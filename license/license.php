@@ -22,7 +22,15 @@ if( ! class_exists('License') ) {
       $locale = get_locale();
       $mo     = dirname(__FILE__) . '/languages/' . $this->localization_domain . '-' . $locale . '.mo';
       load_textdomain($this->localization_domain, $mo);
+
+      
+      // add admin.js to wp-admin pages and displays the site license settings 
+      // in the Settings->General settings page unless you're running WordPress 
+      // Multisite (Network) and the superadmin has disabled this.  
       add_action( 'admin_init', array(&$this, 'license_admin_init') );
+
+      // TODO: probably not needed, it adds attribution choices to the user 
+      // profile page, but this needs to be refactored anyways.    
       add_action( 'init',       array(&$this, 'license_author_info') );
       
       add_action( 'post_submitbox_misc_actions', array(&$this, 'license_submitbox') );
