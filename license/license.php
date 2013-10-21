@@ -10,13 +10,18 @@ Author URI: http://ecs.mit.edu
 
 if( ! class_exists('License') ) { 
   class License {
+    
     private $plugin_url; 
+    private $localization_domain = 'license';
 
 
     function __construct() {
       $this->plugin_url =  WP_PLUGIN_URL .'/' . str_replace( basename( __FILE__ ), "", plugin_basename( __FILE__ ) );
 
-      // deal with hooks in one place
+      // language setup
+      $locale = get_locale();
+      $mo     = dirname(__FILE__) . '/languages/' . $this->localization_domain . '-' . $locale . '.mo';
+      load_textdomain($this->localization_domain, $mo);
       add_action( 'admin_init', array(&$this, 'license_admin_init') );
       add_action( 'init',       array(&$this, 'license_author_info') );
       
