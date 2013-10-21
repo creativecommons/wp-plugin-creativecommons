@@ -32,18 +32,336 @@ if( ! class_exists('License') ) {
       // TODO: probably not needed, it adds attribution choices to the user 
       // profile page, but this needs to be refactored anyways.    
       add_action( 'init',       array(&$this, 'license_author_info') );
-      
-      add_action( 'post_submitbox_misc_actions', array(&$this, 'license_submitbox') );
-      add_action( 'page_submitbox_misc_actions', array(&$this, 'license_submitbox') );
-      add_action( 'save_post',                   array(&$this, 'license_save') );
-      add_action( 'personal_options',            array(&$this, 'license_userprofile_submitbox') );
-      add_action( 'personal_options_update',     array(&$this, 'license_save') );
-      
-      // $this implements the license plugin as a widget. 
+
+      // Selecting a license for individual posts or pages is only possible if the settings of the site allow it
+      // by default it does allow it.
+      if( $this->allow_content_override_site_license() ) {
+        add_action( 'post_submitbox_misc_actions', array(&$this, 'license_submitbox') );
+        add_action( 'page_submitbox_misc_actions', array(&$this, 'license_submitbox') );
+        add_action( 'save_post',                   array(&$this, 'license_save') );
+      }
+
+      // Selecting a license as a user for all your content is only possible if the settings of the site allow it, 
+      // by default it does allow it.
+      if( $this->allow_user_override_site_license() ) {
+        add_action( 'personal_options',            array(&$this, 'license_userprofile_submitbox') );
+        add_action( 'personal_options_update',     array(&$this, 'license_save') );
+      }
+
+      // this implements the license plugin as a widget.
+      // TODO: Widget needs more testing with the new approach 
       add_action( 'widgets_init', array(&$this, 'license_as_widget') );
+    
+      // if the plugin is installed in multisite environment allow to set the 
+      // options for all sites as default from the network options
+      if( is_multisite() ) {
+        add_action('wpmu_options', array(&$this, 'network_license_settings_html') , 10, 0);
+        add_action('update_wpmu_options', array(&$this, 'save_network_license_settings'), 10, 0 );
+      }
     }
 
-  
+    function register_site_settings() {
+      register_setting( 'general', 'license' );
+      add_settings_section( 'license-section', 'License Settings', array(&$this, 'settings_license_section'), 'general', 'license-section');
+
+      add_settings_field( 'license', '<label for="license">' . __('License your site', 'license') . '</label>', array(&$this, 'setting_license_field'), 'general', 'license-section');
+      add_settings_field( 'attribution_to', '<label for="attribution_to">' . __('Set attribution to', 'license') . '</label>', array(&$this, 'setting_attribution_field'), 'general', 'license-section');
+      add_settings_field( 'allow_user_override', '<label for="allow_user_override">' . __('Allow users override site license', 'license') . '</label>', array(&$this, 'setting_user_override_license_field'), 'general', 'license-section');
+      add_settings_field( 'allow_content_override', '<label for="allow_content_override">' . __('Allow license per post or page', 'license') . '</label>', array(&$this, 'setting_content_override_license_field'), 'general', 'license-section');
+    
+    }
+
+    function settings_license_section() {
+      // intentionally left blank 
+    }
+
+
+    function setting_license_field() {
+      $this->select_license_html( $location = 'site', $echo = true );
+    }
+
+    function setting_attribution_field() {
+      $this->select_attribute_to_html( $location = 'site', $echo = true );
+    }
+
+    // only used once in site admin
+    function setting_user_override_license_field() {
+      $license = $this->get_license( $location = 'site');
+      $checked = ( array_key_exists('user_override_license', $license) ) ? checked( $license['user_override_license'], 'true', false ) : '';
+      echo "<input name='license[user_override_license]' type='checkbox' " . $checked . " id='user-override-license' value='true' />";
+    }
+    
+    // only used once in site admin
+    function setting_content_override_license_field() {
+      $license = $this->get_license( $location = 'site');
+      $checked = ( array_key_exists('content_override_license', $license) ) ? checked( $license['content_override_license'], 'true', false ) : '';
+      echo "<input name='license[content_override_license]' type='checkbox' " . $checked . " id='content-override-license' value='true' />";
+    }
+
+    /** 
+     * Check if a site may override the network license.
+     *
+     * If a network license override is allowed, a site admin may change their 
+     * site's license. The rights are cascading: if a site admin may change a 
+     * site's license, she may also allow a user to select their own license. 
+     * if a site admin may not change the license she will also not be allowed 
+     * to let a user pick their own license. A siteadmin may also enable to 
+     * have a license per content.
+     *
+     * @return bool true if the network license override is allowed, false 
+     * otherwise
+     */
+    function allow_site_override_network_license() {
+      $license = $this->get_license( $location = 'network' );
+      // gotcha: using true as string instead of bool since it will be a string value 
+      // returned from the settings form
+      if( 'true' == $license['site_override_license'] ) {
+        return true;
+      } else {
+        return false;
+      }  
+    }
+    
+    function allow_user_override_site_license() {
+      if( is_multisite() && ! $this->allow_site_override_network_license() ) {
+        return false;
+      } else {
+        $license = $this->get_license ( $location = 'site' );
+        if( array_key_exists('user_override_license', $license) && 'true' == $license['user_override_license'] ) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    }
+
+    function allow_content_override_site_license() {
+      if( is_multisite() && ! $this->allow_site_override_network_license() ) {
+        return false;
+      } else {
+        $license = $this->get_license ( $location = 'site' );
+        if( array_key_exists('content_override_license', $license) && 'true' == $license['content_override_license'] ) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    }
+
+
+
+    /**
+     * Set a default license.
+     * 
+     * Hierarchy of license selection
+     * If the plugin is used in a Multisite Network WordPress setup there is an 
+     * option added to the network options to set a default license for all 
+     * sites in this particular network. Each site will inherit this default. 
+     * A sit owner may change this license (at least if the Multisite Admin 
+     * allows it). On a site level (or single WordPress install) an admin may 
+     * allow this site default license to be changed. If the site allows a 
+     * user may change the default license for her/his posts. The same goes for 
+     * posts/pages: if the site admin allows it these can be changed per post 
+     * or page.  
+     * 
+     * 
+     **/
+    function plugin_default_license() {
+      return $license = array(
+        'deed'                     => 'http://creativecommons.org/licenses/by-sa/3.0/',
+        'image'                    => 'http://i.creativecommons.org/l/by-sa/3.0/88x31.png',
+        'attribute_to'             => '',
+        'title'                    => get_bloginfo('name'),
+        'name'                     => 'Creative Commons Attribution-Share Alike 3.0 License',
+        'sitename'                 => get_bloginfo(''),
+        'siteurl'                  => get_bloginfo('url'),
+        'author'                   => get_bloginfo(),
+        'site_override_license'    => true,
+        'user_override_license'    => true,
+        'content_override_license' => true
+      );
+    }
+
+
+    
+    
+    // 1) Check if it's allowed to have a license per content => check the 
+    // content for a license. No license found or not allowed? Continue 2
+    // 2) Check if it's allowed to have a license per user => check the 
+    // content author and grab his/her license preference. No license found 
+    // or user are not allowed to choose their own license? Continue 3
+    // 3) Check if the site is part of a network => No? continue step 4a
+    // Yes? continue step 4b
+    // 4a) the site is NOT part of a network => Get license from options or 
+    // return plugin's default 
+    // 4b) The site is part of a network => check if the site may choose it's 
+    // own license => check the options for a license. Not allowed or no 
+    // license found Continue step 5
+    // 5) Check the multisite options for a license and return if not found 
+    // return plugin default     
+    function get_license( $location = null ) {
+      switch ($location) {
+        case 'network' :
+          $license = get_site_option( 'license', $this->plugin_default_license() );
+          break;
+        
+        case 'site':
+          $license = get_option( 'license', $this->get_license( 'network' ) );
+          break;
+
+        case 'profile':
+          $license = ( $user_license = get_user_option( 'license' ) ) ? $user_license : $this->get_license('site');
+          break;
+
+        default:
+            if( is_multisite() ) {
+                $license = get_site_option('license', $this->plugin_default_license() );
+                if( $this->allow_site_override_network_license() ) { 
+                   $license = get_option('license', $this->plugin_default_license() );
+                   if( array_key_exists( 'user_override_license', $license ) && 'true' == $license['user_override_license'] ) {
+                     $license = ( $user_license = $this->get_user_license() ) ? $user_license : $license;
+                   } 
+                   if( array_key_exists('content_override_license', $license) && 'true' == $license['content_override_license'] ) {
+                     $license = ( $content_license = $this->get_content_license() ) ? $content_license : $license; 
+                   }
+                }
+            } else {
+                $license = get_option('license', $this->plugin_default_license() );
+                if( array_key_exists( 'user_override_license', $license ) && 'true' == $license['user_override_license'] ) {
+                  $license = ( $user_license = $this->get_user_license() ) ? $user_license : $license;
+                } 
+                if( array_key_exists('content_override_license', $license) && 'true' == $license['content_override_license'] ) {
+                  $license = ( $content_license = $this->get_content_license() ) ? $content_license : $license; 
+                }
+            }
+        } 
+      return $license;
+    }
+
+
+    // return license or bool false
+    // either return the user license of a specific user or the current user 
+    function get_user_license( $user_id = null ) {
+      if( is_null( $user_id ) ) { 
+        global $user_id;
+      }
+      return get_user_option('license', $user_id);
+    }
+
+
+    // used in: 
+    // - network settings
+    // - site settings 
+    // - profile settings (personal & others) 
+    // - post/page edit screen (my own & others)
+    function select_license_html( $location = null, $echo = true ) {
+      // get the previously selected license from this site's options or the plugin's default license
+      //$license = get_option('license', $this->plugin_default_license() );
+      $license = $this->get_license( $location );
+      
+      $html = '';
+      $html .= "<span id='license-display'></span>";
+      $html .= '<br id="license"><a title="' . __('Choose a Creative Commons license', 'license') . '" class="thickbox edit-license" href="http://creativecommons.org/choose/?';
+        $html .= 'partner=WordPress+License+Plugin&';
+        $html .= 'exit_url=' . $this->plugin_url . 'licensereturn.php?url=[license_url]%26name=[license_name]%26button=[license_button]%26deed=[deed_url]&';
+        $html .= 'jurisdiction=' . __('us', 'license') . '&KeepThis=true&TB_iframe=true&height=500&width=600">' . __('Change license', 'license');
+      $html .=  '</a>';
+
+      $html .= '<input type="hidden" value="'.$license['deed'].'" id="hidden-license-deed" name="license[deed]"/>';
+      $html .= '<input type="hidden" value="'.$license['image'].'" id="hidden-license-image" name="license[image]"/>';
+      $html .= '<input type="hidden" value="'.$license['name'].'" id="hidden-license-name" name="license[name]"/>';
+      if( $echo ) {
+        echo $html; 
+      } else {
+        return $html;
+      }
+    }
+
+    function select_attribute_to_html( $location = null, $echo = true ) {
+      $license = $this->get_license( $location ); 
+      $html = "<input name='license[attribute_to]' type='text' id='override-license' value='" . $license['attribute_to'] . "' size='45' class='large-text' />";
+      if( $echo ) {
+        echo $html; 
+      } else {
+        return $html;
+      }
+    }
+
+
+
+
+    /** 
+     * Renders the license settings WordPress Network Settings page 
+     *
+     * Using the settings rendered by this function a superadmin may set a 
+     * default license for the WordPress Network. This will be used for all 
+     * sites. If the superadmin allows it, siteadmins may change their site's
+     * license and choose a different license than the default Network license.
+     *
+     * Called by wpmu_options action 
+     *
+     **/
+    function network_license_settings_html() {
+
+      // get the previously selected license from the network options or the plugin's default license
+      //$license = get_site_option('license', $this->plugin_default_license() );
+      $location = 'network';
+      $license = $this->get_license( $location ); 
+
+
+      $html  = '';
+      $html .= "<h3>" . __('License settings') . "</h3>\n";
+      $html .= wp_nonce_field('license-update-network-options', $name = 'license_wpnonce', $referer = true, $echo = false);
+      $html .= "<table class='form-table'>\n";
+    
+      $html .= "<tbody>\n";
+      
+      $html .= "<tr valign='top'>\n";
+      $html .= "\t<th scope='row'><label for='license'>" .  __('Select a default license for the Network') . "</label></th>\n";
+      $html .= "\t<td>";
+      $html .= $this->select_license_html( $location, $echo = false );
+      $html .= "</td>\n";
+      $html .= "</tr>\n";
+
+      $html .= "<tr valign='top'>\n";
+      $html .= "\t<th scope='row'><label for='attribute_to'>" .  __("Set attribution to", 'license') . "</label></th>\n";
+      $html .= "\t<td>";
+      $html .= $this->select_attribute_to_html( $location, $echo = false );
+      $html .= "</td>\n";
+      $html .= "</tr>\n";
+      
+      $html .= "<tr valign='top'>\n";
+      $html .= "\t<th scope='row'><label for='override-license'>" .  __("Allow siteadmins to change their site's license", 'license') . "</label></th>\n";
+      $html .= "\t<td><input name='site_override_license' type='checkbox'" . checked( $license['site_override_license'], 'true' ) . " id='site_override-license' value='true' />";
+      $html .= "</td>\n";
+      $html .= "</tr>\n";
+
+      $html .= "</tbody>\n";
+      $html .= "</table>\n";
+      
+      echo $html;
+    }
+
+
+
+    /**
+     * Saves the default license for the WordPress Network
+     *
+     * TODO: check if values are set
+     */
+    function save_network_license_settings() {
+      if( wp_verify_nonce( $_POST['license_wpnonce'], 'license-update-network-options') ) {
+        $license = array(
+          'deed'                  => esc_url(  $_POST[ 'license']['deed']  ), 
+          'image'                 => esc_url(  $_POST[ 'license']['image'] ),
+          'name'                  => esc_attr( $_POST[ 'license']['name']  ),
+          'attribute_to'          => esc_attr( $_POST[ 'license']['attribute_to'] ),
+          'site_override_license' => esc_attr( $_POST[ 'site_override_license' ] )
+        );
+        update_site_option('license', $license);
+      }
+    }
+
 
 
     function license_admin_init() {
@@ -52,6 +370,15 @@ if( ! class_exists('License') ) {
       wp_enqueue_script("thickbox");
       wp_enqueue_style("thickbox");
       wp_enqueue_script('license');
+      // if a siteadmin may change her site's license, show the settings 
+      // otherwise don't bother 
+      if( is_multisite() ) {
+        if( $this->allow_site_override_network_license() ) {
+          $this->register_site_settings();
+        }
+      } else {
+        $this->register_site_settings();
+      }
     }
 
     function license_author_info() {
