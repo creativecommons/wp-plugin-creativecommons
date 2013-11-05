@@ -277,9 +277,67 @@ if( ! class_exists('License') ) {
       }
     }
 
+
+    // return default attribution options
+    function get_attribution_options( $location ) {
+      switch ( $location ) {
+      
+      case 'network':
+          $attribution_options = array(
+            'network_name' => sprintf( __('Set attribution to the network name: %s', $this->localization_domain), get_site_option('site_name') ), 
+            'site_name'    => __("Set attribution to a site's name", $this->localization_domain),
+            'display_name' => __('Set attribution to the author display name', $this->localization_domain),
+            'other'        => __('Set attribution to something completely differrent', $this->localization_domain)
+          );
+        break;
+        
+        case 'site':
+          $attribution_options = array(
+            'site_name'    => sprintf( __('Set attribution to the site name: %s', $this->localization_domain), get_bloginfo('site') ),
+            'display_name' => __('Set attribution to the author display name', $this->localization_domain),
+            'other'        => __('Set attribution to something completely differrent', $this->localization_domain)
+          );
+        break;
+
+        default: 
+          if( $this->allow_user_override_site_license() ) {
+            $attribution_options = array(
+              'display_name' => __('Set attribution to the author display name', $this->localization_domain),
+              'other'        => __('Set attribution to something completely differrent', $this->localization_domain)
+            );
+          }            
+        break;
+      }
+      
+      return $attribution_options;     
+    }
+
+
+
+
     function select_attribute_to_html( $location = null, $echo = true ) {
       $license = $this->get_license( $location ); 
-      $html = "<input name='license[attribute_to]' type='text' id='override-license' value='" . $license['attribute_to'] . "' size='45' class='large-text' />";
+      $attribute_options = $this->get_attribution_options( $location );
+
+
+      $html = '';
+      if( is_array($attribute_options) && sizeof($attribute_options) > 0 ) {
+        foreach( $attribute_options as $attr_val => $attr_text) {
+          $checked = '';
+          $id = "license-$attr_val";
+          $checked = checked($license['attribute_to'], $attr_val, false);
+          $html .= "<label for='$id'><input type='radio' class='license-attribution-options' id='$id' $checked name='license[attribute_to]' value='$attr_val' />" . $attr_text . "</label><br/>\n";
+        }
+        if ( 'other' == $license['attribute_to'] ) {
+          $class = ''; 
+          $value =  esc_html( $license['attribute_other'] );
+        } else {
+          $class = 'hidden'; // hide the other input text field if the 'other' option is not ticked
+          $value = '';
+        }
+        
+        $html .= "<input type='text' value='$value' name='license[attribute_other]' id='license-other-value' class='large $class' size='45' />"; //might need max length? TODO need to check hidden value if other prev was selected
+      }
       if( $echo ) {
         echo $html; 
       } else {
@@ -332,7 +390,7 @@ if( ! class_exists('License') ) {
       
       $html .= "<tr valign='top'>\n";
       $html .= "\t<th scope='row'><label for='override-license'>" .  __("Allow siteadmins to change their site's license", 'license') . "</label></th>\n";
-      $html .= "\t<td><input name='site_override_license' type='checkbox'" . checked( $license['site_override_license'], 'true' ) . " id='site_override-license' value='true' />";
+      $html .= "\t<td><input name='site_override_license' type='checkbox'" . checked( $license['site_override_license'], 'true', false ) . " id='site_override-license' value='true' />";
       $html .= "</td>\n";
       $html .= "</tr>\n";
 
@@ -351,11 +409,13 @@ if( ! class_exists('License') ) {
      */
     function save_network_license_settings() {
       if( wp_verify_nonce( $_POST['license_wpnonce'], 'license-update-network-options') ) {
+        
         $license = array(
           'deed'                  => esc_url(  $_POST[ 'license']['deed']  ), 
           'image'                 => esc_url(  $_POST[ 'license']['image'] ),
           'name'                  => esc_attr( $_POST[ 'license']['name']  ),
-          'attribute_to'          => esc_attr( $_POST[ 'license']['attribute_to'] ),
+          'attribute_to'          => esc_attr( $_POST[ 'attribute_to'] ),
+          'attribute_other'       => esc_html( $_POST[ 'attribute_other' ] ),
           'site_override_license' => esc_attr( $_POST[ 'site_override_license' ] )
         );
         update_site_option('license', $license);
