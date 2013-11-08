@@ -29,23 +29,19 @@ if( ! class_exists('License') ) {
       // Multisite (Network) and the superadmin has disabled this.  
       add_action( 'admin_init', array(&$this, 'license_admin_init') );
 
-      // TODO: probably not needed, it adds attribution choices to the user 
-      // profile page, but this needs to be refactored anyways.    
-      add_action( 'init',       array(&$this, 'license_author_info') );
-
       // Selecting a license for individual posts or pages is only possible if the settings of the site allow it
       // by default it does allow it.
       if( $this->allow_content_override_site_license() ) {
-        add_action( 'post_submitbox_misc_actions', array(&$this, 'license_submitbox') );
-        add_action( 'page_submitbox_misc_actions', array(&$this, 'license_submitbox') );
-        add_action( 'save_post',                   array(&$this, 'license_save') );
+        add_action( 'post_submitbox_misc_actions', array(&$this, 'post_page_license_settings_html') );
+        add_action( 'page_submitbox_misc_actions', array(&$this, 'post_page_license_settings_html') );
+        add_action( 'save_post',                   array(&$this, 'save_license') );
       }
 
       // Selecting a license as a user for all your content is only possible if the settings of the site allow it, 
-      // by default it does allow it.
+      // by default it will allow it.
       if( $this->allow_user_override_site_license() ) {
-        add_action( 'personal_options',            array(&$this, 'license_userprofile_submitbox') );
-        add_action( 'personal_options_update',     array(&$this, 'license_save') );
+        add_action( 'personal_options',            array(&$this, 'user_license_settings_html') );
+        add_action( 'personal_options_update',     array(&$this, 'save_license') );
       }
 
       // this implements the license plugin as a widget.
@@ -56,7 +52,7 @@ if( ! class_exists('License') ) {
       // options for all sites as default from the network options
       if( is_multisite() ) {
         add_action('wpmu_options', array(&$this, 'network_license_settings_html') , 10, 0);
-        add_action('update_wpmu_options', array(&$this, 'save_network_license_settings'), 10, 0 );
+        add_action('update_wpmu_options', array(&$this, 'save_license'), 10, 0 );
       }
     }
 
@@ -210,11 +206,16 @@ if( ! class_exists('License') ) {
           break;
 
         case 'profile':
-          $license = ( $user_license = get_user_option( 'license' ) ) ? $user_license : $this->get_license('site');
+          $license = ( $user_license = get_user_option( 'license' ) ) ? $user_license : $this->get_license( 'site' );
           break;
 
+        case 'post-page':
+          $license = ( $post_page_license = $this->get_post_page_license() ) ? $post_page_license : $this->get_license( 'profile' );
+          break;
+
+        // TODO need to check default structure below  
         default:
-            if( is_multisite() ) {
+         /*   if( is_multisite() ) {
                 $license = get_site_option('license', $this->plugin_default_license() );
                 if( $this->allow_site_override_network_license() ) { 
                    $license = get_option('license', $this->plugin_default_license() );
@@ -233,20 +234,26 @@ if( ! class_exists('License') ) {
                 if( array_key_exists('content_override_license', $license) && 'true' == $license['content_override_license'] ) {
                   $license = ( $content_license = $this->get_content_license() ) ? $content_license : $license; 
                 }
-            }
+            }*/
         } 
       return $license;
     }
 
 
-    // return license or bool false
-    // either return the user license of a specific user or the current user 
-    function get_user_license( $user_id = null ) {
-      if( is_null( $user_id ) ) { 
-        global $user_id;
-      }
-      return get_user_option('license', $user_id);
+    // will use a variable prefix with underscore to make *really* sure this 
+    // postmeta value will NOT be displayed to other users. The option is the 
+    // same structure as everywhere: a serialized array.
+    // (http://codex.wordpress.org/Function_Reference/add_post_meta)
+    function get_post_page_license() {
+      global $post; // TODO check if this can be done without a global and if we're always getting what we want
+      $license = get_post_meta( $post->ID, '_license', true ); 
+      if( is_array($license) && sizeof($license) > 0 ) {
+        return $license;
+      } else { 
+        return false; 
+      } 
     }
+
 
 
     // used in: 
@@ -369,24 +376,12 @@ if( ! class_exists('License') ) {
 
       $html  = '';
       $html .= "<h3>" . __('License settings') . "</h3>\n";
-      $html .= wp_nonce_field('license-update-network-options', $name = 'license_wpnonce', $referer = true, $echo = false);
+      $html .= wp_nonce_field('license-update', $name = 'license_wpnonce', $referer = true, $echo = false);
       $html .= "<table class='form-table'>\n";
     
       $html .= "<tbody>\n";
       
-      $html .= "<tr valign='top'>\n";
-      $html .= "\t<th scope='row'><label for='license'>" .  __('Select a default license for the Network') . "</label></th>\n";
-      $html .= "\t<td>";
-      $html .= $this->select_license_html( $location, $echo = false );
-      $html .= "</td>\n";
-      $html .= "</tr>\n";
-
-      $html .= "<tr valign='top'>\n";
-      $html .= "\t<th scope='row'><label for='attribute_to'>" .  __("Set attribution to", 'license') . "</label></th>\n";
-      $html .= "\t<td>";
-      $html .= $this->select_attribute_to_html( $location, $echo = false );
-      $html .= "</td>\n";
-      $html .= "</tr>\n";
+      $html .= $this->_license_settings_html( $location ); 
       
       $html .= "<tr valign='top'>\n";
       $html .= "\t<th scope='row'><label for='override-license'>" .  __("Allow siteadmins to change their site's license", 'license') . "</label></th>\n";
@@ -400,28 +395,76 @@ if( ! class_exists('License') ) {
       echo $html;
     }
 
-
-
-    /**
-     * Saves the default license for the WordPress Network
-     *
-     * TODO: check if values are set
-     */
-    function save_network_license_settings() {
-      if( wp_verify_nonce( $_POST['license_wpnonce'], 'license-update-network-options') ) {
-        
-        $license = array(
-          'deed'                  => esc_url(  $_POST[ 'license']['deed']  ), 
-          'image'                 => esc_url(  $_POST[ 'license']['image'] ),
-          'name'                  => esc_attr( $_POST[ 'license']['name']  ),
-          'attribute_to'          => esc_attr( $_POST[ 'attribute_to'] ),
-          'attribute_other'       => esc_html( $_POST[ 'attribute_other' ] ),
-          'site_override_license' => esc_attr( $_POST[ 'site_override_license' ] )
-        );
-        update_site_option('license', $license);
+    // save license from network settings, user profile and post/page interface
+    function save_license( $post_id = false ) {
+      if( isset($_POST['license_wpnonce']) && wp_verify_nonce( $_POST['license_wpnonce'], 'license-update') ) { 
+        if ( defined('IS_PROFILE_PAGE') && IS_PROFILE_PAGE) {
+          $this->_save_user_license();
+        } elseif( is_multisite() && defined('WP_NETWORK_ADMIN') && WP_NETWORK_ADMIN ) {
+          $this->_save_network_license();
+        } else {
+          // presume we're in a post or page wp-admin environment
+          // might need to deal with autosave 
+          
+          $this->_save_post_page_license( $post_id );
+        }
+      } else { 
+        return $post_id;
       }
     }
 
+
+
+    // check the data before saving it
+    // TODO: also needs to be used by the site settings 
+    // use $from ala get_license to determine where the data is coming from 
+    // and what should be mandatory return an array or WP_Error?
+    private function _verify_license_data( $from ) {
+      
+      $license = array();
+
+      $license['deed']             = esc_url(  $_POST[ 'license']['deed']  ); 
+      $license['image']            = esc_url(  $_POST[ 'license']['image'] );
+      $license['name']             = esc_attr( $_POST[ 'license']['name']  );
+      $license['attribute_to']     = esc_attr( $_POST[ 'license']['attribute_to'] );
+      $license['attribute_other']  = esc_html( $_POST[ 'license']['attribute_other' ] );
+
+      switch( $from ) {
+        case 'network': 
+          if( isset( $_POST['site_override_license'] ) ) {
+            $license['site_override_license'] = esc_attr( $_POST['site_override_license'] );
+          }
+          break;
+      }
+      return $license;
+    }
+
+
+
+    // validates & verifies the data and then saves the license in the site_options
+    private function _save_network_license( ) {
+      $license = $this->_verify_license_data( $from = 'network' ); 
+      return update_site_option('license', $license);
+    }
+
+    // TODO: need to decide if the user option is global for all 
+    // sites/blogs in a network. Also need to make sure that we're using 
+    // the current profile user_id which might not be the 
+    // current_user (e.g. admin changing license for a user).
+    // validates & verifies the data and then saves the license in the user_options
+    private function _save_user_license( ) {
+      $license = $this->_verify_license_data( $from = 'profile' );
+      $user_id = get_current_user_id();
+      return update_user_option( $user_id, 'license', $license, $global = false );
+    }
+
+    // save post/page metadata due to it being an array it should not be shown 
+    // in the post or page custom fields interface
+    // using _license to hide it from the custom fields 
+    private function _save_post_page_license( $post_id ) {
+      $license = $this->_verify_license_data( $from = 'post-page' );
+      return update_post_meta( $post_id,  '_license', $license);
+    }
 
 
     function license_admin_init() {
@@ -441,154 +484,60 @@ if( ! class_exists('License') ) {
       }
     }
 
-    function license_author_info() {
-      // "Use the init or any subsequent action to call this function. Calling it outside of an action can lead to troubles. See #14024 for details."
-      // http://codex.wordpress.org/Function_Reference/wp_get_current_user		 ( same apparently applies to wp_get_current_user() because said "troubles" were encountered)
-
-      // for displaying license "attribute to" options, and saving them
-      global $license_displayname, $license_nickname;
-      $current_user = wp_get_current_user();
-      $license_displayname = $current_user->display_name;
-      $license_nickname = $current_user->nickname;
-    }
-
-
-    function license_userprofile_submitbox() {
-      $this->license_submitbox(true);
-    }
-
-    function license_submitbox($userprofile = false) {
-     
-      //&stylesheet=&partner_icon_url=
-      $license = $this->license_get_license();
-      $nonce = wp_create_nonce( plugin_basename(__FILE__) );
-
-      if ($userprofile) {
-        echo '<tr id="license">
-          <th scope="row">' . __('Default License', 'license') . '</th>
-          <td><label for="license">';
-      } else {
-        echo '<div id="license" class="misc-pub-section misc-pub-section-last ">License: ';
-      }
-
     
-      echo '<span id="license-display"></span>
-        <a href="http://creativecommons.org/choose/?partner=WordPress+License+Plugin&exit_url=' . $this->plugin_url . 'licensereturn.php?url=[license_url]%26name=[license_name]%26button=[license_button]%26deed=[deed_url]&jurisdiction=' . __('us', 'license') . '&KeepThis=true&TB_iframe=true&height=500&width=600" title="' . __('Choose a Creative Commons license', 'license') . '" class="thickbox edit-license">' . __('Edit', 'license') . '</a><br>	
-
-        <input type="hidden" name="license_nonce" id="license-nonce" value="'.$nonce.'" />
-        <input type="hidden" value="'.$license['deed'].'" id="hidden-license-deed" name="hidden_license_deed"/>
-        <input type="hidden" value="'.$license['image'].'" id="hidden-license-image" name="hidden_license_image"/>
-        <input type="hidden" value="'.$license['name'].'" id="hidden-license-name" name="hidden_license_name"/>';
-
-      // attribute_to setting is only available while editing user profile.	it is a property of the users's profile, not of the page/post
-      if ($userprofile) {
-        // pull these in for displaying "attribute to" options
-        global $license_displayname, $license_nickname;
-
-        // displayname will be the default
-        echo '</td></tr><tr><th scope="row">Attribute License To:</th><td>
-          <input type="radio" name="attribute_to" checked="true" value="displayname">' . sprintf(__('display name (%s, as selected below)', 'license'), $license_displayname) . '</input><br/>
-          <input type="radio" name="attribute_to" '.checked($license['attribute_to'], 'nickname', false).' value="nickname">' . sprintf(__('nickname (%s)', 'license'), $license_nickname) . '</input><br/>
-          <input type="radio" name="attribute_to" '.checked($license['attribute_to'], 'sitename', false).' value="sitename">' . sprintf(__('site name (%s)', 'license'), get_bloginfo('name')) . '</input>';
-        }
+    // render the html settings for the user profile 
+    // TODO: add global option: if allowed use this license across all my sites 
+    // in this network.
+    function user_license_settings_html(){
+      $location = 'profile';
+      $html     = wp_nonce_field('license-update', $name = 'license_wpnonce', $referer = true, $echo = false);
+      $html     .= $this->_license_settings_html( $location); 
+      echo $html;
+    } 
+    
+    function post_page_license_settings_html(){
+      $location = 'post-page';
+      $html  = '<div id="license" class="misc-pub-section misc-pub-section-last ">';
+      $html .= wp_nonce_field('license-update', $name = 'license_wpnonce', $referer = true, $echo = false);
+      $html .= '<strong>' . __('Licensed:', $this->localization_domain) . '</strong>';
       
-    /*
-      <!--	<p>
-      <a class="save-post-license hide-if-no-js button" href="#license">OK</a>
-      <a class="cancel-post-license hide-if-no-js" href="#license">Cancel</a>
-      </p>-->
-    */
-
-      if ($userprofile)
-        echo '</td></tr>';
-      else 
-        echo '</div>';
-
-      } // license_submitbox
-
-    function license_get_license($post_id = false) {
-      global $user_id;
-      $default = null;
-
-      if (defined('WP_ADMIN') && WP_ADMIN)
-        $default = get_user_option('license');
+      $html .= '<p>';
+      $html .= $this->select_license_html( $location, $echo = false );  
+      $html .= '</p>';
       
-      if (empty($default))
-        $default = array(
-                  'deed' => 'http://creativecommons.org/licenses/by-nc-sa/3.0/us/',
-                  'image' => 'http://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png',
-                  'title' => get_bloginfo('url'),
-                  'name' => 'Creative Commons Attribution-Noncommercial-Share Alike 3.0 United States License',
-                  'sitename' => get_bloginfo(),
-                  'siteurl' => get_bloginfo('url'),
-                  'author' => get_bloginfo()
-                 );
-
-      if (defined('IS_PROFILE_PAGE') && IS_PROFILE_PAGE)
-        return $default;
+      $html .= '<p>';
+      $html .= $this->select_attribute_to_html( $location, $echo = false );
+      $html .= '</p>';
+      $html .= '</div>';
       
-      global $post;
-      if ($post_id === false)
-        $post_id = $post->ID;
-      $this_post = get_post($post_id);
-      $postdeed = get_post_meta($post_id,'_license_deed',true);
-      
-      if (empty($postdeed))
-        return $default;
-      else 
-        return array( 'deed'	=> get_post_meta($post_id,'_license_deed',true),
-                      'image' => get_post_meta($post_id,'_license_image',true),
-                      'title' => get_the_title($post_id),
-                      'name' => get_post_meta($post_id,'_license_name',true),
-                      'sitename' => get_bloginfo(),
-                      'author' => get_the_author($this_post->post_author),
-                      'permalink' => get_permalink($post_id),
-                      'siteurl' => get_bloginfo('url')
-                     );
-      
+      echo $html;
     }
 
-    function license_save($post_id) {
 
-      if ( !isset($_POST['license_nonce']) ||
-        !wp_verify_nonce( $_POST['license_nonce'], plugin_basename(__FILE__) )) {
-        return $post_id;
-      }
 
-      if (defined('IS_PROFILE_PAGE') && IS_PROFILE_PAGE) {
-        if (empty($_POST['hidden_license_deed']))
-          return;
-        update_user_option($post_id,'license',array(
-          'deed' => $_POST['hidden_license_deed'],
-          'image' => $_POST['hidden_license_image'],
-          'name' => $_POST['hidden_license_name'],
-                      'author' => get_the_author($post_id),
-          'title' => get_bloginfo(),
-          'permalink' => get_bloginfo('url'),
-          'sitename' => get_bloginfo(),
-          'siteurl' => get_bloginfo('url'),
-          'attribute_to' => $_POST['attribute_to']
-                     ));
-        return;
-      }
+    // DRY wrapper function used for profile settings and network settings
+    private function _license_settings_html( $location ){
+      $html ='';
+      $html .= "<tr valign='top'>\n";
+      $html .= "\t<th scope='row'><label for='license'>" .  __('Select a default license') . "</label></th>\n";
+      $html .= "\t<td>";
+      $html .= $this->select_license_html( $location, $echo = false );
+      $html .= "</td>\n";
+      $html .= "</tr>\n";
+
+      $html .= "<tr valign='top'>\n";
+      $html .= "\t<th scope='row'><label for='attribute_to'>" .  __("Set attribution to", 'license') . "</label></th>\n";
+      $html .= "\t<td>";
+      $html .= $this->select_attribute_to_html( $location, $echo = false );
+      $html .= "</td>\n";
+      $html .= "</tr>\n";
       
-      if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) 
-        return $post_id;
-
-      // Check permissions
-      if ( 'page' == $_POST['post_type'] ) {
-        if ( !current_user_can( 'edit_page', $post_id ) )
-          return $post_id;
-      } else {
-        if ( !current_user_can( 'edit_post', $post_id ) )
-          return $post_id;
-      }
-
-      update_post_meta($post_id,'_license_deed',$_POST['hidden_license_deed']);
-      update_post_meta($post_id,'_license_image',$_POST['hidden_license_image']);
-      update_post_meta($post_id,'_license_name',$_POST['hidden_license_name']);
+      return $html;
     }
-
+    
+    
+    
+    // TODO: rewrite this below
     function license_print_license_html() {
 
       $license = $this->license_get_license();
