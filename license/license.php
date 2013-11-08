@@ -43,7 +43,7 @@ if( ! class_exists('License') ) {
         add_action( 'personal_options',            array(&$this, 'user_license_settings_html') );
         add_action( 'personal_options_update',     array(&$this, 'save_license') );
       }
-
+      
       // this implements the license plugin as a widget.
       // TODO: Widget needs more testing with the new approach 
       add_action( 'widgets_init', array(&$this, 'license_as_widget') );
@@ -163,6 +163,7 @@ if( ! class_exists('License') ) {
      * 
      **/
     function plugin_default_license() {
+      error_log('called default');
       return $license = array(
         'deed'                     => 'http://creativecommons.org/licenses/by-sa/3.0/',
         'image'                    => 'http://i.creativecommons.org/l/by-sa/3.0/88x31.png',
@@ -198,44 +199,61 @@ if( ! class_exists('License') ) {
     function get_license( $location = null ) {
       switch ($location) {
         case 'network' :
-          $license = get_site_option( 'license', $this->plugin_default_license() );
+          error_log('called network');
+          $license = ( $network_license = get_site_option( 'license' ) ) ? $network_license : $this->plugin_default_license();
           break;
         
         case 'site':
-          $license = get_option( 'license', $this->get_license( 'network' ) );
+          error_log('called site');
+          $license = ( $site_license = get_option( 'license') ) ? $site_license : $this->get_license( 'network' );
           break;
 
         case 'profile':
+          error_log('called profile');
           $license = ( $user_license = get_user_option( 'license' ) ) ? $user_license : $this->get_license( 'site' );
           break;
 
         case 'post-page':
+          error_log('called post-page');
           $license = ( $post_page_license = $this->get_post_page_license() ) ? $post_page_license : $this->get_license( 'profile' );
           break;
 
-        // TODO need to check default structure below  
-        default:
-         /*   if( is_multisite() ) {
-                $license = get_site_option('license', $this->plugin_default_license() );
-                if( $this->allow_site_override_network_license() ) { 
-                   $license = get_option('license', $this->plugin_default_license() );
-                   if( array_key_exists( 'user_override_license', $license ) && 'true' == $license['user_override_license'] ) {
-                     $license = ( $user_license = $this->get_user_license() ) ? $user_license : $license;
-                   } 
-                   if( array_key_exists('content_override_license', $license) && 'true' == $license['content_override_license'] ) {
-                     $license = ( $content_license = $this->get_content_license() ) ? $content_license : $license; 
-                   }
-                }
-            } else {
-                $license = get_option('license', $this->plugin_default_license() );
-                if( array_key_exists( 'user_override_license', $license ) && 'true' == $license['user_override_license'] ) {
-                  $license = ( $user_license = $this->get_user_license() ) ? $user_license : $license;
-                } 
-                if( array_key_exists('content_override_license', $license) && 'true' == $license['content_override_license'] ) {
-                  $license = ( $content_license = $this->get_content_license() ) ? $content_license : $license; 
-                }
-            }*/
-        } 
+        // TODO need to check default structure below since this can cause way 
+        // too many calls for the right license   
+        case 'frontend':
+          error_log('get license for the frontend');
+          if( is_multisite() ) {
+            error_log('get license: multisite');
+            $license = $this->get_license( 'network' );
+            error_log('got network license');
+            if( $this->allow_site_override_network_license() ) { 
+              error_log('site may override network license');
+              $license = $this->get_license( 'site' );
+              $site_license = $license; // keep track of site license cause we need to check it twice...
+              error_log('got site license');
+              if( array_key_exists( 'user_override_license', $site_license ) && 'true' == $site_license['user_override_license'] ) {
+                error_log('user may override license');
+                $license = $this->get_license( 'profile' );
+                error_log('got user license');
+              } 
+              error_log('content override' . print_r( $site_license['content_override_license'], true) );
+              if( array_key_exists('content_override_license', $site_license) && 'true' == $site_license['content_override_license'] ) {
+                error_log('content may override license');
+                $license = $this->get_license( 'post-page' ); 
+                error_log('got content license');
+              }
+            }
+          } else {
+            $license = $this->get_license( 'site' );
+            if( array_key_exists( 'user_override_license', $license ) && 'true' == $license['user_override_license'] ) {
+              $license = $this->get_license( 'profile' );
+            } 
+            if( array_key_exists('content_override_license', $license) && 'true' == $license['content_override_license'] ) {
+              $license = $this->get_license( 'post-page' ); 
+            }
+          }
+          break;
+      } 
       return $license;
     }
 
@@ -264,8 +282,9 @@ if( ! class_exists('License') ) {
     function select_license_html( $location = null, $echo = true ) {
       // get the previously selected license from this site's options or the plugin's default license
       //$license = get_option('license', $this->plugin_default_license() );
-      $license = $this->get_license( $location );
-      
+      $license  = $this->get_license( $location );
+      // add lang option 
+
       $html = '';
       $html .= "<span id='license-display'></span>";
       $html .= '<br id="license"><a title="' . __('Choose a Creative Commons license', 'license') . '" class="thickbox edit-license" href="http://creativecommons.org/choose/?';
@@ -534,40 +553,72 @@ if( ! class_exists('License') ) {
       
       return $html;
     }
-    
-    
-    
-    // TODO: rewrite this below
-    function license_print_license_html() {
 
-      $license = $this->license_get_license();
 
-      // who authored this post/page?
-      $authID = get_the_author_meta(ID);
-      // how does this author prefer their license attribution to be displayed? (options are: display name, nickname, or sitename)
-      // if preference is not set, display name will be used
-      $usrLicOpt = get_user_option('license',$authID);
-      $attribute_pref = $usrLicOpt['attribute_to'];
-      if ($attribute_pref == 'sitename')
-        $attribute_to = get_bloginfo();
-      else if ($attribute_pref == 'nickname')
-        $attribute_to = get_the_author_meta('nickname');
-      else
-        $attribute_to = get_the_author_meta('display_name');
 
-      $imgstyle = apply_filters('license_img_style', "display:block; float:left; margin:0px 3px 3px 0px;");
 
-      echo '<div class="license-wrap"><a rel="license" href="'.esc_url($license['deed']).'"><img style="' . $imgstyle . '" alt="' . __('Creative Commons License', 'license') . '" src="'.esc_url($license['image']).'" /></a> ';
-      printf(__('<span%s>%s</span> is licensed by <span%s>%s</span> under a <a rel="license" href="%s">%s</a>.', 'license'),
-        ' xmlns:dc="http://purl.org/dc/elements/1.1/" href="http://purl.org/dc/dcmitype/Text" property="dc:title" rel="dc:type"',
-        esc_html($license['title']),
-        ' xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName"',
-        esc_html($attribute_to),
-        esc_url($license['deed']),
-        esc_html($license['name']));
-      echo '</div>';
+    // add filters to this function so themers can easily change the html 
+    // output
+    public function print_license_html( $echo = true ) {
+      $license = $this->get_license( 'frontend' );
+      $html = '';
+      if( is_array($license) && sizeof($license) > 0 ) {
+        
+        $deed_url      = esc_url( $license['deed'] ); 
+        $image_url     = esc_url( $license['image'] );
+        $license_name  = esc_html( $license['name'] );
+        $attribution   = $this->_get_attribution( $license );
+        $title_work    = 'TODO title of work here';  
+
+        $html .= "<div class='license-wrap'>";
+        $html .= "<a rel='license' href='$deed_url'>";
+        $html .= "<img alt='" . __('Creative Commons License', $this->localization_domain) . "' style='border-width:0' src='$image_url' />";
+        $html .= "</a><br />";
+        $html .= "<span xmlns:dct='http://purl.org/dc/terms/' property='dct:title'>$title_work</span> "; 
+        $html .= __('by', $this->localization_domain);
+        $html .= " <a xmlns:cc='http://creativecommons.org/ns#' href='http://attribute.url' property='cc:attributionName' rel='cc:attributionURL'>$attribution</a> "; 
+        $html .= sprintf( __('is licensed under a <a rel="license" href="%s">%s</a>.', $this->localization_domain), $deed_url, $license_name );
+        //$html .= '<br />'; 
+        //$html .= __('Based on a work at <a xmlns:dct="http://purl.org/dc/terms/" href="http://source.url" rel="dct:source">http://source.url</a>.', $this->localization_domain);
+        //$html .='<br />';
+        //$html .= __('Permissions beyond the scope of this license may be available at <a xmlns:cc="http://creativecommons.org/ns#" href="http://morepermissions.url" rel="cc:morePermissions">http://morepermissions.url</a>.', $this->localization_domain);
+        $html .= '</div>';
+      }
+      if( $echo ) {
+        echo $html;
+      } else {
+        return $html;
+      }
+
     }
+    
 
+    private function _get_attribution( $license ) {
+      if( is_array($license) && sizeof( $license ) > 0 ){
+        $attribution_option = isset( $license['attribute_to'] ) ? $license['attribute_to'] : null;  
+      }
+      switch($attribution_option) { 
+      
+        case 'network_name': 
+          $attribution = esc_html( get_site_option('site_name') );
+          break;
+
+        case 'site_name': 
+          $attribution = esc_html( get_bloginfo('site') );
+          break;
+        // TODO: display name
+        case 'display_name': 
+          $attribution = 'TODO display_name'; 
+          break;
+
+        case 'other': 
+          $other = isset( $license['attribute_other'] ) ? $license['attribute_other'] : '';
+          $attribution = esc_html( $other );
+          break;
+      }
+      return $attribution; 
+    }  
+    
     function license_as_widget() {
       require_once('widgets/license_widget.php');
       register_widget( 'license_widget' );
