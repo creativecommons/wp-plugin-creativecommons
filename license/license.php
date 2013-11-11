@@ -13,14 +13,14 @@ if( ! class_exists('License') ) {
     
     private $plugin_url; 
     private $localization_domain = 'license';
-
+    private $locale; 
 
     function __construct() {
       $this->plugin_url =  WP_PLUGIN_URL .'/' . str_replace( basename( __FILE__ ), "", plugin_basename( __FILE__ ) );
 
       // language setup
-      $locale = get_locale();
-      $mo     = dirname(__FILE__) . '/languages/' . $this->localization_domain . '-' . $locale . '.mo';
+      $this->locale = get_locale();
+      $mo     = dirname(__FILE__) . '/languages/' . $this->localization_domain . '-' . $this->locale . '.mo';
       load_textdomain($this->localization_domain, $mo);
 
       
@@ -284,11 +284,13 @@ if( ! class_exists('License') ) {
       //$license = get_option('license', $this->plugin_default_license() );
       $license  = $this->get_license( $location );
       // add lang option 
+      $lang = ( isset($this->locale) && ! empty($this->locale) ) ? 'lang=' . esc_attr($this->locale) : '';
 
       $html = '';
       $html .= "<span id='license-display'></span>";
       $html .= '<br id="license"><a title="' . __('Choose a Creative Commons license', 'license') . '" class="thickbox edit-license" href="http://creativecommons.org/choose/?';
         $html .= 'partner=WordPress+License+Plugin&';
+        $html .= $lang;  
         $html .= 'exit_url=' . $this->plugin_url . 'licensereturn.php?url=[license_url]%26name=[license_name]%26button=[license_button]%26deed=[deed_url]&';
         $html .= 'jurisdiction=' . __('us', 'license') . '&KeepThis=true&TB_iframe=true&height=500&width=600">' . __('Change license', 'license');
       $html .=  '</a>';
