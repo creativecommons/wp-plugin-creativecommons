@@ -2,9 +2,9 @@
 /*
 Plugin Name: License
 Description: Allows users to specify a Creative Commons license for their content, with tight WordPress integration.
-Version: 0.6
-Author: mitcho (Michael Yoshitaka Erlewine), Brett Mellor
-Author URI: http://ecs.mit.edu
+Version: 0.7
+Author: Bjorn Wijers <burobjorn@burobjorn.nl>, mitcho (Michael Yoshitaka Erlewine), Brett Mellor
+Author URI: http://burobjorn.nl, http://ecs.mit.edu
 */
 
 
@@ -236,7 +236,7 @@ if( ! class_exists('License') ) {
                 $license = $this->get_license( 'profile' );
                 error_log('got user license');
               } 
-              error_log('content override' . print_r( $site_license['content_override_license'], true) );
+              //error_log('content override' . print_r( $site_license['content_override_license'], true) );
               if( array_key_exists('content_override_license', $site_license) && 'true' == $site_license['content_override_license'] ) {
                 error_log('content may override license');
                 $license = $this->get_license( 'post-page' ); 
@@ -312,26 +312,26 @@ if( ! class_exists('License') ) {
       
       case 'network':
           $attribution_options = array(
-            'network_name' => sprintf( __('Set attribution to the network name: %s', $this->localization_domain), get_site_option('site_name') ), 
-            'site_name'    => __("Set attribution to a site's name", $this->localization_domain),
-            'display_name' => __('Set attribution to the author display name', $this->localization_domain),
-            'other'        => __('Set attribution to something completely differrent', $this->localization_domain)
+            'network_name' => sprintf( __('The network name: %s', $this->localization_domain), get_site_option('site_name') ), 
+            'site_name'    => __("A site's name", $this->localization_domain),
+            'display_name' => __('The author display name', $this->localization_domain),
+            'other'        => __('Something completely differrent', $this->localization_domain)
           );
         break;
         
         case 'site':
           $attribution_options = array(
-            'site_name'    => sprintf( __('Set attribution to the site name: %s', $this->localization_domain), get_bloginfo('site') ),
-            'display_name' => __('Set attribution to the author display name', $this->localization_domain),
-            'other'        => __('Set attribution to something completely differrent', $this->localization_domain)
+            'site_name'    => sprintf( __('The site name: %s', $this->localization_domain), get_bloginfo('site') ),
+            'display_name' => __('The author display name', $this->localization_domain),
+            'other'        => __('Something completely differrent', $this->localization_domain)
           );
         break;
 
         default: 
           if( $this->allow_user_override_site_license() ) {
             $attribution_options = array(
-              'display_name' => __('Set attribution to the author display name', $this->localization_domain),
-              'other'        => __('Set attribution to something completely differrent', $this->localization_domain)
+              'display_name' => __('The author display name', $this->localization_domain),
+              'other'        => __('Something completely differrent', $this->localization_domain)
             );
           }            
         break;
@@ -359,12 +359,17 @@ if( ! class_exists('License') ) {
         if ( 'other' == $license['attribute_to'] ) {
           $class = ''; 
           $value =  esc_html( $license['attribute_other'] );
+          $url   = esc_url ( $license['attribute_other_url']);        
         } else {
           $class = 'hidden'; // hide the other input text field if the 'other' option is not ticked
           $value = '';
+          $url = '';
         }
-        
-        $html .= "<input type='text' value='$value' name='license[attribute_other]' id='license-other-value' class='large $class' size='45' />"; //might need max length? TODO need to check hidden value if other prev was selected
+
+        $html .= "<p id='attribute-other-data' class='$class'>";
+        $html .= "<label for='license-other-value'>". __('Attribution text:', $this->localization_domain) . "<br /><input type='text' value='$value' name='license[attribute_other]' id='license-other-value' class='large' size='45' /></label><br />"; //might need max length? TODO need to check hidden value if other prev was selected
+        $html .= "<label for='license-other-value-url'>". __('Attribution url:', $this->localization_domain) . "<br /><input type='text' value='$url' name='license[attribute_other_url]' id='license-other-value-url' class='large' size='45' /></label>";
+        $html .= '</p>';
       }
       if( $echo ) {
         echo $html; 
@@ -449,6 +454,7 @@ if( ! class_exists('License') ) {
       $license['name']             = esc_attr( $_POST[ 'license']['name']  );
       $license['attribute_to']     = esc_attr( $_POST[ 'license']['attribute_to'] );
       $license['attribute_other']  = esc_html( $_POST[ 'license']['attribute_other' ] );
+      $license['attribute_other_url']  = esc_html( $_POST[ 'license']['attribute_other_url' ] );
 
       switch( $from ) {
         case 'network': 
@@ -569,8 +575,28 @@ if( ! class_exists('License') ) {
         $deed_url      = esc_url( $license['deed'] ); 
         $image_url     = esc_url( $license['image'] );
         $license_name  = esc_html( $license['name'] );
-        $attribution   = $this->_get_attribution( $license );
-        $title_work    = 'TODO title of work here';  
+        $warning       = 'TODO' . __('The license shown may overriden by individual content such as a single post or image.', $this->localization_domain);
+
+
+        if( is_array($attribution = $this->_get_attribution( $license ) ) ) {
+          $attribute_text = isset( $attribution['text'] ) ? $attribution['text'] : '';
+          $attribute_url  = isset( $attribution['url'] ) ? $attribution['url'] : '';
+        }
+      
+
+        // it's a single entity so use the post->title otherwise use the site's 
+        // title and add a warning that multiple items might have different 
+        // licenses.
+        if( is_singular() ) {
+          global $post;
+          if( is_object( $post ) ) { 
+            $title_work = esc_html( $post->post_title );
+            $warning_text = '';
+          }  
+        } else {
+          $title_work   = get_bloginfo( 'name' );   
+          $warning_text = "<p class='license-warning'>" . esc_html( $warning ) . "</p>";
+        }
 
         $html .= "<div class='license-wrap'>";
         $html .= "<a rel='license' href='$deed_url'>";
@@ -578,12 +604,13 @@ if( ! class_exists('License') ) {
         $html .= "</a><br />";
         $html .= "<span xmlns:dct='http://purl.org/dc/terms/' property='dct:title'>$title_work</span> "; 
         $html .= __('by', $this->localization_domain);
-        $html .= " <a xmlns:cc='http://creativecommons.org/ns#' href='http://attribute.url' property='cc:attributionName' rel='cc:attributionURL'>$attribution</a> "; 
+        $html .= " <a xmlns:cc='http://creativecommons.org/ns#' href='$attribute_url' property='cc:attributionName' rel='cc:attributionURL'>$attribute_text</a> "; 
         $html .= sprintf( __('is licensed under a <a rel="license" href="%s">%s</a>.', $this->localization_domain), $deed_url, $license_name );
         //$html .= '<br />'; 
         //$html .= __('Based on a work at <a xmlns:dct="http://purl.org/dc/terms/" href="http://source.url" rel="dct:source">http://source.url</a>.', $this->localization_domain);
         //$html .='<br />';
         //$html .= __('Permissions beyond the scope of this license may be available at <a xmlns:cc="http://creativecommons.org/ns#" href="http://morepermissions.url" rel="cc:morePermissions">http://morepermissions.url</a>.', $this->localization_domain);
+        $html .= $warning_text;
         $html .= '</div>';
       }
       if( $echo ) {
@@ -599,23 +626,30 @@ if( ! class_exists('License') ) {
       if( is_array($license) && sizeof( $license ) > 0 ){
         $attribution_option = isset( $license['attribute_to'] ) ? $license['attribute_to'] : null;  
       }
+
+      $attribution = array();
       switch($attribution_option) { 
       
         case 'network_name': 
-          $attribution = esc_html( get_site_option('site_name') );
+          $attribution['text'] = esc_html( get_site_option('site_name') );
+          $attribution['url']  = esc_url( network_site_url() );
           break;
 
         case 'site_name': 
-          $attribution = esc_html( get_bloginfo('site') );
+          $attribution['text'] = esc_html( get_bloginfo('site') );
+          $attribution['url']  = esc_url( site_url() );
           break;
         // TODO: display name
         case 'display_name': 
-          $attribution = 'TODO display_name'; 
+          $attribution['text'] = 'TODO display_name'; 
           break;
 
         case 'other': 
           $other = isset( $license['attribute_other'] ) ? $license['attribute_other'] : '';
-          $attribution = esc_html( $other );
+          $other_url = isset( $license['attribute_other_url'] ) ? $license['attribute_other_url'] : '';
+          
+          $attribution['text'] = esc_html( $other );
+          $attribution['url']  = esc_url( $other_url );
           break;
       }
       return $attribution; 

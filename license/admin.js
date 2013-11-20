@@ -39,9 +39,9 @@ jQuery(document).ready(function license($) {
 jQuery(document).ready( function() {
   jQuery('.license-attribution-options').change( function() {
     if( jQuery('#license-other').is(':checked') ) {
-      jQuery('#license-other-value').removeClass('hidden');
+      jQuery('#attribute-other-data').removeClass('hidden');
     } else {
-      jQuery('#license-other-value').addClass('hidden');
+      jQuery('#attribute-other-data').addClass('hidden');
     }
   }) 
 });
