@@ -34,3 +34,15 @@ jQuery(document).ready(function license($) {
   }
 
 })
+
+// for now need to integrate this better with the other js code
+jQuery(document).ready( function() {
+  jQuery('.license-attribution-options').change( function() {
+    if( jQuery('#license-other').is(':checked') ) {
+      jQuery('#license-other-value').removeClass('hidden');
+    } else {
+      jQuery('#license-other-value').addClass('hidden');
+    }
+  }) 
+});
+
