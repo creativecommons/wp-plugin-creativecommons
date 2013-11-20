@@ -37,10 +37,8 @@ Our answer here!
 
 == Screenshots ==
 
-1. License settings appear under Personal Options when user is editing their profile
-2. A dialog is provided by Creative Commons for choosing a license type
-3. License setting is available in the Publish Box when creating new content
-4. A license is displayed in the footer of a page including a Creative Commons license mark, title of the content, and to whom the license is atributed.
+TODO
+
 
 == Changelog ==
 
