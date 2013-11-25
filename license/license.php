@@ -291,7 +291,7 @@ if( ! class_exists('License') ) {
       $html .= '<br id="license"><a title="' . __('Choose a Creative Commons license', 'license') . '" class="thickbox edit-license" href="http://creativecommons.org/choose/?';
         $html .= 'partner=WordPress+License+Plugin&';
         $html .= $lang;  
-        $html .= 'exit_url=' . $this->plugin_url . 'licensereturn.php?url=[license_url]%26name=[license_name]%26button=[license_button]%26deed=[deed_url]&';
+        $html .= '&exit_url=' . $this->plugin_url . 'licensereturn.php?url=[license_url]%26name=[license_name]%26button=[license_button]%26deed=[deed_url]&';
         $html .= 'jurisdiction=' . __('us', 'license') . '&KeepThis=true&TB_iframe=true&height=500&width=600">' . __('Change license', 'license');
       $html .=  '</a>';
 
@@ -568,6 +568,14 @@ if( ! class_exists('License') ) {
     // add filters to this function so themers can easily change the html 
     // output
     public function print_license_html( $echo = true ) {
+      // TODO if the license is shown on a multiple items page (except the author 
+      // archive page?) display the site (or network default license) 
+      // default license including a warning that individual items may be 
+      // licensed differently.  
+      // add a filter to include the license with the excerpt & content filter
+      // allow an option to switch this off
+
+
       $license = $this->get_license( 'frontend' );
       $html = '';
       if( is_array($license) && sizeof($license) > 0 ) {
