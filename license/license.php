@@ -68,7 +68,8 @@ if( ! class_exists('License') ) {
     }
 
     function settings_license_section() {
-      // intentionally left blank 
+      // intentionally left blank
+      $this->display_settings_warning( $echo = true );
     }
 
 
@@ -358,7 +359,7 @@ if( ! class_exists('License') ) {
         }
         if ( 'other' == $license['attribute_to'] ) {
           $class = ''; 
-          $value =  esc_html( $license['attribute_other'] );
+          $value = esc_html( $license['attribute_other'] );
           $url   = esc_url ( $license['attribute_other_url']);        
         } else {
           $class = 'hidden'; // hide the other input text field if the 'other' option is not ticked
@@ -378,7 +379,17 @@ if( ! class_exists('License') ) {
       }
     }
 
-
+    function display_settings_warning( $echo = false ) {
+      $html = '';
+      $html .= '<p>'; 
+      $html .= __('WARNING: Changing the license settings after content has been added will result in relicensing all content!', $this->localization_domain);   
+      $html .= '</p>';
+      if( $echo ) {
+        echo $html; 
+      } else {
+        return $html;
+      }
+    }
 
 
     /** 
@@ -402,11 +413,13 @@ if( ! class_exists('License') ) {
 
       $html  = '';
       $html .= "<h3>" . __('License settings') . "</h3>\n";
+      $html .= $this->display_settings_warning();
+
       $html .= wp_nonce_field('license-update', $name = 'license_wpnonce', $referer = true, $echo = false);
       $html .= "<table class='form-table'>\n";
-    
       $html .= "<tbody>\n";
-      
+
+
       $html .= $this->_license_settings_html( $location ); 
       
       $html .= "<tr valign='top'>\n";
