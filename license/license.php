@@ -293,7 +293,7 @@ if( ! class_exists('License') ) {
         $html .= 'partner=WordPress+License+Plugin&';
         $html .= $lang;  
         $html .= '&exit_url=' . $this->plugin_url . 'licensereturn.php?url=[license_url]%26name=[license_name]%26button=[license_button]%26deed=[deed_url]&';
-        $html .= 'jurisdiction=' . __('us', 'license') . '&KeepThis=true&TB_iframe=true&height=500&width=600">' . __('Change license', 'license');
+        $html .= '&KeepThis=true&TB_iframe=true&height=500&width=600">' . __('Change license', 'license');
       $html .=  '</a>';
 
       $html .= '<input type="hidden" value="'.$license['deed'].'" id="hidden-license-deed" name="license[deed]"/>';
@@ -379,6 +379,8 @@ if( ! class_exists('License') ) {
       }
     }
 
+
+    // add a warning text at the site/network settings
     function display_settings_warning( $echo = false ) {
       $html = '';
       $html .= '<p>'; 
@@ -390,6 +392,14 @@ if( ! class_exists('License') ) {
         return $html;
       }
     }
+
+    // let a site admin or network set a warning to be displayed in the license 
+    // display so they can warn people that this particalur license may be 
+    // overridden by content differently licensed
+    private function _setting_warn_multiple_licensed() {
+      
+    }  
+
 
 
     /** 
