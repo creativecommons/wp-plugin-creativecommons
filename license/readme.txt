@@ -1,13 +1,14 @@
 === License ===
 Contributors: BjornW, mitchoyoshitaka, bmellor
 Author: Bjorn Wijers <burobjorn@burobjorn.nl> ,  mitcho (Michael Yoshitaka Erlewine), Brett Mellor
-Author URI: http://burobjorn.nl, http://ecs.mit.edu/
+Author URI: http://wiki.creativecommons.org/Wplicense
 Tags: creative commons, CC, license, copyright, copyleft, attribution, ownership, all rights reserved, some rights reserved, footer, widget
 Requires at least: 3.1
 Tested up to: 3.6.1
 Stable tag: 0.7
 
-The license plugin gives authors the ability to mark their content with a Creative Commons license and to display the license along with the content.  
+Official Creative Commons plugin for Wordpress.
+This plugin gives authors the ability to mark their content with Creative Commons licenses and to display the licenses along with the content.  
 
 == Description ==
 
@@ -20,8 +21,9 @@ This will suppress display of the license in the theme footer and display it ins
 The default license used by the plugin is the Creative Commons [Attribution-ShareAlike (CC BY-SA)](http://creativecommons.org/licenses/by-sa/3.0/) license.
 This can be easily changed including attribution, depending on the permissions by a user with the role: superadmin, site admin or author. 
 
-This plugin is based on the License plugin (a component of the [MIT Educational Collaboration Space](http://ecs.mit.edu) project) by mitcho (Michael Yoshitaka Erlewine) & Brett Mellor. 
-It will work perfectly fine with WordPress Network (aka Multisite). 
+This plugin is based loosely on the License plugin (a component of the [MIT Educational Collaboration Space](http://ecs.mit.edu) project) by mitcho (Michael Yoshitaka Erlewine) & Brett Mellor. Bits from other plugins have also been used, and most of them of course are based on the original WpLicense, written by Creative Commons CTO Nathan Yergler.
+
+This plugin will work perfectly fine with WordPress Network (aka Multisite). 
 
 == Installation ==
 
