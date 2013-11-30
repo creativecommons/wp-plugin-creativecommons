@@ -660,9 +660,10 @@ if( ! class_exists('License') ) {
           $attribution['text'] = esc_html( get_bloginfo('site') );
           $attribution['url']  = esc_url( site_url() );
           break;
-        // TODO: display name
         case 'display_name': 
-          $attribution['text'] = 'TODO display_name'; 
+	  // TODO: works for single posts, but "display name" for a site or network is N/A
+	  $attribution['text'] = esc_html(get_the_author_meta('display_name'));
+	  $attribution['url'] = esc_url(get_the_author_meta('user_url'));
           break;
 
         case 'other': 
