@@ -382,7 +382,7 @@ if( ! class_exists('License') ) {
     function display_settings_warning( $echo = false ) {
       $html = '';
       $html .= '<p>'; 
-      $html .= __('WARNING: Changing the license settings after content has been added will result in relicensing all content!', $this->localization_domain);   
+      $html .= __('WARNING: Changing these license settings after content has been added may change the licenses authors on the site have selected, effectively relicensing possibly all content on the site!', $this->localization_domain);   
       $html .= '</p>';
       if( $echo ) {
         echo $html; 
