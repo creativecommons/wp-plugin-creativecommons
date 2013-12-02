@@ -1,7 +1,7 @@
 <?php
 /*
-Plugin Name: License
-Description: Allows users to specify a Creative Commons license for their content, with tight WordPress integration.
+Plugin Name: WpLicense
+Description: Official Creative Commons plugin for Wordpress. Allows users to select and display Creative Commons licenses for their content.
 Version: 0.7
 Author: Bjorn Wijers <burobjorn@burobjorn.nl>, mitcho (Michael Yoshitaka Erlewine), Brett Mellor
 Author URI: http://burobjorn.nl, http://ecs.mit.edu
@@ -384,7 +384,7 @@ if( ! class_exists('License') ) {
     function display_settings_warning( $echo = false ) {
       $html = '';
       $html .= '<p>'; 
-      $html .= __('WARNING: Changing the license settings after content has been added will result in relicensing all content!', $this->localization_domain);   
+      $html .= __('WARNING: Changing these license settings after content has been added may change the licenses authors on the site have selected, effectively relicensing possibly all content on the site!', $this->localization_domain);   
       $html .= '</p>';
       if( $echo ) {
         echo $html; 
@@ -670,9 +670,10 @@ if( ! class_exists('License') ) {
           $attribution['text'] = esc_html( get_bloginfo('site') );
           $attribution['url']  = esc_url( site_url() );
           break;
-        // TODO: display name
         case 'display_name': 
-          $attribution['text'] = 'TODO display_name'; 
+	  // TODO: works for single posts, but "display name" for a site or network is N/A
+	  $attribution['text'] = esc_html(get_the_author_meta('display_name'));
+	  $attribution['url'] = esc_url(get_the_author_meta('user_url'));
           break;
 
         case 'other': 
