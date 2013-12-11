@@ -687,8 +687,8 @@ if( ! class_exists('WPLicense') ) {
     }  
     
     function license_as_widget() {
-      require_once('widgets/license_widget.php');
-      register_widget( 'license_widget' );
+      require_once('widgets/wplicense_widget.php');
+      register_widget( 'WPLicense_widget' );
     }
   }
   $license = new WPLicense();
