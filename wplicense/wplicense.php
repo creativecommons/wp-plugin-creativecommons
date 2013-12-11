@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: WpLicense
+Plugin Name: WPLicense
 Description: Official Creative Commons plugin for Wordpress. Allows users to select and display Creative Commons licenses for their content.
 Version: 0.7
 Author: Bjorn Wijers <burobjorn@burobjorn.nl>, mitcho (Michael Yoshitaka Erlewine), Brett Mellor
@@ -8,11 +8,11 @@ Author URI: http://burobjorn.nl, http://ecs.mit.edu
 */
 
 
-if( ! class_exists('License') ) { 
-  class License {
+if( ! class_exists('WPLicense') ) { 
+  class WPLicense {
     
     private $plugin_url; 
-    private $localization_domain = 'license';
+    private $localization_domain = 'WPLicense';
     private $locale; 
 
     function __construct() {
@@ -68,7 +68,6 @@ if( ! class_exists('License') ) {
     }
 
     function settings_license_section() {
-      // intentionally left blank
       $this->display_settings_warning( $echo = true );
     }
 
@@ -692,7 +691,7 @@ if( ! class_exists('License') ) {
       register_widget( 'license_widget' );
     }
   }
-  $license = new License();
+  $license = new WPLicense();
 } else {
-  error_log('Could not instantiate class License due to already existing class License.'); 
+  error_log('Could not instantiate class WPLicense due to already existing class WPLicense.'); 
 }
