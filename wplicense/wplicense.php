@@ -28,6 +28,9 @@ if( ! class_exists('WPLicense') ) {
       // in the Settings->General settings page unless you're running WordPress 
       // Multisite (Network) and the superadmin has disabled this.  
       add_action( 'admin_init', array(&$this, 'license_admin_init') );
+  
+      add_filter( 'the_content', array( &$this, 'add_license_to_content'));
+
 
       // Selecting a license for individual posts or pages is only possible if the settings of the site allow it
       // by default it does allow it.
@@ -589,7 +592,7 @@ if( ! class_exists('WPLicense') ) {
 
     // add filters to this function so themers can easily change the html 
     // output
-    public function print_license_html( $echo = true ) {
+    public function print_license_html( $location = 'frontend', $echo = true ) {
       // TODO if the license is shown on a multiple items page (except the author 
       // archive page?) display the site (or network default license) 
       // default license including a warning that individual items may be 
@@ -598,7 +601,7 @@ if( ! class_exists('WPLicense') ) {
       // allow an option to switch this off
 
 
-      $license = $this->get_license( 'frontend' );
+      $license = $this->get_license( $location );
       $html = '';
       if( is_array($license) && sizeof($license) > 0 ) {
         
@@ -650,7 +653,16 @@ if( ! class_exists('WPLicense') ) {
       }
 
     }
-    
+
+
+    // add a filter on the_content
+    function add_license_to_content( $post_content )
+    {
+      $content = $this->print_license_html( $location = 'frontend',  $echo = false );
+      $content .= $post_content;
+      return $content;
+    }
+
 
     private function _get_attribution( $license ) {
       if( is_array($license) && sizeof( $license ) > 0 ){
