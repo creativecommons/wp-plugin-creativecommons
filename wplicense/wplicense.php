@@ -518,7 +518,7 @@ if( ! class_exists('WPLicense') ) {
 
     function license_admin_init() {
       /* Register our script. */
-      wp_register_script('license', WP_PLUGIN_URL . '/license/admin.js');
+      wp_register_script('license', WP_PLUGIN_URL . '/wplicense/js/admin.js');
       wp_enqueue_script("thickbox");
       wp_enqueue_style("thickbox");
       wp_enqueue_script('license');
