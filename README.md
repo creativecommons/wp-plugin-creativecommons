@@ -23,7 +23,8 @@ Send any feedback using Github's issue tracker, or send an email to burobjorn@gm
 
 At this moment the plugin allows you to license WordPress content such as posts and pages but no media files (yet).
 
-_Possible future features_
+*Possible future features*
+
 Here's a list of some features we'd love to add to this plugin or support in a separate (child) plugin. 
 
 - Allow media files to be licensed 
