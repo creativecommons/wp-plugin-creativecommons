@@ -168,11 +168,11 @@ if( ! class_exists('WPLicense') ) {
     function plugin_default_license() {
       error_log('called default');
       return $license = array(
-        'deed'                     => 'http://creativecommons.org/licenses/by-sa/3.0/',
-        'image'                    => 'http://i.creativecommons.org/l/by-sa/3.0/88x31.png',
+        'deed'                     => 'http://creativecommons.org/licenses/by-sa/4.0/',
+        'image'                    => 'http://i.creativecommons.org/l/by-sa/4.0/88x31.png',
         'attribute_to'             => '',
         'title'                    => get_bloginfo('name'),
-        'name'                     => 'Creative Commons Attribution-Share Alike 3.0 License',
+        'name'                     => 'Creative Commons Attribution-Share Alike 4.0 License',
         'sitename'                 => get_bloginfo(''),
         'siteurl'                  => get_bloginfo('url'),
         'author'                   => get_bloginfo(),
