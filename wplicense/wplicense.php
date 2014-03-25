@@ -7,10 +7,12 @@ Author: Bjorn Wijers <burobjorn@burobjorn.nl>, mitcho (Michael Yoshitaka Erlewin
 Author URI: https://burobjorn.nl 
 */
 
-
 if( ! class_exists('WPLicense') ) { 
   class WPLicense {
-    
+
+    // MAKE SURE THE PLUGIN HEADER HAS THE SAME VERSION NUMBER!
+    const VERSION = '2.0-alpha'; 
+
     private $plugin_url; 
     private $localization_domain = 'WPLicense';
     private $locale; 
@@ -60,7 +62,7 @@ if( ! class_exists('WPLicense') ) {
     }
 
     function register_site_settings() {
-      register_setting( 'general', 'license' );
+      register_setting( 'general', 'license', array(&$this, '_wrapper_settings_api_verify') );
       add_settings_section( 'license-section', 'License Settings', array(&$this, 'settings_license_section'), 'general', 'license-section');
 
       add_settings_field( 'license', '<label for="license">' . __('License your site', 'license') . '</label>', array(&$this, 'setting_license_field'), 'general', 'license-section');
@@ -166,7 +168,7 @@ if( ! class_exists('WPLicense') ) {
      * 
      **/
     function plugin_default_license() {
-      error_log('called default');
+      error_log('Got default settings');
       return $license = array(
         'deed'                     => 'http://creativecommons.org/licenses/by-sa/4.0/',
         'image'                    => 'http://i.creativecommons.org/l/by-sa/4.0/88x31.png',
@@ -178,7 +180,8 @@ if( ! class_exists('WPLicense') ) {
         'author'                   => get_bloginfo(),
         'site_override_license'    => true,
         'user_override_license'    => true,
-        'content_override_license' => true
+        'content_override_license' => true,
+        'version'                  => self::VERSION
       );
     }
 
@@ -465,24 +468,35 @@ if( ! class_exists('WPLicense') ) {
     }
 
 
+    // wrapper so I can use the _verify_license_data function. 
+    // @TODO refactor in the future 
+    public function _wrapper_settings_api_verify( $data ) {
+      return $this->_verify_license_data( 'site', $data );
+    }
+
 
     // check the data before saving it
-    // TODO: also needs to be used by the site settings 
     // use $from ala get_license to determine where the data is coming from 
     // and what should be mandatory return an array or WP_Error?
-    private function _verify_license_data( $from ) {
+    private function _verify_license_data( $from, $data = null ) {
       
       $license = array();
 
-      $license['deed']             = esc_url(  $_POST[ 'license']['deed']  ); 
-      $license['image']            = esc_url(  $_POST[ 'license']['image'] );
-      $license['name']             = esc_attr( $_POST[ 'license']['name']  );
-      $license['attribute_to']     = esc_attr( $_POST[ 'license']['attribute_to'] );
-      $license['attribute_other']  = esc_html( $_POST[ 'license']['attribute_other' ] );
-      $license['attribute_other_url']  = esc_html( $_POST[ 'license']['attribute_other_url' ] );
+      // if no data was provided assume the data is in $_POST['license']
+      if( is_null($data) && isset( $_POST['license'] ) ) { 
+        $data = $_POST['license']; 
+      }
+      
+      $license['version']          = self::VERSION; // always save the current version
+      $license['deed']             = esc_url(  $data['deed']  ); 
+      $license['image']            = esc_url(  $data['image'] );
+      $license['name']             = esc_attr( $data['name']  );
+      $license['attribute_to']     = esc_attr( $data['attribute_to'] );
+      $license['attribute_other']  = esc_html( $data['attribute_other' ] );
+      $license['attribute_other_url']  = esc_html( $data['attribute_other_url' ] );
 
       switch( $from ) {
-        case 'network': 
+        case 'network': // @TODO need to check this!
           if( isset( $_POST['site_override_license'] ) ) {
             $license['site_override_license'] = esc_attr( $_POST['site_override_license'] );
           }
