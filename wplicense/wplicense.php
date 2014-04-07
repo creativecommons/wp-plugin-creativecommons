@@ -31,7 +31,6 @@ if( ! class_exists('WPLicense') ) {
       // Multisite (Network) and the superadmin has disabled this.  
       add_action( 'admin_init', array(&$this, 'license_admin_init') );
   
-      add_filter( 'the_content', array( &$this, 'add_license_to_content'));
 
 
       // Selecting a license for individual posts or pages is only possible if the settings of the site allow it
@@ -686,15 +685,6 @@ if( ! class_exists('WPLicense') ) {
         return $html;
       }
 
-    }
-
-
-    // add a filter on the_content
-    function add_license_to_content( $post_content )
-    {
-      $content = $this->print_license_html( $location = 'frontend',  $echo = false );
-      $content .= $post_content;
-      return $content;
     }
 
 
