@@ -1,0 +1,138 @@
+# Copyright (C) 2014 WPLicense
+# This file is distributed under the same license as the WPLicense package.
+msgid ""
+msgstr ""
+"Project-Id-Version: WPLicense 2.0-alpha\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/wplicense\n"
+"POT-Creation-Date: 2014-04-07 15:50:49+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2014-04-07 19:03+0100\n"
+"Last-Translator: BjornW <burobjorn@burobjorn.nl>\n"
+"Language-Team:  <burobjorn@burobjorn.nl>\n"
+"X-Poedit-Language: NL\n"
+"X-Poedit-Country: NL\n"
+
+#: widgets/wplicense_widget.php:10
+msgid "User-specified Creative Commons License will display in the page footer by default. Alternatively, drag this widget to a sidebar and the license will appear there instead."
+msgstr ""
+
+#: widgets/wplicense_widget.php:16
+#: widgets/wplicense_widget.php:32
+msgid "License"
+msgstr ""
+
+#: wplicense.php:66
+msgid "License your site"
+msgstr ""
+
+#: wplicense.php:68
+msgid "Add license warning text"
+msgstr ""
+
+#: wplicense.php:70
+#: wplicense.php:614
+msgid "Set attribution to"
+msgstr ""
+
+#: wplicense.php:71
+msgid "Allow users override site license"
+msgstr ""
+
+#: wplicense.php:72
+msgid "Allow license per post or page"
+msgstr ""
+
+#: wplicense.php:192
+msgid "The license shown may overriden by individual content such as a single post or image."
+msgstr ""
+
+#: wplicense.php:311
+msgid "Choose a Creative Commons license"
+msgstr ""
+
+#: wplicense.php:315
+msgid "Change license"
+msgstr ""
+
+#: wplicense.php:335
+msgid "The network name: %s"
+msgstr ""
+
+#: wplicense.php:336
+msgid "A site's name"
+msgstr ""
+
+#: wplicense.php:337
+#: wplicense.php:345
+#: wplicense.php:353
+msgid "The author display name"
+msgstr ""
+
+#: wplicense.php:338
+#: wplicense.php:346
+#: wplicense.php:354
+msgid "Something completely differrent"
+msgstr ""
+
+#: wplicense.php:344
+msgid "The site name: %s"
+msgstr ""
+
+#: wplicense.php:390
+msgid "Attribution text:"
+msgstr ""
+
+#: wplicense.php:391
+msgid "Attribution url:"
+msgstr ""
+
+#: wplicense.php:406
+msgid "WARNING: Changing these license settings after content has been added may change the licenses authors on the site have selected, effectively relicensing possibly all content on the site!"
+msgstr ""
+
+#: wplicense.php:444
+msgid "License settings"
+msgstr ""
+
+#: wplicense.php:455
+msgid "Allow siteadmins to change their site's license"
+msgstr ""
+
+#: wplicense.php:587
+msgid "Licensed:"
+msgstr ""
+
+#: wplicense.php:607
+msgid "Select a default license"
+msgstr ""
+
+#: wplicense.php:668
+msgid "Creative Commons License"
+msgstr ""
+
+#: wplicense.php:671
+msgid "by"
+msgstr ""
+
+#: wplicense.php:673
+msgid "is licensed under a <a rel=\"license\" href=\"%s\">%s</a>."
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "WPLicense"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Official Creative Commons plugin for Wordpress. Allows users to select and display Creative Commons licenses for their content."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Bjorn Wijers <burobjorn@burobjorn.nl>, mitcho (Michael Yoshitaka Erlewine), Brett Mellor"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "https://burobjorn.nl"
+msgstr ""
+
