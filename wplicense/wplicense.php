@@ -22,9 +22,8 @@ if( ! class_exists('WPLicense') ) {
 
       // language setup
       $this->locale = get_locale();
-      $mo     = dirname(__FILE__) . '/languages/' . $this->localization_domain . '-' . $this->locale . '.mo';
+      $mo     = dirname(__FILE__) . '/languages/' . $this->locale . '.mo';
       load_textdomain($this->localization_domain, $mo);
-
       
       // add admin.js to wp-admin pages and displays the site license settings 
       // in the Settings->General settings page unless you're running WordPress 
@@ -64,13 +63,13 @@ if( ! class_exists('WPLicense') ) {
       register_setting( 'general', 'license', array(&$this, '_wrapper_settings_api_verify') );
       add_settings_section( 'license-section', 'License Settings', array(&$this, 'settings_license_section'), 'general', 'license-section');
 
-      add_settings_field( 'license', '<label for="license">' . __('License your site', 'license') . '</label>', array(&$this, 'setting_license_field'), 'general', 'license-section');
+      add_settings_field( 'license', '<label for="license">' . __('License your site', $this->localization_domain) . '</label>', array(&$this, 'setting_license_field'), 'general', 'license-section');
       
-      add_settings_field( 'warning_txt', '<label for="warning_txt">' . __('Add license warning text', 'license') . '</label>', array(&$this, 'setting_warning_field'), 'general', 'license-section');
+      add_settings_field( 'warning_txt', '<label for="warning_txt">' . __('Add license warning text', $this->localization_domain) . '</label>', array(&$this, 'setting_warning_field'), 'general', 'license-section');
       
-      add_settings_field( 'attribution_to', '<label for="attribution_to">' . __('Set attribution to', 'license') . '</label>', array(&$this, 'setting_attribution_field'), 'general', 'license-section');
-      add_settings_field( 'allow_user_override', '<label for="allow_user_override">' . __('Allow users override site license', 'license') . '</label>', array(&$this, 'setting_user_override_license_field'), 'general', 'license-section');
-      add_settings_field( 'allow_content_override', '<label for="allow_content_override">' . __('Allow license per post or page', 'license') . '</label>', array(&$this, 'setting_content_override_license_field'), 'general', 'license-section');
+      add_settings_field( 'attribution_to', '<label for="attribution_to">' . __('Set attribution to', $this->localization_domain) . '</label>', array(&$this, 'setting_attribution_field'), 'general', 'license-section');
+      add_settings_field( 'allow_user_override', '<label for="allow_user_override">' . __('Allow users override site license', $this->localization_domain) . '</label>', array(&$this, 'setting_user_override_license_field'), 'general', 'license-section');
+      add_settings_field( 'allow_content_override', '<label for="allow_content_override">' . __('Allow license per post or page', $this->localization_domain) . '</label>', array(&$this, 'setting_content_override_license_field'), 'general', 'license-section');
     
     }
 
@@ -309,11 +308,11 @@ if( ! class_exists('WPLicense') ) {
 
       $html = '';
       $html .= "<span id='license-display'></span>";
-      $html .= '<br id="license"><a title="' . __('Choose a Creative Commons license', 'license') . '" class="thickbox edit-license" href="http://creativecommons.org/choose/?';
+      $html .= '<br id="license"><a title="' . __('Choose a Creative Commons license', $this->localization_domain) . '" class="thickbox edit-license" href="http://creativecommons.org/choose/?';
         $html .= 'partner=WordPress+License+Plugin&';
         $html .= $lang;  
         $html .= '&exit_url=' . $this->plugin_url . 'licensereturn.php?url=[license_url]%26name=[license_name]%26button=[license_button]%26deed=[deed_url]&';
-        $html .= '&KeepThis=true&TB_iframe=true&height=500&width=600">' . __('Change license', 'license');
+        $html .= '&KeepThis=true&TB_iframe=true&height=500&width=600">' . __('Change license', $this->localization_domain);
       $html .=  '</a>';
 
       $html .= '<input type="hidden" value="'.$license['deed'].'" id="hidden-license-deed" name="license[deed]"/>';
@@ -442,7 +441,7 @@ if( ! class_exists('WPLicense') ) {
 
 
       $html  = '';
-      $html .= "<h3>" . __('License settings') . "</h3>\n";
+      $html .= "<h3>" . __('License settings', $this->localization_domain) . "</h3>\n";
       $html .= $this->display_settings_warning();
 
       $html .= wp_nonce_field('license-update', $name = 'license_wpnonce', $referer = true, $echo = false);
@@ -453,7 +452,7 @@ if( ! class_exists('WPLicense') ) {
       $html .= $this->_license_settings_html( $location ); 
       
       $html .= "<tr valign='top'>\n";
-      $html .= "\t<th scope='row'><label for='override-license'>" .  __("Allow siteadmins to change their site's license", 'license') . "</label></th>\n";
+      $html .= "\t<th scope='row'><label for='override-license'>" .  __("Allow siteadmins to change their site's license", $this->localization_domain) . "</label></th>\n";
       $html .= "\t<td><input name='site_override_license' type='checkbox'" . checked( $license['site_override_license'], 'true', false ) . " id='site_override-license' value='true' />";
       $html .= "</td>\n";
       $html .= "</tr>\n";
@@ -605,14 +604,14 @@ if( ! class_exists('WPLicense') ) {
     private function _license_settings_html( $location ){
       $html ='';
       $html .= "<tr valign='top'>\n";
-      $html .= "\t<th scope='row'><label for='license'>" .  __('Select a default license') . "</label></th>\n";
+      $html .= "\t<th scope='row'><label for='license'>" .  __('Select a default license', $this->localization_domain) . "</label></th>\n";
       $html .= "\t<td>";
       $html .= $this->select_license_html( $location, $echo = false );
       $html .= "</td>\n";
       $html .= "</tr>\n";
 
       $html .= "<tr valign='top'>\n";
-      $html .= "\t<th scope='row'><label for='attribute_to'>" .  __("Set attribution to", 'license') . "</label></th>\n";
+      $html .= "\t<th scope='row'><label for='attribute_to'>" .  __("Set attribution to", $this->localization_domain) . "</label></th>\n";
       $html .= "\t<td>";
       $html .= $this->select_attribute_to_html( $location, $echo = false );
       $html .= "</td>\n";
