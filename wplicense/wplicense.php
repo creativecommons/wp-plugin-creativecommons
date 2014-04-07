@@ -66,6 +66,9 @@ if( ! class_exists('WPLicense') ) {
       add_settings_section( 'license-section', 'License Settings', array(&$this, 'settings_license_section'), 'general', 'license-section');
 
       add_settings_field( 'license', '<label for="license">' . __('License your site', 'license') . '</label>', array(&$this, 'setting_license_field'), 'general', 'license-section');
+      
+      add_settings_field( 'warning_txt', '<label for="warning_txt">' . __('Add license warning text', 'license') . '</label>', array(&$this, 'setting_warning_field'), 'general', 'license-section');
+      
       add_settings_field( 'attribution_to', '<label for="attribution_to">' . __('Set attribution to', 'license') . '</label>', array(&$this, 'setting_attribution_field'), 'general', 'license-section');
       add_settings_field( 'allow_user_override', '<label for="allow_user_override">' . __('Allow users override site license', 'license') . '</label>', array(&$this, 'setting_user_override_license_field'), 'general', 'license-section');
       add_settings_field( 'allow_content_override', '<label for="allow_content_override">' . __('Allow license per post or page', 'license') . '</label>', array(&$this, 'setting_content_override_license_field'), 'general', 'license-section');
@@ -79,6 +82,12 @@ if( ! class_exists('WPLicense') ) {
 
     function setting_license_field() {
       $this->select_license_html( $location = 'site', $echo = true );
+    }
+    
+    function setting_warning_field() {
+      $license = $this->get_license( $location = 'site');
+      $w = esc_html( $license['warning_txt'] );
+      echo "<input name='license[warning_txt]' type='text' maxlength='250' id='warning-txt' value='$w' />";
     }
 
     function setting_attribution_field() {
@@ -181,7 +190,8 @@ if( ! class_exists('WPLicense') ) {
         'site_override_license'    => true,
         'user_override_license'    => true,
         'content_override_license' => true,
-        'version'                  => self::VERSION
+        'version'                  => self::VERSION,
+        'warning_txt'             => __('The license shown may overriden by individual content such as a single post or image.', $this->localization_domain)
       );
     }
 
@@ -211,7 +221,13 @@ if( ! class_exists('WPLicense') ) {
         
         case 'site':
           error_log('called site');
-          $license = ( $site_license = get_option( 'license') ) ? $site_license : $this->get_license( 'network' );
+          if( is_multisite() ) {
+            error_log('multisite, check network settings');
+            $license = ( $site_license = get_option( 'license') ) ? $site_license : $this->get_license( 'network' );
+          } else {
+            error_log('single site, get site license or else default settings');
+            $license = ( $site_license = get_option( 'license') ) ? $site_license : $this->plugin_default_license();
+          }
           break;
 
         case 'profile':
@@ -501,6 +517,11 @@ if( ! class_exists('WPLicense') ) {
             $license['site_override_license'] = esc_attr( $_POST['site_override_license'] );
           }
           break;
+        case 'site': 
+          $license['user_override_license']    = esc_attr( $data['user_override_license'] );
+          $license['content_override_license'] = esc_attr( $data['content_override_license'] );  
+          $license['warning_txt']              = esc_html( $data['warning_txt'] );
+        break;
       }
       return $license;
     }
@@ -618,11 +639,10 @@ if( ! class_exists('WPLicense') ) {
       $license = $this->get_license( $location );
       $html = '';
       if( is_array($license) && sizeof($license) > 0 ) {
-        
         $deed_url      = esc_url( $license['deed'] ); 
         $image_url     = esc_url( $license['image'] );
         $license_name  = esc_html( $license['name'] );
-        $warning       = 'TODO' . __('The license shown may overriden by individual content such as a single post or image.', $this->localization_domain);
+        $warning       = esc_html( $license['warning_txt'] );
 
 
         if( is_array($attribution = $this->_get_attribution( $license ) ) ) {
