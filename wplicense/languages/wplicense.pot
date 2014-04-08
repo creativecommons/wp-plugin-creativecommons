@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the WPLicense package.
 msgid ""
 msgstr ""
-"Project-Id-Version: WPLicense 2.0-alpha\n"
+"Project-Id-Version: WPLicense 2.0-beta\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/wplicense\n"
 "POT-Creation-Date: 2014-04-07 15:50:49+00:00\n"
 "MIME-Version: 1.0\n"

@@ -8,7 +8,7 @@ Currently the plugin is considered unstable and not yet ready for production.
 Feel free to help us make the plugin more stable by testing the plugin and reporting bugs.
 
 Download the latest:
-[release-2.0-alpha](https://github.com/tarmot/wp-cc-plugin/releases/tag/release-2.0-alpha)
+[release-2.0-beta](https://github.com/tarmot/wp-cc-plugin/releases/tag/release-2.0-beta)
 
 Send any feedback using Github's issue tracker, or send an email to burobjorn@gmail.com
 

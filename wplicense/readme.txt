@@ -44,6 +44,12 @@ TODO
 
 == Changelog ==
 
+
+= 2.0-beta = 
+Second version of the WPLicense plugin. Added localization, tested plugin with CC licenses 4.0 
+and fixed outstanding issues which can be found in Github repo: https://github.com/tarmot/wp-cc-plugin
+
+
 = 2.0-alpha = 
 First version of the WPLicense plugin. It is not recommended to use this version on production machines and it should be considered unstable. 
 This release is for testers only so we can gather some more feedback.
