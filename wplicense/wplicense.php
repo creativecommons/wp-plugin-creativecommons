@@ -175,7 +175,7 @@ if( ! class_exists('WPLicense') ) {
      * 
      **/
     function plugin_default_license() {
-      error_log('Got default settings');
+      $this->_logger('Got default settings');
       return $license = array(
         'deed'                     => 'http://creativecommons.org/licenses/by-sa/4.0/',
         'image'                    => 'http://i.creativecommons.org/l/by-sa/4.0/88x31.png',
@@ -213,54 +213,53 @@ if( ! class_exists('WPLicense') ) {
     function get_license( $location = null ) {
       switch ($location) {
         case 'network' :
-          error_log('called network');
+          $this->_logger('called network');
           $license = ( $network_license = get_site_option( 'license' ) ) ? $network_license : $this->plugin_default_license();
           break;
         
         case 'site':
-          error_log('called site');
+          $this->_logger('called site');
           if( is_multisite() ) {
-            error_log('multisite, check network settings');
+            $this->_logger('multisite, check network settings');
             $license = ( $site_license = get_option( 'license') ) ? $site_license : $this->get_license( 'network' );
           } else {
-            error_log('single site, get site license or else default settings');
+            $this->_logger('single site, get site license or else default settings');
             $license = ( $site_license = get_option( 'license') ) ? $site_license : $this->plugin_default_license();
           }
           break;
 
         case 'profile':
-          error_log('called profile');
+          $this->_logger('called profile');
           $license = ( $user_license = get_user_option( 'license' ) ) ? $user_license : $this->get_license( 'site' );
           break;
 
         case 'post-page':
-          error_log('called post-page');
+          $this->_logger('called post-page');
           $license = ( $post_page_license = $this->get_post_page_license() ) ? $post_page_license : $this->get_license( 'profile' );
           break;
 
         // TODO need to check default structure below since this can cause way 
         // too many calls for the right license   
         case 'frontend':
-          error_log('get license for the frontend');
+          $this->_logger('get license for the frontend');
           if( is_multisite() ) {
-            error_log('get license: multisite');
+            $this->_logger('get license: multisite');
             $license = $this->get_license( 'network' );
-            error_log('got network license');
+            $this->_logger('got network license');
             if( $this->allow_site_override_network_license() ) { 
-              error_log('site may override network license');
+              $this->_logger('site may override network license');
               $license = $this->get_license( 'site' );
               $site_license = $license; // keep track of site license cause we need to check it twice...
-              error_log('got site license');
+              $this->_logger('got site license');
               if( array_key_exists( 'user_override_license', $site_license ) && 'true' == $site_license['user_override_license'] ) {
-                error_log('user may override license');
+                $this->_logger('user may override license');
                 $license = $this->get_license( 'profile' );
-                error_log('got user license');
+                $this->_logger('got user license');
               } 
-              //error_log('content override' . print_r( $site_license['content_override_license'], true) );
               if( array_key_exists('content_override_license', $site_license) && 'true' == $site_license['content_override_license'] ) {
-                error_log('content may override license');
+                $this->_logger('content may override license');
                 $license = $this->get_license( 'post-page' ); 
-                error_log('got content license');
+                $this->_logger('got content license');
               }
             }
           } else {
@@ -411,13 +410,6 @@ if( ! class_exists('WPLicense') ) {
         return $html;
       }
     }
-
-    // let a site admin or network set a warning to be displayed in the license 
-    // display so they can warn people that this particalur license may be 
-    // overridden by content differently licensed
-    private function _setting_warn_multiple_licensed() {
-      
-    }  
 
 
 
@@ -686,6 +678,14 @@ if( ! class_exists('WPLicense') ) {
 
     }
 
+    // log all errors if wp_debug is active
+    private function _logger( $string ) {
+      if( defined('WP_DEBUG') && (WP_DEBUG == true) ) {
+        error_log( $string ); 
+      } else {
+        return;
+      }
+    }
 
     private function _get_attribution( $license ) {
       if( is_array($license) && sizeof( $license ) > 0 ){
@@ -728,5 +728,5 @@ if( ! class_exists('WPLicense') ) {
   }
   $license = new WPLicense();
 } else {
-  error_log('Could not instantiate class WPLicense due to already existing class WPLicense.'); 
+  $this->_logger('Could not instantiate class WPLicense due to already existing class WPLicense.'); 
 }
