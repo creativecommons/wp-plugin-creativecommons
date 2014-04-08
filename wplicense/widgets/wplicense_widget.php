@@ -3,17 +3,19 @@
 if( ! class_exists( 'WPLicense_widget') ) {
   class WPLicense_widget extends WP_Widget {
 
+    private $localization_domain = 'WPLicense';
+
     function WPLicense_widget() {
       /* Widget settings. */
       $widget_ops = array( 
         'classname' => 'license-widget', 
-        'description' => __('User-specified Creative Commons License will display in the page footer by default. Alternatively, drag this widget to a sidebar and the license will appear there instead.', 'license') );
+        'description' => __('User-specified Creative Commons License will display in the page footer by default. Alternatively, drag this widget to a sidebar and the license will appear there instead.', $this->localization_domain) );
 
       /* Widget control settings. */
       $control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'license-widget' );
 
       /* Create the widget. */
-      $this->WP_Widget( 'license-widget', __('License', 'license'), $widget_ops, $control_ops );
+      $this->WP_Widget( 'license-widget', __('License', $this->localization_domain), $widget_ops, $control_ops );
 
       // if the widget is not active, (i.e. the plugin is installed but the widget has not been dragged to a sidebar),
       // then display the license in the footer as a default
@@ -29,7 +31,7 @@ if( ! class_exists( 'WPLicense_widget') ) {
 
     function widget( $args ) {
       extract( $args );
-      $title = __('License', 'license');
+      $title = __('License', $this->localization_domain);
       echo $before_widget;
       echo $before_title . $title . $after_title;
       $this->print_license();  
