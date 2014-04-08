@@ -640,7 +640,7 @@ if( ! class_exists('WPLicense') ) {
         $deed_url      = esc_url( $license['deed'] ); 
         $image_url     = esc_url( $license['image'] );
         $license_name  = esc_html( $license['name'] );
-        $warning       = esc_html( $license['warning_txt'] );
+        $warning       = (array_key_exists( 'warning_txt', $license ) ) ?  esc_html( $license['warning_txt'] ) : ''; // needs check
 
 
         if( is_array($attribution = $this->_get_attribution( $license ) ) ) {
