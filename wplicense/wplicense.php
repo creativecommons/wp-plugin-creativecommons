@@ -189,7 +189,7 @@ if( ! class_exists('WPLicense') ) {
         'user_override_license'    => true,
         'content_override_license' => true,
         'version'                  => self::VERSION,
-        'warning_txt'             => __('The license shown may overriden by individual content such as a single post or image.', $this->localization_domain)
+        'warning_txt'             => __('The license shown may be overriden by individual content such as a single post or image.', $this->localization_domain)
       );
     }
 
