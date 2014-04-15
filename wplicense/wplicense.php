@@ -652,6 +652,7 @@ if( ! class_exists('WPLicense') ) {
           }  
         } else {
           $title_work   = get_bloginfo( 'name' );   
+	  $attribute_url = esc_html(site_url());
           $warning_text = "<p class='license-warning'>" . esc_html( $warning ) . "</p>";
         }
 
@@ -660,10 +661,12 @@ if( ! class_exists('WPLicense') ) {
         $html .= "<img alt='" . __('Creative Commons License', $this->localization_domain) . "' style='border-width:0' src='$image_url' />";
         $html .= "</a><br />";
         $html .= "<span xmlns:dct='http://purl.org/dc/terms/' property='dct:title'>$title_work</span> "; 
-        $html .= __('by', $this->localization_domain);
-        $html .= " <a xmlns:cc='http://creativecommons.org/ns#' href='$attribute_url' property='cc:attributionName' rel='cc:attributionURL'>$attribute_text</a> "; 
-        $html .= sprintf( __('is licensed under a <a rel="license" href="%s">%s</a>.', $this->localization_domain), $deed_url, $license_name );
-        //$html .= '<br />'; 
+	if (is_singular()) {
+	        $html .= __('by', $this->localization_domain);
+		$html .= " <a xmlns:cc='http://creativecommons.org/ns#' href='$attribute_url' property='cc:attributionName' rel='cc:attributionURL'>$attribute_text</a> "; 
+	}
+	$html .= sprintf( __('is licensed under a <a rel="license" href="%s">%s</a>.', $this->localization_domain), $deed_url, $license_name );
+	//$html .= '<br />'; 
         //$html .= __('Based on a work at <a xmlns:dct="http://purl.org/dc/terms/" href="http://source.url" rel="dct:source">http://source.url</a>.', $this->localization_domain);
         //$html .='<br />';
         //$html .= __('Permissions beyond the scope of this license may be available at <a xmlns:cc="http://creativecommons.org/ns#" href="http://morepermissions.url" rel="cc:morePermissions">http://morepermissions.url</a>.', $this->localization_domain);
@@ -693,21 +696,23 @@ if( ! class_exists('WPLicense') ) {
       }
 
       $attribution = array();
+
       switch($attribution_option) { 
       
         case 'network_name': 
           $attribution['text'] = esc_html( get_site_option('site_name') );
-          $attribution['url']  = esc_url( network_site_url() );
+          $attribution['url']  = esc_url( get_permalink() );
           break;
 
         case 'site_name': 
           $attribution['text'] = esc_html( get_bloginfo('site') );
-          $attribution['url']  = esc_url( site_url() );
+          $attribution['url']  = esc_url( get_permalink() );
           break;
+
         case 'display_name': 
-	  // TODO: works for single posts, but "display name" for a site or network is N/A
+	  // If displaying multiple posts, the display_name (author) will be reverted to site name later.
 	  $attribution['text'] = esc_html(get_the_author_meta('display_name'));
-	  $attribution['url'] = esc_url(get_the_author_meta('user_url'));
+	  $attribution['url'] = esc_url(get_permalink());
           break;
 
         case 'other': 
