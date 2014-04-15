@@ -1,7 +1,7 @@
 === WPLicense ===
-Contributors: BjornW, mitchoyoshitaka, bmellor
-Author: Bjorn Wijers <burobjorn@burobjorn.nl> ,  mitcho (Michael Yoshitaka Erlewine), Brett Mellor
-Author URI: http://wiki.creativecommons.org/Wplicense
+Contributors: BjornW, tatti
+Author: Bjorn Wijers <burobjorn@burobjorn.nl>, Tarmo Toikkanen <tarmo@iki.fi>
+Plugin URI: http://wiki.creativecommons.org/Wplicense
 Tags: creative commons, CC, license, copyright, copyleft, attribution, ownership, all rights reserved, some rights reserved, footer, widget
 Requires at least: 3.1
 Tested up to: 3.8.1
