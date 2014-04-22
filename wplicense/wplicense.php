@@ -5,6 +5,7 @@ Description: Official Creative Commons plugin for Wordpress. Allows users to sel
 Version: 2.0-beta
 Author: Bjorn Wijers <burobjorn@burobjorn.nl>, Tarmo Toikkanen <tarmo@iki.fi>
 Plugin URI: http://wiki.creativecommons.org/WpLicense
+License: GPLv2 
 */
 
 if( ! class_exists('WPLicense') ) { 
