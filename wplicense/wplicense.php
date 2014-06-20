@@ -2,7 +2,7 @@
 /*
 Plugin Name: WpLicense
 Description: Official Creative Commons plugin for Wordpress. Allows users to select and display Creative Commons licenses for their content. Partially inspired by the License plugin by mitcho (Michael Yoshitaka Erlewine) and Brett Mellor, as well as the original WpLicense plugin by CC CTO Nathan R. Yergler.
-Version: 2.0-beta
+Version: 2.0
 Author: Bjorn Wijers <burobjorn@burobjorn.nl>, Tarmo Toikkanen <tarmo@iki.fi>
 Plugin URI: http://wiki.creativecommons.org/WpLicense
 License: GPLv2 

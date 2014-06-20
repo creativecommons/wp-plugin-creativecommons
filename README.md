@@ -1,16 +1,14 @@
 wp-cc-plugin
 ============
 
-WPLicense (name may change) is a WordPress plugin, helping you license your WordPress content with the appropriate Creative Commons license. 
+WPLicense is a WordPress plugin, helping you license your WordPress content with the appropriate Creative Commons license. 
 
-## Current status
-Currently the plugin is considered unstable and not yet ready for production. 
+## Contribute
 Feel free to help us make the plugin more stable by testing the plugin and reporting bugs.
-
-Download the latest:
-[release-2.0-beta](https://github.com/tarmot/wp-cc-plugin/releases/tag/release-2.0-beta)
-
 Send any feedback using Github's issue tracker, or send an email to burobjorn@gmail.com
+
+Download the latest version:
+[release-2.0](https://github.com/tarmot/wp-cc-plugin/releases/tag/release-2.0)
 
 ## Features 
 - License your blog (single WordPress install)
@@ -26,6 +24,8 @@ At this moment the plugin allows you to license WordPress content such as posts 
 *Possible future features*
 
 Here's a list of some features we'd love to add to this plugin or support in a separate (child) plugin. 
+If you'd like these or other features to be implemented you may consider supporting this plugin with code contributions, 
+testing or hiring us to sponsor development.  
 
 - Allow media files to be licensed 
 - Allow to search (using external search engines) for specific Creative Commons licensed media files 

@@ -6,6 +6,8 @@ Tags: creative commons, CC, license, copyright, copyleft, attribution, ownership
 Requires at least: 3.1
 Tested up to: 3.8.1
 Stable tag: trunk
+License: GPLv2
+License: https://gnu.org/licenses/gpl.html
 
 Official Creative Commons plugin for Wordpress.
 This plugin gives authors the ability to mark their content with Creative Commons licenses and to display the licenses along with the content.  
@@ -38,11 +40,20 @@ WPLicense will work perfectly fine with WordPress Network (aka Multisite).
 Our answer here!
 
 == Screenshots ==
-
-TODO
+1. In wp-admin the Settings page has license settings for your single WordPress site now
+2. Depending on the plugin settings you may have the ability to license on a per post/page base
 
 
 == Changelog ==
+
+= 2.0 = 
+
+The plugin has been available for some time and no new issues have been reported so far. No code changes have been made 
+between this version and the 2.0-beta version
+
+- Know issue: https://github.com/tarmot/wp-cc-plugin/issues/30 
+If you've encountered this behaviour, please describe exactly what you did and submit all details about your environment.
+With this we may be able to reproduce and hopefully fix this issue. 
 
 
 = 2.0-beta = 
