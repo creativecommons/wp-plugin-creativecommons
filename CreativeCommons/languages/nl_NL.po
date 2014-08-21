@@ -1,5 +1,5 @@
-# Copyright (C) 2014 WPLicense
-# This file is distributed under the same license as the WPLicense package.
+# Copyright (C) 2014 Creative Commons
+# This file is distributed under the GNU General Public License version 2.0 (or at your option later versions)
 msgid ""
 msgstr ""
 "Project-Id-Version: WPLicense 2.0-beta\n"

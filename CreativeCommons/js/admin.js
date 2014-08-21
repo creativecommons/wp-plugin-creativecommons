@@ -1,3 +1,6 @@
+// @source: https://github.com/creativecommons/wordpress-plugin/
+// @license: http://creativecommons.org/publicdomain/zero/1.0/
+
 jQuery(document).ready(function license($) {
   // ensure that misc-pub-section-last is actually on the last one
   $('.misc-pub-section').removeClass('misc-pub-section-last');
