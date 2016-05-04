@@ -1,11 +1,11 @@
 <?php 
 
-if( ! class_exists( 'WPLicense_widget') ) {
-  class WPLicense_widget extends WP_Widget {
+if( ! class_exists( 'CreativeCommons_widget') ) {
+  class CreativeCommons_widget extends WP_Widget {
 
-    private $localization_domain = 'WPLicense';
+    private $localization_domain = 'CreativeCommons';
 
-    function WPLicense_widget() {
+    function CreativeCommons_widget() {
       /* Widget settings. */
       $widget_ops = array( 
         'classname' => 'license-widget', 
@@ -25,7 +25,7 @@ if( ! class_exists( 'WPLicense_widget') ) {
     }
 
     function print_license() {
-      $l = new WPLicense;
+      $l = new CreativeCommons;
       $l->print_license_html();
     }
 
@@ -40,7 +40,7 @@ if( ! class_exists( 'WPLicense_widget') ) {
 
   }
 } else {
-  error_log('Could not instantiate WPLicense_widget class. Perhaps a class with a similar name already exists?');
+  error_log('Could not instantiate CreativeCommons_widget class. Perhaps a class with a similar name already exists?');
 }
 
 ?>

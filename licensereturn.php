@@ -1,6 +1,6 @@
 <html>
-<head>
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 </head>
 <body>
 <?php
@@ -17,5 +17,6 @@ jQuery(function($) {
 	parent.tb_remove();
 });
 </script>
+
 </body>
 </html>

@@ -18,8 +18,14 @@ jQuery(document).ready(function license($) {
           .find('img')
             .attr('src',$('#hidden-license-image').val())
             .attr('title',$('#hidden-license-name').val())
-          .end();  
-        $('#license-display').show().html('').append(img);
+            .end();
+	  var foo = img.find('img').attr('src');
+	  var bar = $("#cc-current-license-image").attr('src');
+	  if (foo != bar) {
+	      console.log("new license chosen");
+              $('#license-display').show();
+	      $('#license-display-image').html("").append(img);
+	  }
       }
     }
     window.setLicenseImage = setLicenseImage;

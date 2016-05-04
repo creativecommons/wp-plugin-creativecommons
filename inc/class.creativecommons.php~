@@ -1,21 +1,27 @@
 <?php
 /*
 Plugin Name: Creative Commons
-Description: Official Creative Commons plugin for WordPress. Allows users to select and display Creative Commons licenses for their content. Partially inspired by the License plugin by mitcho (Michael Yoshitaka Erlewine) and Brett Mellor, as well as the original WpLicense plugin by CC CTO Nathan R. Yergler.
+Description: Official Creative Commons plugin for WordPress. Allows
+users to select and display Creative Commons licenses for their
+content. Partially inspired by the License plugin by mitcho (Michael
+Yoshitaka Erlewine) and Brett Mellor, as well as the original
+WpLicense plugin by CC CTO Nathan R. Yergler.
 Version: 2.0
 Author: Bjorn Wijers <burobjorn@burobjorn.nl>, Tarmo Toikkanen <tarmo@iki.fi>, Matt Lee <mattl@creativecommons.org>
 Plugin URI: http://wiki.creativecommons.org/WpLicense
 License: GPLv2 or later versions
 */
 
-if( ! class_exists('WPLicense') ) { 
-  class WPLicense {
+
+
+if( ! class_exists('CreativeCommons') ) { 
+  class CreativeCommons {
 
     // MAKE SURE THE PLUGIN HEADER HAS THE SAME VERSION NUMBER!
     const VERSION = '2.0-beta'; 
 
     private $plugin_url; 
-    private $localization_domain = 'WPLicense';
+    private $localization_domain = 'CreativeCommons';
     private $locale; 
 
     function __construct() {
@@ -29,10 +35,14 @@ if( ! class_exists('WPLicense') ) {
       // add admin.js to wp-admin pages and displays the site license settings 
       // in the Settings->General settings page unless you're running WordPress 
       // Multisite (Network) and the superadmin has disabled this.  
+
       add_action( 'admin_init', array(&$this, 'license_admin_init') );
-  
+
+      add_action( 'admin_menu', array( $this, 'add_plugin_page' ) );
+      add_action( 'admin_init', array( $this, 'page_init' ) );
 
 
+      
       // Selecting a license for individual posts or pages is only possible if the settings of the site allow it
       // by default it does allow it.
       if( $this->allow_content_override_site_license() ) {
@@ -47,7 +57,7 @@ if( ! class_exists('WPLicense') ) {
         add_action( 'personal_options',            array(&$this, 'user_license_settings_html') );
         add_action( 'personal_options_update',     array(&$this, 'save_license') );
       }
-      
+
       // this implements the license plugin as a widget.
       // TODO: Widget needs more testing with the new approach 
       add_action( 'widgets_init', array(&$this, 'license_as_widget') );
@@ -60,17 +70,33 @@ if( ! class_exists('WPLicense') ) {
       }
     }
 
-    function register_site_settings() {
-      register_setting( 'general', 'license', array(&$this, '_wrapper_settings_api_verify') );
-      add_settings_section( 'license-section', 'License Settings', array(&$this, 'settings_license_section'), 'general', 'license-section');
+    
+function wphub_register_settings() {
+	add_option( 'wphub_use_api', '1');
+	add_option( 'wphub_api_callback', 'alpha');
+	register_setting( 'default', 'wphub_use_api' ); 
+	register_setting( 'default', 'wphub_api_callback' ); 
+} 
 
-      add_settings_field( 'license', '<label for="license">' . __('License your site', $this->localization_domain) . '</label>', array(&$this, 'setting_license_field'), 'general', 'license-section');
+ 
+function wphub_register_options_page() {
+	add_options_page('Page title', 'Sidebar Text', 'manage_options', 'wphub-options', 'wphub_options_page');
+}
+
+    public function page_init() {
+
+      register_setting( 'cc-admin', 'license', array(&$this, '_wrapper_settings_api_verify') );
+      add_settings_section( 'license-section', '', array(&$this, 'settings_license_section'), 'cc-admin', 'license-section');
+
+      add_settings_field( 'license_current', '<label for="license-current">' . __('Current default license', $this->localization_domain) . '</label>', array(&$this, 'setting_license_default_field'), 'cc-admin', 'license-section');
+
+      add_settings_field( 'license', '', array(&$this, 'setting_license_field'), 'cc-admin', 'license-section');
       
-      add_settings_field( 'warning_txt', '<label for="warning_txt">' . __('Add license warning text', $this->localization_domain) . '</label>', array(&$this, 'setting_warning_field'), 'general', 'license-section');
+      add_settings_field( 'warning_txt', '<label for="warning_txt">' . __('Add license warning text', $this->localization_domain) . '</label>', array(&$this, 'setting_warning_field'), 'cc-admin', 'license-section');
       
-      add_settings_field( 'attribution_to', '<label for="attribution_to">' . __('Set attribution to', $this->localization_domain) . '</label>', array(&$this, 'setting_attribution_field'), 'general', 'license-section');
-      add_settings_field( 'allow_user_override', '<label for="allow_user_override">' . __('Allow users override site license', $this->localization_domain) . '</label>', array(&$this, 'setting_user_override_license_field'), 'general', 'license-section');
-      add_settings_field( 'allow_content_override', '<label for="allow_content_override">' . __('Allow license per post or page', $this->localization_domain) . '</label>', array(&$this, 'setting_content_override_license_field'), 'general', 'license-section');
+      add_settings_field( 'attribution_to', '<label for="attribution_to">' . __('Set attribution to', $this->localization_domain) . '</label>', array(&$this, 'setting_attribution_field'), 'cc-admin', 'license-section');
+      add_settings_field( 'allow_user_override', '<label for="allow_user_override">' . __('Allow users to override site-wide license', $this->localization_domain) . '</label>', array(&$this, 'setting_user_override_license_field'), 'cc-admin', 'license-section');
+      add_settings_field( 'allow_content_override', '<label for="allow_content_override">' . __('Allow a different license per post/page', $this->localization_domain) . '</label>', array(&$this, 'setting_content_override_license_field'), 'cc-admin', 'license-section');
     
     }
 
@@ -83,10 +109,18 @@ if( ! class_exists('WPLicense') ) {
       $this->select_license_html( $location = 'site', $echo = true );
     }
     
+    function setting_license_default_field() {
+      $license = $this->get_license( $location = 'site');
+      $d = esc_html( $license['deed'] );
+      $n = esc_html( $license['name'] );
+      $i = esc_html( $license['image']);
+      echo "<div style='text-align: center; background: white; border: solid 2px #666; padding: 1em;'><img id='cc-current-license-image' src='$i'><br /><a href='$d' target='_blank'>$n</a></div><div id='license-display' style='background: white; border: 2px solid red; padding: 1em; margin-top: 1em; display: none;'>" . "<h3>" . __('WARNING: Changing these license settings after content has been added may change the licenses authors on the site have selected, effectively relicensing possibly all content on the site!', $this->localization_domain) . "</h3>" . "<p style='text-align: center;'><span id='license-display-image'></span></p></div>";
+    }
+    
     function setting_warning_field() {
       $license = $this->get_license( $location = 'site');
       $w = esc_html( $license['warning_txt'] );
-      echo "<input name='license[warning_txt]' type='text' maxlength='250' id='warning-txt' value='$w' />";
+      echo "<input name='license[warning_txt]' type='text' size='80' maxlength='250' id='warning-txt' value='$w' />";
     }
 
     function setting_attribution_field() {
@@ -179,7 +213,7 @@ if( ! class_exists('WPLicense') ) {
       $this->_logger('Got default settings');
       return $license = array(
         'deed'                     => 'http://creativecommons.org/licenses/by-sa/4.0/',
-        'image'                    => 'http://i.creativecommons.org/l/by-sa/4.0/88x31.png',
+        'image'                    => 'https://licensebuttons.net/l/by-sa/4.0/88x31.png',
         'attribute_to'             => '',
         'title'                    => get_bloginfo('name'),
         'name'                     => 'Creative Commons Attribution-Share Alike 4.0 License',
@@ -307,8 +341,7 @@ if( ! class_exists('WPLicense') ) {
       $lang = ( isset($this->locale) && ! empty($this->locale) ) ? 'lang=' . esc_attr($this->locale) : '';
 
       $html = '';
-      $html .= "<span id='license-display'></span>";
-      $html .= '<br id="license"><a title="' . __('Choose a Creative Commons license', $this->localization_domain) . '" class="thickbox edit-license" href="http://creativecommons.org/choose/?';
+      $html .= '<br id="license"><a title="' . __('Choose a Creative Commons license', $this->localization_domain) . '" class="button button-secondary thickbox edit-license" href="https://creativecommons.org/choose/?';
         $html .= 'partner=WordPress+License+Plugin&';
         $html .= $lang;  
         $html .= '&exit_url=' . $this->plugin_url . 'licensereturn.php?url=[license_url]%26name=[license_name]%26button=[license_button]%26deed=[deed_url]&';
@@ -403,7 +436,7 @@ if( ! class_exists('WPLicense') ) {
     function display_settings_warning( $echo = false ) {
       $html = '';
       $html .= '<p>'; 
-      $html .= __('WARNING: Changing these license settings after content has been added may change the licenses authors on the site have selected, effectively relicensing possibly all content on the site!', $this->localization_domain);   
+      $html .= __('', $this->localization_domain);   
       $html .= '</p>';
       if( $echo ) {
         echo $html; 
@@ -523,6 +556,7 @@ if( ! class_exists('WPLicense') ) {
     private function _save_network_license( ) {
       $license = $this->_verify_license_data( $from = 'network' ); 
       return update_site_option('license', $license);
+      alert('hello');
     }
 
     // TODO: need to decide if the user option is global for all 
@@ -547,19 +581,10 @@ if( ! class_exists('WPLicense') ) {
 
     function license_admin_init() {
       /* Register our script. */
-      wp_register_script('license', WP_PLUGIN_URL . '/wplicense/js/admin.js');
+      wp_register_script('license', $this->plugin_url . '/js/admin.js');
       wp_enqueue_script("thickbox");
       wp_enqueue_style("thickbox");
       wp_enqueue_script('license');
-      // if a siteadmin may change her site's license, show the settings 
-      // otherwise don't bother 
-      if( is_multisite() ) {
-        if( $this->allow_site_override_network_license() ) {
-          $this->register_site_settings();
-        }
-      } else {
-        $this->register_site_settings();
-      }
     }
 
     
@@ -615,6 +640,164 @@ if( ! class_exists('WPLicense') ) {
 
 
 
+    /**
+     * Add options page
+     */
+    public function add_plugin_page()
+    {
+        // This page will be under "Settings"
+        add_options_page(
+            'Settings Admin', 
+            'Creative Commons', 
+            'manage_options', 
+            'cc-admin', 
+            array( $this, 'create_admin_page' )
+        );
+    }
+
+    /**
+     * Options page callback
+     */
+    public function create_admin_page()
+    {
+        // Set class property
+        $this->options = get_option( 'my_option_name' );
+        ?>
+        <div class="wrap">
+            <h2>Creative Commons licenses</h2>
+
+	    <div style="background: white; border: 3px solid #ddd; padding: 0.5em; display: inline-table;">
+
+	   	    <img src="https://ccstatic.org/presskit/icons/cc.large.png" align="right" style="padding: 1em; width: 20%; height: auto !important; " />
+
+	   <h3>About Creative Commons</h3>
+	   
+	   <p><a href="https://creativecommons.org"
+	   target="_blank">Creative Commons</a> <?php echo __('is a
+	   nonprofit organization that enables the sharing and use of
+	   creativity and knowledge through free legal tools.',
+	   $this->localization_domain); ?></p>
+
+
+           <p><?php echo __('Our free, easy-to-use copyright licenses
+           provide a simple, standardized way to give the public
+           permission to share and use your creative work — on
+           conditions of your choice. CC licenses let you easily
+           change your copyright terms from the default of "all rights
+           reserved" to "some rights reserved."',
+           $this->localization_domain); ?></p>
+
+           <p><?php echo __('Creative Commons licenses are not an
+           alternative to copyright. They work alongside copyright and
+           enable you to modify your copyright terms to best suit your
+		    needs.', $this->localization_domain); ?></p>
+
+
+	   <p><?php echo __('Please consider making a <a href="https://donate.creativecommons.org" target="_blank">donation (tax deductible in the US) to support our work</a>.', $this->localization_domain); ?></p>
+
+
+
+	   <h4>Sign up for our newsletter</h4>
+	   
+	   <form id="Edit" target="_blank" action="https://donate.creativecommons.org/civicrm/profile/create?gid=30&amp;reset=1" method="post" name="Edit">
+	     <p><input id="email-Primary" class="form-control input-lg" maxlength="64" name="email-Primary" size="30" autofocus placeholder="mattl@example.com" type="email" required></p>
+	     <p><input class="btn btn-success btn-block" id="_qf_Edit_next" accesskey="S" name="_qf_Edit_next" type="submit" value="Subscribe"><input name="postURL" type="hidden" value="https://creativecommons.org/thank-you"><input name="cancelURL" type="hidden" value="https://creativecommons.org/newsletter"><input name="group[121]" type="hidden" value="1"><input name="_qf_default" type="hidden" value="Edit:cancel"></p>
+	   </form>
+	     
+
+</div>
+
+            <?php
+                // This prints out all hidden setting fields
+                settings_fields( 'cc_options' );   
+                do_settings_sections( 'cc-admin' );
+                submit_button(); 
+            ?>
+        </div>
+        <?php
+    }
+
+    /**
+     * Register and add settings
+     */
+    public function pa2ge_init()
+    {        
+        register_setting(
+            'my_option_group', // Option group
+            'my_option_name', // Option name
+            array( $this, 'sanitize' ) // Sanitize
+        );
+
+        add_settings_section(
+            'setting_section_id', // ID
+            'My Custom Settings', // Title
+            array( $this, 'print_section_info' ), // Callback
+            'my-setting-admin' // Page
+        );  
+
+        add_settings_field(
+            'id_number', // ID
+            'ID Number', // Title 
+            array( $this, 'id_number_callback' ), // Callback
+            'my-setting-admin', // Page
+            'setting_section_id' // Section           
+        );      
+
+        add_settings_field(
+            'title', 
+            'Title', 
+            array( $this, 'title_callback' ), 
+            'my-setting-admin', 
+            'setting_section_id'
+        );      
+    }
+
+    /**
+     * Sanitize each setting field as needed
+     *
+     * @param array $input Contains all settings fields as array keys
+     */
+    public function sanitize( $input )
+    {
+        $new_input = array();
+        if( isset( $input['id_number'] ) )
+            $new_input['id_number'] = absint( $input['id_number'] );
+
+        if( isset( $input['title'] ) )
+            $new_input['title'] = sanitize_text_field( $input['title'] );
+
+        return $new_input;
+    }
+
+    /** 
+     * Print the Section text
+     */
+    public function print_section_info()
+    {
+        print 'Enter your settings below:';
+    }
+
+    /** 
+     * Get the settings option array and print one of its values
+     */
+    public function id_number_callback()
+    {
+        printf(
+            '<input type="text" id="id_number" name="my_option_name[id_number]" value="%s" />',
+            isset( $this->options['id_number'] ) ? esc_attr( $this->options['id_number']) : ''
+        );
+    }
+
+    /** 
+     * Get the settings option array and print one of its values
+     */
+    public function title_callback()
+    {
+        printf(
+            '<input type="text" id="title" name="my_option_name[title]" value="%s" />',
+            isset( $this->options['title'] ) ? esc_attr( $this->options['title']) : ''
+        );
+    }
 
     // add filters to this function so themers can easily change the html 
     // output
@@ -728,11 +911,13 @@ if( ! class_exists('WPLicense') ) {
     }  
     
     function license_as_widget() {
-      require_once('widgets/wplicense_widget.php');
-      register_widget( 'WPLicense_widget' );
+      require_once('widgets/creativecommons_widget.php');
+      register_widget( 'CreativeCommons_widget' );
     }
+
   }
-  $license = new WPLicense();
-} else {
-  $this->_logger('Could not instantiate class WPLicense due to already existing class WPLicense.'); 
-}
+  $license = new CreativeCommons();
+ } else {
+  $this->_logger('Could not instantiate class CreativeCommons due to already existing class CreativeCommons.'); 
+ }
+
