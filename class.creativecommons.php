@@ -340,9 +340,9 @@ function wphub_register_options_page() {
 
       $html = '';
       $html .= '<br id="license"><a title="' . __('Choose a Creative Commons license', $this->localization_domain) . '" class="button button-secondary thickbox edit-license" href="https://creativecommons.org/choose/?';
-        $html .= 'partner=WordPress+License+Plugin&';
+        $html .= 'partner=CC+WordPress+Plugin&';
         $html .= $lang;  
-        $html .= '&exit_url=' . $this->plugin_url . '../licensereturn.php?url=[license_url]%26name=[license_name]%26button=[license_button]%26deed=[deed_url]&';
+        $html .= '&exit_url=' . $this->plugin_url . 'licensereturn.php?url=[license_url]%26name=[license_name]%26button=[license_button]%26deed=[deed_url]&';
         $html .= '&KeepThis=true&TB_iframe=true&height=500&width=600">' . __('Change license', $this->localization_domain);
       $html .=  '</a>';
 

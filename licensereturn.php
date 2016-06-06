@@ -14,7 +14,8 @@ $license = array(
 <script>
 jQuery(function($) {
 	parent.setLicense($.parseJSON('<?php echo json_encode($license); ?>'));
-	parent.tb_remove();
+parent.tb_remove();
+document.write(json_encode($license));
 });
 </script>
 

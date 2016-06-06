@@ -15,10 +15,10 @@ License: GPLv2 or later versions
 define( 'CC__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
 
-require_once( CC__PLUGIN_DIR . 'inc/class.creativecommons.php' );
+require_once( CC__PLUGIN_DIR . 'class.creativecommons.php' );
 require_once( CC__PLUGIN_DIR . 'widgets/creativecommons_widget.php' );
 
-require( CC__PLUGIN_DIR . 'inc/save-image.php' );
+require( CC__PLUGIN_DIR . 'save-image.php' );
 
 function cc_1ca_add_theme_scripts () {
     wp_enqueue_script('jquery-ui-dialog');
