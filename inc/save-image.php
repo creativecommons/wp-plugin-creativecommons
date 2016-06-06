@@ -69,34 +69,48 @@ function cc_caption_image($empty, $attr, $content) {
 
     //print_r($meta);
     
-    $title =  $meta['image_meta']['title'];
-    $credit =  $meta['image_meta']['credit'];
+    $title =  trim($meta['image_meta']['title']);
+    $credit =  trim($meta['image_meta']['credit']);
 
+    error_log(strlen($title));
+    
     $original = $caption;
 
-    $caption .= '<div class="cc-copyright wp-caption-text">';
+    $opener = '<div class="cc-copyright wp-caption-text" style="background: yellow; border: 1px solid red; padding: 1em;">';
+
+    $caption .= $opener;
 
     if (is_numeric($att_id[0]) && $source_url = get_post_meta($att_id[0], 'source_url', true)) {
 	$parts = parse_url($source_url);
 
 	if ($title) {
 	    if ($credit) {	
-		$caption .= ' ('. __('via') .' <a href="'. $source_url .'">'. $title .'</a> by ' . $credit . ')';
+		$caption .= ' '. __('via') .' <a href="'. $source_url .'">'. $title .'</a> by ' . $credit . '';
 	    }
 	    else {
-		$caption .= ' ('. __('via') .' <a href="'. $source_url .'">'. $title .'</a>)';
+		$caption .= ' '. __('via') .' <a href="'. $source_url .'">'. $title .'</a>';
 	    }
 	}
 	else {
-	    $caption .= ' ('. __('via') .' <a href="'. $source_url .'">'. $parts['host'] .'</a>)';
+	    $caption .= ' '. __('via') .' <a href="'. $source_url .'">'. $parts['host'] .'</a>';
 	}
 	
     }
     else {
+    if ($title) {
+    if ($credit) {
 
-	$caption .= ' ( ' . $title .' by ' . $credit . ')';
+    $caption .= ' ( ' . $title .' by ' . $credit . ')';
+
+    }
+    else {
+
+    $caption .= ' ( ' . $title . ')';
 	
     }
+    }
+    }
+    
 
     
     
@@ -126,6 +140,8 @@ function cc_caption_image($empty, $attr, $content) {
 	if (strpos($copyright, "creative commons attribution-noncommercial-sharealike 4.0")) { $license_url = "http://creativecommons.org/licenses/by-nc-sa/4.0/"; }
 
     }
+
+    if ($license_url) {
    
     if (strpos($license_url, "/by/")) { $license_code = "CC BY"; $button = "by"; }
     if (strpos($license_url, "/by-sa/")) { $license_code = "CC BY-SA"; $button = "by-sa"; }
@@ -134,13 +150,13 @@ function cc_caption_image($empty, $attr, $content) {
     if (strpos($license_url, "/by-nc/")) { $license_code = "CC NC"; $button = "by-nc"; }
     if (strpos($license_url, "/by-nc-nd/")) { $license_code = "CC NC-ND"; $button = "by-nc-nd"; }
     if (strpos($license_url, "/publicdomain/")) { $license_code = "public domain"; $button = "pd"; }
-
-    
-    
+     
     $caption .= ' <a rel="license" href="' . $license_url . '">' . $license_code . '</a>';
 
-    if ($button != "pd") {
-	$caption .= '<img src="https://licensebuttons.net/i/l/' . $button . '/transparent/00/00/00/76x22.png" alt="" width="76" height="22" />';
+    if ($button != "pd" && $button) {
+    $caption .= '<a rel="license" href="' . $license_url . '"><img src="https://licensebuttons.net/l/' . $button . '/4.0/88x31.png" alt="" width="76" height="22" /></a><br />';
+    }
+
     }
 
     // RDF stuff
@@ -148,6 +164,8 @@ function cc_caption_image($empty, $attr, $content) {
     if (! $title) {
 	$title = $original;
     }
+
+    if ($caption != $original . $opener) {
 
     $caption .= '<!-- RDFa! --><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">' . $title . '</span>';
 
@@ -161,6 +179,12 @@ function cc_caption_image($empty, $attr, $content) {
     }
 
     $caption .= "<!-- end of RDFa! -->";
+
+    } else {
+
+    $caption .= "<p>Sorry for the empty ugly box. We'll remove that before release. It also means we don't have even a CC license for this image. Go set one in the Media Library.</p>";
+    
+    }
 
     $caption .= '</div>';
     

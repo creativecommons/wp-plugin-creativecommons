@@ -30,7 +30,9 @@ if( ! class_exists('CreativeCommons') ) {
       // language setup
       $this->locale = get_locale();
       $mo     = dirname(__FILE__) . '/languages/' . $this->locale . '.mo';
-      load_textdomain($this->localization_domain, $mo);
+	load_textdomain($this->localization_domain, $mo);
+
+	
       
       // add admin.js to wp-admin pages and displays the site license settings 
       // in the Settings->General settings page unless you're running WordPress 
@@ -342,7 +344,7 @@ function wphub_register_options_page() {
       $html .= '<br id="license"><a title="' . __('Choose a Creative Commons license', $this->localization_domain) . '" class="button button-secondary thickbox edit-license" href="https://creativecommons.org/choose/?';
         $html .= 'partner=WordPress+License+Plugin&';
         $html .= $lang;  
-        $html .= '&exit_url=' . $this->plugin_url . '../licensereturn.php?url=[license_url]%26name=[license_name]%26button=[license_button]%26deed=[deed_url]&';
+        $html .= '&exit_url=' . $this->plugin_url . 'licensereturn.php?url=[license_url]%26name=[license_name]%26button=[license_button]%26deed=[deed_url]&';
         $html .= '&KeepThis=true&TB_iframe=true&height=500&width=600">' . __('Change license', $this->localization_domain);
       $html .=  '</a>';
 
