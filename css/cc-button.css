@@ -1,22 +1,24 @@
-.cc-reset, img, .cc-attribution, .cc-attribution-button, .cc-attribution-button:hover, .cc-attribution-button:active, .cc-attribution-button-cc, .cc-attribution-button-share, .cc-attribution-copy-button, .cc-attribution-format-select, .cc-attribution-help-button, .cc-attribution-popup, .cc-attribution-note, .cc-help-modal {
+.cc-reset, img, .cc-attribution-element, .cc-attribution-button, .cc-attribution-button:hover, .cc-attribution-copy-button:hover, .cc-attribution-button:active, .cc-attribution-copy-button:active, .cc-attribution-help-button, .cc-attribution-help-button:hover, .cc-attribution-button-cc, .cc-attribution-button-share, .cc-attribution-help-button:active, .cc-attribution-copy-button, .cc-attribution-format-select, .cc-attribution-popup, .cc-attribution-note, .cc-help-popup, .cc-transient-notice, .cc-dropdown-wrapper, .cc-dropdown-menu, .cc-dropdown-menu-item, .cc-dropdown-menu-item-link {
   border: 0;
   padding: 0;
   margin: 0;
   line-height: 1;
   font-size: 100%;
-  font: inherit;
+  font-family: sans-serif;
   /* Upsets cc-attribution alignment vertical-align: middle; */ }
 
 img {
   border: 1px solid gray; }
 
-.cc-attribution {
+.cc-attribution-element {
   height: 31px;
   overflow: visible;
   vertical-align: middle;
-  padding: 0; }
+  padding: 0;
+  float: right;
+  display: inline; }
 
-.cc-attribution-button, .cc-attribution-button:hover, .cc-attribution-button:active {
+.cc-attribution-button, .cc-attribution-button:hover, .cc-attribution-copy-button:hover, .cc-attribution-button:active, .cc-attribution-copy-button:active, .cc-attribution-help-button, .cc-attribution-help-button:hover {
   background-color: #7788EE;
   height: 31px;
   width: auto;
@@ -34,25 +36,36 @@ img {
   border: 0;
   vertical-align: text-bottom; }
 
-.cc-attribution-button:hover {
+.cc-attribution-button:hover, .cc-attribution-copy-button:hover, .cc-attribution-help-button:hover {
   background-color: #5566CC; }
 
-.cc-attribution-button:active {
+.cc-attribution-button:active, .cc-attribution-copy-button:active, .cc-attribution-help-button:active {
   background-color: #3344AA; }
 
 .cc-attribution-copy-button {
   border-radius: 4px 0px 0px 4px; }
 
+.cc-attribution-copy-button:hover {
+  border-radius: 4px 0px 0px 4px; }
+
+.cc-attribution-copy-button:active {
+  border-radius: 4px 0px 0px 4px; }
+
 .cc-attribution-format-select {
   background-color: #88EE77;
   height: 31px;
+  width: 5em;
   margin: 0;
   border: 0;
   border-radius: 0px 4px 4px 0px; }
 
-.cc-attribution-help-button {
+.cc-attribution-help-button, .cc-attribution-help-button:hover {
   border-radius: 50%;
-  background-color: transparent; }
+  font-weight: bold;
+  background-color: #686868; }
+
+.cc-attribution-help-button:hover {
+  background-color: #5566CC; }
 
 .cc-attribution-popup {
   display: inline-block;
@@ -66,8 +79,62 @@ img {
   margin-bottom: 3px;
   font-size: small; }
 
-.cc-help-modal {
-  background-color: #ffffff;
-  border: 4px solid #444444;
+.cc-help-popup {
+  background-color: #F8F8F8;
+  border: 1px solid #666666;
+  position: fixed;
+  width: 200px;
+  height: auto;
+  bottom: 60%;
+  left: 50%;
+  margin-left: -100px;
+  padding: 6px;
   border-radius: 12px;
-  padding: 6px; }
+  box-shadow: 0px 0px 24px -1px #3f3f3f; }
+
+.cc-transient-notice {
+  color: #F5F5F5;
+  background-color: #444444;
+  font-size: 20px;
+  text-align: center;
+  position: fixed;
+  width: 200px;
+  height: auto;
+  left: 50%;
+  margin-left: -100px;
+  bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 24px -1px #3f3f3f; }
+
+.cc-dropdown-wrapper {
+  position: relative;
+  display: inline-block; }
+
+.cc-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  list-style-type: none;
+  display: none;
+  background-color: #E8E8E8;
+  border: 1px solid gray;
+  box-shadow: 0px 0px 24px -1px #3f3f3f; }
+
+.cc-dropdown-menu-item {
+  font-weight: bold;
+  float: left;
+  padding: 3px 8px;
+  /*background-color: #FFF;*/
+  margin: 0 10px 0 0;
+  color: #F00;
+  list-style-type: none; }
+
+.cc-dropdown-menu-item-link {
+  font-size: 20px;
+  display: block;
+  width: 60px;
+  text-decoration: none; }
+
+.cc-dropdown-menu-item-link-selected {
+  background: #CCCCCC; }
