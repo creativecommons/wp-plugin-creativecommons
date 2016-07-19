@@ -109,7 +109,8 @@ img {
 
 .cc-dropdown-wrapper {
   position: relative;
-  display: inline-block; }
+  display: inline-block;
+  margin-left: -4px; }
 
 .cc-dropdown-menu {
   position: absolute;
@@ -125,16 +126,19 @@ img {
   font-weight: bold;
   float: left;
   padding: 3px 8px;
+  /* So we fill the drop-down div, and our background color covers it */
+  width: 100%;
   /*background-color: #FFF;*/
   margin: 0 10px 0 0;
-  color: #F00;
   list-style-type: none; }
+
+.cc-dropdown-menu-item-selected {
+  background: #CCCCCC; }
 
 .cc-dropdown-menu-item-link {
   font-size: 20px;
   display: block;
   width: 60px;
-  text-decoration: none; }
-
-.cc-dropdown-menu-item-link-selected {
-  background: #CCCCCC; }
+  text-decoration: none;
+  /* And to remove the underlining from WordPress's style... */
+  box-shadow: none !important; }

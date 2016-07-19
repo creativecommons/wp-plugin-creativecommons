@@ -201,9 +201,9 @@ CCButton.prototype.SUITE_HELP_CONTENT = '<div class="cc-help-modal">You can re-u
 
 CCButton.prototype.PD_HELP_CONTENT = '<div class="cc-help-modal">You can re-use material such as this work in the public domain. It doesn&apos;t hurt to attribute it though, as this will help other people. <br><br><a target="_blank", href="https://wiki.creativecommons.org/wiki/Best_practices_for_attribution">Read more about this</a>.</div>';
 
-CCButton.prototype.option_selected = 'cc-dropdown-menu-item-link cc-dropdown-menu-item-link-selected';
+CCButton.prototype.option_selected = 'cc-dropdown-menu-item cc-dropdown-menu-item-selected';
 
-CCButton.prototype.option_unselected = 'cc-dropdown-menu-item-link';
+CCButton.prototype.option_unselected = 'cc-dropdown-menu-item';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Finding UI elements from each other
@@ -225,14 +225,19 @@ CCButton.prototype.attributionButtonFromFormatLink = function (link) {
   return link.parentElement.parentElement.parentElement.previousElementSibling;
 };
 
+CCButton.prototype.formatButtonFromFormatDropdown = function (dropdown) {
+  return dropdown.parentElement.previousElementSibling;
+};
+
+CCButton.prototype.linkWithinMenuItem = function (menu_item) {
+  return menu_item.firstChild;
+};
+
 ////////////////////////////////////////////////////////////////////////////////
 // UI Element data access
 ////////////////////////////////////////////////////////////////////////////////
 
 CCButton.prototype.setButtonAttributionData = function (button, format) {
-  console.log(button);
-  console.log('data-cc-attribution-' + format);
-  console.log(button.getAttribute('data-cc-attribution-' + format));
   button.setAttribute('data-clipboard-text',
                       button.getAttribute('data-cc-attribution-' + format));
 };
@@ -243,7 +248,7 @@ CCButton.prototype.setButtonAttributionData = function (button, format) {
 
 CCButton.prototype.deselectFormatOptions = function (format_dropdown) {
   var self = this;
-  var options = format_dropdown.getElementsByClassName('cc-dropdown-menu-item-link');
+  var options = format_dropdown.getElementsByClassName('cc-dropdown-menu-item');
   Array.prototype.forEach.call(options,
                                function (option) {
                                  option.className = self.option_unselected;
@@ -252,10 +257,12 @@ CCButton.prototype.deselectFormatOptions = function (format_dropdown) {
 
 CCButton.prototype.selectFormatOption = function (format_dropdown, format) {
   var self = this;
-  var options = format_dropdown.getElementsByClassName('cc-dropdown-menu-item-link');
+  var options = format_dropdown.getElementsByClassName('cc-dropdown-menu-item');
   Array.prototype.forEach.call(options,
                                function (option) {
-                                 if (option.getAttribute('data-cc-format') == format) {
+                                 if (self.linkWithinMenuItem(option)
+                                     .getAttribute('data-cc-format')
+                                     == format) {
                                    option.className = self.option_selected;
                                  }
                                });
@@ -268,14 +275,20 @@ CCButton.prototype.selectFormatOption = function (format_dropdown, format) {
 CCButton.prototype.option_labels = {'html-rdfa': 'HTML &#x25BC;',
                                     'text': 'Text &#x25BC;'};
 
+CCButton.prototype.updateFormatOptionStates = function (dropdown, format) {
+  this.deselectFormatOptions(dropdown);
+  this.selectFormatOption(dropdown, format);
+};
+
 CCButton.prototype.formatLinkClick = function (event) {
   this.stopPropagation(event);
+  // Don't jump to top of page
+  event.preventDefault();
   var link = event.target;
   var dropdown = this.formatDropdownFromFormatLink(link);
   this.hideElement(dropdown);
-  this.deselectFormatOptions(dropdown);
   var format = link.getAttribute('data-cc-format');
-  this.selectFormatOption(dropdown, format);
+  this.updateFormatOptionStates(dropdown, format);
   var attribution_button = this.attributionButtonFromFormatLink(link);
   this.setButtonAttributionData(attribution_button, format);
   this.formatButtonFromFormatLink(link).innerHTML = this.option_labels[format];
@@ -284,7 +297,8 @@ CCButton.prototype.formatLinkClick = function (event) {
 
 CCButton.prototype.formatButtonClick = function (event) {
   this.stopPropagation(event);
-  var dropdown = this.formatDropdownFromFormatButton(event.target);
+  var button = event.target;
+  var dropdown = this.formatDropdownFromFormatButton(button);
   this.toggleVisible(dropdown);
 };
 

@@ -185,7 +185,7 @@ function cc_caption_image($empty, $attr, $content) {
                                    $extras_url,
                                    ''); // warning_text
 
-        $button = CCButton::markup($html_rdfa, false, 31, null);
+        $button = CCButton::markup($html_rdfa, false, 31, false);
         $caption .= $button;
         $caption .= '<!-- RDFa! -->' . $html_rdfa .= "<!-- end of RDFa! -->";
     } else {

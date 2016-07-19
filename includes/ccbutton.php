@@ -2,21 +2,13 @@
 
 class CCButton {
 
-    const CC_ICON_18px = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABmJLR0QA/wD/AP+gvaeTAAACMElEQVQ4y5WUv0sbcRjGP5dLRjnbRQ1Ceqk4piHVyXbImsVMAcFkCQgSm5xa6B+guPoX2FCoZOoQKhkylv4B7WQcWigIbpUKQrx8vadL7jCxEvuM74+H93l/WfwbT4HnwCsgBQj4BXwFfgK/eQTeAqeAbNuW67pyXVe2bWtIeAq8m0TyEdDs7KxOTk7k+76MMTLGyPd9dTodJZPJkLD9EMkHy7K0ubmpSajX64rFYgI+A9Zdki1A1WpVj0W9Xg8ri2Q6wPfp6emRwMFgcC953DYzMxP27AlABlCr1ZIkBUGgg4MDra6uqlarqdfrSdKI7ezsTJLUbrfDqnKRLN/3JUnr6+uKx+Pa2dnRwsKCCoWCyuWybNvW7u6u0um08vm8JMn3/bBXDYBD13VljNHl5aVSqZQymUwUeH19rcXFRS0vL0uSbm5uImnGGLmuK+AwBiAp6rplWQRBAEAikeDq6grLsjDGRP7b29uR+HByb+5KW1tbUzwel+d5Wlpa0srKikqlkmzb1vb2trLZrHK5nIIg0GAwUCKREOABvAB0fHwclbu/v69isahGo6Hz83MZY7S3txfZLi4uJEndbjds9sto/I7j/Pf45+fnBfSGtwlADVClUlEQBI9aSM/z7i1kiPeAyuXyRLKNjY1w7J/GT2SEbGpqSkdHR+r3+9HR9vt9NZtNOY4TVtKa9AFqwLdhsObm5u5evIa+rfEk6wEyB3gGvB4+OIAfwJfhg/sznvAX84BJ9VztlGoAAAAASUVORK5CYII=';
-
-    const SHARE_18px = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAQAAAD4MpbhAAAAAmJLR0QA/4ePzL8AAAD2SURBVCjPbdFNK4RxFAXw3zwzjSZ5+QYzGGpWyqxYWEi+gShlQ8TaQjY2PoW9vGylpKxIoqyUkiikNAsWw4R4bJ5Gev73bk6d073n3pMVqoyyORVP6mF60LdY7Ew5JMjaFSc9GwUEP7qauDOXoosmtCe44SLzj8ybNqVhW8mYd5u2Mhi1qMW+R/NabdjzIKfbh3sxfWpisborqyppSytNx4dKaTry5+LFW+jqos9kQs2CQkhSdeDUjHG3TgwpIK9Dm2z6h2uereu37Nq5Sfn0vF476snSLyPBMF02L1uKgmHdNPFrOO7h5HlHejLBFZGqAQ3H7n4BpPJL0/n4/qAAAAAASUVORK5CYII=';
-
     const CC_BUTTON_HEAD = '<div class="cc-attribution-element"><button class="cc-attribution-button cc-attribution-copy-button" data-clipboard-action="copy" data-clipboard-text="';
 
     const CC_BUTTON_TAIL = '"><span data-l10n-id="Share">Share</span>'
-                         /*  . self::CC_ICON_18px
-                             . '" class="cc-attribution-button-cc"> <img src="'
-                             . self::CCButton.prototype.SHARE_18px
-                             . '" class="cc-attribution-button-share">*/
                          . '</button>
 <div class="cc-dropdown-wrapper"><button class="cc-attribution-format-select">HTML &#x25BC;</button>
 <ul class="cc-dropdown-menu" aria-haspopup="true" aria-expanded="false">
-    <li class="cc-dropdown-menu-item"><a class="cc-dropdown-menu-item-link cc-dropdown-menu-item-link-selected cc-format-html-rdfa" data-cc-format="html-rdfa" href="#">HTML</a></li>
+    <li class="cc-dropdown-menu-item cc-dropdown-menu-item-selected"><a class="cc-dropdown-menu-item-link cc-format-html-rdfa" data-cc-format="html-rdfa" href="#">HTML</a></li>
     <li class="cc-dropdown-menu-item"><a class="cc-dropdown-menu-item-link cc-format-text" data-cc-format="text" href="#">Text</a></li></ul></div>
 <button class="cc-attribution-help-button" data-l10n-id="?">?</button></div>';
 
@@ -25,28 +17,30 @@ class CCButton {
     }
 
     static function htmlToText ($metadata) {
-        $result = preg_replace('|<br>|', ' ', $metadata);
+        $result = preg_replace('|<br[^>]*>|', ' ', $metadata);
         $result = preg_replace('|<img [^>]+>|', '', $result);
         $result = preg_replace('|</?span[^>]*>|', '', $result);
         // Remove links made empty by previous operations
         $result = preg_replace('|<a[^>]+href[^>]+>\s*</a>|', '', $result);
         // Convert surviving links
-        $result = preg_replace('|<a[^>]+href="([^"]+)"[^>]*>([^>]+)</a>|', '$2 <$1>', $result);
+        $result = preg_replace('|<a[^>]+href="([^"]+)"[^>]*>([^>]+)</a>|',
+                               '$2 <$1>', $result);
         return trim($result);
     }
 
     public static function markup ($html_rdfa, $text, $button_height, $media) {
-        if ($media) {
-            $html_rdfa =  $media . '<br>' . $html_rdfa;
+        if ($text === false) {
+            $text = htmlentities(self::htmlToText($html_rdfa), ENT_QUOTES);
         }
-        if (! $text) {
-            $text = htmlentities(self::mediaToText($media) . ' ' . self::htmlToText($html_rdfa));
+        if ($media !== false) {
+            $html_rdfa = $media . '<br>' . $html_rdfa;
+            $text = self::mediaToText($media) . ' ' . $text;
         }
-        $html_rdfa = htmlentities($html_rdfa);
+        $html_rdfa = htmlentities($html_rdfa, ENT_QUOTES);
         $button = self::CC_BUTTON_HEAD
                 // Start with the metadata as html. Have JS copy it in?
                 . $html_rdfa
-                . '" data-cc-attribution-html-rdfa='
+                . '" data-cc-attribution-html-rdfa="'
                 . $html_rdfa
                 . '" data-cc-attribution-text="'
                 . $text
