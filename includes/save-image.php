@@ -91,24 +91,24 @@ function add_image_source_url($form_fields, $post) {
     //       it should also have the help "Add the URL to which the work should be attributed. For example, the work's page on the author's site."
 
     $form_fields["source_url"] = array(
-        "label" => __("Atribution URL"),
+        "label" => __("Attribution URL"),
         "input" => "text",
         "value" => get_post_meta($post->ID, "source_url", true),
-        "helps" => __("The URL where the original image was posted"),
+        "helps" => __("The URL where the original image was posted, e.g. https://example.com/mattl/image2/"),
     );
 
     $form_fields["source_work_url"] = array(
-        "label" => __("Source Work URL"),
+        "label" => __("Source Work"),
         "input" => "text",
         "value" => get_post_meta($post->ID, "source_work_url", true),
-        "helps" => __("The URL of the work that this work is based on or derived from"),
+        "helps" => __("The URL of the work that this work is based on or derived from, e.g. https://example.com/robm/image1/"),
     );
 
     $form_fields["extra_permissions_url"] = array(
-        "label" => __("Extra Permissions URL"),
+        "label" => __("Extra Permissions"),
         "input" => "text",
         "value" => get_post_meta($post->ID, "extra_permissions_url", true),
-        "helps" => __("A URL where the user can find information about obtaining rights that are not already permitted by the CC license"),
+        "helps" => __("A URL where the user can find information about obtaining rights that are not already permitted by the CC license, e.g. https://example.com/mattl/image2/ccplus/"),
     );
 
     return $form_fields;
@@ -139,6 +139,7 @@ function cc_caption_image($empty, $attr, $content) {
 
     $license_url = get_post_meta($att_id[0], 'license_url', true);
     $license_url = strtolower($license_url);
+    $attribution_url = get_post_meta($att_id[0], 'source_url', true);
     $source_work_url = get_post_meta($att_id[0], 'source_work_url', true);
     $extras_url = get_post_meta($att_id[0], 'extra_permissions_url', true);
 
@@ -179,7 +180,7 @@ function cc_caption_image($empty, $attr, $content) {
                                    $license_button_url,
                                    $title,
                                    true, // is_singular
-                                   $source_url,
+                                   $attribution_url,
                                    $credit,
                                    $source_work_url,
                                    $extras_url,
