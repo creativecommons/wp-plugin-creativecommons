@@ -2,7 +2,7 @@
 
 class CCButton {
 
-    const CC_BUTTON_HEAD = '<div class="cc-attribution-element"><button class="cc-attribution-button cc-attribution-copy-button" data-clipboard-action="copy" data-clipboard-text="';
+    const CC_BUTTON_HEAD = '<div class="cc-attribution-element"><button class="cc-attribution-button cc-attribution-copy-button" data-clipboard-action="copy" data-clipboard-text="" ';
 
     const CC_BUTTON_TAIL = '"><span data-l10n-id="Share">Share</span>'
                          . '</button>
@@ -38,9 +38,7 @@ class CCButton {
         }
         $html_rdfa = htmlentities($html_rdfa, ENT_QUOTES);
         $button = self::CC_BUTTON_HEAD
-                // Start with the metadata as html. Have JS copy it in?
-                . $html_rdfa
-                . '" data-cc-attribution-html-rdfa="'
+                . 'data-cc-attribution-html-rdfa="'
                 . $html_rdfa
                 . '" data-cc-attribution-text="'
                 . $text

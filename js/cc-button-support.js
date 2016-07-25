@@ -313,6 +313,18 @@ CCButton.prototype.helpButtonClick = function (event) {
 };
 
 ////////////////////////////////////////////////////////////////////////////////
+// Initializing button values for when clicked
+////////////////////////////////////////////////////////////////////////////////
+
+CCButton.prototype.copyDefaultClipboardValues = function () {
+  var self = this;
+  var elements = document.getElementsByClassName('cc-attribution-copy-button');
+  Array.prototype.forEach.call(elements, function (element) {
+    self.setButtonAttributionData(element, 'html-rdfa');
+  });
+};
+
+////////////////////////////////////////////////////////////////////////////////
 // Public API
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -329,4 +341,5 @@ CCButton.prototype.addEventListeners = function () {
   this.addClassEventListener('cc-attribution-help-button',
                              'click',
                              function (e) { self.helpButtonClick(e); });
+  this.copyDefaultClipboardValues();
 };
