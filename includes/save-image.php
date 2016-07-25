@@ -50,7 +50,7 @@ function cc_license_name ($license_url) {
     if (strpos($license_url, '/publicdomain/')) {
         $name = 'Public Domain';
     } else {
-        $name = 'Creative Commons Attribution ';
+        $name = 'Creative Commons Attribution';
         if (strpos($license_url, '-nc') !== false) {
             $name .= '-NonCommercial';
         }
