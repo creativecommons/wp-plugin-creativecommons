@@ -15,7 +15,7 @@ if( ! class_exists( 'CreativeCommons_widget') ) {
       $control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'license-widget' );
 
       /* Create the widget. */
-      $this->WP_Widget( 'license-widget', __('License', $this->localization_domain), $widget_ops, $control_ops );
+      $this->__construct( 'license-widget', __('License', $this->localization_domain), $widget_ops, $control_ops );
 
       // if the widget is not active, (i.e. the plugin is installed but the widget has not been dragged to a sidebar),
       // then display the license in the footer as a default
@@ -29,7 +29,7 @@ if( ! class_exists( 'CreativeCommons_widget') ) {
       $l->print_license_html();
     }
 
-    function widget( $args ) {
+      function widget( $args, $instance ) {
       extract( $args );
       $title = __('License', $this->localization_domain);
       echo $before_widget;
