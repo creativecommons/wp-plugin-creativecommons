@@ -4,27 +4,34 @@
   License: GPLv2 or later versions
 */
 
-// Convert a structured English representation of a license into a license url
-// $copyright has already been lowercased at this point
+// Extract the first license in triangle brackets from the Exif Copyright
+// FIXME: validate in regex, and handle publicdomain
 
-function cc_copyright_license_url($copyright) {
-    $url = false;
-    $matched = preg_match('/creative commons attribution (\D*)(\d\.\d)/',
+function cc_exif_copyright_license_url($copyright) {
+    $url = '';
+    $matched = preg_match('/<(https?:\/\/creativecommons.org\/licenses\/[^>]+)>/',
                           $copyright, $matches);
     if ($matched) {
-        $url = 'http://creativecommons.org/licenses/by';
-        if (strpos($matches[1], ' noncommercial') !== false) {
-            $url .= '-nc';
-        }
-        if (strpos($matches[1], ' noderivatives') !== false) {
-            $url .= '-nd';
-        }
-        if (strpos($matches[1], ' sharealike') !== false) {
-            $url .= '-sa';
-        }
-        $url .= '/' . $matches[2] . '/';
+        $url = $matches[1];
     }
     return $url;
+}
+
+// Extract a url from a string of the form "A. N. Other <https://another.com/home/>"
+
+function cc_exif_url($exif_value) {
+    $url = '';
+    $matched = preg_match('/<(https?:\/\/[^>]+)>/', $exif_value, $matches);
+    if ($matched) {
+        $url = trim($matches[1]);
+    }
+    return $url;
+}
+
+// Extract the non-url text from a string of the form "A. N. Other <https://another.com/home/>"
+
+function cc_exif_text($exif_value) {
+    return trim(preg_replace('/<https?:\/\/[^>]+>/', '', $exif_value));
 }
 
 // Convert a license url into the url for the icon for that license
@@ -43,7 +50,7 @@ function cc_license_button_url ($license_url) {
     return $url;
 }
 
-// generate the canonical English name for the license with the given url
+// Generate the canonical English name for the license with the given url
 
 function cc_license_name ($license_url) {
     $name = '';
@@ -74,8 +81,47 @@ function cc_license_name ($license_url) {
     return $name;
 }
 
+function maybe_apply_attachment_license_url($post_id, $exif) {
+    if (isset($exif['COMPUTED']['Copyright'])) {
+        $url = cc_exif_copyright_license_url($exif['COMPUTED']['Copyright']);
+        // Set the metadata, which wasn't already set
+        add_post_meta($post_id, 'license_url', $url, true);
+    }
+}
+
+function maybe_apply_attachment_url($post_id, $meta_field, $exif, $exif_field) {
+    if (isset($exif[$exif_field])) {
+        $url = cc_exif_url($exif[$exif_field]);
+        // Set the metadata, which wasn't already set
+        add_post_meta($post_id, $meta_field, $url, true);
+    }
+}
+
+// Will error for image formats we can't get Exif for
+
+function read_exif($post_id) {
+    $image_path = get_attached_file($post_id);
+    $exif = exif_read_data($image_path);
+    return $exif;
+}
+
+// If the file has Exif, and it cointains license metadata, apply it
+
+add_filter('add_attachment', 'extract_exif_license_metadata', 10, 2);
+function extract_exif_license_metadata($post_id) {
+    $exif = read_exif($post_id);
+    maybe_apply_attachment_license_url($post_id, $exif);
+    maybe_apply_attachment_url($post_id, 'source_url', $exif,
+                               'ImageDescription');
+}
+
+
 add_filter("attachment_fields_to_edit", "add_image_source_url", 10, 2);
 function add_image_source_url($form_fields, $post) {
+    $post_id = $post->ID;
+
+    //FIXME: We can get the attribution name from Artist, and title from ImageDescription.
+    //       Should we?
 
     //FIXME: we use "credit" but that doesn't seem to be accessible?
     //       should we expose that here in some way?
@@ -83,31 +129,30 @@ function add_image_source_url($form_fields, $post) {
     $form_fields["license_url"] = array(
         "label" => __("License URL"),
         "input" => "text",
-        "value" => get_post_meta($post->ID, "license_url", true),
+        "value" => get_post_meta($post_id, 'license_url', true),
         "helps" => __("The URL for the license for the work, e.g. https://creativecommons.org/licenses/by-sa/4.0/"),
     );
 
     //FIXME: this should be attribution_url now we have the source work field
-    //       it should also have the help "Add the URL to which the work should be attributed. For example, the work's page on the author's site."
 
     $form_fields["source_url"] = array(
         "label" => __("Attribution URL"),
         "input" => "text",
-        "value" => get_post_meta($post->ID, "source_url", true),
-        "helps" => __("The URL where the original image was posted, e.g. https://example.com/mattl/image2/"),
+        "value" => get_post_meta($post_id, 'source_url', true),
+        "helps" => __("The URL to which the work should be attributed. For example the work's page on the author's site., e.g. https://example.com/mattl/image2/"),
     );
 
     $form_fields["source_work_url"] = array(
         "label" => __("Source Work"),
         "input" => "text",
-        "value" => get_post_meta($post->ID, "source_work_url", true),
+        "value" => get_post_meta($post_id, "source_work_url", true),
         "helps" => __("The URL of the work that this work is based on or derived from, e.g. https://example.com/robm/image1/"),
     );
 
     $form_fields["extra_permissions_url"] = array(
         "label" => __("Extra Permissions"),
         "input" => "text",
-        "value" => get_post_meta($post->ID, "extra_permissions_url", true),
+        "value" => get_post_meta($post_id, "extra_permissions_url", true),
         "helps" => __("A URL where the user can find information about obtaining rights that are not already permitted by the CC license, e.g. https://example.com/mattl/image2/ccplus/"),
     );
 
@@ -143,7 +188,8 @@ function cc_caption_image($empty, $attr, $content) {
     $source_work_url = get_post_meta($att_id[0], 'source_work_url', true);
     $extras_url = get_post_meta($att_id[0], 'extra_permissions_url', true);
 
-    $meta = wp_get_attachment_metadata($att_id[0]);
+    // Unfiltered
+    $meta = wp_get_attachment_metadata($att_id[0], true);
 
     $title = trim($meta['image_meta']['title']);
     $credit = trim($meta['image_meta']['credit']);
@@ -156,11 +202,6 @@ function cc_caption_image($empty, $attr, $content) {
         if (substr($license_url, -1) != "/") {
             $license_url = $license_url . "/";
         }
-    }
-
-    if (! $license_url) {
-        $copyright = strtolower($meta['image_meta']['copyright']);
-        $license_url = cc_copyright_license_url ($copyright);
     }
 
     if ($license_url) {
