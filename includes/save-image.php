@@ -4,22 +4,29 @@
   License: GPLv2 or later versions
 */
 
+
 // Extract the first license in triangle brackets from the Exif Copyright
 // FIXME: validate in regex, and handle publicdomain
 
-function cc_exif_copyright_license_url($copyright) {
+function cc_exif_copyright_license_url($copyright) 
+{
     $url = '';
-    $matched = preg_match('/<(https?:\/\/creativecommons.org\/licenses\/[^>]+)>/',
-                          $copyright, $matches);
+    $matched = preg_match(
+        '/<(https?:\/\/creativecommons.org\/licenses\/[^>]+)>/',
+        $copyright, $matches
+    );
     if ($matched) {
         $url = $matches[1];
     }
     return $url;
 }
 
-// Extract a url from a string of the form "A. N. Other <https://another.com/home/>"
 
-function cc_exif_url($exif_value) {
+// Extract a url from a string of the form
+// "A. N. Other <https://another.com/home/>"
+
+function cc_exif_url($exif_value) 
+{
     $url = '';
     $matched = preg_match('/<(https?:\/\/[^>]+)>/', $exif_value, $matches);
     if ($matched) {
@@ -28,18 +35,25 @@ function cc_exif_url($exif_value) {
     return $url;
 }
 
-// Extract the non-url text from a string of the form "A. N. Other <https://another.com/home/>"
 
-function cc_exif_text($exif_value) {
+// Extract the non-url text from a string of the form
+// "A. N. Other <https://another.com/home/>"
+
+function cc_exif_text($exif_value) 
+{
     return trim(preg_replace('/<https?:\/\/[^>]+>/', '', $exif_value));
 }
 
+
 // Convert a license url into the url for the icon for that license
 
-function cc_license_button_url ($license_url) {
+function cc_license_button_url($license_url) 
+{
     $url = false;
-    $matched = preg_match('/\/(licenses|publicdomain)\/([^\/]+)\//',
-                          $license_url, $matches);
+    $matched = preg_match(
+        '/\/(licenses|publicdomain)\/([^\/]+)\//',
+        $license_url, $matches
+    );
     if ($matched) {
         $button = $matches[2];
         if ($matches[1] == 'publicdomain') {
@@ -50,9 +64,11 @@ function cc_license_button_url ($license_url) {
     return $url;
 }
 
+
 // Generate the canonical English name for the license with the given url
 
-function cc_license_name ($license_url) {
+function cc_license_name($license_url) 
+{
     $name = '';
     if (strpos($license_url, '/publicdomain/')) {
         $name = 'Public Domain';
@@ -81,7 +97,9 @@ function cc_license_name ($license_url) {
     return $name;
 }
 
-function maybe_apply_attachment_license_url($post_id, $exif) {
+
+function maybe_apply_attachment_license_url($post_id, $exif) 
+{
     if (isset($exif['COMPUTED']['Copyright'])) {
         $url = cc_exif_copyright_license_url($exif['COMPUTED']['Copyright']);
         // Set the metadata, which wasn't already set
@@ -89,7 +107,9 @@ function maybe_apply_attachment_license_url($post_id, $exif) {
     }
 }
 
-function maybe_apply_attachment_url($post_id, $meta_field, $exif, $exif_field) {
+
+function maybe_apply_attachment_url($post_id, $meta_field, $exif, $exif_field) 
+{
     if (isset($exif[$exif_field])) {
         $url = cc_exif_url($exif[$exif_field]);
         // Set the metadata, which wasn't already set
@@ -97,30 +117,38 @@ function maybe_apply_attachment_url($post_id, $meta_field, $exif, $exif_field) {
     }
 }
 
+
 // Will error for image formats we can't get Exif for
 
-function read_exif($post_id) {
+function read_exif($post_id) 
+{
     $image_path = get_attached_file($post_id);
     $exif = exif_read_data($image_path);
     return $exif;
 }
 
+
 // If the file has Exif, and it cointains license metadata, apply it
 
 add_filter('add_attachment', 'extract_exif_license_metadata', 10, 2);
-function extract_exif_license_metadata($post_id) {
+function extract_exif_license_metadata($post_id) 
+{
     $exif = read_exif($post_id);
     maybe_apply_attachment_license_url($post_id, $exif);
-    maybe_apply_attachment_url($post_id, 'source_url', $exif,
-                               'ImageDescription');
+    maybe_apply_attachment_url(
+        $post_id, 'source_url', $exif,
+        'ImageDescription'
+    );
 }
 
 
 add_filter("attachment_fields_to_edit", "add_image_source_url", 10, 2);
-function add_image_source_url($form_fields, $post) {
+function add_image_source_url($form_fields, $post) 
+{
     $post_id = $post->ID;
 
-    //FIXME: We can get the attribution name from Artist, and title from ImageDescription.
+    //FIXME: We can get the attribution name from Artist, and title from
+    //       ImageDescription.
     //       Should we?
 
     //FIXME: we use "credit" but that doesn't seem to be accessible?
@@ -159,25 +187,34 @@ function add_image_source_url($form_fields, $post) {
     return $form_fields;
 }
 
-add_filter("attachment_fields_to_save", "save_image_source_url", 10 , 2);
-function save_image_source_url($post, $attachment) {
+
+add_filter("attachment_fields_to_save", "save_image_source_url", 10, 2);
+function save_image_source_url($post, $attachment) 
+{
     foreach (['license_url', 'source_url', 'source_work_url',
               'extra_permissions_url'] as $field) {
-        if (isset($attachment[$field]))
+        if (isset($attachment[$field])) {
             update_post_meta($post['ID'], $field, esc_url($attachment[$field]));
+        }
     }
     return $post;
 }
 
-add_filter( 'img_caption_shortcode', 'cc_caption_image', 10, 3 );
-function cc_caption_image($empty, $attr, $content) {
-    extract(shortcode_atts(array(
-        'id'=> '',
-        'align'=> 'alignnone',
-        'width'=> '',
-        'caption' => '',
-        'title' => '',
-    ), $attr));
+
+add_filter('img_caption_shortcode', 'cc_caption_image', 10, 3);
+function cc_caption_image($empty, $attr, $content) 
+{
+    extract(
+        shortcode_atts(
+            array(
+            'id'=> '',
+            'align'=> 'alignnone',
+            'width'=> '',
+            'caption' => '',
+            'title' => '',
+            ), $attr
+        )
+    );
 
     // Extract attachment $post->ID
     preg_match('/\d+/', $attr['id'], $att_id);
@@ -216,16 +253,18 @@ function cc_caption_image($empty, $attr, $content) {
     if ($license_url) {
         $license_button_url = cc_license_button_url($license_url);
         $l = new CreativeCommons;
-        $html_rdfa = $l->html_rdfa($license_url,
-                                   $license_name,
-                                   $license_button_url,
-                                   $title,
-                                   true, // is_singular
-                                   $attribution_url,
-                                   $credit,
-                                   $source_work_url,
-                                   $extras_url,
-                                   ''); // warning_text
+        $html_rdfa = $l->html_rdfa(
+            $license_url,
+            $license_name,
+            $license_button_url,
+            $title,
+            true, // is_singular
+            $attribution_url,
+            $credit,
+            $source_work_url,
+            $extras_url,
+            ''
+        ); // warning_text
 
         $button = CCButton::markup($html_rdfa, false, 31, false);
         $caption .= $button;
@@ -243,9 +282,9 @@ function cc_caption_image($empty, $attr, $content) {
 
     $caption .= '</div>';
 
-    if ($id) {
+    /*if ($id) {
         $id = 'id="' . esc_attr($id) . '" ';
-    }
+        }*/
 
     //FIXME: width is never set, and caption is always set, so test is redundant
     //       is there some logic we could implement higher up around width to
@@ -253,7 +292,7 @@ function cc_caption_image($empty, $attr, $content) {
     //       If not, we can add this code back in above and avoid overwriting
     //       $caption here.
     //if ((intval($width) > 1) && $caption) {
-    $caption = '<div ' . $id . 'class="cc-caption wp-caption '
+    $caption = '<div ' /*. $id*/ . 'class="cc-caption wp-caption '
              . esc_attr($align) . '" style="width: ' . (10 + (int) $width)
              . 'px">' . do_shortcode($content)
              . '<p class="wp-caption-text">' . $caption . '</p></div>';

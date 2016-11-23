@@ -8,11 +8,11 @@ Plugin URI: http://wiki.creativecommons.org/WpLicense
 License: GPLv2 or later versions
 */
 
-define( 'CC__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+define('CC__PLUGIN_DIR', plugin_dir_path(__FILE__));
 
-require_once( CC__PLUGIN_DIR . 'includes/class.creativecommons.php' );
-require_once( CC__PLUGIN_DIR . 'widgets/creativecommons_widget.php' );
-require( CC__PLUGIN_DIR . 'includes/save-image.php' );
-require( CC__PLUGIN_DIR . 'includes/ccbutton.php' );
+require_once CC__PLUGIN_DIR . 'includes/class.creativecommons.php';
+require_once CC__PLUGIN_DIR . 'widgets/creativecommons_widget.php';
+require CC__PLUGIN_DIR . 'includes/save-image.php';
+require CC__PLUGIN_DIR . 'includes/ccbutton.php';
 
 CCButton::init();
