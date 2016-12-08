@@ -109,6 +109,9 @@ if (! class_exists('CreativeCommons')) {
             );
         }
 
+        /**
+         * Register and add settings
+         */
         
         public function page_init()
         {
@@ -155,6 +158,7 @@ if (! class_exists('CreativeCommons')) {
                 'cc-admin',
                 'license-section'
             );
+
             add_settings_field(
                 'allow_user_override',
                 '<label for="allow_user_override">' . __('Allow users to override site-wide license', $this->localization_domain) . '</label>',
@@ -162,6 +166,7 @@ if (! class_exists('CreativeCommons')) {
                 'cc-admin',
                 'license-section'
             );
+            
             add_settings_field(
                 'allow_content_override',
                 '<label for="allow_content_override">' . __('Allow a different license per post/page', $this->localization_domain) . '</label>',
@@ -473,7 +478,7 @@ if (! class_exists('CreativeCommons')) {
             $html .= '<br id="license"><a title="' . __('Choose a Creative Commons license', $this->localization_domain) . '" class="button button-secondary thickbox edit-license" href="https://creativecommons.org/choose/?';
             $html .= 'partner=CC+WordPress+Plugin&';
             $html .= $lang;
-            $html .= '&exit_url=' . $this->plugin_url . 'licensereturn.php?url=[license_url]%26name=[license_name]%26button=[license_button]%26deed=[deed_url]&';
+            $html .= '&exit_url=' . $this->plugin_url . 'license-return.php?url=[license_url]%26name=[license_name]%26button=[license_button]%26deed=[deed_url]&';
             $html .= '&KeepThis=true&TB_iframe=true&height=500&width=600">' . __('Change license', $this->localization_domain);
             $html .=  '</a>';
 
@@ -903,42 +908,6 @@ if (! class_exists('CreativeCommons')) {
 
 
         /**
-         * Register and add settings
-         */
-        public function pa2ge_init()
-        {
-            register_setting(
-                'my_option_group', // Option group
-                'my_option_name', // Option name
-                array($this, 'sanitize') // Sanitize
-            );
-
-            add_settings_section(
-                'setting_section_id', // ID
-                'My Custom Settings', // Title
-                array($this, 'print_section_info'), // Callback
-                'my-setting-admin' // Page
-            );
-
-            add_settings_field(
-                'id_number', // ID
-                'ID Number', // Title
-                array($this, 'id_number_callback'), // Callback
-                'my-setting-admin', // Page
-                'setting_section_id' // Section
-            );
-
-            add_settings_field(
-                'title',
-                'Title',
-                array($this, 'title_callback'),
-                'my-setting-admin',
-                'setting_section_id'
-            );
-        }
-
-
-        /**
          * Sanitize each setting field as needed
          *
          * @param array $input Contains all settings fields as array keys
@@ -1091,17 +1060,6 @@ if (! class_exists('CreativeCommons')) {
         }
 
 
-        // log all errors if wp_debug is active
-        private function _logger($string)
-        {
-            if (defined('WP_DEBUG') && (WP_DEBUG == true)) {
-                error_log($string);
-            } else {
-                return;
-            }
-        }
-
-
         private function _get_attribution($license)
         {
             if (is_array($license) && sizeof($license) > 0) {
@@ -1147,6 +1105,17 @@ if (! class_exists('CreativeCommons')) {
             register_widget('CreativeCommons_widget');
         }
 
+        
+        // log all errors if wp_debug is active
+        private function _logger($string)
+        {
+            if (defined('WP_DEBUG') && (WP_DEBUG == true)) {
+                error_log($string);
+            } else {
+                return;
+            }
+        }
+        
     }
 
     //$_license = new CreativeCommons();
