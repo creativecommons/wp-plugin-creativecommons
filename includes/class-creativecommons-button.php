@@ -5,7 +5,7 @@ class CreativeCommonsButton
 
     const CCL_BUTTON_HEAD = '<div class="cc-attribution-element"><button class="cc-attribution-button cc-attribution-copy-button" data-clipboard-action="copy" data-clipboard-text="" ';
 
-    const CCL_BUTTON_TAIL = '"><span data-l10n-id="Share">Share</span>'
+    const CCL_BUTTON_TAIL = '"><span class="cc-attribution-copy-button-label" data-l10n-id="Share">Copy credit as</span>'
                          . '</button>
 <div class="cc-dropdown-wrapper"><button class="cc-attribution-format-select">HTML &#x25BC;</button>
 <ul class="cc-dropdown-menu" aria-haspopup="true" aria-expanded="false">

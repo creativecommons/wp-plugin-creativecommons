@@ -41,7 +41,7 @@ if(! class_exists('CreativeCommons_widget')) {
 
         function print_license()
         {
-            $ccl = new CreativeCommons;
+            $ccl = CreativeCommons::get_instance();
             $ccl->print_license_html();
         }
 

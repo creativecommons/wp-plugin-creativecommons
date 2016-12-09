@@ -248,13 +248,13 @@ class CreativeCommonsImage {
             $button_url = $this->license_button_url($license_url);
         }
 
-        $caption = '<div class="cc-copyright wp-caption-text" style="background: yellow; border: 1px solid red; padding: 1em;">';
+        $caption = '<div class="cc-license-caption-wrapper wp-caption-text">';
 
         // RDF stuff
 
         if ($license_url) {
             $license_button_url = $this->license_button_url($license_url);
-            $l = new CreativeCommons;
+            $l = CreativeCommons::get_instance();
             $html_rdfa = $l->html_rdfa(
                 $license_url,
                 $license_name,
@@ -327,8 +327,9 @@ class CreativeCommonsImage {
         //       overwriting $caption here.
         //if ((intval($width) > 1) && $caption) {
         $caption = '<div ' /*. $id*/ . 'class="cc-caption wp-caption '
-                 . esc_attr($align) . '" style="width: ' . (10 + (int) $width)
-                 . 'px">' . do_shortcode($content)
+                 . esc_attr($align) . '"'
+                 //. ' style="width: ' . (10 + (int) $width) . 'px"'
+                 . '>' . do_shortcode($content)
                  . '<p class="wp-caption-text">'
                  . $this->license_block($attr, $att_id)
                  . '</p></div>';

@@ -20,5 +20,6 @@ require_once CC__PLUGIN_DIR . 'widgets/creativecommons-widget.php';
 require CC__PLUGIN_DIR . 'includes/class-creativecommons-image.php';
 require CC__PLUGIN_DIR . 'includes/class-creativecommons-button.php';
 
+CreativeCommons::get_instance()-> init();
 CreativeCommonsButton::get_instance()->init();
 CreativeCommonsImage::get_instance()->init();

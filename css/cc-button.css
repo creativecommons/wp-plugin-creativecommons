@@ -1,21 +1,21 @@
-.cc-reset, img, .cc-attribution-element, .cc-attribution-button, .cc-attribution-button:hover, .cc-attribution-copy-button:hover, .cc-attribution-button:active, .cc-attribution-copy-button:active, .cc-attribution-help-button, .cc-attribution-help-button:hover, .cc-attribution-button-cc, .cc-attribution-button-share, .cc-attribution-help-button:active, .cc-attribution-copy-button, .cc-attribution-format-select, .cc-attribution-popup, .cc-attribution-note, .cc-help-popup, .cc-transient-notice, .cc-dropdown-wrapper, .cc-dropdown-menu, .cc-dropdown-menu-item, .cc-dropdown-menu-item-link {
+.cc-reset, .cc-attribution-element, .cc-attribution-button, .cc-attribution-button:hover, .cc-attribution-copy-button:hover, .cc-attribution-button:active, .cc-attribution-copy-button:active, .cc-attribution-help-button, .cc-attribution-help-button:hover, .cc-attribution-button-cc, .cc-attribution-button-share, .cc-attribution-help-button:active, .cc-attribution-copy-button, .cc-attribution-format-select, .cc-attribution-popup, .cc-attribution-note, .cc-help-popup, .cc-transient-notice, .cc-dropdown-wrapper, .cc-dropdown-menu, .cc-dropdown-menu-item, .cc-dropdown-menu-item-link {
   border: 0;
   padding: 0;
   margin: 0;
   line-height: 1;
   font-size: 100%;
   font-family: sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  text-transform: none;
   /* Upsets cc-attribution alignment vertical-align: middle; */ }
-
-img {
-  border: 1px solid gray; }
 
 .cc-attribution-element {
   height: 31px;
   overflow: visible;
   vertical-align: middle;
   padding: 0;
-  float: right;
+  float:right;
   display: inline; }
 
 .cc-attribution-button, .cc-attribution-button:hover, .cc-attribution-copy-button:hover, .cc-attribution-button:active, .cc-attribution-copy-button:active, .cc-attribution-help-button, .cc-attribution-help-button:hover {
@@ -26,12 +26,12 @@ img {
   border: 0;
   padding: 0 5px 0 5px;
   border-radius: 4px;
-  font-weight: bold; }
+  /*font-weight: bold;*/ }
 
 .cc-attribution-button-cc {
   border: 0;
   vertical-align: text-bottom; }
-
+    
 .cc-attribution-button-share {
   border: 0;
   vertical-align: text-bottom; }
@@ -43,26 +43,35 @@ img {
   background-color: #3344AA; }
 
 .cc-attribution-copy-button {
+  background-color: #ABB1AA;
+  border-color: black;
+  border-style: solid;
+  border-width: 1px 0px 1px 1px;
   border-radius: 4px 0px 0px 4px; }
 
 .cc-attribution-copy-button:hover {
   border-radius: 4px 0px 0px 4px; }
 
 .cc-attribution-copy-button:active {
-  border-radius: 4px 0px 0px 4px; }
+    border-radius: 4px 0px 0px 4px; }
 
 .cc-attribution-format-select {
-  background-color: #88EE77;
+  background-color: #ABB1AA;
   height: 31px;
   width: 5em;
   margin: 0;
-  border: 0;
+  border-color: black;
+  border-style: solid;
+  border-width: 1px 1px 1px 0px;
   border-radius: 0px 4px 4px 0px; }
 
 .cc-attribution-help-button, .cc-attribution-help-button:hover {
-  border-radius: 50%;
-  font-weight: bold;
-  background-color: #686868; }
+  background-color: #ABB1AA; 
+  border-color: black;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 4px 4px 4px 4px;
+  /*font-weight: bold;*/ }
 
 .cc-attribution-help-button:hover {
   background-color: #5566CC; }
@@ -110,7 +119,7 @@ img {
 .cc-dropdown-wrapper {
   position: relative;
   display: inline-block;
-  margin-left: -4px; }
+  margin-left: -4px;}
 
 .cc-dropdown-menu {
   position: absolute;
@@ -136,7 +145,7 @@ img {
   background: #CCCCCC; }
 
 .cc-dropdown-menu-item-link {
-  font-size: 20px;
+  font-size: 100%;
   display: block;
   width: 60px;
   text-decoration: none;
