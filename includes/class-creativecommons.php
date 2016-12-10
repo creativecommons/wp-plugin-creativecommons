@@ -146,10 +146,14 @@ class CreativeCommons {
 
         add_settings_field(
             'license_current',
-            '<label for="license-current">' . __('Current default license', $this->localization_domain) . '</label>',
+            __(
+                'Current default license',
+                $this->localization_domain
+            ),
             array(&$this, 'setting_license_default_field'),
             'cc-admin',
-            'license-section'
+            'license-section',
+            array('label_for' => 'license_current')
         );
 
         add_settings_field(
@@ -162,34 +166,50 @@ class CreativeCommons {
 
         add_settings_field(
             'warning_txt',
-            '<label for="warning_txt">' . __('Add license warning text', $this->localization_domain) . '</label>',
+            __(
+                'Add license warning text',
+                $this->localization_domain
+            ),
             array(&$this, 'setting_warning_field'),
             'cc-admin',
-            'license-section'
+            'license-section',
+            array('label_for' => 'warning_txt')
         );
 
         add_settings_field(
             'attribution_to',
-            '<label for="attribution_to">' . __('Set attribution to', $this->localization_domain) . '</label>',
+             __(
+                 'Set attribution to',
+                 $this->localization_domain
+             ),
             array(&$this, 'setting_attribution_field'),
             'cc-admin',
-            'license-section'
+            'license-section',
+            array('label_for' => 'attribution_to')
         );
 
         add_settings_field(
             'allow_user_override',
-            '<label for="allow_user_override">' . __('Allow users to override site-wide license', $this->localization_domain) . '</label>',
+             __(
+                 'Allow users to override site&#8209;wide license',
+                 $this->localization_domain
+             ),
             array(&$this, 'setting_user_override_license_field'),
             'cc-admin',
-            'license-section'
+            'license-section',
+            array('label_for' => 'allow_user_override')
         );
             
         add_settings_field(
             'allow_content_override',
-            '<label for="allow_content_override">' . __('Allow a different license per post/page', $this->localization_domain) . '</label>',
+             __(
+                 'Allow a different license per post/page',
+                 $this->localization_domain
+             ),
             array(&$this, 'setting_content_override_license_field'),
             'cc-admin',
-            'license-section'
+            'license-section',
+            array('label_for' => 'allow_content_override')
         );
     }
 

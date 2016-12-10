@@ -174,7 +174,7 @@ class CreativeCommonsImage {
         //       should we expose that here in some way?
 
         $form_fields["license_url"] = array(
-            "label" => __("License URL"),
+           "label" => __('License&nbsp;URL'),
             "input" => "text",
             "value" => get_post_meta($post_id, 'license_url', true),
             "helps" => __("The URL for the license for the work, e.g. https://creativecommons.org/licenses/by-sa/4.0/"),
@@ -183,21 +183,21 @@ class CreativeCommonsImage {
         //FIXME: this should be attribution_url now we have the source work field
 
         $form_fields["source_url"] = array(
-            "label" => __("Attribution URL"),
+            "label" => __("Attribution&nbsp;URL"),
             "input" => "text",
             "value" => get_post_meta($post_id, 'source_url', true),
             "helps" => __("The URL to which the work should be attributed. For example the work's page on the author's site., e.g. https://example.com/mattl/image2/"),
         );
 
         $form_fields["source_work_url"] = array(
-            "label" => __("Source Work"),
+            "label" => __("Source&nbsp;Work"),
             "input" => "text",
             "value" => get_post_meta($post_id, "source_work_url", true),
             "helps" => __("The URL of the work that this work is based on or derived from, e.g. https://example.com/robm/image1/"),
         );
 
         $form_fields["extra_permissions_url"] = array(
-            "label" => __("Extra Permissions"),
+            "label" => __("Extra&nbsp;Permissions"),
             "input" => "text",
             "value" => get_post_meta($post_id, "extra_permissions_url", true),
             "helps" => __("A URL where the user can find information about obtaining rights that are not already permitted by the CC license, e.g. https://example.com/mattl/image2/ccplus/"),
@@ -212,7 +212,11 @@ class CreativeCommonsImage {
         foreach (['license_url', 'source_url', 'source_work_url',
                   'extra_permissions_url'] as $field) {
             if (isset($attachment[$field])) {
-                update_post_meta($post['ID'], $field, esc_url($attachment[$field]));
+                update_post_meta(
+                    $post['ID'],
+                    $field,
+                    esc_url($attachment[$field])
+                );
             }
         }
         return $post;
@@ -248,7 +252,10 @@ class CreativeCommonsImage {
             $button_url = $this->license_button_url($license_url);
         }
 
-        $caption = '<div class="cc-license-caption-wrapper wp-caption-text">';
+        $caption = '<div class="cc-license-caption-wrapper">'
+                 . '<div class="wp-caption-text">'
+                 . $attr['caption']
+                 . '</div><br />';
 
         // RDF stuff
 
@@ -330,9 +337,8 @@ class CreativeCommonsImage {
                  . esc_attr($align) . '"'
                  //. ' style="width: ' . (10 + (int) $width) . 'px"'
                  . '>' . do_shortcode($content)
-                 . '<p class="wp-caption-text">'
                  . $this->license_block($attr, $att_id)
-                 . '</p></div>';
+                 . '</div>';
         //}
 
         return $caption;
