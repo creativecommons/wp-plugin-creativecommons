@@ -269,25 +269,33 @@ class CreativeCommonsImage {
         return $post;
     }
 
-    
-    function license_block($attr, $att_id)
-    {
-        $license_url = get_post_meta($att_id[0], 'license_url', true);
-        $license_url = strtolower($license_url);
-        $attribution_url = get_post_meta($att_id[0], 'source_url', true);
-        $source_work_url = get_post_meta($att_id[0], 'source_work_url', true);
-        $extras_url = get_post_meta($att_id[0], 'extra_permissions_url', true);
 
+    function license_block($att_id, $fallback_title = null)
+    {
+        if ($fallback_title === null) {
+            $fallback_title = __('This image');
+        }
+        $license_url = get_post_meta($att_id, 'license_url', true);
+        $license_url = strtolower($license_url);
+        $attribution_url = get_post_meta($att_id, 'source_url', true);
+        $source_work_url = get_post_meta($att_id, 'source_work_url', true);
+        $extras_url = get_post_meta($att_id, 'extra_permissions_url', true);
+        
         // Unfiltered
-        $meta = wp_get_attachment_metadata($att_id[0], true);
+        $meta = wp_get_attachment_metadata($att_id, true);
 
         $title = trim($meta['image_meta']['title']);
+        error_log(json_encode(get_post_meta($att_id, 'title', true)));
         $credit = trim($meta['image_meta']['credit']);
 
+        //FIXME: We prefer the image title to the post title.
         if (! $title) {
-            $title = $attr['caption'];
+            $title = get_the_title($att_id);
         }
-
+         if (! $title) {
+            $title = $fallback_title;
+        }
+        
         if (strpos($license_url, "creativecommons")) {
             if (substr($license_url, -1) != "/") {
                 $license_url = $license_url . "/";
@@ -299,12 +307,7 @@ class CreativeCommonsImage {
             $button_url = $this->license_button_url($license_url);
         }
 
-        $caption = '<div class="cc-license-caption-wrapper">'
-                 . '<div class="wp-caption-text">'
-                 . $attr['caption']
-                 . '</div><br />';
-
-        // RDF stuff
+         // RDF stuff
 
         if ($license_url) {
             $license_button_url = $this->license_button_url($license_url);
@@ -329,27 +332,82 @@ class CreativeCommonsImage {
                 false
             );
             
-            $caption .= $button;
-            $caption .= '<!-- RDFa! -->' . $html_rdfa . "<!-- end of RDFa! -->";
+            $block = $button;
+            $block .= '<!-- RDFa! -->' . $html_rdfa . "<!-- end of RDFa! -->";
         } else {
             if ($title) {
                 if ($credit) {
-                    $caption .= '<p>( ' . $title .' by ' . $credit . ')</p>';
+                    $block .= '<p>( ' . $title .' by ' . $credit . ')</p>';
                 } else {
-                    $caption .= '<p>( ' . $title . ')</p>';
+                    $block .= '<p>( ' . $title . ')</p>';
                 }
             }
-            $caption .= "<p><strong>TESTING NOTE:</strong> We don't have even a CC license for this image so we made this caption instead. Go set a license in the Media Library.</p>";
+            //$block .= "<p><strong>TESTING NOTE:</strong> We don't have even a CC license for this image so we made this caption instead. Go set a license in the Media Library.</p>";
         }
 
+        return $block;
+    }
+
+    
+    function caption_block($attr, $att_id)
+    {
+        $caption = '<div class="cc-license-caption-wrapper cc-license-block">'
+                 . '<div class="wp-caption-text">'
+                 . $attr['caption']
+                 . '</div><br />';
+
+        $caption .= $this->license_block($att_id, $attr['caption']);
+        
         $caption .= '</div>';
         
         return $caption;
     }
 
+    // This will make two database calls for a resized image, and almost
+    // every embedded image will be resized.
+    // We do this to avoid the edge case where image-20x20.jpg and image.jpg
+    // both exist and we are getting the former.
     
-    function captionless_image ($empty, $attr, $content) {
+    function image_url_to_postid ($image_url)
+    {
+        $att_id = null;
+        $att_id = attachment_url_to_postid($image_url);
+        if (! $att_id) {
+            // Remove resized image part of path.
+            // attachment_url_to_postid doesn't handle that.
+            $image_url = preg_replace(
+                '/-\d+x\d+(?=\.[^.]+$)/i',
+                '',
+                $image_url
+            );
+            $att_id = attachment_url_to_postid($image_url);
+        }
+        return $att_id;
+    }
+
     
+    function license_shortcode ($atts, $content = null)
+    {
+        $result = $content;
+        if ($content !== null) {
+            //TODO: Profile replacing this with parsing html and walking the DOM
+            $match_count = preg_match(
+                '/<img[^>]+src="([^"]+)"/',
+                $content,
+                $matches
+            );
+            if ($match_count == 1) {
+                $image_url = $matches[1];
+                $att_id = $this->image_url_to_postid($image_url);
+                if ($att_id) {
+                    $license_block = $this->license_block($att_id);
+                    $result .= '<div class="cc-license-block"><br />';
+                    $result .= $license_block;
+                    $result .= '</div>';
+                }
+            }
+        }
+        return $result;
     }
 
     
@@ -370,9 +428,6 @@ class CreativeCommonsImage {
         // Extract attachment $post->ID
         preg_match('/\d+/', $attr['id'], $att_id);
 
-        /*if ($id) {
-          $id = 'id="' . esc_attr($id) . '" ';
-          }*/
 
         //FIXME: width is never set, and caption is always set, so test is
         //       redundant is there some logic we could implement higher up
@@ -384,7 +439,7 @@ class CreativeCommonsImage {
                  . esc_attr($align) . '"'
                  //. ' style="width: ' . (10 + (int) $width) . 'px"'
                  . '>' . do_shortcode($content)
-                 . $this->license_block($attr, $att_id)
+                 . $this->caption_block($attr, $att_id[0])
                  . '</div>';
         //}
 
@@ -420,6 +475,11 @@ class CreativeCommonsImage {
             array($this, 'captioned_image'),
             10,
             3
+        );
+        
+        add_shortcode(
+            'license',
+            array($this, 'license_shortcode')
         );
     }
     
