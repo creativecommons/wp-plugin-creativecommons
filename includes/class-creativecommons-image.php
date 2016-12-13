@@ -162,6 +162,49 @@ class CreativeCommonsImage {
     }
 
 
+    function license_url_field_id ($post_id)
+    {
+        return "attachments-{$post_id}-license_url]";
+    }
+
+
+    //TODO: Select a better option than "Original" if we can determine one.
+    //TODO: CC0.
+
+    function license_select ($post_id, $original)
+    {
+        //FIXME: Move style to separate css file and change to separate js file
+        $select = '<select onChange="var el = document.getElementById(\''
+                . $this->license_url_field_id ($post_id)
+                // Set & scroll to end of text field so user can see new value
+                . '\'); el.value=this.value; el.scrollLeft = el.scrollWidth;"'
+                . 'style="vertical-align: baseline;">';
+        $select .= "<option value=\"{$original}\">"
+                . __('Original')
+                . '</option>';
+        // Short names so the select fits on the same line as the text input
+        $select .= '<option value="https://creativecommons.org/licenses/by/4.0/">' . __("CC BY 4.0") . '</option>';
+        $select .= '<option value="https://creativecommons.org/licenses/by-nc/4.0/">' . __("CC BY-NC 4.0") . '</option>';
+        $select .= '<option value="https://creativecommons.org/licenses/by-nc-nd/4.0/">' . __("CC BY-NC-ND 4.0") . '</option>';
+        $select .= '<option value="https://creativecommons.org/licenses/by-nc-sa/4.0/">' . __("CC BY-NC-SA 4.0") . '</option>';
+        $select .= '<option value="https://creativecommons.org/licenses/by-nd/4.0/">' . __("CC BY-ND 4.0") . '</option>';
+        $select .= '<option value="https://creativecommons.org/licenses/by-sa/4.0/">' . __("CC BY-SA 4.0") . '</option>';
+        $select .= '<option value="">' . __('None') . '</option>';
+        $select .= '</select>';
+        return $select;
+    }
+
+
+    function license_text_field ($post_id, $original)
+    {
+        return "<input type=\"text\" class=\"text\""
+            . " name=\"attachments[{$post_id}][license_url]\""
+            . " id=\"" . $this->license_url_field_id($post_id) . "\""
+            . " value=\"{$original}\""
+            . " />";
+    }
+
+
     function add_image_source_url($form_fields, $post) 
     {
         $post_id = $post->ID;
@@ -173,11 +216,15 @@ class CreativeCommonsImage {
         //FIXME: we use "credit" but that doesn't seem to be accessible?
         //       should we expose that here in some way?
 
+        $original_license = get_post_meta($post_id, 'license_url', true);
+
         $form_fields["license_url"] = array(
-           "label" => __('License&nbsp;URL'),
-            "input" => "text",
-            "value" => get_post_meta($post_id, 'license_url', true),
-            "helps" => __("The URL for the license for the work, e.g. https://creativecommons.org/licenses/by-sa/4.0/"),
+            "label" => __('License&nbsp;URL'),
+            "input" => "html",
+            "value" => $original_license,
+            "helps" => __("The URL for the license for the work, e.g. https://creativecommons.org/licenses/by-sa/4.0/ .<br />Only change this to correct the license or if you are the rightsholder!"),
+            "html" => $this->license_text_field($post_id, $original_license)
+                      . $this->license_select($post_id, $original_license)
         );
 
         //FIXME: this should be attribution_url now we have the source work field
