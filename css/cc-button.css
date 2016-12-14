@@ -10,7 +10,7 @@
   text-transform: none;
   /* Upsets cc-attribution alignment vertical-align: middle; */ }
 
-.cc-license-caption-wrapper {
+.cc-license-block {
   font-color: #686868;
   font-size: 80%;
   font-style: italic;
