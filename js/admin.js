@@ -19,13 +19,7 @@ jQuery(document).ready(function license($) {
             .attr('src',$('#hidden-license-image').val())
             .attr('title',$('#hidden-license-name').val())
             .end();
-	  var foo = img.find('img').attr('src');
-	  var bar = $("#cc-current-license-image").attr('src');
-	  if (foo != bar) {
-	      console.log("new license chosen");
-              $('#license-display').show();
-	      $('#license-display-image').html("").append(img);
-	  }
+	  $('#license-display').html('').append(img).show();
       }
     }
     window.setLicenseImage = setLicenseImage;

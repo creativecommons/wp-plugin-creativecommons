@@ -512,6 +512,7 @@ class CreativeCommons {
               ? 'lang=' . esc_attr($this->locale) : '';
 
         $html = '';
+        $html .= "<span id='license-display'></span>";
         $html .= '<br id="license"><a title="' . __('Choose a Creative Commons license', $this->localization_domain) . '" class="button button-secondary thickbox edit-license" href="https://creativecommons.org/choose/?';
         $html .= 'partner=CC+WordPress+Plugin&';
         $html .= $lang;
@@ -837,6 +838,8 @@ class CreativeCommons {
         $html .= '<p>';
         $html .= $this->select_license_html($location, $echo = false);
         $html .= '</p>';
+
+        $html .= '<strong>' . __('Set attribution to',$this->localization_domain) . '</strong>';
 
         $html .= '<p>';
         $html .= $this->select_attribute_to_html($location, $echo = false);
