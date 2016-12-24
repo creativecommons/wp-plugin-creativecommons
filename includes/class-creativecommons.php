@@ -724,11 +724,11 @@ class CreativeCommons {
 
         // if no data was provided assume the data is in $_POST['license']
         if (is_null($data)
-            && filter_has_var(INPUT_POST, 'license')
+            && isset($_POST['license'])
         ) {
-            $data = filter_input(INPUT_POST, 'license');
+            $data = $_POST['license'];
         }
-
+        
         // always save the current version
         $license['version']          = self::VERSION;
         $license['deed']             = esc_url( $data['deed'] );
@@ -738,7 +738,7 @@ class CreativeCommons {
         $license['attribute_other']  = esc_html($data['attribute_other' ]);
         $license['attribute_other_url']
             = esc_html($data['attribute_other_url']);
-
+        
         switch($from) {
             // @TODO need to check this!
         case 'network':
@@ -1044,7 +1044,7 @@ class CreativeCommons {
                 $warning_text = "<p class='license-warning'>" . esc_html($warning) . "</p>";
             }
             $html = "<div class='license-wrap'>"
-                  . $this->html_rdfa(
+                  . $this->license_html_rdfa(
                       $deed_url,
                       $license_name,
                       $image_url,
@@ -1066,10 +1066,10 @@ class CreativeCommons {
     }
 
 
-    public function html_rdfa($deed_url, $license_name, $image_url,
-                              $title_work, $is_singular, $attribute_url,
-                              $attribute_text, $source_work_url,
-                              $extra_permissions_url, $warning_text)
+    public function license_html_rdfa($deed_url, $license_name, $image_url,
+                                      $title_work, $is_singular, $attribute_url,
+                                      $attribute_text, $source_work_url,
+                                      $extra_permissions_url, $warning_text)
     {
         $html = '';
         $html .= "<a rel='license' href='$deed_url'>";
@@ -1094,6 +1094,28 @@ class CreativeCommons {
             $html .= $warning_text;
         }
         return $html;
+    }
+
+    
+    public function cc0_html_rdfa($title_work, $attribute_url, $attribute_text)
+    {
+        return '<p xmlns:dct="http://purl.org/dc/terms/" xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">
+  <a rel="license"
+     href="http://creativecommons.org/publicdomain/zero/1.0/">
+    <img src="http://i.creativecommons.org/p/zero/1.0/88x31.png" style="border-style: none;" alt="CC0" />
+  </a>
+  <br />
+  To the extent possible under law,
+  <a rel="dct:publisher"
+     href="' . $attribute_url . '">
+    <span property="dct:title">' . $attribute_text . '</span></a>
+  has waived all copyright and related or neighboring rights to
+  <span property="dct:title">' . $title_work . '</span>.'
+/*This work is published from:
+<span property="vcard:Country" datatype="dct:ISO3166"
+      content="' . $country_code . '" about="' . $attribute_url . '">
+      ' . $country_name . '</span>.*/
+        . '</p>';
     }
 
 

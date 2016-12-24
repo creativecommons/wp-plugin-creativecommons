@@ -35,6 +35,12 @@ class CreativeCommonsImage {
             '/<(https?:\/\/creativecommons.org\/licenses\/[^>]+)>/',
             $copyright, $matches
         );
+        if (! $matched) {
+            $matched = preg_match(
+                '/<(https?:\/\/creativecommons.org\/publicdomain\/[^>]+)>/',
+                $copyright, $matches
+            );
+        }
         if ($matched) {
             $url = $matches[1];
         }
@@ -75,11 +81,15 @@ class CreativeCommonsImage {
             $license_url, $matches
         );
         if ($matched) {
-            $button = $matches[2];
-            if ($matches[1] == 'publicdomain') {
-                $button = 'pd';
+            if ($matches[2] == 'zero') {
+                $url = 'https://licensebuttons.net/l/zero/1.0/88x31.png';
+            } elseif ($matches[1] == 'publicdomain') {
+                $url = 'https://licensebuttons.net/l/publicdomain/88x31.png';
+            } else {
+                $url = 'https://licensebuttons.net/l/'
+                     . $matches[2]
+                     . '/4.0/88x31.png';
             }
-            $url = 'https://licensebuttons.net/l/' . $button . '/4.0/88x31.png';
         }
         return $url;
     }
@@ -91,7 +101,12 @@ class CreativeCommonsImage {
     {
         $name = '';
         if (strpos($license_url, '/publicdomain/')) {
-            $name = 'Public Domain';
+            // Note combination of version with dedication
+            if (strpos($license_url, '/zero/1.0')) {
+                $name = "CC0 1.0 Universal";
+            } else {   
+                $name = 'Public Domain';
+            }
         } else {
             $name = 'Creative Commons Attribution';
             if (strpos($license_url, '-nc') !== false) {
@@ -115,6 +130,15 @@ class CreativeCommonsImage {
             $name .= ' License';
         }
         return $name;
+    }
+
+
+    function license_url_is_zero($license_url)
+    {
+        return strpos(
+            $license_url,
+            '//creativecommons.org/publicdomain/zero/1.0/'
+        ) !== false;
     }
 
 
@@ -189,6 +213,7 @@ class CreativeCommonsImage {
         $select .= '<option value="https://creativecommons.org/licenses/by-nc-sa/4.0/">' . __("CC BY-NC-SA 4.0") . '</option>';
         $select .= '<option value="https://creativecommons.org/licenses/by-nd/4.0/">' . __("CC BY-ND 4.0") . '</option>';
         $select .= '<option value="https://creativecommons.org/licenses/by-sa/4.0/">' . __("CC BY-SA 4.0") . '</option>';
+        $select .= '<option value="https://creativecommons.org/publicdomain/zero/1.0/">' . __("CC0") . '</option>';
         $select .= '<option value="">' . __('None') . '</option>';
         $select .= '</select>';
         return $select;
@@ -227,9 +252,14 @@ class CreativeCommonsImage {
                       . $this->license_select($post_id, $original_license)
         );
 
-        //FIXME: this should be attribution_url now we have the source work field
+        $form_fields["credit"] = array(
+            "label" => __("Attribution Name"),
+            "input" => "text",
+            "value" => get_post_meta($post_id, 'credit', true),
+            "helps" => __("The name to attribute the work to, e.g. A. N. Other"),
+        );
 
-        $form_fields["source_url"] = array(
+        $form_fields["attribution_url"] = array(
             "label" => __("Attribution&nbsp;URL"),
             "input" => "text",
             "value" => get_post_meta($post_id, 'source_url', true),
@@ -269,7 +299,6 @@ class CreativeCommonsImage {
         return $post;
     }
 
-
     function license_block($att_id, $fallback_title = null)
     {
         if ($fallback_title === null) {
@@ -284,10 +313,9 @@ class CreativeCommonsImage {
         // Unfiltered
         $meta = wp_get_attachment_metadata($att_id, true);
 
-        $title = trim($meta['image_meta']['title']);
-        error_log(json_encode(get_post_meta($att_id, 'title', true)));
         $credit = trim($meta['image_meta']['credit']);
-
+        
+        $title = trim($meta['image_meta']['title']);
         //FIXME: We prefer the image title to the post title.
         if (! $title) {
             $title = get_the_title($att_id);
@@ -312,19 +340,27 @@ class CreativeCommonsImage {
         if ($license_url) {
             $license_button_url = $this->license_button_url($license_url);
             $l = CreativeCommons::get_instance();
-            $html_rdfa = $l->html_rdfa(
-                $license_url,
-                $license_name,
-                $license_button_url,
-                $title,
-                true, // is_singular
-                $attribution_url,
-                $credit,
-                $source_work_url,
-                $extras_url,
-                ''
-            ); // warning_text
-
+            if ($this->license_url_is_zero($license_url)) {
+                $html_rdfa = $l->cc0_html_rdfa(
+                    $title,
+                    $attribution_url,
+                    $credit
+                );
+            } else {
+                $html_rdfa = $l->license_html_rdfa(
+                    $license_url,
+                    $license_name,
+                    $license_button_url,
+                    $title,
+                    true, // is_singular
+                    $attribution_url,
+                    $credit,
+                    $source_work_url,
+                    $extras_url,
+                    ''
+                ); // warning_text
+            }
+            
             $button = CreativeCommonsButton::get_instance()->markup(
                 $html_rdfa,
                 false,
