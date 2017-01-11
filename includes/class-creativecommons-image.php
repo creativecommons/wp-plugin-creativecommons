@@ -411,9 +411,10 @@ class CreativeCommonsImage {
         if (! $att_id) {
             // Remove resized image part of path.
             // attachment_url_to_postid doesn't handle that.
+            // Make sure regex handles image urls that end e.g. aaa-1.jpg
             $image_url = preg_replace(
-                '/-\d+x\d+(?=\.[^.]+$)/i',
-                '',
+                '/-\d+x\d+(\.[^.]+)$/i',
+                '$1',
                 $image_url
             );
             $att_id = attachment_url_to_postid($image_url);
@@ -461,25 +462,26 @@ class CreativeCommonsImage {
             )
         );
 
-        // Extract attachment $post->ID
-        preg_match('/\d+/', $attr['id'], $att_id);
-
-
-        //FIXME: width is never set, and caption is always set, so test is
-        //       redundant is there some logic we could implement higher up
-        //       around width to exit early if width < 1 ?
-        //       If not, we can add this code back in above and avoid
-        //       overwriting $caption here.
-        //if ((intval($width) > 1) && $caption) {
-        $caption = '<div ' /*. $id*/ . 'class="cc-caption wp-caption '
-                 . esc_attr($align) . '"'
-                 //. ' style="width: ' . (10 + (int) $width) . 'px"'
-                 . '>' . do_shortcode($content)
-                 . $this->caption_block($attr, $att_id[0])
-                 . '</div>';
-        //}
-
-        return $caption;
+        if (isset($attr['id'])) {
+            // Extract attachment $post->ID
+            preg_match('/\d+/', $attr['id'], $att_id);
+            if ($att_id) {
+                //FIXME: width is never set, and caption is always set, so test
+                //       is redundant is there some logic we could implement
+                //       higher up around width to exit early if width < 1 ?
+                //       If not, we can add this code back in above and avoid
+                //       overwriting $caption here.
+                //if ((intval($width) > 1) && $caption) {
+                $content = '<div ' /*. $id*/ . 'class="cc-caption wp-caption '
+                         . esc_attr($align) . '"'
+                         //. ' style="width: ' . (10 + (int) $width) . 'px"'
+                         . '>' . $content
+                         . $this->caption_block($attr, $att_id[0])
+                         . '</div>';
+                //}
+            }
+        }
+        return $content;
     }
 
     
