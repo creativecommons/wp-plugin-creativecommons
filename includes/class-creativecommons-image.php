@@ -238,9 +238,6 @@ class CreativeCommonsImage {
         //       ImageDescription.
         //       Should we?
 
-        //FIXME: we use "credit" but that doesn't seem to be accessible?
-        //       should we expose that here in some way?
-
         $original_license = get_post_meta($post_id, 'license_url', true);
 
         $form_fields["license_url"] = array(
@@ -252,10 +249,20 @@ class CreativeCommonsImage {
                       . $this->license_select($post_id, $original_license)
         );
 
-        $form_fields["credit"] = array(
+        $attachment_metadata = wp_get_attachment_metadata($post_id, true);
+        $image_metadata = $attachment_metadata['image_meta'];
+
+        $attribution_name = get_post_meta($post_id, 'attribution_name', true);
+        if ((! $attribution_name)
+            && isset($image_metadata['credit'])
+        ) {
+            $attribution_name = $image_metadata['credit'];
+        }
+
+        $form_fields["attribution_name"] = array(
             "label" => __("Attribution Name"),
             "input" => "text",
-            "value" => get_post_meta($post_id, 'credit', true),
+            "value" => $attribution_name,
             "helps" => __("The name to attribute the work to, e.g. A. N. Other"),
         );
 
@@ -296,6 +303,17 @@ class CreativeCommonsImage {
                 );
             }
         }
+        foreach (['attribution_name'] as $field) {
+            if (isset($attachment[$field])) {
+                update_post_meta(
+                    $post['ID'],
+                    $field,
+                    // Documentation says not to sanitize
+                    $attachment[$field]
+                );
+            }
+
+        }
         return $post;
     }
 
@@ -312,15 +330,19 @@ class CreativeCommonsImage {
         
         // Unfiltered
         $meta = wp_get_attachment_metadata($att_id, true);
-
-        $credit = trim($meta['image_meta']['credit']);
         
-        $title = trim($meta['image_meta']['title']);
-        //FIXME: We prefer the image title to the post title.
-        if (! $title) {
-            $title = get_the_title($att_id);
+        $credit = get_post_meta($att_id, 'attribution_name', true);
+        if ((! $credit)
+            && isset($image_metadata['credit'])
+        ) {
+            $credit = $meta['image_meta']['credit'];
         }
-         if (! $title) {
+
+        $title = get_the_title($att_id);
+        if (! $title) {
+            $title = $meta['image_meta']['title'];
+        }
+        if (! $title) {
             $title = $fallback_title;
         }
         
@@ -398,6 +420,7 @@ class CreativeCommonsImage {
         
         return $caption;
     }
+
 
     // This will make two database calls for a resized image, and almost
     // every embedded image will be resized.
