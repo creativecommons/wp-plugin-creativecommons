@@ -90,13 +90,7 @@ Images that support Exif data may include licensing metadata. Where possible the
 
 ### Display An Image License
 
-If you place a [caption] block around an image that has licensing metadata and include the attachement ID, that will display the license block with the caption. e.g.:
-
-![Image with caption and license block](screenshot-5.jpg)
-
-    [caption id="attachment_10" width="300"]<img src="https://localhost/wp-content/uploads/2016/12/tree_test-1-300x188.jpg" alt="" width="300" height="188" class="size-medium wp-image-10" /> A caption. [/caption]
-
-Otherwise if you place a [license] block around an image that has licensing metadata, that will display the license block alone:
+If you place a [license] block around an image that has licensing metadata, that will display the license block and the One Click Attribution button:
 
 ![Image with license block](screenshot-6.jpg)
 

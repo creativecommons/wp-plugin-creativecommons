@@ -530,13 +530,15 @@ class CreativeCommonsImage {
             10,
             2
         );
-        
-        add_filter(
+
+        // Just use the license tag. This makes things more regular for users
+        // and easier to reason about for developers.
+        /*add_filter(
             'img_caption_shortcode',
             array($this, 'captioned_image'),
             10,
             3
-        );
+            );*/
         
         add_shortcode(
             'license',
