@@ -90,7 +90,7 @@ Images that support Exif data may include licensing metadata. Where possible the
 
 ### Display An Image License
 
-If you place a [license] block around an image that has licensing metadata, that will display the license block and the One Click Attribution button:
+If you place a [license] shortcode around an image that has licensing metadata, that will display the license block and the One Click Attribution button:
 
 ![Image with license block](screenshot-6.jpg)
 

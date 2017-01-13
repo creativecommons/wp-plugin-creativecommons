@@ -407,6 +407,8 @@ class CreativeCommonsImage {
     }
 
     
+    // This is way too simple. Improve before re-introducing the caption filter.
+
     function caption_block($attr, $att_id)
     {
         $caption = '<div class="cc-license-caption-wrapper cc-license-block">'
@@ -448,7 +450,6 @@ class CreativeCommonsImage {
     
     function license_shortcode ($atts, $content = null)
     {
-        $result = $content;
         if ($content !== null) {
             //TODO: Profile replacing this with parsing html and walking the DOM
             $match_count = preg_match(
@@ -460,16 +461,20 @@ class CreativeCommonsImage {
                 $image_url = $matches[1];
                 $att_id = $this->image_url_to_postid($image_url);
                 if ($att_id) {
-                    $license_block = $this->license_block($att_id);
-                    $result .= '<div class="cc-license-block"><br />';
-                    $result .= $license_block;
-                    $result .= '</div>';
+                    $content .= '<div class="cc-license-block"><br />';
+                    $content .= $this->license_block($att_id);;
+                    $content .= '</div>';
                 }
             }
         }
-        return $result;
+        return do_shortcode($content);
     }
 
+
+    // Note that we use isset(license), so e.g. license="1" and license="true"
+    // both work. We could allow users to insert a license *here*, but we would
+    // rather associate the license with the media object as that is more
+    // robust. So we do not and will not do that.
     
     function captioned_image($empty, $attr, $content) 
     {
@@ -480,31 +485,32 @@ class CreativeCommonsImage {
                     'align'=> 'alignnone',
                     'width'=> '',
                     'caption' => '',
-                    'title' => '',
+                    'title' => ''
                 ), $attr
             )
         );
 
-        if (isset($attr['id'])) {
+        if (isset($attr['id'])
+            && isset($attr['license'])
+        ) {
             // Extract attachment $post->ID
             preg_match('/\d+/', $attr['id'], $att_id);
             if ($att_id) {
-                //FIXME: width is never set, and caption is always set, so test
-                //       is redundant is there some logic we could implement
-                //       higher up around width to exit early if width < 1 ?
-                //       If not, we can add this code back in above and avoid
-                //       overwriting $caption here.
+                // We *should* handle this based on the shortcode code's
+                // behaviour.
                 //if ((intval($width) > 1) && $caption) {
-                $content = '<div ' /*. $id*/ . 'class="cc-caption wp-caption '
-                         . esc_attr($align) . '"'
-                         //. ' style="width: ' . (10 + (int) $width) . 'px"'
-                         . '>' . $content
-                         . $this->caption_block($attr, $att_id[0])
-                         . '</div>';
+                $result = '<div ' /*. $id*/ . 'class="cc-caption wp-caption '
+                        . esc_attr($align) . '"'
+                        //. ' style="width: ' . (10 + (int) $width) . 'px"'
+                        . '>' . do_shortcode($content)
+                        . $this->caption_block($attr, $att_id[0])
+                        . '</div>';
                 //}
             }
+        } else {
+            $result = '';
         }
-        return $content;
+        return $result;
     }
 
     
@@ -531,8 +537,9 @@ class CreativeCommonsImage {
             2
         );
 
-        // Just use the license tag. This makes things more regular for users
-        // and easier to reason about for developers.
+        // We really need to improve our emulation of the caption shortcode's
+        // output, and make sure our css fits it better, before adding this
+        // back in.
         /*add_filter(
             'img_caption_shortcode',
             array($this, 'captioned_image'),
