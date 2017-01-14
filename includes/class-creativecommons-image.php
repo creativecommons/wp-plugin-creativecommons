@@ -180,7 +180,7 @@ class CreativeCommonsImage {
         $exif = $this->read_exif($post_id);
         $this->maybe_apply_attachment_license_url($post_id, $exif);
         $this->maybe_apply_attachment_url(
-            $post_id, 'source_url', $exif,
+            $post_id, 'attribution_url', $exif,
             'ImageDescription'
         );
     }
@@ -230,7 +230,7 @@ class CreativeCommonsImage {
     }
 
 
-    function add_image_source_url($form_fields, $post) 
+    function add_image_license_metadata($form_fields, $post)
     {
         $post_id = $post->ID;
 
@@ -250,13 +250,15 @@ class CreativeCommonsImage {
         );
 
         $attachment_metadata = wp_get_attachment_metadata($post_id, true);
-        $image_metadata = $attachment_metadata['image_meta'];
-
         $attribution_name = get_post_meta($post_id, 'attribution_name', true);
-        if ((! $attribution_name)
-            && isset($image_metadata['credit'])
-        ) {
-            $attribution_name = $image_metadata['credit'];
+
+        if (isset ($attachment_metadata['image_meta'])) {
+            $image_metadata = $attachment_metadata['image_meta'];
+            if ((! $attribution_name)
+                && isset($image_metadata['credit'])
+            ) {
+                $attribution_name = $image_metadata['credit'];
+            }
         }
 
         $form_fields["attribution_name"] = array(
@@ -269,7 +271,7 @@ class CreativeCommonsImage {
         $form_fields["attribution_url"] = array(
             "label" => __("Attribution&nbsp;URL"),
             "input" => "text",
-            "value" => get_post_meta($post_id, 'source_url', true),
+            "value" => get_post_meta($post_id, 'attribution_url', true),
             "helps" => __("The URL to which the work should be attributed. For example the work's page on the author's site., e.g. https://example.com/mattl/image2/"),
         );
 
@@ -291,9 +293,9 @@ class CreativeCommonsImage {
     }
 
 
-    function save_image_source_url($post, $attachment) 
+    function save_image_license_metadata($post, $attachment) 
     {
-        foreach (['license_url', 'source_url', 'source_work_url',
+        foreach (['license_url', 'attribution_url', 'source_work_url',
                   'extra_permissions_url'] as $field) {
             if (isset($attachment[$field])) {
                 update_post_meta(
@@ -324,7 +326,7 @@ class CreativeCommonsImage {
         }
         $license_url = get_post_meta($att_id, 'license_url', true);
         $license_url = strtolower($license_url);
-        $attribution_url = get_post_meta($att_id, 'source_url', true);
+        $attribution_url = get_post_meta($att_id, 'attribution_url', true);
         $source_work_url = get_post_meta($att_id, 'source_work_url', true);
         $extras_url = get_post_meta($att_id, 'extra_permissions_url', true);
         
@@ -525,14 +527,14 @@ class CreativeCommonsImage {
                    
         add_filter(
             'attachment_fields_to_edit', 
-            array($this, 'add_image_source_url'),
+            array($this, 'add_image_license_metadata'),
             10,
             2
         );
         
         add_filter(
             'attachment_fields_to_save', 
-            array($this, 'save_image_source_url'),
+            array($this, 'save_image_license_metadata'),
             10,
             2
         );
