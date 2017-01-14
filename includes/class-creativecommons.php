@@ -1079,9 +1079,13 @@ class CreativeCommons {
         $html .= "<img alt='" . __('Creative Commons License', $this->localization_domain) . "' style='border-width:0' src='$image_url' />";
         $html .= "</a><br />";
         $html .= "<span xmlns:dct='http://purl.org/dc/terms/' property='dct:title'>$title_work</span> ";
-        if ($is_singular && $attribute_text && $attribute_url) {
+        if ($is_singular && $attribute_text) {
             $html .= __('by', $this->localization_domain);
-            $html .= " <a xmlns:cc='http://creativecommons.org/ns#' href='$attribute_url' property='cc:attributionName' rel='cc:attributionURL'>$attribute_text</a> ";
+            if ($attribute_url != '') {
+                $html .= " <a xmlns:cc='http://creativecommons.org/ns#' href='$attribute_url' property='cc:attributionName' rel='cc:attributionURL'>$attribute_text</a> ";
+            } else {
+                $html .= $attribute_text;
+            }
         }
         $html .= sprintf(__('is licensed under a <a rel="license" href="%s">%s</a>.', $this->localization_domain), $deed_url, $license_name);
         if ($source_work_url) {
@@ -1102,23 +1106,30 @@ class CreativeCommons {
     
     public function cc0_html_rdfa($title_work, $attribute_url, $attribute_text)
     {
-        return '<p xmlns:dct="http://purl.org/dc/terms/" xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">
+        $result = '<p xmlns:dct="http://purl.org/dc/terms/" xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">
   <a rel="license"
      href="http://creativecommons.org/publicdomain/zero/1.0/">
-    <img src="http://i.creativecommons.org/p/zero/1.0/88x31.png" style="border-style: none;" alt="CC0" />
-  </a>
+    <img src="http://i.creativecommons.org/p/zero/1.0/88x31.png" style="border-style: none;" alt="CC0" /></a>
   <br />
-  To the extent possible under law,
+  To the extent possible under law,';
+        if ($attribute_url) {
+            $result .= '
   <a rel="dct:publisher"
      href="' . $attribute_url . '">
-    <span property="dct:title">' . $attribute_text . '</span></a>
-  has waived all copyright and related or neighboring rights to
+    <span property="dct:title">' . $attribute_text . '</span></a>';
+        } else {
+            $result .= '
+  <span resource="[_:publisher]" rel="dct:publisher">
+    <span property="dct:title">' . $attribute_text . '</span></span>';
+        }
+        $result .= '  has waived all copyright and related or neighboring rights to
   <span property="dct:title">' . $title_work . '</span>.'
 /*This work is published from:
 <span property="vcard:Country" datatype="dct:ISO3166"
       content="' . $country_code . '" about="' . $attribute_url . '">
       ' . $country_name . '</span>.*/
         . '</p>';
+        return $result;
     }
 
 
