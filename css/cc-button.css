@@ -1,158 +1,216 @@
-.cc-reset, .cc-attribution-element, .cc-attribution-button, .cc-attribution-button:hover, .cc-attribution-copy-button:hover, .cc-attribution-button:active, .cc-attribution-copy-button:active, .cc-attribution-help-button, .cc-attribution-help-button:hover, .cc-attribution-button-cc, .cc-attribution-button-share, .cc-attribution-help-button:active, .cc-attribution-copy-button, .cc-attribution-format-select, .cc-attribution-popup, .cc-attribution-note, .cc-help-popup, .cc-transient-notice, .cc-dropdown-wrapper, .cc-dropdown-menu, .cc-dropdown-menu-item, .cc-dropdown-menu-item-link {
-  border: 0;
-  padding: 0;
-  margin: 0;
-  line-height: 1;
-  font-size: 100%;
-  font-family: sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  text-transform: none;
-  /* Upsets cc-attribution alignment vertical-align: middle; */ }
+
+/* The div wrapping everything */
 
 .cc-license-block {
-  font-color: #686868;
-  font-size: 80%;
-  font-style: italic;
-  font-weight: normal;
 }
+
+.cc-license-block p {
+    /* See #36 - without this the height of the attribution button is added in
+                 some themes */
+    margin-top: 0 !important;
+}
+
+/* The div wrapping all our buttony things */
 
 .cc-attribution-element {
-  height: 31px;
-  overflow: visible;
-  vertical-align: middle;
-  font-size: 100%;
-  padding: 0;
-  float:right;
-  display: inline; }
-
-.cc-attribution-button, .cc-attribution-button:hover, .cc-attribution-copy-button:hover, .cc-attribution-button:active, .cc-attribution-copy-button:active, .cc-attribution-help-button, .cc-attribution-help-button:hover {
-  height: 31px;
-  width: auto;
-  margin: 0;
-  border: 0;
-  border-radius: 4px;
-/*font-weight: bold;*/ }
-
-.cc-attribution-button {
-  background-color: #ABB1AA;
+    height: 31px;
+    overflow: visible;
+    vertical-align: middle;
+    padding: 0;
+    float:right;
+    display: inline;
+    box-shadow: none;
+    animation: 0s none;
+    transition: none;
 }
 
-.cc-attribution-button-cc {
-  border: 0;
-  vertical-align: text-bottom; }
-    
-.cc-attribution-button-share {
-  border: 0;
-  vertical-align: text-bottom; }
+/* The shared reset / text basics class */
 
-.cc-attribution-copy-button, .cc-attribution-copy-button:hover, .cc-attribution-copy-button:active {
+.cc-attribution-button,
+.cc-attribution-button:focus,
+.cc-attribution-button:hover,
+.cc-attribution-button:active,
+.cc-attribution-button:visited,
+.cc-dropdown-menu-item-link,
+.cc-dropdown-menu-item-link:hover,
+.cc-dropdown-menu-item-link:active,
+.cc-dropdown-menu-item-link:focus,
+.cc-dropdown-menu-item-link:visited {
+    width: auto;
+    color: #fefefe;
+    background-color: #ABB1AA;
+    background-image: none;
+    line-height: 1;
+    font-size: 16px; /*100%;*/
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    text-transform: none;
+    text-decoration: none;
+    text-align: left;
+    letter-spacing: normal;
+    margin: 0;
+    padding: 0;
+    border: 1px solid black;
+    border-radius: 0;
+    box-shadow: none;
+    animation: 0s none;
+    transition: none;
+}
+
+/* The shared button class */
+
+.cc-attribution-button,
+.cc-attribution-button:focus,
+.cc-attribution-button:hover,
+.cc-attribution-button:active,
+.cc-attribution-button:visited {
+    height: 31px;
+    width: auto;
+}
+
+.cc-attribution-button:hover,
+.cc-attribution-button:active {
+    color: #555;
+}
+
+/* Used with cc-attribution-button in the html */
+
+.cc-attribution-copy-button,
+.cc-attribution-copy-button:focus,
+.cc-attribution-copy-button:hover,
+.cc-attribution-copy-button:active,
+.cc-attribution-copy-button:visited {
   padding: 0 2px 0 5px;
-  border-color: black;
   border-style: solid;
   border-width: 1px 0px 1px 1px;
-  border-radius: 4px 0px 0px 4px; }
-
-.cc-attribution-format-select {
-  background-color: #ABB1AA;
-  height: 31px;
-  width: 5em;
-  margin: 0;
-  padding: 0 5px 0 0px;
-  border-color: black;
-  border-style: solid;
-  border-width: 1px 1px 1px 0px;
-  border-radius: 0px 4px 4px 0px; }
-
-.cc-attribution-help-button, .cc-attribution-help-button:hover {
-  border-color: black;
-  border-style: solid;
-  border-width: 1px;
-  border-radius: 4px 4px 4px 4px;
-  padding: 0 5px 0 5px;
-  /*font-weight: bold;*/ }
-
-.cc-attribution-help-button {
-  background-color: #ABB1AA;
+  border-radius: 4px 0px 0px 4px;
 }
 
-.cc-attribution-help-button:hover {
-  background-color:  rgba(51, 51, 51, 0.7); }
+.cc-attribution-copy-button-label {
+}
 
-.cc-attribution-popup {
-  display: inline-block;
-  padding: 12px;
-  border: 2px solid gray;
-  border-radius: 12px;
-  font-family: sans-serif; }
-
-.cc-attribution-note {
-  margin-top: 5px;
-  margin-bottom: 3px;
-  font-size: small; }
-
-.cc-help-popup {
-  background-color: #F8F8F8;
-  border: 1px solid #666666;
-  position: fixed;
-  width: 200px;
-  height: auto;
-  bottom: 60%;
-  left: 50%;
-  margin-left: -100px;
-  padding: 6px;
-  border-radius: 12px;
-  box-shadow: 0px 0px 24px -1px #3f3f3f; }
-
-.cc-transient-notice {
-  color: #F5F5F5;
-  background-color: #444444;
-  font-size: 20px;
-  text-align: center;
-  position: fixed;
-  width: 200px;
-  height: auto;
-  left: 50%;
-  margin-left: -100px;
-  bottom: 10px;
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 0px 0px 24px -1px #3f3f3f; }
+/* Div containing the drop-down menu for the format,
+   used without other classes */
 
 .cc-dropdown-wrapper {
-  position: relative;
-  display: inline-block;
-  margin-left: -4px;}
+    position: relative;
+    display: inline-block;
+    margin-left: -4px;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+    animation: 0s none;
+}
+
+/* Used with cc-attribution-button in the html */
+
+.cc-attribution-format-select,
+.cc-attribution-format-select:focus,
+.cc-attribution-format-select:hover,
+.cc-attribution-format-select:active,
+.cc-attribution-format-select:visited {
+    width: 5em;
+    padding: 0 4px 0 2px;
+    border-style: solid;
+    border-width: 1px 1px 1px 0px;
+    border-radius: 0px 4px 4px 0px;
+}
 
 .cc-dropdown-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  margin: 0 !important
-  list-style-type: none;
-  display: none;
-  background-color: #E8E8E8;
-  border: 1px solid gray;
-  box-shadow: 0px 0px 24px -1px #3f3f3f; }
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 5em;
+    list-style: none;
+    background-color: #E8E8E8;
+    border: 1px solid gray;
+    margin: 0;
+    /* !important otherwise some themes ignore this, and inset the items */
+    padding: 0 !important;
+    box-shadow: 0px 0px 24px -1px #3f3f3f;
+}
 
 .cc-dropdown-menu-item {
-  font-weight: bold;
-  float: left;
-  padding: 3px 8px;
-  /* So we fill the drop-down div, and our background color covers it */
-  width: 100%;
-  /*background-color: #FFF;*/
-  margin: 0 10px 0 0;
-  list-style: none outside none; }
+    display: block;
+    font-weight: bold;
+    float: left;
+    padding: 3px 8px;
+    /* So we fill the drop-down div, and our background color covers it */
+    width: 100%;
+    list-style: none outside none;
+    /* Some styles set these aggressively, make sure we override them... */
+    margin: 0 !important;
+    border: 0 !important;
+    padding: 0 !important;
+    border-radius: 0;
+    box-shadow: none;
+    animation: 0s none;
+}
 
 .cc-dropdown-menu-item-selected {
-  background: #CCCCCC; }
+    background: #CCCCCC;
+}
 
-.cc-dropdown-menu-item-link {
-  font-size: 100%;
-  display: block;
-  width: 60px;
-  text-decoration: none;
-  /* And to remove the underlining from WordPress's style... */
-  box-shadow: none !important;
-  border: none !important; }
+.cc-dropdown-menu-item-link,
+.cc-dropdown-menu-item-link:hover,
+.cc-dropdown-menu-item-link:active,
+.cc-dropdown-menu-item-link:focus,
+.cc-dropdown-menu-item-link:visited {
+    display:inline-block;
+    width:100%;
+    height:100%;
+    background: none;
+    color: black;
+    /* And to remove any underlining... */
+    text-decoration: none !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+/* Used with cc-attribution-button in the html */
+
+.cc-attribution-help-button,
+.cc-attribution-help-button:hover,
+.cc-attribution-help-button:active,
+.cc-attribution-help-button:focus,
+.cc-attribution-help-button:visited
+{
+    border-radius: 4px 4px 4px 4px;
+    padding: 0 5px 0 5px;
+}
+
+.cc-help-modal {
+}
+
+.cc-help-popup {
+    background-color: #F8F8F8;
+    border: 1px solid #666666;
+    position: fixed;
+    width: 200px;
+    height: auto;
+    bottom: 60%;
+    left: 50%;
+    margin-left: -100px;
+    padding: 6px;
+    border-radius: 12px;
+    box-shadow: 0px 0px 24px -1px #3f3f3f;
+}
+
+.cc-transient-notice {
+    color: #F5F5F5;
+    background-color: #444444;
+    font-size: 20px;
+    text-align: center;
+    position: fixed;
+    width: 200px;
+    height: auto;
+    left: 50%;
+    margin-left: -100px;
+    bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 24px -1px #3f3f3f;
+}
