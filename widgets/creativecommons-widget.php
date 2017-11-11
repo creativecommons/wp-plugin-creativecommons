@@ -7,8 +7,7 @@ if(! class_exists('CreativeCommons_widget')) {
 
         private $localization_domain = 'CreativeCommons';
 
-
-        function CreativeCommons_widget()
+        function __construct()
         {
             /* Widget settings. */
             $widget_ops = array(
@@ -23,7 +22,7 @@ if(! class_exists('CreativeCommons_widget')) {
             );
 
             /* Create the widget. */
-            $this->__construct(
+            parent::__construct(
                 'license-widget',
                 __('License', $this->localization_domain),
                 $widget_ops,
