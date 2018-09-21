@@ -534,8 +534,8 @@ class CreativeCommons {
 	$html = <<<CONTENT
 
 	<span id='license-display'></span>
-        <br id="license">
-        {$link}
+	<br id="license">
+	{$link}
 
 	<input type="hidden" value="{$license['deed']}" id="hidden-license-deed" name="license[deed]"/>
 	<input type="hidden" value="{$license['image']}" id="hidden-license-image" name="license[image]"/>
