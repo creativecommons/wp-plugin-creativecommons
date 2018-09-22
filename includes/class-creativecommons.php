@@ -524,7 +524,7 @@ class CreativeCommons {
 	}
 
 	// Link.
-	$link = sprintf( '<a title="$1$s" class="button button-secondary thickbox edit-license" href="%2$s">%3$s</a>',
+	$link = sprintf( '<a title="%1$s" class="button button-secondary thickbox edit-license" href="%2$s">%3$s</a>',
 		__( 'Choose a Creative Commons license', $this->localization_domain ),
 		add_query_arg( $link_args, 'https://creativecommons.org/choose/' ),
 		__( 'Change license', $this->localization_domain )
