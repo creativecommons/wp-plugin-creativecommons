@@ -295,7 +295,8 @@ class CreativeCommonsImage {
 
     function save_image_license_metadata($post, $attachment) 
     {
-        foreach ( array( 'license_url', 'attribution_url', 'source_work_url', 'extra_permissions_url' ) as $field) {
+        $image_meta = array( 'license_url', 'attribution_url', 'source_work_url', 'extra_permissions_url' );
+        foreach ( $image_meta as $field ) {
             if (isset($attachment[$field])) {
                 update_post_meta(
                     $post['ID'],
@@ -304,7 +305,9 @@ class CreativeCommonsImage {
                 );
             }
         }
-        foreach ( array( 'attribution_name' ) as $field) {
+      
+        $image_meta_no_sanitization = array( 'attribution_name' );
+        foreach ( $image_meta_no_sanitization as $field ) {
             if (isset($attachment[$field])) {
                 update_post_meta(
                     $post['ID'],
