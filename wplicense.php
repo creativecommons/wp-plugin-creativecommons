@@ -182,7 +182,7 @@ if( ! class_exists('WPLicense') ) {
         'image'                    => 'http://i.creativecommons.org/l/by-sa/4.0/88x31.png',
         'attribute_to'             => '',
         'title'                    => get_bloginfo('name'),
-        'name'                     => 'Creative Commons Attribution-Share Alike 4.0 License',
+        'name'                     => 'Creative Commons Attribution-Share Alike 4.0',
         'sitename'                 => get_bloginfo(''),
         'siteurl'                  => get_bloginfo('url'),
         'author'                   => get_bloginfo(),
@@ -666,7 +666,7 @@ if( ! class_exists('WPLicense') ) {
 	        $html .= __('by', $this->localization_domain);
 		$html .= " <a xmlns:cc='http://creativecommons.org/ns#' href='$attribute_url' property='cc:attributionName' rel='cc:attributionURL'>$attribute_text</a> ";
 	}
-	$html .= sprintf( __('is licensed under a <a rel="license" href="%s">%s</a>.', $this->localization_domain), $deed_url, $license_name );
+	$html .= sprintf( __('is licensed under a <a rel="license" href="%s">%s</a> License.', $this->localization_domain), $deed_url, $license_name );
 	//$html .= '<br />';
         //$html .= __('Based on a work at <a xmlns:dct="http://purl.org/dc/terms/" href="http://source.url" rel="dct:source">http://source.url</a>.', $this->localization_domain);
         //$html .='<br />';
