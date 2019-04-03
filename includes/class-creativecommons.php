@@ -14,13 +14,13 @@ class CreativeCommons {
     private $locale;
 
     private static $instance = null;
-    
+
 
     private function __construct()
     {
     }
 
-    
+
     public function init()
     {
         $this->plugin_url = plugin_dir_url(dirname(__FILE__));
@@ -92,20 +92,20 @@ class CreativeCommons {
             );
         }
     }
-    
+
 
     public static function get_instance()
     {
- 
+
         if ( null == self::$instance ) {
             self::$instance = new self;
         }
- 
+
         return self::$instance;
- 
+
     }
-    
-    
+
+
     function wphub_register_settings()
     {
         add_option('wphub_use_api', '1');
@@ -129,7 +129,7 @@ class CreativeCommons {
     /**
      * Register and add settings
      */
-        
+
     public function page_init()
     {
         register_setting(
@@ -199,7 +199,7 @@ class CreativeCommons {
             'license-section',
             array('label_for' => 'allow_user_override')
         );
-            
+
         add_settings_field(
             'allow_content_override',
              __(
@@ -729,7 +729,7 @@ class CreativeCommons {
         ) {
             $data = $_POST['license'];
         }
-        
+
         // always save the current version
         $license['version']          = self::VERSION;
         $license['deed']             = esc_url( $data['deed'] );
@@ -739,7 +739,7 @@ class CreativeCommons {
         $license['attribute_other']  = esc_html($data['attribute_other' ]);
         $license['attribute_other_url']
             = esc_html($data['attribute_other_url']);
-        
+
         switch($from) {
             // @TODO need to check this!
         case 'network':
@@ -1103,7 +1103,7 @@ class CreativeCommons {
         return $html;
     }
 
-    
+
     public function cc0_html_rdfa($title_work, $attribute_url, $attribute_text)
     {
         $result = '<p xmlns:dct="http://purl.org/dc/terms/" xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">
@@ -1178,7 +1178,7 @@ class CreativeCommons {
         register_widget('CreativeCommons_widget');
     }
 
-        
+
     // log all errors if wp_debug is active
     private function _logger($string)
     {
@@ -1188,5 +1188,5 @@ class CreativeCommons {
             return;
         }
     }
-        
+
 }
