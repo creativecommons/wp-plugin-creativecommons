@@ -366,7 +366,7 @@ class CreativeCommons {
             'image'                    => 'https://licensebuttons.net/l/by-sa/4.0/88x31.png',
             'attribute_to'             => '',
             'title'                    => get_bloginfo('name'),
-            'name'                     => 'Creative Commons Attribution-Share Alike 4.0 License',
+            'name'                     => 'Creative Commons Attribution-Share Alike 4.0',
             'sitename'                 => get_bloginfo(''),
             'siteurl'                  => get_bloginfo('url'),
             'author'                   => get_bloginfo(),
@@ -1087,7 +1087,7 @@ class CreativeCommons {
                 $html .= $attribute_text;
             }
         }
-        $html .= sprintf(__('is licensed under a <a rel="license" href="%s">%s</a>.', $this->localization_domain), $deed_url, $license_name);
+        $html .= sprintf(__('is licensed under a <a rel="license" href="%s">%s</a> License.', $this->localization_domain), $deed_url, $license_name);
         if ($source_work_url) {
             $html .= '<br />';
             $html .= sprintf(__('Based on a work at <a xmlns:dct="http://purl.org/dc/terms/" href="%s" rel="dct:source">%s</a>.', $this->localization_domain), $source_work_url, $source_work_url);
