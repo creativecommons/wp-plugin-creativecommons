@@ -1,6 +1,6 @@
 <html>
 <head>
-<script src="//code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
 </head>
 <body>
 <?php

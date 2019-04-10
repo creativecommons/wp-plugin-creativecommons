@@ -178,8 +178,8 @@ if( ! class_exists('WPLicense') ) {
     function plugin_default_license() {
       $this->_logger('Got default settings');
       return $license = array(
-        'deed'                     => '//creativecommons.org/licenses/by-sa/4.0/',
-        'image'                    => '//i.creativecommons.org/l/by-sa/4.0/88x31.png',
+        'deed'                     => 'https://creativecommons.org/licenses/by-sa/4.0/',
+        'image'                    => 'https://i.creativecommons.org/l/by-sa/4.0/88x31.png',
         'attribute_to'             => '',
         'title'                    => get_bloginfo('name'),
         'name'                     => 'Creative Commons Attribution-Share Alike 4.0 License',
@@ -308,7 +308,7 @@ if( ! class_exists('WPLicense') ) {
 
       $html = '';
       $html .= "<span id='license-display'></span>";
-      $html .= '<br id="license"><a title="' . __('Choose a Creative Commons license', $this->localization_domain) . '" class="thickbox edit-license" href="//creativecommons.org/choose/?';
+      $html .= '<br id="license"><a title="' . __('Choose a Creative Commons license', $this->localization_domain) . '" class="thickbox edit-license" href="https://creativecommons.org/choose/?';
         $html .= 'partner=WordPress+License+Plugin&';
         $html .= $lang;  
         $html .= '&exit_url=' . $this->plugin_url . 'licensereturn.php?url=[license_url]%26name=[license_name]%26button=[license_button]%26deed=[deed_url]&';
