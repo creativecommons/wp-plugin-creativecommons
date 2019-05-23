@@ -5,6 +5,10 @@ Creative Commons plugin for WordPress
 This is a WordPress plugin to assist you to choose a Creative Commons license
 for your blog or website.
 
+Download the latest version from this projects [releases][releases].
+
+[releases]: https://github.com/creativecommons/creativecommons-wordpress-plugin/releases "Releases · creativecommons/creativecommons-wordpress-plugin"
+
 
 ## Features
 
@@ -35,15 +39,23 @@ testing or funding Creative Commons for further development.
   licensed media files
 
 
-## Contribute
+## Code of Conduct
 
-Feel free to help us make the plugin more stable by testing the plugin and
-reporting bugs. Send any feedback using Github's issue tracker, or send an
-email to hackers@creativecommons.org
+[`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md):
+> The Creative Commons team is committed to fostering a welcoming community.
+> This project and all other Creative Commons open source projects are governed
+> by our [Code of Conduct][code_of_conduct]. Please report unacceptable
+> behavior to [conduct@creativecommons.org](mailto:conduct@creativecommons.org)
+> per our [reporting guidelines][reporting_guide].
 
-Download the latest version from this projects [releases][releases].
 
-[releases]: https://github.com/creativecommons/creativecommons-wordpress-plugin/releases "Releases · creativecommons/creativecommons-wordpress-plugin"
+[code_of_conduct]:https://creativecommons.github.io/community/code-of-conduct/
+[reporting_guide]:https://creativecommons.github.io/community/code-of-conduct/enforcement/
+
+
+## Contributing
+
+See [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
 
 ## Development
