@@ -2,31 +2,8 @@
 
 Creative Commons plugin for WordPress
 
-This is a WordPress plugin to assist you to choose a
-Creative Commons license for your blog or website.
-
-
-## Credits
-
-Main development work by:
-
-- Tarmo Toikkanen
-- Bjorn Wijers
-
-On behalf of Creative Commons:
-
-- Matt Lee
-
-
-## Contribute
-
-Feel free to help us make the plugin more stable by
-testing the plugin and reporting bugs.  Send any
-feedback using Github's issue tracker, or send an email
-to hackers@creativecommons.org
-
-Download the latest version:
-[release-2.0](https://github.com/creativecommons/wordpress-plugin/releases/tag/release-2.0)
+This is a WordPress plugin to assist you to choose a Creative Commons license
+for your blog or website.
 
 
 ## Features
@@ -54,22 +31,19 @@ implemented you may consider supporting this plugin with code contributions,
 testing or funding Creative Commons for further development.
 
 - Allow media files to be licensed
+- Allow to search (using external search engines) for specific Creative Commons
+  licensed media files
 
-- Allow to search (using external search engines) for
-  specific Creative Commons licensed media files
 
+## Contribute
 
-## History
+Feel free to help us make the plugin more stable by testing the plugin and
+reporting bugs. Send any feedback using Github's issue tracker, or send an
+email to hackers@creativecommons.org
 
-This plugin is loosely based on an existing, but seemingly abandoned WordPress
-plugin named 'License' (a component of the [MIT Educational Collaboration
-Space][collabspace] project) by mitcho (Michael Yoshitaka Erlewine) and
-Brett Mellor. We're also inspired by Creative Commons' original
-[wordpress-cc-plugin][oldplugin] written by former Creative Commons CTO Nathan
- Yergler.
+Download the latest version from this projects [releases][releases].
 
-[collabspace]:http://cispace.mit.edu/
-[oldplugin]:https://github.com/cc-archive/wordpress-cc-plugin
+[releases]: https://github.com/creativecommons/creativecommons-wordpress-plugin/releases "Releases · creativecommons/creativecommons-wordpress-plugin"
 
 
 ## Development
@@ -79,3 +53,28 @@ releases. Development will be done in the development branch.
 
 Occasionally other branches may be available to test new features or play with
 new ideas, but they may be deleted anytime so don't rely on those branches.
+
+
+## History
+
+This plugin is loosely based on an existing, but seemingly abandoned WordPress
+plugin named 'License' (a component of the [MIT Educational Collaboration
+Space][collabspace] project) by mitcho (Michael Yoshitaka Erlewine) and
+Brett Mellor. We're also inspired by Creative Commons' original
+[wordpress-cc-plugin][oldplugin] written by former Creative Commons CTO Nathan
+Yergler.
+
+[collabspace]:http://cispace.mit.edu/
+[oldplugin]:https://github.com/cc-archive/wordpress-cc-plugin
+
+
+### Credits
+
+Main development work by:
+
+- Tarmo Toikkanen
+- Bjorn Wijers
+
+On behalf of Creative Commons:
+
+- Matt Lee
