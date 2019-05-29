@@ -1,9 +1,9 @@
 <?php
 $license = array(
-	'url'    => $_GET["url"],
-	'name'   => $_GET["name"],
-	'button' => $_GET["button"],
-	'deed'   => $_GET["deed"],
+	'url'    => $_GET['url'],
+	'name'   => $_GET['name'],
+	'button' => $_GET['button'],
+	'deed'   => $_GET['deed'],
 );
 ?>
 <html>

@@ -99,12 +99,11 @@ class CreativeCommonsButton {
 		);
 	}
 
-
 	public function cc_1ca_insert_footer() {
-		echo "<script>
+		echo '<script>
 	  var ccButton = new CCButton();
 	  ccButton.addEventListeners();
-</script>";
+</script>';
 	}
 
 	public function init() {

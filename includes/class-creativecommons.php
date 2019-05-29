@@ -223,7 +223,7 @@ class CreativeCommons {
 		$deed = esc_html( $license['deed'] );
 		$name = esc_html( $license['name'] );
 		$image = esc_html( $license['image'] );
-		echo "<div style='text-align: center; background: white; border: solid 2px #666; padding: 1em;'><img id='cc-current-license-image' src='$image'><br /><a href='$deed' target='_blank'>$name</a></div><div id='license-display' style='background: white; border: 2px solid red; padding: 1em; margin-top: 1em; display: none;'>" . "<h3>" . __( 'WARNING: Changing these license settings after content has been added may change the licenses authors on the site have selected, effectively relicensing possibly all content on the site!', $this->localization_domain ) . "</h3>" . "<p style='text-align: center;'><span id='license-display-image'></span></p></div>";
+		echo "<div style='text-align: center; background: white; border: solid 2px #666; padding: 1em;'><img id='cc-current-license-image' src='$image'><br /><a href='$deed' target='_blank'>$name</a></div><div id='license-display' style='background: white; border: 2px solid red; padding: 1em; margin-top: 1em; display: none;'>" . '<h3>' . __( 'WARNING: Changing these license settings after content has been added may change the licenses authors on the site have selected, effectively relicensing possibly all content on the site!', $this->localization_domain ) . '</h3>' . "<p style='text-align: center;'><span id='license-display-image'></span></p></div>";
 	}
 
 
@@ -377,7 +377,7 @@ class CreativeCommons {
 			case 'network':
 				$this->_logger( 'called network' );
 				$license = ( $network_license = get_site_option( 'license' ) )
-					 ? $network_license : $this->plugin_default_license();
+					? $network_license : $this->plugin_default_license();
 				break;
 
 			case 'site':
@@ -385,24 +385,24 @@ class CreativeCommons {
 				if ( is_multisite() ) {
 					$this->_logger( 'multisite, check network settings' );
 					$license = ( $site_license = get_option( 'license' ) )
-						 ? $site_license : $this->get_license( 'network' );
+						? $site_license : $this->get_license( 'network' );
 				} else {
 					$this->_logger( 'single site, get site license or else default settings' );
 					$license = ( $site_license = get_option( 'license' ) )
-						 ? $site_license : $this->plugin_default_license();
+						? $site_license : $this->plugin_default_license();
 				}
 				break;
 
 			case 'profile':
 				$this->_logger( 'called profile' );
 				$license = ( $user_license = get_user_option( 'license' ) )
-					 ? $user_license : $this->get_license( 'site' );
+					? $user_license : $this->get_license( 'site' );
 				break;
 
 			case 'post-page':
 				$this->_logger( 'called post-page' );
 				$license = ( $post_page_license = $this->get_post_page_license() )
-					 ? $post_page_license : $this->get_license( 'profile' );
+					? $post_page_license : $this->get_license( 'profile' );
 				break;
 
 			// TODO need to check default structure below since this can
@@ -489,9 +489,9 @@ class CreativeCommons {
 		$license  = $this->get_license( $location );
 		// add lang option
 		$lang = ( isset( $this->locale ) && ! empty( $this->locale ) )
-			  ? 'lang=' . esc_attr( $this->locale ) : '';
+			? 'lang=' . esc_attr( $this->locale ) : '';
 
-		$html = '';
+		$html  = '';
 		$html .= "<span id='license-display'></span>";
 		$html .= '<br id="license"><a title="' . __( 'Choose a Creative Commons license', $this->localization_domain ) . '" class="button button-secondary thickbox edit-license" href="https://creativecommons.org/choose/?';
 		$html .= 'partner=CC+WordPress+Plugin&';
@@ -649,7 +649,7 @@ class CreativeCommons {
 		$license = $this->get_license( $location );
 
 		$html  = '';
-		$html .= "<h3>" . __( 'License settings', $this->localization_domain ) . "</h3>\n";
+		$html .= '<h3>' . __( 'License settings', $this->localization_domain ) . "</h3>\n";
 		$html .= $this->display_settings_warning();
 
 		$html .= wp_nonce_field( 'license-update', $name = 'license_wpnonce', $referer = true, $echo = false );
@@ -792,8 +792,8 @@ class CreativeCommons {
 	function license_admin_init() {
 		/* Register our script. */
 		wp_register_script( 'license', $this->plugin_url . '/js/admin.js' );
-		wp_enqueue_script( "thickbox" );
-		wp_enqueue_style( "thickbox" );
+		wp_enqueue_script( 'thickbox' );
+		wp_enqueue_style( 'thickbox' );
 		wp_enqueue_script( 'license' );
 	}
 
@@ -845,7 +845,7 @@ class CreativeCommons {
 		$html .= "</tr>\n";
 
 		$html .= "<tr valign='top'>\n";
-		$html .= "\t<th scope='row'><label for='attribute_to'>" . __( "Set attribution to", $this->localization_domain ) . "</label></th>\n";
+		$html .= "\t<th scope='row'><label for='attribute_to'>" . __( 'Set attribution to', $this->localization_domain ) . "</label></th>\n";
 		$html .= "\t<td>";
 		$html .= $this->select_attribute_to_html( $location, $echo = false );
 		$html .= "</td>\n";
@@ -853,7 +853,6 @@ class CreativeCommons {
 
 		return $html;
 	}
-
 
 	/**
 	 * Add options page
@@ -1039,7 +1038,7 @@ class CreativeCommons {
 			} else {
 				$title_work    = get_bloginfo( 'name' );
 				$attribute_url = esc_html( site_url() );
-				$warning_text  = "<p class='license-warning'>" . esc_html( $warning ) . "</p>";
+				$warning_text  = "<p class='license-warning'>" . esc_html( $warning ) . '</p>';
 			}
 			$html = "<div class='license-wrap'>"
 				. $this->license_html_rdfa(
@@ -1071,7 +1070,7 @@ class CreativeCommons {
 		$html = '';
 		$html .= "<a rel='license' href='$deed_url'>";
 		$html .= "<img alt='" . __( 'Creative Commons License', $this->localization_domain ) . "' style='border-width:0' src='$image_url' />";
-		$html .= "</a><br />";
+		$html .= '</a><br />';
 		$html .= "<span xmlns:dct='http://purl.org/dc/terms/' property='dct:title'>$title_work</span> ";
 		if ( $is_singular && $attribute_text ) {
 			$html .= __( 'by', $this->localization_domain );
