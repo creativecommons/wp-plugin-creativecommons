@@ -1,4 +1,5 @@
 <?php
+
 /*
 Plugin Name: Creative Commons
 Description: Official Creative Commons plugin for WordPress. Allows users to select and display Creative Commons licenses for their content. Partially inspired by the License plugin by mitcho (Michael Yoshitaka Erlewine) and Brett Mellor, as well as the original WpLicense plugin by CC CTO Nathan R. Yergler.
@@ -13,13 +14,13 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-define('CC__PLUGIN_DIR', plugin_dir_path(__FILE__));
+define( 'CC__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
 require_once CC__PLUGIN_DIR . 'includes/class-creativecommons.php';
 require_once CC__PLUGIN_DIR . 'widgets/creativecommons-widget.php';
 require CC__PLUGIN_DIR . 'includes/class-creativecommons-image.php';
 require CC__PLUGIN_DIR . 'includes/class-creativecommons-button.php';
 
-CreativeCommons::get_instance()-> init();
+CreativeCommons::get_instance()->init();
 CreativeCommonsButton::get_instance()->init();
 CreativeCommonsImage::get_instance()->init();
