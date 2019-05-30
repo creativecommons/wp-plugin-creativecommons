@@ -140,7 +140,7 @@ class CreativeCommons {
 			'license_current',
 			__(
 				'Current default license',
-				$this->localization_domain
+				'CreativeCommons'
 			),
 			array( &$this, 'setting_license_default_field' ),
 			'cc-admin',
@@ -160,7 +160,7 @@ class CreativeCommons {
 			'warning_txt',
 			__(
 				'Add license warning text',
-				$this->localization_domain
+				'CreativeCommons'
 			),
 			array( &$this, 'setting_warning_field' ),
 			'cc-admin',
@@ -172,7 +172,7 @@ class CreativeCommons {
 			'attribution_to',
 			__(
 				'Set attribution to',
-				$this->localization_domain
+				'CreativeCommons'
 			),
 			array( &$this, 'setting_attribution_field' ),
 			'cc-admin',
@@ -184,7 +184,7 @@ class CreativeCommons {
 			'allow_user_override',
 			__(
 				'Allow users to override site&#8209;wide license',
-				$this->localization_domain
+				'CreativeCommons'
 			),
 			array( &$this, 'setting_user_override_license_field' ),
 			'cc-admin',
@@ -196,7 +196,7 @@ class CreativeCommons {
 			'allow_content_override',
 			__(
 				'Allow a different license per post/page',
-				$this->localization_domain
+				'CreativeCommons'
 			),
 			array( &$this, 'setting_content_override_license_field' ),
 			'cc-admin',
@@ -223,7 +223,7 @@ class CreativeCommons {
 		$deed = esc_html( $license['deed'] );
 		$name = esc_html( $license['name'] );
 		$image = esc_html( $license['image'] );
-		echo "<div style='text-align: center; background: white; border: solid 2px #666; padding: 1em;'><img id='cc-current-license-image' src='$image'><br /><a href='$deed' target='_blank'>$name</a></div><div id='license-display' style='background: white; border: 2px solid red; padding: 1em; margin-top: 1em; display: none;'>" . '<h3>' . __( 'WARNING: Changing these license settings after content has been added may change the licenses authors on the site have selected, effectively relicensing possibly all content on the site!', $this->localization_domain ) . '</h3>' . "<p style='text-align: center;'><span id='license-display-image'></span></p></div>";
+		echo "<div style='text-align: center; background: white; border: solid 2px #666; padding: 1em;'><img id='cc-current-license-image' src='$image'><br /><a href='$deed' target='_blank'>$name</a></div><div id='license-display' style='background: white; border: 2px solid red; padding: 1em; margin-top: 1em; display: none;'>" . '<h3>' . __( 'WARNING: Changing these license settings after content has been added may change the licenses authors on the site have selected, effectively relicensing possibly all content on the site!', 'CreativeCommons' ) . '</h3>' . "<p style='text-align: center;'><span id='license-display-image'></span></p></div>";
 	}
 
 
@@ -353,7 +353,7 @@ class CreativeCommons {
 			'user_override_license'    => true,
 			'content_override_license' => true,
 			'version'                  => self::VERSION,
-			'warning_txt'              => __( 'The license shown may be overriden by individual content such as a single post or image.', $this->localization_domain ),
+			'warning_txt'              => __( 'The license shown may be overriden by individual content such as a single post or image.', 'CreativeCommons' ),
 		);
 	}
 
@@ -493,11 +493,11 @@ class CreativeCommons {
 
 		$html  = '';
 		$html .= "<span id='license-display'></span>";
-		$html .= '<br id="license"><a title="' . __( 'Choose a Creative Commons license', $this->localization_domain ) . '" class="button button-secondary thickbox edit-license" href="https://creativecommons.org/choose/?';
+		$html .= '<br id="license"><a title="' . __( 'Choose a Creative Commons license', 'CreativeCommons' ) . '" class="button button-secondary thickbox edit-license" href="https://creativecommons.org/choose/?';
 		$html .= 'partner=CC+WordPress+Plugin&';
 		$html .= $lang;
 		$html .= '&exit_url=' . $this->plugin_url . 'license-return.php?url=[license_url]%26name=[license_name]%26button=[license_button]%26deed=[deed_url]&';
-		$html .= '&KeepThis=true&TB_iframe=true&height=500&width=600">' . __( 'Change license', $this->localization_domain );
+		$html .= '&KeepThis=true&TB_iframe=true&height=500&width=600">' . __( 'Change license', 'CreativeCommons' );
 		$html .= '</a>';
 
 		$html .= '<input type="hidden" value="' . $license['deed'] . '" id="hidden-license-deed" name="license[deed]"/>';
@@ -517,20 +517,20 @@ class CreativeCommons {
 			case 'network':
 				$attribution_options = array(
 					'network_name' => sprintf(
-						__( 'The network name: %s', $this->localization_domain ),
+						__( 'The network name: %s', 'CreativeCommons' ),
 						get_site_option( 'site_name' )
 					),
 					'site_name'    => __(
 						"A site's name",
-						$this->localization_domain
+						'CreativeCommons'
 					),
 					'display_name' => __(
 						'The author display name',
-						$this->localization_domain
+						'CreativeCommons'
 					),
 					'other'        => __(
 						'Something completely differrent',
-						$this->localization_domain
+						'CreativeCommons'
 					),
 				);
 				break;
@@ -538,16 +538,16 @@ class CreativeCommons {
 			case 'site':
 				$attribution_options = array(
 					'site_name'    => sprintf(
-						__( 'The site name: %s', $this->localization_domain ),
+						__( 'The site name: %s', 'CreativeCommons' ),
 						get_bloginfo( 'site' )
 					),
 					'display_name' => __(
 						'The author display name',
-						$this->localization_domain
+						'CreativeCommons'
 					),
 					'other'        => __(
 						'Something completely differrent',
-						$this->localization_domain
+						'CreativeCommons'
 					),
 				);
 				break;
@@ -557,11 +557,11 @@ class CreativeCommons {
 					$attribution_options = array(
 						'display_name' => __(
 							'The author display name',
-							$this->localization_domain
+							'CreativeCommons'
 						),
 						'other'        => __(
 							'Something completely differrent',
-							$this->localization_domain
+							'CreativeCommons'
 						),
 					);
 				}
@@ -603,8 +603,8 @@ class CreativeCommons {
 			}
 
 			$html .= "<p id='attribute-other-data' class='$class'>";
-			$html .= "<label for='license-other-value'>" . __( 'Attribution text:', $this->localization_domain ) . "<br /><input type='text' value='$value' name='license[attribute_other]' id='license-other-value' class='large' size='45' /></label><br />"; // might need max length? TODO need to check hidden value if other prev was selected
-			$html .= "<label for='license-other-value-url'>" . __( 'Attribution url:', $this->localization_domain ) . "<br /><input type='text' value='$url' name='license[attribute_other_url]' id='license-other-value-url' class='large' size='45' /></label>";
+			$html .= "<label for='license-other-value'>" . __( 'Attribution text:', 'CreativeCommons' ) . "<br /><input type='text' value='$value' name='license[attribute_other]' id='license-other-value' class='large' size='45' /></label><br />"; // might need max length? TODO need to check hidden value if other prev was selected
+			$html .= "<label for='license-other-value-url'>" . __( 'Attribution url:', 'CreativeCommons' ) . "<br /><input type='text' value='$url' name='license[attribute_other_url]' id='license-other-value-url' class='large' size='45' /></label>";
 			$html .= '</p>';
 		}
 		if ( $echo ) {
@@ -619,7 +619,7 @@ class CreativeCommons {
 	function display_settings_warning( $echo = false ) {
 		$html = '';
 		$html .= '<p>';
-		$html .= __( '', $this->localization_domain );
+		$html .= __( '', 'CreativeCommons' );
 		$html .= '</p>';
 		if ( $echo ) {
 			echo $html;
@@ -649,7 +649,7 @@ class CreativeCommons {
 		$license = $this->get_license( $location );
 
 		$html  = '';
-		$html .= '<h3>' . __( 'License settings', $this->localization_domain ) . "</h3>\n";
+		$html .= '<h3>' . __( 'License settings', 'CreativeCommons' ) . "</h3>\n";
 		$html .= $this->display_settings_warning();
 
 		$html .= wp_nonce_field( 'license-update', $name = 'license_wpnonce', $referer = true, $echo = false );
@@ -659,7 +659,7 @@ class CreativeCommons {
 		$html .= $this->_license_settings_html( $location );
 
 		$html .= "<tr valign='top'>\n";
-		$html .= "\t<th scope='row'><label for='override-license'>" . __( "Allow siteadmins to change their site's license", $this->localization_domain ) . "</label></th>\n";
+		$html .= "\t<th scope='row'><label for='override-license'>" . __( "Allow siteadmins to change their site's license", 'CreativeCommons' ) . "</label></th>\n";
 		$html .= "\t<td><input name='site_override_license' type='checkbox'" . checked( $license['site_override_license'], 'true', false ) . " id='site_override-license' value='true' />";
 		$html .= "</td>\n";
 		$html .= "</tr>\n";
@@ -683,8 +683,8 @@ class CreativeCommons {
 			if ( defined( 'IS_PROFILE_PAGE' ) && IS_PROFILE_PAGE ) {
 				$this->_save_user_license();
 			} elseif ( is_multisite()
-					  && defined( 'WP_NETWORK_ADMIN' )
-					  && WP_NETWORK_ADMIN
+					&& defined( 'WP_NETWORK_ADMIN' )
+					&& WP_NETWORK_ADMIN
 			) {
 				$this->_save_network_license();
 			} else {
@@ -719,14 +719,13 @@ class CreativeCommons {
 		}
 
 		// always save the current version
-		$license['version']          = self::VERSION;
-		$license['deed']             = esc_url( $data['deed'] );
-		$license['image']            = esc_url( $data['image'] );
-		$license['name']             = esc_attr( $data['name'] );
-		$license['attribute_to']     = esc_attr( $data['attribute_to'] );
-		$license['attribute_other']  = esc_html( $data['attribute_other'] );
-		$license['attribute_other_url']
-			= esc_html( $data['attribute_other_url'] );
+		$license['version']             = self::VERSION;
+		$license['deed']                = esc_url( $data['deed'] );
+		$license['image']               = esc_url( $data['image'] );
+		$license['name']                = esc_attr( $data['name'] );
+		$license['attribute_to']        = esc_attr( $data['attribute_to'] );
+		$license['attribute_other']     = esc_html( $data['attribute_other'] );
+		$license['attribute_other_url'] = esc_html( $data['attribute_other_url'] );
 
 		switch ( $from ) {
 			// @TODO need to check this!
@@ -817,13 +816,13 @@ class CreativeCommons {
 		$location = 'post-page';
 		$html  = '<div id="license" class="misc-pub-section misc-pub-section-last ">';
 		$html .= wp_nonce_field( 'license-update', $name = 'license_wpnonce', $referer = true, $echo = false );
-		$html .= '<strong>' . __( 'Licensed:', $this->localization_domain ) . '</strong>';
+		$html .= '<strong>' . __( 'Licensed:', 'CreativeCommons' ) . '</strong>';
 
 		$html .= '<p>';
 		$html .= $this->select_license_html( $location, $echo = false );
 		$html .= '</p>';
 
-		$html .= '<strong>' . __( 'Set attribution to', $this->localization_domain ) . '</strong>';
+		$html .= '<strong>' . __( 'Set attribution to', 'CreativeCommons' ) . '</strong>';
 
 		$html .= '<p>';
 		$html .= $this->select_attribute_to_html( $location, $echo = false );
@@ -838,14 +837,14 @@ class CreativeCommons {
 	private function _license_settings_html( $location ) {
 		$html = '';
 		$html .= "<tr valign='top'>\n";
-		$html .= "\t<th scope='row'><label for='license'>" . __( 'Select a default license', $this->localization_domain ) . "</label></th>\n";
+		$html .= "\t<th scope='row'><label for='license'>" . __( 'Select a default license', 'CreativeCommons' ) . "</label></th>\n";
 		$html .= "\t<td>";
 		$html .= $this->select_license_html( $location, $echo = false );
 		$html .= "</td>\n";
 		$html .= "</tr>\n";
 
 		$html .= "<tr valign='top'>\n";
-		$html .= "\t<th scope='row'><label for='attribute_to'>" . __( 'Set attribution to', $this->localization_domain ) . "</label></th>\n";
+		$html .= "\t<th scope='row'><label for='attribute_to'>" . __( 'Set attribution to', 'CreativeCommons' ) . "</label></th>\n";
 		$html .= "\t<td>";
 		$html .= $this->select_attribute_to_html( $location, $echo = false );
 		$html .= "</td>\n";
@@ -890,9 +889,9 @@ class CreativeCommons {
 		<?php
 		echo __(
 			'is a
-	   nonprofit organization that enables the sharing and use of
-	   creativity and knowledge through free legal tools.',
-			$this->localization_domain
+			nonprofit organization that enables the sharing and use of
+			creativity and knowledge through free legal tools.',
+			'CreativeCommons'
 		);
 		?>
 		</p>
@@ -901,12 +900,12 @@ class CreativeCommons {
 		<?php
 		echo __(
 			'Our free, easy-to-use copyright licenses
-		   provide a simple, standardized way to give the public
-		   permission to share and use your creative work — on
-		   conditions of your choice. CC licenses let you easily
-		   change your copyright terms from the default of "all rights
-		   reserved" to "some rights reserved."',
-			$this->localization_domain
+			provide a simple, standardized way to give the public
+			permission to share and use your creative work — on
+			conditions of your choice. CC licenses let you easily
+			change your copyright terms from the default of "all rights
+			reserved" to "some rights reserved."',
+			'CreativeCommons'
 		);
 		?>
 		</p>
@@ -918,12 +917,12 @@ class CreativeCommons {
 		   alternative to copyright. They work alongside copyright and
 		   enable you to modify your copyright terms to best suit your
 			needs.',
-			$this->localization_domain
+			'CreativeCommons'
 		);
 		?>
 		</p>
 
-		<p><?php echo __( 'Please consider making a <a href="https://donate.creativecommons.org" target="_blank">donation (tax deductible in the US) to support our work</a>.', $this->localization_domain ); ?></p>
+		<p><?php echo __( 'Please consider making a <a href="https://donate.creativecommons.org" target="_blank">donation (tax deductible in the US) to support our work</a>.', 'CreativeCommons' ); ?></p>
 
 		<h4>Sign up for our newsletter</h4>
 
@@ -1069,25 +1068,25 @@ class CreativeCommons {
 									$extra_permissions_url, $warning_text ) {
 		$html = '';
 		$html .= "<a rel='license' href='$deed_url'>";
-		$html .= "<img alt='" . __( 'Creative Commons License', $this->localization_domain ) . "' style='border-width:0' src='$image_url' />";
+		$html .= "<img alt='" . __( 'Creative Commons License', 'CreativeCommons' ) . "' style='border-width:0' src='$image_url' />";
 		$html .= '</a><br />';
 		$html .= "<span xmlns:dct='http://purl.org/dc/terms/' property='dct:title'>$title_work</span> ";
 		if ( $is_singular && $attribute_text ) {
-			$html .= __( 'by', $this->localization_domain );
+			$html .= __( 'by', 'CreativeCommons' );
 			if ( $attribute_url != '' ) {
 				$html .= " <a xmlns:cc='http://creativecommons.org/ns#' href='$attribute_url' property='cc:attributionName' rel='cc:attributionURL'>$attribute_text</a> ";
 			} else {
 				$html .= $attribute_text;
 			}
 		}
-		$html .= sprintf( __( 'is licensed under a <a rel="license" href="%s">%s</a> License.', $this->localization_domain ), $deed_url, $license_name );
+		$html .= sprintf( __( 'is licensed under a <a rel="license" href="%s">%s</a> License.', 'CreativeCommons' ), $deed_url, $license_name );
 		if ( $source_work_url ) {
 			$html .= '<br />';
-			$html .= sprintf( __( 'Based on a work at <a xmlns:dct="http://purl.org/dc/terms/" href="%s" rel="dct:source">%s</a>.', $this->localization_domain ), $source_work_url, $source_work_url );
+			$html .= sprintf( __( 'Based on a work at <a xmlns:dct="http://purl.org/dc/terms/" href="%s" rel="dct:source">%s</a>.', 'CreativeCommons' ), $source_work_url, $source_work_url );
 		}
 		if ( $extra_permissions_url ) {
 			$html .= '<br />';
-			$html .= sprintf( __( 'Permissions beyond the scope of this license may be available at <a xmlns:cc="http://creativecommons.org/ns#" href="%s" rel="cc:morePermissions">%s</a>.', $this->localization_domain ), $extra_permissions_url, $extra_permissions_url );
+			$html .= sprintf( __( 'Permissions beyond the scope of this license may be available at <a xmlns:cc="http://creativecommons.org/ns#" href="%s" rel="cc:morePermissions">%s</a>.', 'CreativeCommons' ), $extra_permissions_url, $extra_permissions_url );
 		}
 		if ( $warning_text ) {
 			$html .= '<br />';
