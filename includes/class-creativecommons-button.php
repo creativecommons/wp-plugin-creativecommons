@@ -1,42 +1,82 @@
 <?php
 
+/**
+ * CC WordPress Plugin: Button class
+ *
+ * Button for the selection of license as per needs.
+ *
+ * @package WordPress
+ * @subpackage Component
+ * @since 2.0
+ */
 class CreativeCommonsButton {
 
 	const CCL_BUTTON_HEAD = '<div class="cc-attribution-element"><button class="cc-attribution-button cc-attribution-copy-button" data-clipboard-action="copy" data-clipboard-text="" ';
 
 	const CC_BUTTON_TAIL = '"><span data-l10n-id="Share">Share</span></button>
-<div class="cc-dropdown-wrapper"><button class="cc-attribution-format-select">HTML &#x25BC;</button>
-<ul class="cc-dropdown-menu" aria-haspopup="true" aria-expanded="false">
+	<div class="cc-dropdown-wrapper"><button class="cc-attribution-format-select">HTML &#x25BC;</button>
+	<ul class="cc-dropdown-menu" aria-haspopup="true" aria-expanded="false">
 	<li class="cc-dropdown-menu-item cc-dropdown-menu-item-selected"><a class="cc-dropdown-menu-item-link cc-format-html-rdfa" data-cc-format="html-rdfa" href="#">HTML</a></li>
 	<li class="cc-dropdown-menu-item"><a class="cc-dropdown-menu-item-link cc-format-text" data-cc-format="text" href="#">Text</a></li></ul></div>
-<button class="cc-attribution-help-button" data-l10n-id="?">?</button></div>';
+	<button class="cc-attribution-help-button" data-l10n-id="?">?</button></div>';
 
+	/**
+	 * Instance
+	 *
+	 * @var mixed null.
+	 */
 	private static $instance = null;
 
+
+	/**
+	 * Constructor
+	 *
+	 * @return void
+	 */
 	private function __construct() {
 	}
 
+
+	/**
+	 * Instantiate class.
+	 *
+	 * @return mixed
+	 */
 	public static function get_instance() {
 
 		if ( null == self::$instance ) {
-			self::$instance = new self;
+			self::$instance = new self();
 		}
-
 		return self::$instance;
-
 	}
 
+
+	/**
+	 * Media to text, search and replace
+	 *
+	 * @param  mixed $media media to be replaced.
+	 *
+	 * @return string|string[]|null
+	 */
 	function mediaToText( $media ) {
 		return preg_replace( '/^.+ src="([^"]+)".+$/', '<$1>', $media );
 	}
 
+
+	/**
+	 * Html to text
+	 *
+	 * @param  mixed $metadata to be replaced.
+	 *
+	 * @return string
+	 */
 	function htmlToText( $metadata ) {
 		$result = preg_replace( '|<br[^>]*>|', ' ', $metadata );
 		$result = preg_replace( '|<img [^>]+>|', '', $result );
 		$result = preg_replace( '|</?span[^>]*>|', '', $result );
-		// Remove links made empty by previous operations
+		// Remove links made empty by previous operations.
 		$result = preg_replace( '|<a[^>]+href[^>]+>\s*</a>|', '', $result );
-		// Convert surviving links
+		// Convert surviving links.
 		$result = preg_replace(
 			'|<a[^>]+href="([^"]+)"[^>]*>([^>]+)</a>|',
 			'$2 <$1>',
@@ -46,6 +86,16 @@ class CreativeCommonsButton {
 	}
 
 
+	/**
+	 * Markup
+	 *
+	 * @param  mixed $html_rdfa
+	 * @param  mixed $text
+	 * @param  mixed $button_height
+	 * @param  mixed $media
+	 *
+	 * @return string
+	 */
 	public function markup( $html_rdfa, $text, $button_height, $media ) {
 		if ( $text === false ) {
 			$text = htmlentities( $this->htmlToText( $html_rdfa ), ENT_QUOTES );
@@ -65,11 +115,21 @@ class CreativeCommonsButton {
 	}
 
 
+	/**
+	 * Returns the base directory path.
+	 *
+	 * @return mixed
+	 */
 	private function basedir() {
 		return plugin_dir_url( dirname( __FILE__ ) );
 	}
 
 
+	/**
+	 * Adds scripts
+	 *
+	 * @return void
+	 */
 	public function cc_1ca_add_theme_scripts() {
 		wp_enqueue_script( 'jquery-ui-dialog' );
 		wp_enqueue_style(
@@ -99,19 +159,31 @@ class CreativeCommonsButton {
 		);
 	}
 
+
+	/**
+	 * Insert footer
+	 *
+	 * @return void
+	 */
 	public function cc_1ca_insert_footer() {
 		echo '<script>
-	  var ccButton = new CCButton();
-	  ccButton.addEventListeners();
-</script>';
+			var ccButton = new CCButton();
+			ccButton.addEventListeners();
+			</script>';
 	}
 
+
+	/**
+	 * Initialize scripts
+	 *
+	 * @return void
+	 */
 	public function init() {
 		add_action(
 			'wp_enqueue_scripts',
 			array( $this, 'cc_1ca_add_theme_scripts' )
 		);
-		// Low priority so we go after the scripts are included
+		// Low priority so we go after the scripts that are included.
 		add_action(
 			'wp_footer',
 			array( $this, 'cc_1ca_insert_footer' ),

@@ -1,44 +1,95 @@
 <?php
 
 /**
-	Author: Bjorn Wijers <burobjorn@burobjorn.nl>, Tarmo Toikkanen <tarmo@iki.fi>, Matt Lee <mattl@creativecommons.org>, Rob Myers <rob@creativecommons.org>
-	License: GPLv2 or later versions
- **/
+ * CC WordPress Plugin: Main Class
+ *
+ * Author: Bjorn Wijers <burobjorn@burobjorn.nl>, Tarmo Toikkanen
+ * <tarmo@iki.fi>, Matt Lee <mattl@creativecommons.org>, Rob Myers
+ * <rob@creativecommons.org>
+ *
+ * License: GPLv2 or later versions
+ *
+ * @package WordPress
+ * @subpackage Component
+ * @since 2.0
+ */
 class CreativeCommons {
 
-	// MAKE SURE THE PLUGIN HEADER HAS THE SAME VERSION NUMBER!
+	// Make sure the plugin header has the same version number.
 	const VERSION = '2.0-beta';
 
+	/**
+	 * Plugin URL.
+	 *
+	 * @since 2.0
+	 * @var mixed $plugin_url
+	 */
 	private $plugin_url;
+
+	/**
+	 * Store text-domain. Only used to load text-domain.
+	 * Do not use this variable with strings, use 'CreativeCommons' instead
+	 *
+	 * @since 2.0
+	 * @var mixed $localization_domain
+	 */
 	private $localization_domain = 'CreativeCommons';
+
+	/**
+	 * To store locale.
+	 *
+	 * @since 2.0
+	 * @var mixed $locale
+	 */
 	private $locale;
 
+	/**
+	 * Instance
+	 *
+	 * @since 2.0
+	 * @var null $instance
+	 */
 	private static $instance = null;
 
+
+	/**
+	 * Constructor
+	 *
+	 * @return void
+	 */
 	private function __construct() {
 	}
 
 
+	/**
+	 * Intializer
+	 *
+	 * @return void
+	 */
 	public function init() {
 		$this->plugin_url = plugin_dir_url( dirname( __FILE__ ) );
 
-		// language setup
+		// language setup.
 		$this->locale = get_locale();
 		$mofile = plugin_dir_path( dirname( __FILE__ ) )
 				. '/languages/' . $this->locale . '.mo';
 		load_textdomain( $this->localization_domain, $mofile );
 
-		// add admin.js to wp-admin pages and displays the site license
-		// settings in the Settings->General settings page unless you're
-		// running WordPress Multisite (Network) and the superadmin has
-		// disabled this.
+		/*
+		 * add admin.js to wp-admin pages and displays the site
+		 * license settings in the Settings->General settings page
+		 * unless you're running WordPress Multisite (Network) the
+		 * superadmin has disabled this.
+		 */
 		add_action( 'admin_init', array( &$this, 'license_admin_init' ) );
 		add_action( 'admin_menu', array( $this, 'add_plugin_page' ) );
 		add_action( 'admin_init', array( $this, 'page_init' ) );
 
-		// Selecting a license for individual posts or pages is only
-		// possible if the settings of the site allow it
-		// by default it does allow it.
+		/*
+		 * Selecting a license for individual posts or pages is only
+		 * possible if the settings of the site allow it
+		 * by default it does allow it.
+		 */
 		if ( $this->allow_content_override_site_license() ) {
 			add_action(
 				'post_submitbox_misc_actions',
@@ -54,9 +105,11 @@ class CreativeCommons {
 			);
 		}
 
-		// Selecting a license as a user for all your content is only
-		// possible if the settings of the site allow it,
-		// by default it will allow it.
+		/*
+		 * Selecting a license as a user for all your content is only
+		 * possible if the settings of the site allow it,
+		 * by default it will allow it.
+		 */
 		if ( $this->allow_user_override_site_license() ) {
 			add_action(
 				'personal_options',
@@ -69,11 +122,13 @@ class CreativeCommons {
 		}
 
 		// this implements the license plugin as a widget.
-		// TODO: Widget needs more testing with the new approach
+		// TODO: Widget needs more testing with the new approach.
 		add_action( 'widgets_init', array( &$this, 'license_as_widget' ) );
 
-		// if the plugin is installed in multisite environment allow to set
-		// the options for all sites as default from the network options
+		/*
+		 * if the plugin is installed in multisite environment allow to set
+		 * the options for all sites as default from the network options
+		 */
 		if ( is_multisite() ) {
 			add_action(
 				'wpmu_options',
@@ -91,17 +146,25 @@ class CreativeCommons {
 	}
 
 
+	/**
+	 * Gets an instance
+	 *
+	 * @return $instance
+	 */
 	public static function get_instance() {
 
 		if ( null == self::$instance ) {
-			self::$instance = new self;
+			self::$instance = new self();
 		}
-
 		return self::$instance;
-
 	}
 
 
+	/**
+	 * Register settings
+	 *
+	 * @return void
+	 */
 	function wphub_register_settings() {
 		add_option( 'wphub_use_api', '1' );
 		add_option( 'wphub_api_callback', 'alpha' );
@@ -110,6 +173,11 @@ class CreativeCommons {
 	}
 
 
+	/**
+	 * Add Options Page
+	 *
+	 * @return void
+	 */
 	function wphub_register_options_page() {
 		add_options_page(
 			'Page title',
@@ -206,6 +274,9 @@ class CreativeCommons {
 	}
 
 
+	/**
+	 * Function: settings_license_section
+	 */
 	function settings_license_section() {
 		$this->display_settings_warning(
 			$echo = true
@@ -213,20 +284,33 @@ class CreativeCommons {
 	}
 
 
+	/**
+	 * Funtion: setting_license_field
+	 */
 	function setting_license_field() {
 		$this->select_license_html( $location = 'site', $echo = true );
 	}
 
 
+	/**
+	 * Funciton: setting_license_default_field
+	 *
+	 * @return void
+	 */
 	function setting_license_default_field() {
 		$license = $this->get_license( $location = 'site' );
-		$deed = esc_html( $license['deed'] );
-		$name = esc_html( $license['name'] );
-		$image = esc_html( $license['image'] );
+		$deed    = esc_html( $license['deed'] );
+		$name    = esc_html( $license['name'] );
+		$image   = esc_html( $license['image'] );
 		echo "<div style='text-align: center; background: white; border: solid 2px #666; padding: 1em;'><img id='cc-current-license-image' src='$image'><br /><a href='$deed' target='_blank'>$name</a></div><div id='license-display' style='background: white; border: 2px solid red; padding: 1em; margin-top: 1em; display: none;'>" . '<h3>' . __( 'WARNING: Changing these license settings after content has been added may change the licenses authors on the site have selected, effectively relicensing possibly all content on the site!', 'CreativeCommons' ) . '</h3>' . "<p style='text-align: center;'><span id='license-display-image'></span></p></div>";
 	}
 
 
+	/**
+	 * Function: etting_warning_field
+	 *
+	 * @return void
+	 */
 	function setting_warning_field() {
 		$license = $this->get_license( $location = 'site' );
 		$warning = esc_html( $license['warning_txt'] );
@@ -234,11 +318,22 @@ class CreativeCommons {
 	}
 
 
+	/**
+	 * Functon: setting_attribution_field
+	 *
+	 * @return void
+	 */
 	function setting_attribution_field() {
 		$this->select_attribute_to_html( $location = 'site', $echo = true );
 	}
 
-	// only used once in site admin
+
+	/**
+	 * Function: setting_user_override_license_field
+	 * only used once in site admin
+	 *
+	 * @return void
+	 */
 	function setting_user_override_license_field() {
 		$license = $this->get_license( $location = 'site' );
 		$checked = ( array_key_exists( 'user_override_license', $license ) )
@@ -248,7 +343,12 @@ class CreativeCommons {
 	}
 
 
-	// only used once in site admin
+	/**
+	 * Function: setting_content_override_license_field
+	 * only used once in site admin
+	 *
+	 * @return void
+	 */
 	function setting_content_override_license_field() {
 		$license = $this->get_license( $location = 'site' );
 		$checked = ( array_key_exists( 'content_override_license', $license ) )
@@ -273,13 +373,16 @@ class CreativeCommons {
 	 * allowed to let a user pick their own license. A siteadmin may also
 	 * enable to have a license per content.
 	 *
-	 * @return bool true if the network license override is allowed, false
-	 * otherwise
+	 * @return bool true if the network license override is allowed,
+	 * otherwise false
 	 */
 	function allow_site_override_network_license() {
 		$license = $this->get_license( $location = 'network' );
-		// gotcha: using true as string instead of bool since it will be a
-		// string value returned from the settings form
+
+		/*
+		 * Using true as string instead of bool since it will be a
+		 * string value returned from the settings form
+		 */
 		if ( 'true' == $license['site_override_license'] ) {
 			return true;
 		} else {
@@ -288,6 +391,11 @@ class CreativeCommons {
 	}
 
 
+	/**
+	 * Function: allow_user_override_site_license
+	 *
+	 * @return bool
+	 */
 	function allow_user_override_site_license() {
 		if ( is_multisite()
 			&& ! $this->allow_site_override_network_license()
@@ -306,6 +414,11 @@ class CreativeCommons {
 	}
 
 
+	/**
+	 * Function: allow_content_override_site_license
+	 *
+	 * @return bool
+	 */
 	function allow_content_override_site_license() {
 		if ( is_multisite()
 			&& ! $this->allow_site_override_network_license()
@@ -340,7 +453,7 @@ class CreativeCommons {
 	 **/
 	function plugin_default_license() {
 		$this->_logger( 'Got default settings' );
-		return $license = array(
+		$license = array(
 			'deed'                     => 'http://creativecommons.org/licenses/by-sa/4.0/',
 			'image'                    => 'https://licensebuttons.net/l/by-sa/4.0/88x31.png',
 			'attribute_to'             => '',
@@ -355,23 +468,28 @@ class CreativeCommons {
 			'version'                  => self::VERSION,
 			'warning_txt'              => __( 'The license shown may be overriden by individual content such as a single post or image.', 'CreativeCommons' ),
 		);
+		return $license;
 	}
 
 
-	// 1) Check if it's allowed to have a license per content => check the
-	// content for a license. No license found or not allowed? Continue 2
-	// 2) Check if it's allowed to have a license per user => check the
-	// content author and grab his/her license preference. No license found
-	// or user are not allowed to choose their own license? Continue 3
-	// 3) Check if the site is part of a network => No? continue step 4a
-	// Yes? continue step 4b
-	// 4a) the site is NOT part of a network => Get license from options or
-	// return plugin's default
-	// 4b) The site is part of a network => check if the site may choose its
-	// own license => check the options for a license. Not allowed or no
-	// license found Continue step 5
-	// 5) Check the multisite options for a license and return if not found
-	// return plugin default
+	/**
+	 * Content for a license. No license found or not allowed? Continue 2
+	 * 1) Check if it's allowed to have a license per content => check the
+	 * 2) Check if it's allowed to have a license per user => check the
+	 * content author and grab his/her license preference. No license found
+	 * 3) Check if the site is part of a network => No? continue step 4a
+	 * or user are not allowed to choose their own license? Continue 3
+	 * 4a) the site is NOT part of a network => Get license from options or
+	 * Yes? continue step 4b
+	 * 4b) The site is part of a network => check if the site may choose its
+	 * return plugin's default
+	 * license found Continue step 5
+	 * own license => check the options for a license. Not allowed or no
+	 * return plugin default
+	 * 5) Check the multisite options for a license and return if not found
+	 *
+	 * @param mixed $location null.
+	 */
 	function get_license( $location = null ) {
 		switch ( $location ) {
 			case 'network':
@@ -405,8 +523,8 @@ class CreativeCommons {
 					? $post_page_license : $this->get_license( 'profile' );
 				break;
 
-			// TODO need to check default structure below since this can
-			// cause way too many calls for the right license
+			// TODO: need to check default structure below
+			// since this can cause way too many calls for the right license.
 			case 'frontend':
 				$this->_logger( 'get license for the frontend' );
 				if ( is_multisite() ) {
@@ -416,8 +534,7 @@ class CreativeCommons {
 					if ( $this->allow_site_override_network_license() ) {
 						$this->_logger( 'site may override network license' );
 						$license = $this->get_license( 'site' );
-						// keep track of site license cause we need to check it
-						// twice...
+						// keep track of site license cause we need to check it twice.
 						$site_license = $license;
 						$this->_logger( 'got site license' );
 						if ( array_key_exists(
@@ -460,13 +577,17 @@ class CreativeCommons {
 	}
 
 
-	// will use a variable prefix with underscore to make *really* sure this
-	// postmeta value will NOT be displayed to other users. The option is
-	// the same structure as everywhere: a serialized array.
-	// (http://codex.wordpress.org/Function_Reference/add_post_meta)
+	/**
+	 * Function: get_post_page_license
+	 *
+	 * It will use a variable prefix with underscore to make really
+	 * sure this postmeta value will NOT be displayed to other users. The option is
+	 * the same structure as everywhere: a serialized array.
+	 *
+	 * (http://codex.wordpress.org/Function_Reference/add_post_meta)
+	 */
 	function get_post_page_license() {
-		// TODO check if this can be done without a global
-		// and if we're always getting what we want
+		// TODO check if this can be done without a global.
 		global $post;
 		$license = get_post_meta( $post->ID, '_license', true );
 		if ( is_array( $license ) && sizeof( $license ) > 0 ) {
@@ -477,17 +598,27 @@ class CreativeCommons {
 	}
 
 
-	// used in:
-	// - network settings
-	// - site settings
-	// - profile settings (personal & others)
-	// - post/page edit screen (my own & others)
+	/**
+	 * Function: select_license_html
+	 *
+	 * It is used in:
+	 * - network settings
+	 * - site settings
+	 * - profile settings (personal & others)
+	 * - post/page edit screen (my own & others)
+	 *
+	 * @param  mixed $location null.
+	 * @param  mixed $echo true.
+	 */
 	function select_license_html( $location = null, $echo = true ) {
-		// get the previously selected license from this site's options
-		// or the plugin's default license
-		// $license = get_option('license', $this->plugin_default_license());
-		$license  = $this->get_license( $location );
-		// add lang option
+		/*
+		 * get the previously selected license from this site's options
+		 * or the plugin's default license
+		 * $license = get_option('license', $this->plugin_default_license());
+		 * $license  = $this->get_license( $location );
+		 */
+
+		// Add lang option.
 		$lang = ( isset( $this->locale ) && ! empty( $this->locale ) )
 			? 'lang=' . esc_attr( $this->locale ) : '';
 
@@ -511,7 +642,15 @@ class CreativeCommons {
 	}
 
 
-	// return default attribution options
+	/**
+	 * Function: get_attribution_options
+	 *
+	 * Returns default attribution options
+	 *
+	 * @param  mixed $location
+	 *
+	 * @return $attribution_options
+	 */
 	function get_attribution_options( $location ) {
 		switch ( $location ) {
 			case 'network':
@@ -572,6 +711,12 @@ class CreativeCommons {
 	}
 
 
+	/**
+	 * Funciton: select_attribute_to_html
+	 *
+	 * @param  mixed $location null.
+	 * @param  mixed $echo true.
+	 */
 	function select_attribute_to_html( $location = null, $echo = true ) {
 		$license = $this->get_license( $location );
 		$attribute_options = $this->get_attribution_options( $location );
@@ -595,15 +740,15 @@ class CreativeCommons {
 				$value = esc_html( $license['attribute_other'] );
 				$url   = esc_url( $license['attribute_other_url'] );
 			} else {
-				// hide the other input text field if the 'other' option is
-				// not ticked
+				// Hide the other input text field if the 'other' option is not ticked.
 				$class = 'hidden';
 				$value = '';
 				$url = '';
 			}
 
 			$html .= "<p id='attribute-other-data' class='$class'>";
-			$html .= "<label for='license-other-value'>" . __( 'Attribution text:', 'CreativeCommons' ) . "<br /><input type='text' value='$value' name='license[attribute_other]' id='license-other-value' class='large' size='45' /></label><br />"; // might need max length? TODO need to check hidden value if other prev was selected
+			$html .= "<label for='license-other-value'>" . __( 'Attribution text:', 'CreativeCommons' ) . "<br /><input type='text' value='$value' name='license[attribute_other]' id='license-other-value' class='large' size='45' /></label><br />";
+			// Might need max length? TODO: need to check hidden value if other prev was selected.
 			$html .= "<label for='license-other-value-url'>" . __( 'Attribution url:', 'CreativeCommons' ) . "<br /><input type='text' value='$url' name='license[attribute_other_url]' id='license-other-value-url' class='large' size='45' /></label>";
 			$html .= '</p>';
 		}
@@ -615,7 +760,13 @@ class CreativeCommons {
 	}
 
 
-	// add a warning text at the site/network settings
+	/**
+	 * Function: display_settings_warning
+	 *
+	 * Adds a warning text at the site/network settings.
+	 *
+	 * @param  mixed $echo false.
+	 */
 	function display_settings_warning( $echo = false ) {
 		$html = '';
 		$html .= '<p>';
@@ -639,12 +790,13 @@ class CreativeCommons {
 	 * Network license.
 	 *
 	 * Called by wpmu_options action
-	 *
 	 **/
 	function network_license_settings_html() {
-		// get the previously selected license from the network options or
-		// the plugin's default license
-		// $license = get_site_option('license', $this->plugin_default_license());
+		/*
+		 * Get the previously selected license from the network options or
+		 * the plugin's default license
+		 * $license = get_site_option('license', $this->plugin_default_license());
+		 */
 		$location = 'network';
 		$license = $this->get_license( $location );
 
@@ -671,8 +823,12 @@ class CreativeCommons {
 	}
 
 
-	// save license from network settings, user profile and post/page
-	// interface
+	/**
+	 * Function: save_license
+	 *
+	 * Saves license from network settings, user profile and post/page interface.
+	 * @param  mixed $post_id false.
+	 */
 	function save_license( $post_id = false ) {
 		if ( filter_has_var( INPUT_POST, 'license_wpnonce' )
 			&& wp_verify_nonce(
@@ -688,8 +844,7 @@ class CreativeCommons {
 			) {
 				$this->_save_network_license();
 			} else {
-				// presume we're in a post or page wp-admin environment
-				// might need to deal with autosave
+				// Assume we're in a post or page wp-admin environment might need to deal with autosave.
 				$this->_save_post_page_license( $post_id );
 			}
 		} else {
@@ -698,8 +853,14 @@ class CreativeCommons {
 	}
 
 
-	// wrapper so I can use the _verify_license_data function.
-	// @TODO refactor in the future
+	/**
+	 * Function: _wrapper_settings_api_verify
+	 *
+	 * Wrapper so that we can use the _verify_license_data function.
+	 * TODO: refactor in the future
+	 *
+	 * @param  mixed $data license data.
+	 */
 	public function _wrapper_settings_api_verify( $data ) {
 		return $this->_verify_license_data( 'site', $data );
 	}
@@ -711,14 +872,14 @@ class CreativeCommons {
 	private function _verify_license_data( $from, $data = null ) {
 		$license = array();
 
-		// if no data was provided assume the data is in $_POST['license']
+		// if no data was provided assume the data is in $_POST['license'].
 		if ( is_null( $data )
 			&& isset( $_POST['license'] )
 		) {
 			$data = $_POST['license'];
 		}
 
-		// always save the current version
+		// Always save the current version.
 		$license['version']             = self::VERSION;
 		$license['deed']                = esc_url( $data['deed'] );
 		$license['image']               = esc_url( $data['image'] );
@@ -728,7 +889,6 @@ class CreativeCommons {
 		$license['attribute_other_url'] = esc_html( $data['attribute_other_url'] );
 
 		switch ( $from ) {
-			// @TODO need to check this!
 			case 'network':
 				if ( filter_has_var( INPUT_POST, 'site_override_license' ) ) {
 					$license['site_override_license'] = esc_attr(
@@ -752,8 +912,11 @@ class CreativeCommons {
 	}
 
 
-	// validates & verifies the data and then saves the license in the
-	// site_options
+	/**
+	 * Function: _save_network_license
+	 *
+	 * Validates & verifies the data and then saves the license in the site_options.
+	 */
 	private function _save_network_license() {
 		$license = $this->_verify_license_data( $from = 'network' );
 		return update_site_option( 'license', $license );
@@ -761,12 +924,16 @@ class CreativeCommons {
 	}
 
 
-	// TODO: need to decide if the user option is global for all
-	// sites/blogs in a network. Also need to make sure that we're using
-	// the current profile user_id which might not be the
-	// current_user (e.g. admin changing license for a user).
-	// validates & verifies the data and then saves the license in the
-	// user_options
+	/**
+	 * Function: _save_user_license
+	 *
+	 * TODO: need to decide if the user option is global for all sites/blogs in a network.
+	 * Also need to make sure that we're using
+	 * the current profile user_id which might not be the
+	 * current_user (e.g. admin changing license for a user).
+	 * validates & verifies the data and then saves the license in the
+	 * user_options
+	 */
 	private function _save_user_license() {
 		$license = $this->_verify_license_data( $from = 'profile' );
 		$user_id = get_current_user_id();
@@ -779,17 +946,27 @@ class CreativeCommons {
 	}
 
 
-	// save post/page metadata due to it being an array it should not be
-	// shown in the post or page custom fields interface
-	// using _license to hide it from the custom fields
+	/**
+	 * Function: _save_post_page_license
+	 *
+	 * Save post/page metadata due to it being an array it should not be
+	 * shown in the post or page custom fields interface using _license to hide it from the custom fields
+	 *
+	 * @param  mixed $post_id .
+	 */
 	private function _save_post_page_license( $post_id ) {
 		$license = $this->_verify_license_data( $from = 'post-page' );
 		return update_post_meta( $post_id, '_license', $license );
 	}
 
 
+	/**
+	 * Function: license_admin_init
+	 *
+	 * @return void
+	 */
 	function license_admin_init() {
-		/* Register our script. */
+		// Register our script.
 		wp_register_script( 'license', $this->plugin_url . '/js/admin.js' );
 		wp_enqueue_script( 'thickbox' );
 		wp_enqueue_style( 'thickbox' );
@@ -797,9 +974,11 @@ class CreativeCommons {
 	}
 
 
-	// render the html settings for the user profile
-	// TODO: add global option: if allowed use this license across all my
-	// sites in this network.
+	/**
+	 * Function: user_license_settings_html
+	 * Renders the html settings for the user profile
+	 * TODO: add global option: if allowed use this license across all my sites in this network.
+	 */
 	function user_license_settings_html() {
 		$location = 'profile';
 		$html     = wp_nonce_field(
@@ -812,6 +991,11 @@ class CreativeCommons {
 		echo $html;
 	}
 
+	/**
+	 * Function: post_page_license_settings_html
+	 *
+	 * @return void
+	 */
 	function post_page_license_settings_html() {
 		$location = 'post-page';
 		$html  = '<div id="license" class="misc-pub-section misc-pub-section-last ">';
@@ -833,7 +1017,14 @@ class CreativeCommons {
 	}
 
 
-	// DRY wrapper function used for profile settings and network settings
+	/**
+	 * Function: _license_settings_html
+	 *
+	 * DRY wrapper function used for profile settings and network settings
+	 *
+	 * @param  mixed $location
+	 *
+	 */
 	private function _license_settings_html( $location ) {
 		$html = '';
 		$html .= "<tr valign='top'>\n";
@@ -857,7 +1048,7 @@ class CreativeCommons {
 	 * Add options page
 	 */
 	public function add_plugin_page() {
-		// This page will be under "Settings"
+		// This page will be under "Settings".
 		add_options_page(
 			'Settings Admin',
 			'Creative Commons',
@@ -872,7 +1063,7 @@ class CreativeCommons {
 	 * Options page callback
 	 */
 	public function create_admin_page() {
-		// Set class property
+		// Set class property.
 		$this->options = get_option( 'my_option_name' );
 		?>
 		<div class="wrap">
@@ -948,7 +1139,7 @@ class CreativeCommons {
 	/**
 	 * Sanitize each setting field as needed
 	 *
-	 * @param array $input Contains all settings fields as array keys
+	 * @param array $input Contains all settings fields as array keys.
 	 */
 	public function sanitize( $input ) {
 		$new_input = array();
@@ -996,16 +1187,22 @@ class CreativeCommons {
 	}
 
 
-	// add filters to this function so themers can easily change the html
-	// output
+	/**
+	 * Funciton: print_license_html
+	 *
+	 * @param  mixed $location
+	 * @param  mixed $echo
+	 *
+	 * @return void
+	 */
 	public function print_license_html( $location = 'frontend', $echo = true ) {
-		// TODO if the license is shown on a multiple items page (except
-		// the author archive page?) display the site (or network default
-		// license)
-		// default license including a warning that individual items may be
-		// licensed differently.
-		// add a filter to include the license with the excerpt & content
-		// filter allow an option to switch this off
+		/*
+		 * TODO: if the license is shown on a multiple items page (except
+		 * the author archive page?) display the site (or network default license)
+		 * default license including a warning that individual items may be licensed differently.
+		 * Add a filter to include the license with the excerpt & content
+		 * filter allow an option to switch this off
+		 */
 
 		$license = $this->get_license( $location );
 		$html = '';
@@ -1013,7 +1210,7 @@ class CreativeCommons {
 			$deed_url     = esc_url( $license['deed'] );
 			$image_url    = esc_url( $license['image'] );
 			$license_name = esc_html( $license['name'] );
-			// needs check
+			// needs check.
 			$warning       = ( array_key_exists( 'warning_txt', $license ) )
 						? esc_html( $license['warning_txt'] ) : '';
 
@@ -1025,9 +1222,10 @@ class CreativeCommons {
 								? $attribution['url'] : '';
 			}
 
-			// it's a single entity so use the post->title otherwise use
-			// the site's title and add a warning that multiple items might
-			// have different licenses.
+			/*
+			 * it's a single entity so use the post->title otherwise use
+			 * the site's title and add a warning that multiple items might have different licenses.
+			 */
 			if ( is_singular() ) {
 				global $post;
 				if ( is_object( $post ) ) {
@@ -1062,6 +1260,9 @@ class CreativeCommons {
 	}
 
 
+	/**
+	 * Function: license_html_rdfa
+	 */
 	public function license_html_rdfa( $deed_url, $license_name, $image_url,
 									$title_work, $is_singular, $attribute_url,
 									$attribute_text, $source_work_url,
@@ -1096,6 +1297,13 @@ class CreativeCommons {
 	}
 
 
+	/**
+	 * Function: cc0_html_rdfa
+	 *
+	 * @param  mixed $title_work
+	 * @param  mixed $attribute_url
+	 * @param  mixed $attribute_text
+	 */
 	public function cc0_html_rdfa( $title_work, $attribute_url, $attribute_text ) {
 		$result = '<p xmlns:dct="http://purl.org/dc/terms/" xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">
   <a rel="license"
@@ -1127,6 +1335,11 @@ class CreativeCommons {
 	}
 
 
+	/**
+	 * Function: _get_attribution
+	 *
+	 * @param  mixed $license
+	 */
 	private function _get_attribution( $license ) {
 		if ( is_array( $license ) && sizeof( $license ) > 0 ) {
 			$attribution_option = isset( $license['attribute_to'] )
@@ -1147,8 +1360,7 @@ class CreativeCommons {
 				break;
 
 			case 'display_name':
-				// If displaying multiple posts, the display_name (author) will
-				// be reverted to site name later.
+				// If displaying multiple posts, the display_name (author) will be reverted to site name later.
 				$attribution['text']
 				= esc_html( get_the_author_meta( 'display_name' ) );
 				$attribution['url'] = esc_url( get_permalink() );
@@ -1167,12 +1379,28 @@ class CreativeCommons {
 		return $attribution;
 	}
 
+	/**
+	 * Function: license_as_widget
+	 *
+	 * Registers widget.
+	 *
+	 * @return void
+	 */
 	function license_as_widget() {
 		register_widget( 'CreativeCommons_widget' );
 	}
 
 
-	// log all errors if wp_debug is active
+
+	/**
+	 * Function: _logger
+	 *
+	 * Logs all errors if wp_debug is active.
+	 *
+	 *  @param  mixed $string error message.
+	 *
+	 * @return void
+	 */
 	private function _logger( $string ) {
 		if ( defined( 'WP_DEBUG' ) && ( WP_DEBUG == true ) ) {
 			error_log( $string );
