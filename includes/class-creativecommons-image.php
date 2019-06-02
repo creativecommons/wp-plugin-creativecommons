@@ -596,8 +596,7 @@ class CreativeCommonsImage {
 	 * robust. So we do not and will not do that.
 	 */
 	function captioned_image( $empty, $attr, $content ) {
-		extract(
-			shortcode_atts(
+			$args = shortcode_atts(
 				array(
 					'id'      => '',
 					'align'   => 'alignnone',
@@ -606,8 +605,7 @@ class CreativeCommonsImage {
 					'title'   => '',
 				),
 				$attr
-			)
-		);
+			);
 
 		if ( isset( $attr['id'] )
 			&& isset( $attr['license'] )
@@ -615,10 +613,11 @@ class CreativeCommonsImage {
 			// Extract attachment $post->ID.
 			preg_match( '/\d+/', $attr['id'], $att_id );
 			if ( $att_id ) {
+
 				// We *should* handle this based on the shortcode code's behaviour.
 				// if ((intval($width) > 1) && $caption) {
 				$result = '<div ' /*. $id*/ . 'class="cc-caption wp-caption '
-						. esc_attr( $align ) . '"'
+						. esc_attr( $args['align'] ) . '"'
 						//. ' style="width: ' . (10 + (int) $width) . 'px"'
 						. '>' . do_shortcode( $content )
 						. $this->caption_block( $attr, $att_id[0] )

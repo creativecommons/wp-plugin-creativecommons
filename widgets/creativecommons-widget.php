@@ -74,12 +74,11 @@ if ( ! class_exists( 'CreativeCommons_widget' ) ) {
 		 * @return void
 		 */
 		function widget( $args, $instance ) {
-			extract( $args );
 			$title = __( 'License', 'CreativeCommons' );
-			echo $before_widget;
-			echo $before_title . $title . $after_title;
+			echo $args['before_widget'];
+			echo $args['before_title'] . $title . $args['after_title'];
 			$this->print_license();
-			echo $after_widget;
+			echo $args['after_widget'];
 		}
 	}
 
