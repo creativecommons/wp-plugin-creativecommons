@@ -12,7 +12,7 @@
  *
  * @link http://wiki.creativecommons.org/WpLicense
  *
- * @package CC WordPress Plugin
+ * @package CreativeCommons
  */
 
 // If this file is called directly, abort.
@@ -22,7 +22,7 @@ if ( ! defined( 'WPINC' ) ) {
 
 define( 'CC__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
-// Require component files.
+// Require class files.
 require_once CC__PLUGIN_DIR . 'includes/class-creativecommons.php';
 require_once CC__PLUGIN_DIR . 'widgets/creativecommons-widget.php';
 require CC__PLUGIN_DIR . 'includes/class-creativecommons-image.php';

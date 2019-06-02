@@ -1,11 +1,11 @@
 <?php
 
 /**
- * CC WordPress Plugin: Button class
+ * Class: Creative Commons Button
  *
  * Button for the selection of license as per needs.
  *
- * @package WordPress
+ * @package CreativeCommons
  * @subpackage Component
  * @since 2.0
  */

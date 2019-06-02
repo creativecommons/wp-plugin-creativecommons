@@ -9,7 +9,7 @@
  *
  * License: GPLv2 or later versions
  *
- * @package WordPress
+ * @package CC WordPress Plugin
  * @subpackage Component
  * @since 2.0
  */
@@ -866,9 +866,13 @@ class CreativeCommons {
 	}
 
 
-	// check the data before saving it
-	// use $from ala get_license to determine where the data is coming from
-	// and what should be mandatory return an array or WP_Error?
+	/**
+	 * Checks the data before saving it
+	 * Use $from ala get_license to determine where the data is coming from and what should be mandatory return an array or WP_Error?
+	 *
+	 * @param  mixed $from Data from Network or Site.
+	 * @param  mixed $data Array of license data.
+	 */
 	private function _verify_license_data( $from, $data = null ) {
 		$license = array();
 
@@ -1023,10 +1027,9 @@ class CreativeCommons {
 	 * DRY wrapper function used for profile settings and network settings
 	 *
 	 * @param  mixed $location
-	 *
 	 */
 	private function _license_settings_html( $location ) {
-		$html = '';
+		$html  = '';
 		$html .= "<tr valign='top'>\n";
 		$html .= "\t<th scope='row'><label for='license'>" . __( 'Select a default license', 'CreativeCommons' ) . "</label></th>\n";
 		$html .= "\t<td>";
@@ -1125,7 +1128,7 @@ class CreativeCommons {
 		</div>
 		<form method="post" action="options.php">
 			<?php
-				// This prints out all hidden setting fields
+				// This prints out all hidden setting fields.
 				settings_fields( 'cc-admin' );
 				do_settings_sections( 'cc-admin' );
 				submit_button();
@@ -1389,7 +1392,6 @@ class CreativeCommons {
 	function license_as_widget() {
 		register_widget( 'CreativeCommons_widget' );
 	}
-
 
 
 	/**

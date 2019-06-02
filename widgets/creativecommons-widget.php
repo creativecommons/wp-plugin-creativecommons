@@ -1,6 +1,6 @@
 <?php
 /**
- * CC WordPress PLugin: Widget class
+ * Class: Creativce Commons Widget
  *
  * User-specified Creative Commons License will display in the page footer by default.
  * User will be able to drag this widget to a sidebar as well.
