@@ -23,7 +23,7 @@ if ( ! class_exists( 'CreativeCommons_widget' ) ) {
 		 *
 		 * @return void
 		 */
-		function __construct() {
+		public function __construct() {
 
 			// Widget settings.
 			$widget_ops = array(
@@ -60,7 +60,7 @@ if ( ! class_exists( 'CreativeCommons_widget' ) ) {
 		 *
 		 * @return void
 		 */
-		function print_license() {
+		public function print_license() {
 			$ccl = CreativeCommons::get_instance();
 			$ccl->print_license_html();
 		}
@@ -73,7 +73,7 @@ if ( ! class_exists( 'CreativeCommons_widget' ) ) {
 		 *
 		 * @return void
 		 */
-		function widget( $args, $instance ) {
+		public function widget( $args, $instance ) {
 			$title = __( 'License', 'CreativeCommons' );
 			echo $args['before_widget'];
 			echo $args['before_title'] . $title . $args['after_title'];

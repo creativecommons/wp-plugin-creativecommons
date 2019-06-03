@@ -58,7 +58,7 @@ class CreativeCommonsButton {
 	 *
 	 * @return string|string[]|null
 	 */
-	function mediaToText( $media ) {
+	public function media_to_text( $media ) {
 		return preg_replace( '/^.+ src="([^"]+)".+$/', '<$1>', $media );
 	}
 
@@ -70,7 +70,7 @@ class CreativeCommonsButton {
 	 *
 	 * @return string
 	 */
-	function htmlToText( $metadata ) {
+	public function html_to_text( $metadata ) {
 		$result = preg_replace( '|<br[^>]*>|', ' ', $metadata );
 		$result = preg_replace( '|<img [^>]+>|', '', $result );
 		$result = preg_replace( '|</?span[^>]*>|', '', $result );
@@ -98,11 +98,11 @@ class CreativeCommonsButton {
 	 */
 	public function markup( $html_rdfa, $text, $button_height, $media ) {
 		if ( $text === false ) {
-			$text = htmlentities( $this->htmlToText( $html_rdfa ), ENT_QUOTES );
+			$text = htmlentities( $this->html_to_text( $html_rdfa ), ENT_QUOTES );
 		}
 		if ( $media !== false ) {
 			$html_rdfa = $media . '<br>' . $html_rdfa;
-			$text      = $this->mediaToText( $media ) . ' ' . $text;
+			$text      = $this->media_to_text( $media ) . ' ' . $text;
 		}
 		$html_rdfa = htmlentities( $html_rdfa, ENT_QUOTES );
 		$button    = self::CCL_BUTTON_HEAD
