@@ -9,8 +9,8 @@
  *
  * License: GPLv2 or later versions
  *
- * @package CC WordPress Plugin
- * @subpackage Component
+ * @package CC_WordPress_Plugin
+ * @subpackage Main_Class
  * @since 2.0
  */
 class CreativeCommons {

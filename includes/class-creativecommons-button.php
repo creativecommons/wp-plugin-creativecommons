@@ -5,8 +5,8 @@
  *
  * Button for the selection of license as per needs.
  *
- * @package CreativeCommons
- * @subpackage Component
+ * @package CC_WordPress_Plugin
+ * @subpackage Button_Class
  * @since 2.0
  */
 class CreativeCommonsButton {

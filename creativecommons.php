@@ -12,7 +12,10 @@
  *
  * @link http://wiki.creativecommons.org/WpLicense
  *
- * @package CreativeCommons
+ * @package CC_WordPress_Plugin
+ *
+ * GitHub URI: https://github.com/creativecommons/creativecommons-wordpress-plugin
+ * GitHub branch: develop
  */
 
 // If this file is called directly, abort.

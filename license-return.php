@@ -12,8 +12,9 @@
  *
  * @link http://wiki.creativecommons.org/WpLicense
  *
- * @package CreativeCommons
+ * @package CC_WordPress_Plugin
  */
+
 $license = array(
 	'url'    => $_GET['url'],
 	'name'   => $_GET['name'],
