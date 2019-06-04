@@ -10,22 +10,22 @@ License: GPLv2
 License: https://gnu.org/licenses/gpl.html
 
 Official Creative Commons plugin for Wordpress.
-This plugin gives authors the ability to mark their content with Creative Commons licenses and to display the licenses along with the content.  
+This plugin gives authors the ability to mark their content with Creative Commons licenses and to display the licenses along with the content.
 
 == Description ==
 
 The WPLicense plugin gives authors the ability to mark their content with a [Creative Commons](http://creativecommons.org/) license and to display the license along with the content.
-With Creative Commons licenses, you keep your copyright but share your creativity. 
+With Creative Commons licenses, you keep your copyright but share your creativity.
 
 By default, the plugin will display a license in the footer of your theme. The license plugin is also a widget, and can be dragged to any widget area.
 This will suppress display of the license in the theme footer and display it instead in the widget area.
 
 The default license used by the plugin is the Creative Commons [Attribution-ShareAlike (CC BY-SA)](http://creativecommons.org/licenses/by-sa/4.0/) license.
-This can be easily changed including attribution, depending on the permissions by a user with the role: superadmin, site admin or author. 
+This can be easily changed including attribution, depending on the permissions by a user with the role: superadmin, site admin or author.
 
 WPLicense is based loosely on the License plugin (a component of the [MIT Educational Collaboration Space](http://ecs.mit.edu) project) by mitcho (Michael Yoshitaka Erlewine) & Brett Mellor. Bits from other plugins have also been used, and most of them of course are based on the original WpLicense, written by Creative Commons CTO Nathan Yergler.
 
-WPLicense will work perfectly fine with WordPress Network (aka Multisite). 
+WPLicense will work perfectly fine with WordPress Network (aka Multisite).
 
 == Installation ==
 
@@ -46,30 +46,29 @@ Our answer here!
 
 == Changelog ==
 
-= 2.0 = 
-
-The plugin has been available for some time and no new issues have been reported so far. No code changes have been made 
+= 2.0 =
+The plugin has been available for some time and no new issues have been reported so far. No code changes have been made
 between this version and the 2.0-beta version
 
-- Know issue: https://github.com/tarmot/wp-cc-plugin/issues/30 
+- Know issue: https://github.com/tarmot/wp-cc-plugin/issues/30
 If you've encountered this behaviour, please describe exactly what you did and submit all details about your environment.
-With this we may be able to reproduce and hopefully fix this issue. 
+With this we may be able to reproduce and hopefully fix this issue.
 
-
-= 2.0-beta = 
-Second version of the WPLicense plugin. Added localization, tested plugin with CC licenses 4.0 
+= 2.0-beta =
+Second version of the WPLicense plugin. Added localization, tested plugin with CC licenses 4.0
 and fixed outstanding issues which can be found in Github repo: https://github.com/tarmot/wp-cc-plugin
 
-
-= 2.0-alpha = 
-First version of the WPLicense plugin. It is not recommended to use this version on production machines and it should be considered unstable. 
+= 2.0-alpha =
+First version of the WPLicense plugin. It is not recommended to use this version on production machines and it should be considered unstable.
 This release is for testers only so we can gather some more feedback.
 
+= 0.7 =
+* Rewrote most of the code to support Multisite and add extra features.
 
-
-= 0.7 = 
-Forked License plugin
-* Rewrote most of the code to support Multisite and add extra features. 
+= 0.6 =
+* Fork of original License plugin by tatti
+* Fixed several bugs, including deduction of correct license based on site and author defaults
+* Fixed author information in widget to display correct context-specific author information
 
 = 0.5 =
 * Fixed a XSS security vulnerability. props duck_.
