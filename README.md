@@ -163,6 +163,8 @@ Yergler.
 
 ### Credits
 
+- Michael Yoshitaka Erlewine (License v0.5)
+- Brett Mellor (License v0.5)
 - Bjorn Wijers
 - Matt Lee
 - Rob Myers
