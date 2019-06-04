@@ -1,5 +1,5 @@
 === WPLicense ===
-Contributors: BjornW, tatti
+Contributors: BjornW, tatti, robmyers
 Author: Bjorn Wijers <burobjorn@burobjorn.nl>, Tarmo Toikkanen <tarmo@iki.fi>
 Plugin URI: http://wiki.creativecommons.org/Wplicense
 Tags: creative commons, CC, license, copyright, copyleft, attribution, ownership, all rights reserved, some rights reserved, footer, widget
