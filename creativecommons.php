@@ -35,3 +35,8 @@ require CC__PLUGIN_DIR . 'includes/class-creativecommons-button.php';
 CreativeCommons::get_instance()->init();
 CreativeCommonsButton::get_instance()->init();
 CreativeCommonsImage::get_instance()->init();
+
+/**
+ * Gutenberg Blocks Initializer.
+ */
+require_once plugin_dir_path( __FILE__ ) . 'src/init.php';
