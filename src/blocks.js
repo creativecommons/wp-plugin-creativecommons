@@ -9,4 +9,11 @@
  * Webpack is compiling as the input file.
  */
 
-import './block/block.js';
+import './CC-BY/block.js';
+import './CC-BY-SA/block.js';
+import './CC-BY-ND/block.js';
+import './CC-BY-NC/block.js';
+import './CC-BY-NC-ND/block.js';
+import './CC-BY-NC-SA/block.js';
+import './CC-BY-CC0/block.js';
+import './CC-BY-PDM/block.js';

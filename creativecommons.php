@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Creative Commons
+ * Plugin Name: Creative Commons Categories
  * Description: Official Creative Commons plugin for WordPress. Allows users to select and display
  * Creative Commons licenses for their content. Partially inspired by the License plugin by mitcho
  * (Michael Yoshitaka Erlewine) and Brett Mellor, as well as the original WpLicense plugin by CC CTO
@@ -40,3 +40,22 @@ CreativeCommonsImage::get_instance()->init();
  * Gutenberg Blocks Initializer.
  */
 require_once plugin_dir_path( __FILE__ ) . 'src/init.php';
+
+/**
+ * Creates a new category for CC blocks.
+ *
+ * @param  mixed $categories
+ * @param  mixed $post
+ */
+function creative_commons_block_category( $categories, $post ) {
+	return array_merge(
+		$categories,
+		array(
+			array(
+				'slug'  => 'cc-licenses',
+				'title' => __( 'Creative Commons Licenses', 'creative-commons' ),
+			),
+		)
+	);
+}
+add_filter( 'block_categories', 'creative_commons_block_category', 10, 2 );
