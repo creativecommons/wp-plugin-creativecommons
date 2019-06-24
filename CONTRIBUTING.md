@@ -111,10 +111,12 @@ If you are not setup to detect WPCS errors, consider the following steps.
    To configure VSCode so that it may report errors right in the editor,
    install [phpcs extension][phpcs]. Open User Settings and add the following
    settings:
-   ```
+
+   ```shell
    "phpcs.executablePath": "/usr/local/bin/phpcs",
    "phpcs.standard": "WordPress"
    ```
+
    Now, phpcs will report errors inside VSCode. If you are using some other
    editor, consult its documentation. Once there are no reported errors in your
    fix, you are good to go.
@@ -122,6 +124,46 @@ If you are not setup to detect WPCS errors, consider the following steps.
 [wpcs-repo]: https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards
 [phpcs]: https://marketplace.visualstudio.com/items?itemName=ikappas.phpcs
 
+
+### Contributing to Gutenberg Blocks
+
+CC plugin for WordPress uses Gutenberg blocks built by **create-guten-block** tool.
+ If you are interested, you can read its detailed and
+ well-written [documentation](https://github.com/ahmadawais/create-guten-block). If you want to test/make changes to these blocks, follow the following steps.
+
+
+1. **Setup npm**
+
+   First off, make sure you have Node version 8+ and npm 5.3 or more. Clone the repository
+   and move to the branch which houses the blocks. In that directory, open your terminal
+   and run:
+
+   ```shell
+   npm install
+   ```
+
+2. **Start Development**
+
+   After the install is completed run the following command:
+
+   ```shell
+   npm start
+   ```
+
+   This will compile and run the block in development mode. It also watches for any
+    changes and reports back any errors in your code. Now, you can make changes and
+	 test them.
+
+
+3. **Build the Blocks**
+
+   Once your development is done, make sure to run this:
+
+   ```shell
+   npm run build
+   ```
+
+   It optimizes and builds production code for your block inside `dist` folder.
 
 ## Questions or Thoughts?
 
