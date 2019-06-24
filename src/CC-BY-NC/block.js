@@ -1,13 +1,9 @@
-/**
- * BLOCK: CC-BY-NC
- */
-
-//  Import CSS.
 import './style.scss';
 import './editor.scss';
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
+const { InspectorControls, PanelColorSettings } = wp.editor;
 
 /**
  * Register: aa Gutenberg Block.
@@ -22,12 +18,22 @@ const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.b
  * @return {?WPBlock}          The block, if it has been successfully
  *                             registered; otherwise `undefined`.
  */
-registerBlockType( 'cgb/cc-by-nc', {
+registerBlockType('cgb/cc-by-nc', {
 	// Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
-	title: __( 'CC-BY-NC' ), // Block title.
+	title: __('CC-BY-NC'), // Block title.
 	icon: 'media-text', // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
 	category: 'cc-licenses', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
-	keywords: [ __( 'creative commons' ), __( 'non commercial' ), __( 'license' ) ],
+	keywords: [__('creative commons'), __('non commercial'), __('license')],
+	attributes: {
+		bgColor: {
+			type: 'string',
+			default: 'white'
+		},
+		txtColor: {
+			type: 'string',
+			default: 'black'
+		}
+	},
 
 	/**
 	 * The edit function describes the structure of your block in the context of the editor.
@@ -37,19 +43,38 @@ registerBlockType( 'cgb/cc-by-nc', {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-	edit: function( props ) {
-		// Creates a <p class='wp-block-cgb-block-cc-block'></p>.
-		return (
-			<div className={ props.className }>
+	edit: function(props) {
+		const bgColor = props.attributes.bgColor;
+		const txtColor = props.attributes.txtColor;
+		return [
+			<InspectorControls>
+				<PanelColorSettings
+					title={__('Color Settings', 'creativecommons')}
+					colorSettings={[
+						{
+							label: __('Background Color'),
+							value: bgColor,
+							onChange: colorValue => props.setAttributes({ bgColor: colorValue })
+						},
+						{
+							label: __('Text Color'),
+							value: txtColor,
+							onChange: colorValue => props.setAttributes({ txtColor: colorValue })
+						}
+					]}
+				/>
+			</InspectorControls>,
+
+			<div className={props.className} style={{ backgroundColor: bgColor, color: txtColor }}>
 				<img src="https://licensebuttons.net/l/by-nc/3.0/88x31.png" alt="CC" />
 				<p>
-					This blog post is licensed under a{ ' ' }
+					This blog post is licensed under a{' '}
 					<a href="https://creativecommons.org/licenses/by-nc/4.0">
 						Creative Commons Attribution-NonCommercial 4.0 International license.
 					</a>
 				</p>
 			</div>
-		);
+		];
 	},
 
 	/**
@@ -60,17 +85,19 @@ registerBlockType( 'cgb/cc-by-nc', {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-	save: function( props ) {
+	save: function(props) {
+		const bgColor = props.attributes.bgColor;
+		const txtColor = props.attributes.txtColor;
 		return (
-			<div>
+			<div style={{ backgroundColor: bgColor, color: txtColor }}>
 				<img src="https://licensebuttons.net/l/by-nc/3.0/88x31.png" alt="CC" />
 				<p>
-					This blog post is licensed under a{ ' ' }
+					This blog post is licensed under a{' '}
 					<a href="https://creativecommons.org/licenses/by-nc/4.0">
 						Creative Commons Attribution-NonCommercial 4.0 International license.
 					</a>
 				</p>
 			</div>
 		);
-	},
-} );
+	}
+});
