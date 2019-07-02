@@ -15,12 +15,18 @@
  * @package CC_WordPress_Plugin
  */
 
-$license = array(
-	'url'    => $_GET['url'],
-	'name'   => $_GET['name'],
-	'button' => $_GET['button'],
-	'deed'   => $_GET['deed'],
-);
+if ( ! empty( $_GET['url'] ) ) {
+	$license['url'] = $_GET['url'];
+}
+if ( ! empty( $_GET['name'] ) ) {
+	$license['name'] = $_GET['name'];
+}
+if ( ! empty( $_GET['button'] ) ) {
+	$license['button'] = $_GET['button'];
+}
+if ( ! empty( $_GET['deed'] ) ) {
+	$license['deed'] = $_GET['deed'];
+}
 ?>
 <html>
 	<head>

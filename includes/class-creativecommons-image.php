@@ -337,7 +337,7 @@ class CreativeCommonsImage {
 					. $this->license_select(
 						$post_id,
 						$original_license
-					)
+					),
 		);
 
 		$attachment_metadata = wp_get_attachment_metadata( $post_id, true );
@@ -497,7 +497,7 @@ class CreativeCommonsImage {
 		} else {
 			if ( $title ) {
 				if ( $credit ) {
-					$block .= '<p>( ' . $title .' by ' . $credit . ')</p>';
+					$block .= '<p>( ' . $title . ' by ' . $credit . ')</p>';
 				} else {
 					$block .= '<p>( ' . $title . ')</p>';
 				}

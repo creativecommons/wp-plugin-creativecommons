@@ -590,7 +590,7 @@ class CreativeCommons {
 		// TODO check if this can be done without a global.
 		global $post;
 		$license = get_post_meta( $post->ID, '_license', true );
-		if ( is_array( $license ) && sizeof( $license ) > 0 ) {
+		if ( is_array( $license ) && count( $license ) > 0 ) {
 			return $license;
 		} else {
 			return false;
@@ -827,6 +827,7 @@ class CreativeCommons {
 	 * Function: save_license
 	 *
 	 * Saves license from network settings, user profile and post/page interface.
+	 *
 	 * @param  mixed $post_id false.
 	 */
 	public function save_license( $post_id = false ) {
@@ -880,7 +881,7 @@ class CreativeCommons {
 		if ( is_null( $data )
 			&& isset( $_POST['license'] )
 		) {
-			$data = $_POST['license'];
+			$data = sanitize_text_field( wp_unslash( $_POST['license'] ) );
 		}
 
 		// Always save the current version.
@@ -1207,7 +1208,7 @@ class CreativeCommons {
 
 		$license = $this->get_license( $location );
 		$html = '';
-		if ( is_array( $license ) && sizeof( $license ) > 0 ) {
+		if ( is_array( $license ) && count( $license ) > 0 ) {
 			$deed_url     = esc_url( $license['deed'] );
 			$image_url    = esc_url( $license['image'] );
 			$license_name = esc_html( $license['name'] );
@@ -1342,7 +1343,7 @@ class CreativeCommons {
 	 * @param  mixed $license
 	 */
 	private function _get_attribution( $license ) {
-		if ( is_array( $license ) && sizeof( $license ) > 0 ) {
+		if ( is_array( $license ) && count( $license ) > 0 ) {
 			$attribution_option = isset( $license['attribute_to'] )
 								? $license['attribute_to'] : null;
 		}
