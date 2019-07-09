@@ -611,36 +611,50 @@ class CreativeCommons {
 	 * @param  mixed $echo true.
 	 */
 	public function select_license_html( $location = null, $echo = true ) {
+
 		/*
 		 * get the previously selected license from this site's options
 		 * or the plugin's default license
 		 * $license = get_option('license', $this->plugin_default_license());
-		 * $license  = $this->get_license( $location );
 		 */
 
-		// Add lang option.
-		$lang = ( isset( $this->locale ) && ! empty( $this->locale ) )
-			? 'lang=' . esc_attr( $this->locale ) : '';
+		$license = $this->get_license( $location );
 
-		$html  = '';
-		$html .= "<span id='license-display'></span>";
-		$html .= '<br id="license"><a title="' . __( 'Choose a Creative Commons license', 'CreativeCommons' ) . '" class="button button-secondary thickbox edit-license" href="https://creativecommons.org/choose/?';
-		$html .= 'partner=CC+WordPress+Plugin&';
-		$html .= $lang;
-		$html .= '&exit_url=' . $this->plugin_url . 'license-return.php?url=[license_url]%26name=[license_name]%26button=[license_button]%26deed=[deed_url]&';
-		$html .= '&KeepThis=true&TB_iframe=true&height=500&width=600">' . __( 'Change license', 'CreativeCommons' );
-		$html .= '</a>';
+		// Set up link arguments.
+		$link_args = array(
+			'partner'   => 'CC+WordPress+Plugin',
+			'exit_url'  => urlencode( $this->plugin_url ) . 'license-return.php?url=[license_url]%26name=[license_name]%26button=[license_button]%26deed=[deed_url]',
+			'KeepThis'  => 'true',
+			'TB_iframe' => 'true',
+			'height'    => 500,
+			'width'     => 600,
+		);
 
-		$html .= '<input type="hidden" value="' . $license['deed'] . '" id="hidden-license-deed" name="license[deed]"/>';
-		$html .= '<input type="hidden" value="' . $license['image'] . '" id="hidden-license-image" name="license[image]"/>';
-		$html .= '<input type="hidden" value="' . $license['name'] . '" id="hidden-license-name" name="license[name]"/>';
+		// Set lang if available.
+		if ( isset( $this->locale ) && ! empty( $this->locale ) ) {
+			$link_args['lang'] = esc_attr( $this->locale );
+		}
+		// Link.
+		$link = sprintf( '<a title="Choose a License" class="button button-secondary thickbox edit-license" href="%2$s">%3$s</a>',
+			__( 'Choose a Creative Commons license', 'CreativeCommons' ),
+			add_query_arg( $link_args, 'https://creativecommons.org/choose/' ),
+			__( 'Change license', 'CreativeCommons' )
+		);
+		// HTML markup.
+		$html = <<<CONTENT
+		<span id='license-display'></span>
+		<br id="license">
+		{$link}
+		<input type="hidden" value="{$license['deed']}" id="hidden-license-deed" name="license[deed]"/>
+		<input type="hidden" value="{$license['image']}" id="hidden-license-image" name="license[image]"/>
+		<input type="hidden" value="{$license['name']}" id="hidden-license-name" name="license[name]"/>
+CONTENT;
 		if ( $echo ) {
 			echo $html;
 		} else {
 			return $html;
 		}
 	}
-
 
 	/**
 	 * Function: get_attribution_options
@@ -1049,10 +1063,9 @@ class CreativeCommons {
 	}
 
 	/**
-	 * Add options page
+	 * Add options page, this page will be under "Settings"
 	 */
 	public function add_plugin_page() {
-		// This page will be under "Settings".
 		add_options_page(
 			'Settings Admin',
 			'Creative Commons',
