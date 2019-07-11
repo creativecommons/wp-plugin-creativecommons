@@ -27,6 +27,14 @@ if ( ! empty( $_GET['button'] ) ) {
 if ( ! empty( $_GET['deed'] ) ) {
 	$license['deed'] = $_GET['deed'];
 }
+
+$license = array_map(
+	function( $retval ) {
+		return filter_var( $retval, FILTER_SANITIZE_STRING );
+	},
+	$license
+);
+
 ?>
 <html>
 	<head>
