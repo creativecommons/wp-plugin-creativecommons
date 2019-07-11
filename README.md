@@ -1,11 +1,9 @@
-# creativecommons-wordpress-plugin
-
-Creative Commons plugin for WordPress
+# Creative Commons WordPress Plugin
 
 This is a WordPress plugin to assist you to choose a Creative Commons license
 for your blog or website.
 
-Download the latest version from this projects [releases][releases].
+Download the latest version from this project's [releases][releases].
 
 [releases]: https://github.com/creativecommons/creativecommons-wordpress-plugin/releases "Releases · creativecommons/creativecommons-wordpress-plugin"
 
@@ -25,8 +23,10 @@ well as image files. You can:
   need to use the same license)
 - Prevent license changes per site (all pages on a site must use the same
   license)
-- Display license for the site, posts and pages.
+- Display license for the site, posts and pages
 - Display license information with "One Click Attribution" for images
+- License posts and pages by simply including CC Gutenberg blocks for each license
+  required
 
 
 ### Possible future features
@@ -77,7 +77,7 @@ role: superadmin, site admin or author.
 
 ### Choose A Site License
 
-![Site license chooser](screenshot-1.jpg)
+![Site license chooser](assets/screenshot-1.jpg)
 
 To choose a site-wide license, go to the "Creative Commons" option in the
 "Settings" item on the left hand menu in the WordPress admin site.
@@ -88,7 +88,7 @@ work.
 
 ### Choose An Author License
 
-![Author license chooser](screenshot-3.jpg)
+![Author license chooser](assets/screenshot-3.jpg)
 
 When changing an individual author's license is enabled, the option to do so is
 included on the Users Profile page for that author.
@@ -99,7 +99,7 @@ You can change the license ("Select a default license") or the attribution
 
 ### Choose A Post Or Page License
 
-![Post edit page with license chooser](screenshot-2.jpg)
+![Post edit page with license chooser](assets/screenshot-2.jpg)
 
 If changing the license on individual posts and pages is enabled, the option to
 do so is included in the editor on the right hand side of the page under the
@@ -112,7 +112,7 @@ Remember to save the post or page after you change its license.
 
 ### Choose An Image License
 
-![Media item license metadata editor](screenshot-4.jpg)
+![Media item license metadata editor](assets/screenshot-4.jpg)
 
 In the "Attachment Details" page for an image in the Media Library, there are
 fields to edit license and attribution information underneath the usual Title,
@@ -129,9 +129,7 @@ If you place a `[license]` shortcode around an image that has licensing
 metadata, that will display the license block and the One Click Attribution
 button:
 
-![Image with license block](screenshot-6.jpg)
-
-    [license]<img src="https://localhost/wp-content/uploads/2016/12/tree_test-1-300x188.jpg" alt="" width="300" height="188" class="size-medium wp-image-10" />[/license]
+![Image with license block](assets/screenshot-6.jpg)
 
 
 ## Contributing
