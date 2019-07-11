@@ -68,7 +68,7 @@ registerBlockType('cgb/cc-by', {
 			<div className={props.className} style={{ backgroundColor: bgColor, color: txtColor }}>
 				<img src="https://licensebuttons.net/l/by/3.0/88x31.png" alt="CC-BY" />
 				<p>
-					This blog post is licensed under a{' '}
+					This content is licensed under a{' '}
 					<a href="https://creativecommons.org/licenses/by/4.0/">
 						Creative Commons Attribution 4.0 International license.
 					</a>
@@ -92,7 +92,7 @@ registerBlockType('cgb/cc-by', {
 			<div style={{ backgroundColor: bgColor, color: txtColor }}>
 				<img src="https://licensebuttons.net/l/by/3.0/88x31.png" alt="CC" />
 				<p>
-					This blog post is licensed under a{' '}
+					This content is licensed under a{' '}
 					<a href="https://creativecommons.org/licenses/by/4.0/">
 						Creative Commons Attribution 4.0 International license.
 					</a>
