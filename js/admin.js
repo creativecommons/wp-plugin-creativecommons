@@ -18,8 +18,8 @@ jQuery(document).ready(function license($) {
           .find('img')
             .attr('src',$('#hidden-license-image').val())
             .attr('title',$('#hidden-license-name').val())
-          .end();  
-        $('#license-display').show().html('').append(img);
+            .end();
+	  $('#license-display').html('').append(img).show();
       }
     }
     window.setLicenseImage = setLicenseImage;
