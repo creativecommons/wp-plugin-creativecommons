@@ -5,7 +5,7 @@
  * Creative Commons licenses for their content. Partially inspired by the License plugin by mitcho
  * (Michael Yoshitaka Erlewine) and Brett Mellor, as well as the original WpLicense plugin by CC CTO
  * Nathan R. Yergler.
- * Version: 2.0-beta
+ * Version: 2019.7.1
  * Author: Bjorn Wijers <burobjorn@burobjorn.nl>, Tarmo Toikkanen <tarmo@iki.fi>, Matt Lee <mattl@creativecommons.org>, Rob Myers <rob@creativecommons.org>
  * License: GPLv2 or later versions
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
