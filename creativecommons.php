@@ -14,8 +14,7 @@
  *
  * @package CC_WordPress_Plugin
  *
- * GitHub URI: https://github.com/creativecommons/creativecommons-wordpress-plugin
- * GitHub branch: develop
+ * GitHub URI: https://github.com/creativecommons/wp-plugin-creativecommons
  */
 
 // If this file is called directly, abort.
