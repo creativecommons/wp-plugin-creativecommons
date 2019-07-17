@@ -4,8 +4,9 @@ Tags: creative commons, CC, license, copyright, copyleft, attribution, attribute
 Requires at least: 3.1
 Tested up to: 5.2
 Stable tag: 2019.7.1
+Requires PHP: 5.6.20
 License: GPLv2 or later
-License: https://gnu.org/licenses/gpl-2.0.html
+License URI: https://gnu.org/licenses/gpl-2.0.html
 Donate link: https://us.netdonor.net/page/6650/donate/1?ea.tracking.id=top-of-page-banner
 
 Official Creative Commons plugin for Wordpress.
