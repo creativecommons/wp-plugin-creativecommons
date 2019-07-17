@@ -59,7 +59,7 @@ Our answer here!
 = 2019.7.1 =
 * Initial release.
 * The plugin is an updated and revamped version of the WPLicense plugin by Creative Commons: https://github.com/tarmot/wp-cc-plugin
-* The pugin has been made compatible to the latest version of WordPress (5.2.2) while the former one was stable only upto 3.8.1.
+* The pugin has been made compatible to the latest version of WordPress (5.2.2) while the former one was stable only up to 3.8.1.
 * The revamp brings bug fixes and security fixes.
 * Gutenberg blocks for Creative Commons have been added which can be used in posts and pages.
 * For more information, check the current GitHub repository: https://github.com/creativecommons/wp-plugin-creativecommons
