@@ -14,7 +14,6 @@
  * @package CC_WordPress_Plugin
  */
 
-
 if ( ! empty( $_GET['url'] ) ) {
 	$license['url'] = $_GET['url'];
 }
