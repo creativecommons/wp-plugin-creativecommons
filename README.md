@@ -73,12 +73,13 @@ testing or funding Creative Commons for further development.
 
 The default license used by the plugin is the Creative Commons
 [Attribution-ShareAlike
-(CC BY-SA)](http://creativecommons.org/licenses/by-sa/4.0/) license. This can 
+(CC BY-SA)](http://creativecommons.org/licenses/by-sa/4.0/) license. This can
 be easily changed including attribution, depending on the permissions by a user
- with the role: superadmin, site admin or author.
+with the role: superadmin, site admin or author.
 
-By default, the plugin will display a license in the footer of your theme. The 
-license plugin is also a widget, and can be dragged to any widget area like the side-bar and all other available areas (this will suppress display of the
+By default, the plugin will display a license in the footer of your theme. The
+license plugin is also a widget, and can be dragged to any widget area like the
+side-bar and all other available areas (this will suppress display of the
 license in the theme footer and display it only in the widget area).
 
 ### Choose A Site License
