@@ -171,6 +171,6 @@ Yergler.
 
 ## License
 
-- [`LICENSE`](LICENSE) ([GPLv2 or later][gplv2] License)
+- [`license.txt`](license.txt) ([GPLv2 or later][gplv2] License)
 
 [gplv2]: https://opensource.org/licenses/GPL-2.0 "GNU General Public License version 2 | Open Source Initiative"
