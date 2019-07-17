@@ -78,7 +78,7 @@ See the GitHub project: [creativecommons/wp-plugin-creativecommons](https://gith
 == Changelog ==
 
 
-= 2019.7.1 =
+= v2019.7.1 =
 
 * Initial release.
 * The plugin is an updated and revamped version of the WPLicense plugin by
