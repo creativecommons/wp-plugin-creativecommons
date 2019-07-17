@@ -2,8 +2,8 @@
 /**
  * Class: Creative Commons Widget
  *
- * User-specified Creative Commons License will display in the page footer by default.
- * User will be able to drag this widget to a sidebar as well.
+ * User-specified Creative Commons License will display in the page footer by
+ * default. User will be able to drag this widget to a sidebar as well.
  *
  * @package CC_WordPress_Plugin
  * @subpackage Widget Class

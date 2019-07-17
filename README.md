@@ -1,9 +1,7 @@
 # Creative Commons WordPress Plugin
 
-Official Creative Commons plugin for Wordpress. This plugin allows you to
-license WordPress content such as pages, posts, and media files using a
-Creative Commons license. With Creative Commons licenses, you keep your
-copyright but share your creativity at the same time.
+Official Creative Commons plugin for licensing your content. With Creative
+Commons licenses, you keep your copyright AND share your creativity.
 
 Download the latest version from this project's [releases][releases].
 
