@@ -4,8 +4,9 @@
  *
  * Enqueue CSS/JS of all the blocks.
  *
- * @since   1.0.0
- * @package CGB
+ * @package CC_WordPress_Plugin
+ * @subpackage CGB
+ * @since   v2019.7.1
  */
 
 // Exit if accessed directly.
@@ -25,7 +26,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @uses {wp-element} for WP Element abstraction — structure of blocks.
  * @uses {wp-i18n} to internationalize the block's text.
  * @uses {wp-editor} for WP editor styles.
- * @since 1.0.0
  */
 function cc_block_cgb_block_assets() { // phpcs:ignore
 	// Register block styles for both frontend + backend.
@@ -61,7 +61,6 @@ function cc_block_cgb_block_assets() { // phpcs:ignore
 	 * enqueued when the editor loads.
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/blocks/writing-your-first-block-type#enqueuing-block-scripts
-	 * @since 1.16.0
 	 */
 	register_block_type(
 		'cgb/block-cc-block', array(

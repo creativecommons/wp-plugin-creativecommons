@@ -1,13 +1,6 @@
 <?php
-
 /**
  * CC WordPress Plugin: Image Class
- *
- * Author: Bjorn Wijers <burobjorn@burobjorn.nl>, Tarmo Toikkanen
- * <tarmo@iki.fi>, Matt Lee <mattl@creativecommons.org>, Rob Myers
- * <rob@creativecommons.org>
- *
- * License: GPLv2 or later versions
  *
  * @package CC_WordPress_Plugin
  * @subpackage Image_Class

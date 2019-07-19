@@ -1,32 +1,34 @@
 # Creative Commons WordPress Plugin
 
-This is a WordPress plugin to assist you to choose a Creative Commons license
-for your blog or website.
+Official Creative Commons plugin for licensing your content. With Creative
+Commons licenses, keep your copyright AND share your creativity.
 
 Download the latest version from this project's [releases][releases].
 
 [releases]: https://github.com/creativecommons/creativecommons-wordpress-plugin/releases "Releases · creativecommons/creativecommons-wordpress-plugin"
 
 
-## Features
+## Description
 
-The plugin allows you to license WordPress content such as posts and pages as
-well as image files. You can:
+The CreativeCommons WordPress plugin gives authors the ability to license
+content with a Creative Commons license
+([Choose a License](https://creativecommons.org/choose/)). With this plugin
+you can:
 
-- License your blog (single WordPress install)
-- License your WordPress Network (WordPress Multisite install)
-- License some of your sites differently in your WordPress Network
-- License all your content with the same license (license per author)
-- License some posts, pages or images differently from your default license
-  (per content license)
-- Prevent license changes in your WordPress Network (all pages on all sites
-  need to use the same license)
-- Prevent license changes per site (all pages on a site must use the same
+* License your blog (single WordPress install)
+* Display license for the site, posts and pages
+* Prevent license changes per site (all pages on a site must use the same
   license)
-- Display license for the site, posts and pages
-- Display license information with "One Click Attribution" for images
-- License posts and pages by simply including CC Gutenberg blocks for each license
-  required
+* License your WordPress Network (WordPress Multisite install)
+* License some of your sites differently in your WordPress Network
+* Prevent license changes in your WordPress Network (all pages on all sites
+  need to use the same license)
+* License all your content with the same license (license per author)
+* License some posts, pages, or images differently from your default license
+  (per content license)
+* License posts and pages by simply including CC Gutenberg blocks for each
+  license required (Gutenberg License Blocks)
+* Display license information with "One Click Attribution" for images
 
 
 ### Possible future features
@@ -36,9 +38,9 @@ separate (child) plugin. If you'd like these or other features to be
 implemented you may consider supporting this plugin with code contributions,
 testing or funding Creative Commons for further development.
 
-- Allow more kinds of media files to be licensed
-- Extract license information from more kinds of media files
-- Allow to search (using external search engines) for specific Creative Commons
+* Allow more kinds of media files to be licensed
+* Extract license information from more kinds of media files
+* Allow to search (using external search engines) for specific Creative Commons
   licensed media files
 
 
@@ -68,12 +70,15 @@ testing or funding Creative Commons for further development.
 ## Usage
 
 The default license used by the plugin is the Creative Commons
-[Attribution-ShareAlike (CC BY-SA)][by-sa] license.  This can be easily
-changed, including attribution, depending on the permissions by a user with the
-role: superadmin, site admin or author.
+[Attribution-ShareAlike
+(CC BY-SA)](http://creativecommons.org/licenses/by-sa/4.0/) license. This can
+be easily changed including attribution, depending on the permissions by a user
+with the role: superadmin, site admin or author.
 
-[by-sa]: http://creativecommons.org/licenses/by-sa/4.0/
-
+By default, the plugin will display a license in the footer of your theme. The
+license plugin is also a widget, and can be dragged to any widget area like the
+side-bar and all other available areas (this will suppress display of the
+license in the theme footer and display it only in the widget area).
 
 ### Choose A Site License
 
@@ -161,9 +166,16 @@ Yergler.
 
 ### Credits
 
-- Michael Yoshitaka Erlewine (License v0.5)
-- Brett Mellor (License v0.5)
-- Bjorn Wijers
-- Matt Lee
-- Rob Myers
-- Tarmo Toikkanen
+* Michael Yoshitaka Erlewine (License v0.5)
+* Brett Mellor (License v0.5)
+* Bjorn Wijers
+* Matt Lee
+* Rob Myers
+* Tarmo Toikkanen
+
+
+## License
+
+* [`license.txt`](license.txt) ([GPLv2 or later][gplv2] License)
+
+[gplv2]: https://opensource.org/licenses/GPL-2.0 "GNU General Public License version 2 | Open Source Initiative"

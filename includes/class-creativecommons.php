@@ -1,13 +1,6 @@
 <?php
-
 /**
  * CC WordPress Plugin: Main Class
- *
- * Author: Bjorn Wijers <burobjorn@burobjorn.nl>, Tarmo Toikkanen
- * <tarmo@iki.fi>, Matt Lee <mattl@creativecommons.org>, Rob Myers
- * <rob@creativecommons.org>
- * Version: 2019.7.1
- * License: GPLv2 or later versions
  *
  * @package CC_WordPress_Plugin
  * @subpackage Main_Class
@@ -16,7 +9,7 @@
 class CreativeCommons {
 
 	// Make sure the plugin header has the same version number.
-	const VERSION = '2019.7.1';
+	const VERSION = 'v2019.7.1';
 
 	/**
 	 * Plugin URL.
