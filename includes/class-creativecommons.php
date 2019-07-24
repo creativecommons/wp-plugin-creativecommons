@@ -154,34 +154,6 @@ class CreativeCommons {
 
 
 	/**
-	 * Register settings
-	 *
-	 * @return void
-	 */
-	public function wphub_register_settings() {
-		add_option( 'wphub_use_api', '1' );
-		add_option( 'wphub_api_callback', 'alpha' );
-		register_setting( 'default', 'wphub_use_api' );
-		register_setting( 'default', 'wphub_api_callback' );
-	}
-
-
-	/**
-	 * Add Options Page
-	 *
-	 * @return void
-	 */
-	public function wphub_register_options_page() {
-		add_options_page(
-			'Page title',
-			'Sidebar Text',
-			'manage_options',
-			'wphub-options',
-			'wphub_options_page'
-		);
-	}
-
-	/**
 	 * Register and add settings
 	 **/
 	public function page_init() {
