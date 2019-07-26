@@ -163,9 +163,9 @@ class CreativeCommons {
 			array( &$this, '_wrapper_settings_api_verify' )
 		);
 		add_settings_section(
-			'license-section',
+			'license-chooser',
 			'',
-			array( &$this, 'settings_license_section' ),
+			array( &$this, 'settings_license_chooser' ),
 			'cc-admin'
 		);
 
