@@ -337,7 +337,7 @@ class CreativeCommons {
 				</p></label>
 			</td>
 			<td>
-				<a href="https://creativecommons.org/share-your-work/public-domain/cc0/" target="blank" img src="https://i.creativecommons.org/p/zero/1.0/88x31.png" alt="CC0"></a>
+				<a href="https://creativecommons.org/share-your-work/public-domain/cc0/" target="blank"> <img src="https://i.creativecommons.org/p/zero/1.0/88x31.png" alt="CC0"></a>
 			</td>
 	</tr>
 		</tbody>
