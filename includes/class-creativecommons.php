@@ -244,6 +244,7 @@ class CreativeCommons {
 	 * array as $license['choice'].
 	 */
 	public function settings_license_chooser() {
+		$license = $this->get_license( $location = 'site' ); // Gets license array to store the selection.
 		?>
 		<table class="widefat" style="padding: 2%; padding-right: 5%;">
 		<thead>
