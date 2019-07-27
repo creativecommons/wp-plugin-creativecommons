@@ -238,6 +238,112 @@ class CreativeCommons {
 		);
 	}
 
+	/**
+	 * Html output call-back for license section shown in Settings > Creative Commons.
+	 * Uses radio buttons, and the selected license is stored in the $license
+	 * array as $license['choice'].
+	 */
+	public function settings_license_chooser() {
+		?>
+		<table class="widefat" style="padding: 2%; padding-right: 5%;">
+		<thead>
+			<tr>
+				<th>
+					<h3><?php _e( 'Select the License', 'CreativeCommons' ); ?></h3>
+					<p>
+						<?php _e( 'Select your required default license for your website. Choose a license from Creative Commons licenses. If you are not sure about what license to use, let our ', 'CreativeCommons' ); ?>
+						<strong><a href="https://creativecommons.org/choose/" target="blank">
+						<?php _e( 'License Chooser', 'CreativeCommons' ); ?>
+						</a></strong>
+						<?php _e( ' help. The selected license will be visible in footer as default or you can also use it as a widget. We recommend using the widget for better compatibility with your theme. You can use individual licenses in posts or pages using Gutenberg blocks.', 'CreativeCommons' ); ?>
+					</p>
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+		<tr>
+			<td>
+				<p><label>
+					<input name="license[choice]" type="radio" value="by" <?php checked( $license['choice'], 'by' ); ?> />
+					<?php _e( 'Attribution 4.0 International License', 'CreativeCommons' ); ?>
+					<strong style="color:#fc7303;" >(CC BY 4.0)</strong>
+				</p></label>
+			</td>
+			<td>
+					<a href="https://creativecommons.org/licenses/by/4.0" target="blank"><img src="https://licensebuttons.net/l/by/4.0/88x31.png" alt="License icon"></a>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<p class="cc-test-css"><label>
+					<input name="license[choice]" type="radio" value="by-sa" <?php checked( $license['choice'], 'by-sa' ); ?> /> <?php _e( 'Attribution-ShareAlike 4.0 International License', 'CreativeCommons' ); ?>
+					<strong style="color:#fc7303;" >(CC BY-SA 4.0)</strong>
+				</p></label>
+			</td>
+			<td>
+					<a href="https://creativecommons.org/licenses/by-sa/4.0" target="blank"> <img src="https://licensebuttons.net/l/by-sa/4.0/88x31.png" alt="CC-BY-SA"></a>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<p><label>
+					<input name="license[choice]" type="radio" value="by-nc" <?php checked( $license['choice'], 'by-nc' ); ?> /> <?php _e( 'Attribution-NonCommercial 4.0 International License', 'CreativeCommons' );?>
+					<strong style="color:#fc7303;" >(CC BY-NC 4.0)</strong>
+				</p></label>
+			</td>
+			<td>
+				<a href="https://creativecommons.org/licenses/by-nc/4.0" target="blank" ><img src="https://licensebuttons.net/l/by-nc/4.0/88x31.png" alt="CC-BY-NC"></a>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<p><label>
+					<input name="license[choice]" type="radio" value="by-nc-sa" <?php checked( $license['choice'], 'by-nc-sa' ); ?> /> <?php _e( 'Atribution-NonCommercial-ShareAlike 4.0 International License', 'CreativeCommons' ); ?>
+					<strong style="color:#fc7303;" >(CC BY-NC-SA 4.0)</strong>
+				</p></label>
+			</td>
+			<td>
+				<a href="https://creativecommons.org/licenses/by-nc-sa/4.0" target="blank"> <img src="https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png" alt="CC-BY-NC-SA"></a>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<p><label>
+					<input name="license[choice]" type="radio" value="by-nc-nd" <?php checked( $license['choice'], 'by-nc-nd' ); ?> /> <?php _e( 'Attribution-NonCommercial-NoDerivatives 4.0 International License', 'CreativeCommons' ); ?>
+					<strong style="color:#fc7303;" >(CC BY-NC-ND 4.0)</strong>
+				</p></label>
+			</td>
+			<td>
+				<a href="https://creativecommons.org/licenses/by-nc-nd/4.0" target="blank"> <img src="https://licensebuttons.net/l/by-nc-nd/4.0/88x31.png" alt="CC-BY-NC-ND"></a>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<p><label>
+					<input name="license[choice]" type="radio" value="by-nd" <?php checked( $license['choice'], 'by-nd' ); ?> /> <?php _e( 'Atribution-NoDerivatives 4.0 International License', 'CreativeCommons' ); ?>
+					<strong style="color:#fc7303;" >(CC BY-ND 4.0)</strong>
+				</p></label>
+			</td>
+			<td>
+				<a href="https://creativecommons.org/licenses/by-nd/4.0" target="blank"> <img src="https://licensebuttons.net/l/by-nd/4.0/88x31.png" alt="CC-BY-ND"></a>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<p><label>
+					<input name="license[choice]" type="radio" value="cc0" <?php checked( $license['choice'], 'cc0' ); ?> /> <?php _e( 'CC0 Universal Public Domain Dedication license', 'CreativeCommons' ); ?>
+					<strong style="color:#fc7303;">(CC0)</strong>
+				</p></label>
+			</td>
+			<td>
+				<a href="https://creativecommons.org/share-your-work/public-domain/cc0/" target="blank" img src="https://i.creativecommons.org/p/zero/1.0/88x31.png" alt="CC0"></a>
+			</td>
+	</tr>
+		</tbody>
+	</table>
+		<?php
+	}
+
 
 	/**
 	 * Function: settings_license_section
