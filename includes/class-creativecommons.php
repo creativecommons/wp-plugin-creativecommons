@@ -539,6 +539,7 @@ class CreativeCommons {
 			'content_override_license' => true,
 			'version'                  => self::VERSION,
 			'warning_txt'              => __( 'The license shown may be overriden by individual content such as a single post or image.', 'CreativeCommons' ),
+			'choice'                   => '',   // Used to store the selected license.
 		);
 		return $license;
 	}
