@@ -671,64 +671,6 @@ class CreativeCommons {
 
 
 	/**
-	 * Function: select_license_html
-	 *
-	 * It is used in:
-	 * - network settings
-	 * - site settings
-	 * - profile settings (personal & others)
-	 * - post/page edit screen (my own & others)
-	 *
-	 * @param  mixed $location null.
-	 * @param  mixed $echo true.
-	 */
-	public function select_license_html( $location = null, $echo = true ) {
-
-		/*
-		 * get the previously selected license from this site's options
-		 * or the plugin's default license
-		 * $license = get_option('license', $this->plugin_default_license());
-		 */
-
-		$license = $this->get_license( $location );
-
-		// Set up link arguments.
-		$link_args = array(
-			'partner'   => 'CC+WordPress+Plugin',
-			'exit_url'  => urlencode( $this->plugin_url ) . 'license-return.php?url=[license_url]%26name=[license_name]%26button=[license_button]%26deed=[deed_url]',
-			'KeepThis'  => 'true',
-			'TB_iframe' => 'true',
-			'height'    => 500,
-			'width'     => 600,
-		);
-
-		// Set lang if available.
-		if ( isset( $this->locale ) && ! empty( $this->locale ) ) {
-			$link_args['lang'] = esc_attr( $this->locale );
-		}
-		// Link.
-		$link = sprintf( '<a title="Choose a License" class="button button-secondary thickbox edit-license" href="%2$s">%3$s</a>',
-			__( 'Choose a Creative Commons license', 'CreativeCommons' ),
-			add_query_arg( $link_args, 'https://creativecommons.org/choose/' ),
-			__( 'Change license', 'CreativeCommons' )
-		);
-		// HTML markup.
-		$html = <<<CONTENT
-		<span id='license-display'></span>
-		<br id="license">
-		{$link}
-		<input type="hidden" value="{$license['deed']}" id="hidden-license-deed" name="license[deed]"/>
-		<input type="hidden" value="{$license['image']}" id="hidden-license-image" name="license[image]"/>
-		<input type="hidden" value="{$license['name']}" id="hidden-license-name" name="license[name]"/>
-CONTENT;
-		if ( $echo ) {
-			echo $html;
-		} else {
-			return $html;
-		}
-	}
-
-	/**
 	 * Function: get_attribution_options
 	 *
 	 * Returns default attribution options
