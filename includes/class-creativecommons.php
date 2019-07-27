@@ -913,14 +913,54 @@ class CreativeCommons {
 			$data = sanitize_text_field( wp_unslash( $_POST['license'] ) );
 		}
 
-		// Always save the current version.
+		// Saves the license attribution information. MAke sure to save the current version.
 		$license['version']             = self::VERSION;
-		$license['deed']                = esc_url( $data['deed'] );
-		$license['image']               = esc_url( $data['image'] );
-		$license['name']                = esc_attr( $data['name'] );
 		$license['attribute_to']        = esc_attr( $data['attribute_to'] );
 		$license['attribute_other']     = esc_html( $data['attribute_other'] );
 		$license['attribute_other_url'] = esc_html( $data['attribute_other_url'] );
+
+		// Gets the name, deed(url) and icon of the selected license and stores/saves it.
+		switch ( $data['choice'] ) {
+			case 'by':
+				$license['image'] = esc_url( 'https://licensebuttons.net/l/by/4.0/88x31.png' );
+				$license['name']  = esc_attr( '(CC BY-4.0) Attribution 4.0 International' );
+				$license['deed']  = esc_url( 'http://creativecommons.org/licenses/by/4.0/' );
+				break;
+			case 'by-sa':
+				$license['image'] = esc_url( 'https://licensebuttons.net/l/by-sa/4.0/88x31.png' );
+				$license['name']  = esc_attr( '(CC BY-SA) Attribution-ShareAlike 4.0 International License' );
+				$license['deed']  = esc_url( 'http://creativecommons.org/licenses/by-sa/4.0/' );
+				break;
+			case 'by-nc':
+				$license['image'] = esc_url( 'https://licensebuttons.net/l/by-nc/4.0/88x31.png' );
+				$license['name']  = esc_attr( '(CC BY-NC) Attribution-NonCommercial 4.0 International License' );
+				$license['deed']  = esc_url( 'https://creativecommons.org/licenses/by-nc/4.0' );
+				break;
+			case 'by-nc-sa':
+				$license['image'] = esc_url( 'https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png' );
+				$license['name']  = esc_attr( '(CC BY-NC-SA 4.0) Atribution-NonCommercial-ShareAlike 4.0 International' );
+				$license['deed']  = esc_url( 'https://creativecommons.org/licenses/by-nc-sa/4.0' );
+				break;
+			case 'by-nc-nd':
+				$license['image'] = esc_url( 'https://licensebuttons.net/l/by-nc-nd/4.0/88x31.png' );
+				$license['name']  = esc_attr( '(CC BY-NC-ND 4.0) Attribution-NonCommercial-NoDerivatives 4.0 International' );
+				$license['deed']  = esc_url( 'https://creativecommons.org/licenses/by-nc-nd/4.0' );
+				break;
+			case 'by-nd':
+				$license['image'] = esc_url( 'https://licensebuttons.net/l/by-nd/4.0/88x31.png' );
+				$license['name']  = esc_attr( '(CC BY-ND 4.0) Attribution-NoDerivatives 4.0 International' );
+				$license['deed']  = esc_url( 'https://creativecommons.org/licenses/by-nd/4.0' );
+				break;
+			case 'cc0':
+				$license['image'] = esc_url( 'https://i.creativecommons.org/p/zero/1.0/88x31.png' );
+				$license['name']  = esc_attr( 'CC0 Universal Public Domain Dedication' );
+				$license['deed']  = esc_url( 'https://creativecommons.org/share-your-work/public-domain/cc0' );
+				break;
+			default:    // Uses 'CC BY' as the default license.
+				$license['image'] = esc_url( 'https://licensebuttons.net/l/by/4.0/88x31.png' );
+				$license['name']  = esc_attr( '(CC BY-4.0) Attribution 4.0 International' );
+				$license['deed']  = esc_url( 'http://creativecommons.org/licenses/by/4.0/' );
+		}
 
 		switch ( $from ) {
 			case 'network':
