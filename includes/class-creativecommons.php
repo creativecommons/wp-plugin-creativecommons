@@ -926,42 +926,42 @@ class CreativeCommons {
 		switch ( $data['choice'] ) {
 			case 'by':
 				$license['image'] = esc_url( 'https://licensebuttons.net/l/by/4.0/88x31.png' );
-				$license['name']  = esc_attr( '(CC BY-4.0) Attribution 4.0 International' );
+				$license['name']  = esc_attr( 'Creative Commons Attribution 4.0 International' );
 				$license['deed']  = esc_url( 'http://creativecommons.org/licenses/by/4.0/' );
 				break;
 			case 'by-sa':
 				$license['image'] = esc_url( 'https://licensebuttons.net/l/by-sa/4.0/88x31.png' );
-				$license['name']  = esc_attr( '(CC BY-SA) Attribution-ShareAlike 4.0 International License' );
+				$license['name']  = esc_attr( 'Creative Commons Attribution-ShareAlike 4.0 International License' );
 				$license['deed']  = esc_url( 'http://creativecommons.org/licenses/by-sa/4.0/' );
 				break;
 			case 'by-nc':
 				$license['image'] = esc_url( 'https://licensebuttons.net/l/by-nc/4.0/88x31.png' );
-				$license['name']  = esc_attr( '(CC BY-NC) Attribution-NonCommercial 4.0 International License' );
+				$license['name']  = esc_attr( 'Creative Commons Attribution-NonCommercial 4.0 International License' );
 				$license['deed']  = esc_url( 'https://creativecommons.org/licenses/by-nc/4.0' );
 				break;
 			case 'by-nc-sa':
 				$license['image'] = esc_url( 'https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png' );
-				$license['name']  = esc_attr( '(CC BY-NC-SA 4.0) Atribution-NonCommercial-ShareAlike 4.0 International' );
+				$license['name']  = esc_attr( 'Creative Commons Atribution-NonCommercial-ShareAlike 4.0 International' );
 				$license['deed']  = esc_url( 'https://creativecommons.org/licenses/by-nc-sa/4.0' );
 				break;
 			case 'by-nc-nd':
 				$license['image'] = esc_url( 'https://licensebuttons.net/l/by-nc-nd/4.0/88x31.png' );
-				$license['name']  = esc_attr( '(CC BY-NC-ND 4.0) Attribution-NonCommercial-NoDerivatives 4.0 International' );
+				$license['name']  = esc_attr( 'Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International' );
 				$license['deed']  = esc_url( 'https://creativecommons.org/licenses/by-nc-nd/4.0' );
 				break;
 			case 'by-nd':
 				$license['image'] = esc_url( 'https://licensebuttons.net/l/by-nd/4.0/88x31.png' );
-				$license['name']  = esc_attr( '(CC BY-ND 4.0) Attribution-NoDerivatives 4.0 International' );
+				$license['name']  = esc_attr( 'Creative Commons Attribution-NoDerivatives 4.0 International' );
 				$license['deed']  = esc_url( 'https://creativecommons.org/licenses/by-nd/4.0' );
 				break;
 			case 'cc0':
 				$license['image'] = esc_url( 'https://i.creativecommons.org/p/zero/1.0/88x31.png' );
-				$license['name']  = esc_attr( 'CC0 Universal Public Domain Dedication' );
+				$license['name']  = esc_attr( 'Creative Commons CC0 Universal Public Domain Dedication' );
 				$license['deed']  = esc_url( 'https://creativecommons.org/share-your-work/public-domain/cc0' );
 				break;
 			default:    // Uses 'CC BY' as the default license.
 				$license['image'] = esc_url( 'https://licensebuttons.net/l/by/4.0/88x31.png' );
-				$license['name']  = esc_attr( '(CC BY-4.0) Attribution 4.0 International' );
+				$license['name']  = esc_attr( 'Creative Commons Attribution 4.0 International' );
 				$license['deed']  = esc_url( 'http://creativecommons.org/licenses/by/4.0/' );
 		}
 
@@ -1344,16 +1344,19 @@ class CreativeCommons {
 		$html .= "<a rel='license' href='$deed_url'>";
 		$html .= "<img alt='" . __( 'Creative Commons License', 'CreativeCommons' ) . "' style='border-width:0' src='$image_url' />";
 		$html .= '</a><br />';
-		$html .= "<span xmlns:dct='http://purl.org/dc/terms/' property='dct:title'>$title_work</span> ";
-		if ( $is_singular && $attribute_text ) {
-			$html .= __( 'by', 'CreativeCommons' );
-			if ( $attribute_url != '' ) {
-				$html .= " <a xmlns:cc='http://creativecommons.org/ns#' href='$attribute_url' property='cc:attributionName' rel='cc:attributionURL'>$attribute_text</a> ";
-			} else {
-				$html .= $attribute_text;
-			}
-		}
-		$html .= sprintf( __( 'is licensed under a <a rel="license" href="%s">%s</a> License.', 'CreativeCommons' ), $deed_url, $license_name );
+		/**
+		 * Refactor when we add title and work licnesing.
+		 */
+		// $html .= "<span xmlns:dct='http://purl.org/dc/terms/' property='dct:title'>$title_work</span> ";
+		// if ( $is_singular && $attribute_text ) {
+		// 	$html .= __( 'by', 'CreativeCommons' );
+		// 	if ( $attribute_url != '' ) {
+		// 		$html .= " <a xmlns:cc='http://creativecommons.org/ns#' href='$attribute_url' property='cc:attributionName' rel='cc:attributionURL'>$attribute_text</a> ";
+		// 	} else {
+		// 		$html .= $attribute_text;
+		// 	}
+		// }
+		$html .= sprintf( __( 'Except where otherwise noted, the content on this site is licensed under a <a rel="license" href="%s">%s</a> License.', 'CreativeCommons' ), $deed_url, $license_name );
 		if ( $source_work_url ) {
 			$html .= '<br />';
 			$html .= sprintf( __( 'Based on a work at <a xmlns:dct="http://purl.org/dc/terms/" href="%s" rel="dct:source">%s</a>.', 'CreativeCommons' ), $source_work_url, $source_work_url );
