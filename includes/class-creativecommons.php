@@ -195,15 +195,15 @@ class CreativeCommons {
 		);
 
 		add_settings_field(
-			'warning_txt',
+			'additional_attribution_txt',
 			__(
-				'Add license warning text',
+				'Add additional attribution text',
 				'CreativeCommons'
 			),
-			array( &$this, 'setting_warning_field' ),
+			array( &$this, 'setting_additional_text_field' ),
 			'cc-admin',
-			'license-section',
-			array( 'label_for' => 'warning_txt' )
+			'license-attribution-settings',
+			array( 'label_for' => 'additional_attribution_txt' )
 		);
 
 		add_settings_field(
@@ -383,14 +383,13 @@ class CreativeCommons {
 
 
 	/**
-	 * Function: etting_warning_field
-	 *
-	 * @return void
+	 * Provides an option to the user to add an additional
+	 * attribution text after the license.
 	 */
-	public function setting_warning_field() {
+	public function setting_additional_text_field() {
 		$license = $this->get_license( $location = 'site' );
-		$warning = esc_html( $license['warning_txt'] );
-		echo "<input name='license[warning_txt]' type='text' size='80' maxlength='250' id='warning-txt' value='$warning' />";
+		$add_txt = esc_html( $license['additional_attribution_txt'] );
+		echo "<input style='padding:0.5rem;' name='license[additional_attribution_txt]' type='text' size='120' maxlength='300' id='additional-attribution-txt' value='$add_txt' />";
 	}
 
 
@@ -530,20 +529,20 @@ class CreativeCommons {
 	public function plugin_default_license() {
 		$this->_logger( 'Got default settings' );
 		$license = array(
-			'deed'                     => 'http://creativecommons.org/licenses/by-sa/4.0/',
-			'image'                    => 'https://licensebuttons.net/l/by-sa/4.0/88x31.png',
-			'attribute_to'             => '',
-			'title'                    => get_bloginfo( 'name' ),
-			'name'                     => 'Creative Commons Attribution-Share Alike 4.0',
-			'sitename'                 => get_bloginfo( '' ),
-			'siteurl'                  => get_bloginfo( 'url' ),
-			'author'                   => get_bloginfo(),
-			'site_override_license'    => true,
-			'user_override_license'    => true,
-			'content_override_license' => true,
-			'version'                  => self::VERSION,
-			'warning_txt'              => __( 'The license shown may be overriden by individual content such as a single post or image.', 'CreativeCommons' ),
-			'choice'                   => '',   // Used to store the selected license.
+			'deed'                       => 'http://creativecommons.org/licenses/by-sa/4.0/',
+			'image'                      => 'https://licensebuttons.net/l/by-sa/4.0/88x31.png',
+			'attribute_to'               => '',
+			'title'                      => get_bloginfo( 'name' ),
+			'name'                       => 'Creative Commons Attribution-Share Alike 4.0',
+			'sitename'                   => get_bloginfo( '' ),
+			'siteurl'                    => get_bloginfo( 'url' ),
+			'author'                     => get_bloginfo(),
+			'site_override_license'      => true,
+			'user_override_license'      => true,
+			'content_override_license'   => true,
+			'version'                    => self::VERSION,
+			'additional_attribution_txt' => __( '', 'CreativeCommons' ),
+			'choice'                     => '',
 		);
 		return $license;
 	}
@@ -982,8 +981,8 @@ class CreativeCommons {
 				= esc_attr( $data['user_override_license'] );
 				$license['content_override_license']
 				= esc_attr( $data['content_override_license'] );
-				$license['warning_txt']
-				= esc_html( $data['warning_txt'] );
+				$license['additional_attribution_txt']
+				= esc_html( $data['additional_attribution_txt'] );
 				break;
 		}
 		return $license;
@@ -1284,9 +1283,9 @@ class CreativeCommons {
 			$deed_url     = esc_url( $license['deed'] );
 			$image_url    = esc_url( $license['image'] );
 			$license_name = esc_html( $license['name'] );
-			// needs check.
-			$warning       = ( array_key_exists( 'warning_txt', $license ) )
-						? esc_html( $license['warning_txt'] ) : '';
+
+			$additional_attribution_txt = ( array_key_exists( 'additional_attribution_txt', $license ) )
+						? esc_html( $license['additional_attribution_txt'] ) : '';
 
 			$attribution = $this->_get_attribution( $license );
 			if ( is_array( $attribution ) ) {
@@ -1304,12 +1303,12 @@ class CreativeCommons {
 				global $post;
 				if ( is_object( $post ) ) {
 					$title_work = esc_html( $post->post_title );
-					$warning_text = '';
+					$additional_attribution_txt = '';
 				}
 			} else {
 				$title_work    = get_bloginfo( 'name' );
 				$attribute_url = esc_html( site_url() );
-				$warning_text  = "<p class='license-warning'>" . esc_html( $warning ) . '</p>';
+				$additional_attribution_txt  = "<p class='license-warning'>" . esc_html( $additional_attribution_txt ) . '</p>';
 			}
 			$html = "<div class='license-wrap'>"
 				. $this->license_html_rdfa(
@@ -1322,7 +1321,7 @@ class CreativeCommons {
 					$attribute_text,
 					false,
 					false,
-					$warning_text
+					$additional_attribution_txt
 				)
 				. '</div>';
 		}
@@ -1340,7 +1339,7 @@ class CreativeCommons {
 	public function license_html_rdfa( $deed_url, $license_name, $image_url,
 									$title_work, $is_singular, $attribute_url,
 									$attribute_text, $source_work_url,
-									$extra_permissions_url, $warning_text ) {
+									$extra_permissions_url, $additional_attribution_txt ) {
 		$html = '';
 		$html .= "<a rel='license' href='$deed_url'>";
 		$html .= "<img alt='" . __( 'Creative Commons License', 'CreativeCommons' ) . "' style='border-width:0' src='$image_url' />";
@@ -1363,9 +1362,9 @@ class CreativeCommons {
 			$html .= '<br />';
 			$html .= sprintf( __( 'Permissions beyond the scope of this license may be available at <a xmlns:cc="http://creativecommons.org/ns#" href="%s" rel="cc:morePermissions">%s</a>.', 'CreativeCommons' ), $extra_permissions_url, $extra_permissions_url );
 		}
-		if ( $warning_text ) {
+		if ( $additional_attribution_txt ) {
 			$html .= '<br />';
-			$html .= $warning_text;
+			$html .= $additional_attribution_txt;
 		}
 		return $html;
 	}
