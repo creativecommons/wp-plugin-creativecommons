@@ -70,7 +70,7 @@ registerBlockType('cgb/cc0', {
 				<p>
 					This content is licensed under a{' '}
 					<a href="https://creativecommons.org/publicdomain/zero/1.0/">
-						CC0 1.0 Universal Public Domain Dedication license.
+						Creative Commons CC0 Universal Public Domain Dedication license.
 					</a>
 				</p>
 			</div>
@@ -94,7 +94,7 @@ registerBlockType('cgb/cc0', {
 				<p>
 					This content is licensed under a{' '}
 					<a href="https://creativecommons.org/publicdomain/zero/1.0/">
-						CC0 1.0 Universal Public Domain Dedication license.
+						Creative Commons CC0 Universal Public Domain Dedication license.
 					</a>
 				</p>
 			</div>
