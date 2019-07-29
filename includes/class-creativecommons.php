@@ -251,7 +251,7 @@ class CreativeCommons {
 	public function settings_license_chooser() {
 		$license = $this->get_license( $location = 'site' ); // Gets license array to store the selection.
 		?>
-		<table class="widefat" style="padding: 2%; padding-right: 5%;">
+		<table class="widefat" style="padding: 1.4em; padding-right: 3em;">
 		<thead>
 			<tr>
 				<th>
@@ -378,7 +378,7 @@ class CreativeCommons {
 		$name    = esc_html( $license['name'] );
 		$image   = esc_html( $license['image'] );
 		// Closing the settings table by </table>. Do not use any more setting fields in license-chooser section.
-		echo "</table><div style=' align: left; text-align: center; padding: 1em;'><img id='cc-current-license-image' src='$image'><br /><a href='$deed' target='blank'>$name</a></div>";
+		echo "</table><div style=' text-align: center; background: #fff; border: 1px solid #e5e5e5; box-shadow: 0 1px 1px rgba(0,0,0,.04); padding: 1em;'><img id='cc-current-license-image' src='$image'><br /><a href='$deed' target='blank'>$name</a></div>";
 	}
 
 
@@ -1145,7 +1145,7 @@ class CreativeCommons {
 		<div class="wrap">
 		<h2>Creative Commons licenses</h2>
 
-		<div style="background: white; border: 3px solid #ddd; padding: 0.5em; display: inline-table;">
+		<div style="background: white; border: 1px solid #e5e5e5; box-shadow: 0 1px 1px rgba(0,0,0,.04); padding: 2em; display: inline-table;">
 
 		<img src="https://ccstatic.org/presskit/icons/cc.large.png" align="right" style="padding: 1em; width: 20%; height: auto !important; " />
 
