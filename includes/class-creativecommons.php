@@ -154,14 +154,19 @@ class CreativeCommons {
 
 
 	/**
-	 * Register and add settings
-	 **/
+	 * Register and add plugin settings.
+	 */
 	public function page_init() {
 		register_setting(
 			'cc-admin',
 			'license',
 			array( &$this, '_wrapper_settings_api_verify' )
 		);
+		/**
+		* Includes:
+		* License selector
+		* license_current settings field which previews the current/selected license
+		*/
 		add_settings_section(
 			'license-chooser',
 			'',
@@ -172,12 +177,12 @@ class CreativeCommons {
 		add_settings_field(
 			'license_current',
 			__(
-				'Current default license',
+				'Current License',
 				'CreativeCommons'
 			),
-			array( &$this, 'setting_license_default_field' ),
+			array( &$this, 'settings_preview_current_license' ),
 			'cc-admin',
-			'license-section',
+			'license-chooser',
 			array( 'label_for' => 'license_current' )
 		);
 
