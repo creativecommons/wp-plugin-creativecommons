@@ -173,6 +173,17 @@ class CreativeCommons {
 			array( &$this, 'settings_license_chooser' ),
 			'cc-admin'
 		);
+		/**
+		 * This section includes:
+		 * Additional attribution text.
+		 * More attribtion settings that will be added in the future.
+		 */
+		add_settings_section(
+			'license-attribution-settings',
+			'',
+			array( &$this, 'admin_license_attr_settings' ),
+			'cc-admin'
+		);
 
 		add_settings_field(
 			'license_current',
@@ -348,6 +359,15 @@ class CreativeCommons {
 		</tbody>
 	</table>
 		<?php
+	}
+
+	/**
+	 * Callback for 'license-attribution-settings' section.
+	 * It is empty currently, but is required for the related settings-field to work.
+	 *
+	 * @return void
+	 */
+	public function admin_license_attr_settings() {
 	}
 
 
