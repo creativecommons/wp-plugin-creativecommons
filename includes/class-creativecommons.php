@@ -163,9 +163,9 @@ class CreativeCommons {
 			array( &$this, '_wrapper_settings_api_verify' )
 		);
 		/**
-		* Includes:
-		* License selector
-		* license_current settings field which previews the current/selected license
+		* This section includes:
+		* License selector.
+		* license_current settings field which previews the current/selected license.
 		*/
 		add_settings_section(
 			'license-chooser',
@@ -370,16 +370,15 @@ class CreativeCommons {
 
 
 	/**
-	 * Funciton: setting_license_default_field
-	 *
-	 * @return void
+	 * Displays a preview of current selected license. Used in 'license-chooser' settings section.
 	 */
-	public function setting_license_default_field() {
+	public function settings_preview_current_license() {
 		$license = $this->get_license( $location = 'site' );
 		$deed    = esc_html( $license['deed'] );
 		$name    = esc_html( $license['name'] );
 		$image   = esc_html( $license['image'] );
-		echo "<div style='text-align: center; background: white; border: solid 2px #666; padding: 1em;'><img id='cc-current-license-image' src='$image'><br /><a href='$deed' target='_blank'>$name</a></div><div id='license-display' style='background: white; border: 2px solid red; padding: 1em; margin-top: 1em; display: none;'>" . '<h3>' . __( 'WARNING: Changing these license settings after content has been added may change the licenses authors on the site have selected, effectively relicensing possibly all content on the site!', 'CreativeCommons' ) . '</h3>' . "<p style='text-align: center;'><span id='license-display-image'></span></p></div>";
+		// Closing the settings table by </table>. Do not use any more setting fields in license-chooser section.
+		echo "</table><div style=' align: left; text-align: center; padding: 1em;'><img id='cc-current-license-image' src='$image'><br /><a href='$deed' target='blank'>$name</a></div>";
 	}
 
 
