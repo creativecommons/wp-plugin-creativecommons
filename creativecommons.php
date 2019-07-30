@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name: Creative Commons
- * Description: Official Creative Commons plugin for WordPress. Allows users to select and display
- * Creative Commons licenses for their content. Partially inspired by the License plugin by mitcho
+ * Description: Official Creative Commons plugin for WordPress. Allows users to select and display Creative Commons licenses for their content.
+ * Partially inspired by the License plugin by mitcho
  * (Michael Yoshitaka Erlewine) and Brett Mellor, as well as the original WpLicense plugin by CC CTO
  * Nathan R. Yergler.
  * Version: 2019.7.2
