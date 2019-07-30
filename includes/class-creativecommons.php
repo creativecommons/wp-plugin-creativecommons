@@ -951,12 +951,12 @@ class CreativeCommons {
 				break;
 			case 'by-sa':
 				$license['image'] = esc_url( 'https://licensebuttons.net/l/by-sa/4.0/88x31.png' );
-				$license['name']  = esc_attr( 'Creative Commons Attribution-ShareAlike 4.0 International License' );
+				$license['name']  = esc_attr( 'Creative Commons Attribution-ShareAlike 4.0 International' );
 				$license['deed']  = esc_url( 'http://creativecommons.org/licenses/by-sa/4.0/' );
 				break;
 			case 'by-nc':
 				$license['image'] = esc_url( 'https://licensebuttons.net/l/by-nc/4.0/88x31.png' );
-				$license['name']  = esc_attr( 'Creative Commons Attribution-NonCommercial 4.0 International License' );
+				$license['name']  = esc_attr( 'Creative Commons Attribution-NonCommercial 4.0 International' );
 				$license['deed']  = esc_url( 'https://creativecommons.org/licenses/by-nc/4.0' );
 				break;
 			case 'by-nc-sa':
