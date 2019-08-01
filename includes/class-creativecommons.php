@@ -9,7 +9,7 @@
 class CreativeCommons {
 
 	// Make sure the plugin header has the same version number.
-	const VERSION = 'v2019.7.1';
+	const VERSION = 'v2019.7.2';
 
 	/**
 	 * Plugin URL.
@@ -154,58 +154,46 @@ class CreativeCommons {
 
 
 	/**
-	 * Register settings
-	 *
-	 * @return void
+	 * Register and add plugin settings.
 	 */
-	public function wphub_register_settings() {
-		add_option( 'wphub_use_api', '1' );
-		add_option( 'wphub_api_callback', 'alpha' );
-		register_setting( 'default', 'wphub_use_api' );
-		register_setting( 'default', 'wphub_api_callback' );
-	}
-
-
-	/**
-	 * Add Options Page
-	 *
-	 * @return void
-	 */
-	public function wphub_register_options_page() {
-		add_options_page(
-			'Page title',
-			'Sidebar Text',
-			'manage_options',
-			'wphub-options',
-			'wphub_options_page'
-		);
-	}
-
-	/**
-	 * Register and add settings
-	 **/
 	public function page_init() {
 		register_setting(
 			'cc-admin',
 			'license',
 			array( &$this, '_wrapper_settings_api_verify' )
 		);
+		/**
+		* This section includes:
+		* License selector.
+		* license_current settings field which previews the current/selected license.
+		*/
 		add_settings_section(
-			'license-section',
+			'license-chooser',
 			'',
-			array( &$this, 'settings_license_section' ),
+			array( &$this, 'settings_license_chooser' ),
+			'cc-admin'
+		);
+		/**
+		 * This section includes:
+		 * Additional attribution text.
+		 * More attribtion settings that will be added in the future.
+		 */
+		add_settings_section(
+			'license-attribution-settings',
+			'',
+			array( &$this, 'admin_license_attr_settings' ),
 			'cc-admin'
 		);
 
 		add_settings_field(
 			'license_current',
 			__(
-				'Current default license',
+				'Current License',
 				'CreativeCommons'
 			),
-			array( &$this, 'setting_license_default_field' ),
+			array( &$this, 'settings_preview_current_license' ),
 			'cc-admin',
-			'license-section',
+			'license-chooser',
 			array( 'label_for' => 'license_current' )
 		);
 
@@ -218,15 +206,15 @@ class CreativeCommons {
 		);
 
 		add_settings_field(
-			'warning_txt',
+			'additional_attribution_txt',
 			__(
-				'Add license warning text',
+				'Add additional attribution text',
 				'CreativeCommons'
 			),
-			array( &$this, 'setting_warning_field' ),
+			array( &$this, 'setting_additional_text_field' ),
 			'cc-admin',
-			'license-section',
-			array( 'label_for' => 'warning_txt' )
+			'license-attribution-settings',
+			array( 'label_for' => 'additional_attribution_txt' )
 		);
 
 		add_settings_field(
@@ -268,6 +256,123 @@ class CreativeCommons {
 
 
 	/**
+	 * Html output call-back for license section shown in Settings > Creative Commons.
+	 * Uses radio buttons, and the selected license is stored in the $license
+	 * array as $license['choice'].
+	 */
+	public function settings_license_chooser() {
+		$license = $this->get_license( $location = 'site' ); // Gets license array to store the selection.
+		?>
+		<table class="widefat" style="padding: 1.4em; padding-right: 3em;">
+		<thead>
+			<tr>
+				<th>
+					<h3><?php _e( 'Select the License', 'CreativeCommons' ); ?></h3>
+					<p>
+						<?php _e( 'Select your required default license for your website. Choose a license from Creative Commons licenses. If you are not sure about what license to use, let our ', 'CreativeCommons' ); ?>
+						<strong><a href="https://creativecommons.org/choose/" target="blank">
+						<?php _e( 'License Chooser', 'CreativeCommons' ); ?>
+						</a></strong>
+						<?php _e( ' help. The selected license will be visible in footer as default or you can also use it as a widget. We recommend using the widget for better compatibility with your theme. You can use individual licenses in posts or pages using Gutenberg blocks.', 'CreativeCommons' ); ?>
+					</p>
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+		<tr>
+			<td>
+				<p><label>
+					<input name="license[choice]" type="radio" value="by" <?php checked( $license['choice'], 'by' ); ?> />
+					<?php _e( 'Attribution 4.0 International License', 'CreativeCommons' ); ?>
+					<strong style="color:#fc7303;" >(CC BY 4.0)</strong>
+				</p></label>
+			</td>
+			<td>
+					<a href="https://creativecommons.org/licenses/by/4.0" target="blank"><img src="https://licensebuttons.net/l/by/4.0/88x31.png" alt="License icon"></a>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<p class="cc-test-css"><label>
+					<input name="license[choice]" type="radio" value="by-sa" <?php checked( $license['choice'], 'by-sa' ); ?> /> <?php _e( 'Attribution-ShareAlike 4.0 International License', 'CreativeCommons' ); ?>
+					<strong style="color:#fc7303;" >(CC BY-SA 4.0)</strong>
+				</p></label>
+			</td>
+			<td>
+					<a href="https://creativecommons.org/licenses/by-sa/4.0" target="blank"> <img src="https://licensebuttons.net/l/by-sa/4.0/88x31.png" alt="CC-BY-SA"></a>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<p><label>
+					<input name="license[choice]" type="radio" value="by-nc" <?php checked( $license['choice'], 'by-nc' ); ?> /> <?php _e( 'Attribution-NonCommercial 4.0 International License', 'CreativeCommons' );?>
+					<strong style="color:#fc7303;" >(CC BY-NC 4.0)</strong>
+				</p></label>
+			</td>
+			<td>
+				<a href="https://creativecommons.org/licenses/by-nc/4.0" target="blank" ><img src="https://licensebuttons.net/l/by-nc/4.0/88x31.png" alt="CC-BY-NC"></a>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<p><label>
+					<input name="license[choice]" type="radio" value="by-nc-sa" <?php checked( $license['choice'], 'by-nc-sa' ); ?> /> <?php _e( 'Atribution-NonCommercial-ShareAlike 4.0 International License', 'CreativeCommons' ); ?>
+					<strong style="color:#fc7303;" >(CC BY-NC-SA 4.0)</strong>
+				</p></label>
+			</td>
+			<td>
+				<a href="https://creativecommons.org/licenses/by-nc-sa/4.0" target="blank"> <img src="https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png" alt="CC-BY-NC-SA"></a>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<p><label>
+					<input name="license[choice]" type="radio" value="by-nc-nd" <?php checked( $license['choice'], 'by-nc-nd' ); ?> /> <?php _e( 'Attribution-NonCommercial-NoDerivatives 4.0 International License', 'CreativeCommons' ); ?>
+					<strong style="color:#fc7303;" >(CC BY-NC-ND 4.0)</strong>
+				</p></label>
+			</td>
+			<td>
+				<a href="https://creativecommons.org/licenses/by-nc-nd/4.0" target="blank"> <img src="https://licensebuttons.net/l/by-nc-nd/4.0/88x31.png" alt="CC-BY-NC-ND"></a>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<p><label>
+					<input name="license[choice]" type="radio" value="by-nd" <?php checked( $license['choice'], 'by-nd' ); ?> /> <?php _e( 'Atribution-NoDerivatives 4.0 International License', 'CreativeCommons' ); ?>
+					<strong style="color:#fc7303;" >(CC BY-ND 4.0)</strong>
+				</p></label>
+			</td>
+			<td>
+				<a href="https://creativecommons.org/licenses/by-nd/4.0" target="blank"> <img src="https://licensebuttons.net/l/by-nd/4.0/88x31.png" alt="CC-BY-ND"></a>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<p><label>
+					<input name="license[choice]" type="radio" value="cc0" <?php checked( $license['choice'], 'cc0' ); ?> /> <?php _e( 'CC0 Universal Public Domain Dedication license', 'CreativeCommons' ); ?>
+					<strong style="color:#fc7303;">(CC0)</strong>
+				</p></label>
+			</td>
+			<td>
+				<a href="https://creativecommons.org/share-your-work/public-domain/cc0/" target="blank"> <img src="https://i.creativecommons.org/p/zero/1.0/88x31.png" alt="CC0"></a>
+			</td>
+	</tr>
+		</tbody>
+	</table>
+		<?php
+	}
+
+	/**
+	 * Callback for 'license-attribution-settings' section.
+	 * It is empty currently, but is required for the related settings-field to work.
+	 *
+	 * @return void
+	 */
+	public function admin_license_attr_settings() {
+	}
+
+
+	/**
 	 * Function: settings_license_section
 	 */
 	public function settings_license_section() {
@@ -286,28 +391,27 @@ class CreativeCommons {
 
 
 	/**
-	 * Funciton: setting_license_default_field
-	 *
-	 * @return void
+	 * Displays a preview of current selected license. Used in 'license-chooser' settings section.
 	 */
-	public function setting_license_default_field() {
+	public function settings_preview_current_license() {
 		$license = $this->get_license( $location = 'site' );
 		$deed    = esc_html( $license['deed'] );
 		$name    = esc_html( $license['name'] );
 		$image   = esc_html( $license['image'] );
-		echo "<div style='text-align: center; background: white; border: solid 2px #666; padding: 1em;'><img id='cc-current-license-image' src='$image'><br /><a href='$deed' target='_blank'>$name</a></div><div id='license-display' style='background: white; border: 2px solid red; padding: 1em; margin-top: 1em; display: none;'>" . '<h3>' . __( 'WARNING: Changing these license settings after content has been added may change the licenses authors on the site have selected, effectively relicensing possibly all content on the site!', 'CreativeCommons' ) . '</h3>' . "<p style='text-align: center;'><span id='license-display-image'></span></p></div>";
+
+		// Closing the settings table by </table>. Do not use any more setting fields in license-chooser section.
+		echo "</table><div style=' text-align: center; background: #fff; border: 1px solid #e5e5e5; box-shadow: 0 1px 1px rgba(0,0,0,.04); padding: 1em;'><img id='cc-current-license-image' src='$image'><br /><a href='$deed' target='blank'>$name</a></div>";
 	}
 
 
 	/**
-	 * Function: etting_warning_field
-	 *
-	 * @return void
+	 * Provides an option to the user to add an additional
+	 * attribution text after the license.
 	 */
-	public function setting_warning_field() {
+	public function setting_additional_text_field() {
 		$license = $this->get_license( $location = 'site' );
-		$warning = esc_html( $license['warning_txt'] );
-		echo "<input name='license[warning_txt]' type='text' size='80' maxlength='250' id='warning-txt' value='$warning' />";
+		$add_txt = esc_html( $license['additional_attribution_txt'] );
+		echo "<input style='padding:0.5rem;' name='license[additional_attribution_txt]' type='text' size='120' maxlength='300' id='additional-attribution-txt' value='$add_txt' />";
 	}
 
 
@@ -447,19 +551,20 @@ class CreativeCommons {
 	public function plugin_default_license() {
 		$this->_logger( 'Got default settings' );
 		$license = array(
-			'deed'                     => 'http://creativecommons.org/licenses/by-sa/4.0/',
-			'image'                    => 'https://licensebuttons.net/l/by-sa/4.0/88x31.png',
-			'attribute_to'             => '',
-			'title'                    => get_bloginfo( 'name' ),
-			'name'                     => 'Creative Commons Attribution-Share Alike 4.0',
-			'sitename'                 => get_bloginfo( '' ),
-			'siteurl'                  => get_bloginfo( 'url' ),
-			'author'                   => get_bloginfo(),
-			'site_override_license'    => true,
-			'user_override_license'    => true,
-			'content_override_license' => true,
-			'version'                  => self::VERSION,
-			'warning_txt'              => __( 'The license shown may be overriden by individual content such as a single post or image.', 'CreativeCommons' ),
+			'deed'                       => 'http://creativecommons.org/licenses/by-sa/4.0/',
+			'image'                      => 'https://licensebuttons.net/l/by-sa/4.0/88x31.png',
+			'attribute_to'               => '',
+			'title'                      => get_bloginfo( 'name' ),
+			'name'                       => 'Creative Commons Attribution-Share Alike 4.0',
+			'sitename'                   => get_bloginfo( '' ),
+			'siteurl'                    => get_bloginfo( 'url' ),
+			'author'                     => get_bloginfo(),
+			'site_override_license'      => true,
+			'user_override_license'      => true,
+			'content_override_license'   => true,
+			'version'                    => self::VERSION,
+			'additional_attribution_txt' => __( '', 'CreativeCommons' ),
+			'choice'                     => '',
 		);
 		return $license;
 	}
@@ -590,64 +695,6 @@ class CreativeCommons {
 		}
 	}
 
-
-	/**
-	 * Function: select_license_html
-	 *
-	 * It is used in:
-	 * - network settings
-	 * - site settings
-	 * - profile settings (personal & others)
-	 * - post/page edit screen (my own & others)
-	 *
-	 * @param  mixed $location null.
-	 * @param  mixed $echo true.
-	 */
-	public function select_license_html( $location = null, $echo = true ) {
-
-		/*
-		 * get the previously selected license from this site's options
-		 * or the plugin's default license
-		 * $license = get_option('license', $this->plugin_default_license());
-		 */
-
-		$license = $this->get_license( $location );
-
-		// Set up link arguments.
-		$link_args = array(
-			'partner'   => 'CC+WordPress+Plugin',
-			'exit_url'  => urlencode( $this->plugin_url ) . 'license-return.php?url=[license_url]%26name=[license_name]%26button=[license_button]%26deed=[deed_url]',
-			'KeepThis'  => 'true',
-			'TB_iframe' => 'true',
-			'height'    => 500,
-			'width'     => 600,
-		);
-
-		// Set lang if available.
-		if ( isset( $this->locale ) && ! empty( $this->locale ) ) {
-			$link_args['lang'] = esc_attr( $this->locale );
-		}
-		// Link.
-		$link = sprintf( '<a title="Choose a License" class="button button-secondary thickbox edit-license" href="%2$s">%3$s</a>',
-			__( 'Choose a Creative Commons license', 'CreativeCommons' ),
-			add_query_arg( $link_args, 'https://creativecommons.org/choose/' ),
-			__( 'Change license', 'CreativeCommons' )
-		);
-		// HTML markup.
-		$html = <<<CONTENT
-		<span id='license-display'></span>
-		<br id="license">
-		{$link}
-		<input type="hidden" value="{$license['deed']}" id="hidden-license-deed" name="license[deed]"/>
-		<input type="hidden" value="{$license['image']}" id="hidden-license-image" name="license[image]"/>
-		<input type="hidden" value="{$license['name']}" id="hidden-license-name" name="license[name]"/>
-CONTENT;
-		if ( $echo ) {
-			echo $html;
-		} else {
-			return $html;
-		}
-	}
 
 	/**
 	 * Function: get_attribution_options
@@ -891,14 +938,54 @@ CONTENT;
 			$data = sanitize_text_field( wp_unslash( $_POST['license'] ) );
 		}
 
-		// Always save the current version.
+		// Saves the license attribution information. MAke sure to save the current version.
 		$license['version']             = self::VERSION;
-		$license['deed']                = esc_url( $data['deed'] );
-		$license['image']               = esc_url( $data['image'] );
-		$license['name']                = esc_attr( $data['name'] );
 		$license['attribute_to']        = esc_attr( $data['attribute_to'] );
 		$license['attribute_other']     = esc_html( $data['attribute_other'] );
 		$license['attribute_other_url'] = esc_html( $data['attribute_other_url'] );
+
+		// Gets the name, deed(url) and icon of the selected license and stores/saves it.
+		switch ( $data['choice'] ) {
+			case 'by':
+				$license['image'] = esc_url( 'https://licensebuttons.net/l/by/4.0/88x31.png' );
+				$license['name']  = esc_attr( 'Creative Commons Attribution 4.0 International' );
+				$license['deed']  = esc_url( 'http://creativecommons.org/licenses/by/4.0/' );
+				break;
+			case 'by-sa':
+				$license['image'] = esc_url( 'https://licensebuttons.net/l/by-sa/4.0/88x31.png' );
+				$license['name']  = esc_attr( 'Creative Commons Attribution-ShareAlike 4.0 International' );
+				$license['deed']  = esc_url( 'http://creativecommons.org/licenses/by-sa/4.0/' );
+				break;
+			case 'by-nc':
+				$license['image'] = esc_url( 'https://licensebuttons.net/l/by-nc/4.0/88x31.png' );
+				$license['name']  = esc_attr( 'Creative Commons Attribution-NonCommercial 4.0 International' );
+				$license['deed']  = esc_url( 'https://creativecommons.org/licenses/by-nc/4.0' );
+				break;
+			case 'by-nc-sa':
+				$license['image'] = esc_url( 'https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png' );
+				$license['name']  = esc_attr( 'Creative Commons Atribution-NonCommercial-ShareAlike 4.0 International' );
+				$license['deed']  = esc_url( 'https://creativecommons.org/licenses/by-nc-sa/4.0' );
+				break;
+			case 'by-nc-nd':
+				$license['image'] = esc_url( 'https://licensebuttons.net/l/by-nc-nd/4.0/88x31.png' );
+				$license['name']  = esc_attr( 'Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International' );
+				$license['deed']  = esc_url( 'https://creativecommons.org/licenses/by-nc-nd/4.0' );
+				break;
+			case 'by-nd':
+				$license['image'] = esc_url( 'https://licensebuttons.net/l/by-nd/4.0/88x31.png' );
+				$license['name']  = esc_attr( 'Creative Commons Attribution-NoDerivatives 4.0 International' );
+				$license['deed']  = esc_url( 'https://creativecommons.org/licenses/by-nd/4.0' );
+				break;
+			case 'cc0':
+				$license['image'] = esc_url( 'https://i.creativecommons.org/p/zero/1.0/88x31.png' );
+				$license['name']  = esc_attr( 'Creative Commons CC0 Universal Public Domain Dedication' );
+				$license['deed']  = esc_url( 'https://creativecommons.org/share-your-work/public-domain/cc0' );
+				break;
+			default:    // Uses 'CC BY' as the default license.
+				$license['image'] = esc_url( 'https://licensebuttons.net/l/by/4.0/88x31.png' );
+				$license['name']  = esc_attr( 'Creative Commons Attribution 4.0 International' );
+				$license['deed']  = esc_url( 'http://creativecommons.org/licenses/by/4.0/' );
+		}
 
 		switch ( $from ) {
 			case 'network':
@@ -916,8 +1003,8 @@ CONTENT;
 				= esc_attr( $data['user_override_license'] );
 				$license['content_override_license']
 				= esc_attr( $data['content_override_license'] );
-				$license['warning_txt']
-				= esc_html( $data['warning_txt'] );
+				$license['additional_attribution_txt']
+				= esc_html( $data['additional_attribution_txt'] );
 				break;
 		}
 		return $license;
@@ -1079,7 +1166,7 @@ CONTENT;
 		<div class="wrap">
 		<h2>Creative Commons licenses</h2>
 
-		<div style="background: white; border: 3px solid #ddd; padding: 0.5em; display: inline-table;">
+		<div style="background: white; border: 1px solid #e5e5e5; box-shadow: 0 1px 1px rgba(0,0,0,.04); padding: 2em; display: inline-table;">
 
 		<img src="https://ccstatic.org/presskit/icons/cc.large.png" align="right" style="padding: 1em; width: 20%; height: auto !important; " />
 
@@ -1218,9 +1305,9 @@ CONTENT;
 			$deed_url     = esc_url( $license['deed'] );
 			$image_url    = esc_url( $license['image'] );
 			$license_name = esc_html( $license['name'] );
-			// needs check.
-			$warning       = ( array_key_exists( 'warning_txt', $license ) )
-						? esc_html( $license['warning_txt'] ) : '';
+
+			$additional_attribution_txt = ( array_key_exists( 'additional_attribution_txt', $license ) )
+						? esc_html( $license['additional_attribution_txt'] ) : '';
 
 			$attribution = $this->_get_attribution( $license );
 			if ( is_array( $attribution ) ) {
@@ -1238,12 +1325,12 @@ CONTENT;
 				global $post;
 				if ( is_object( $post ) ) {
 					$title_work = esc_html( $post->post_title );
-					$warning_text = '';
+					$additional_attribution_txt = '';
 				}
 			} else {
 				$title_work    = get_bloginfo( 'name' );
 				$attribute_url = esc_html( site_url() );
-				$warning_text  = "<p class='license-warning'>" . esc_html( $warning ) . '</p>';
+				$additional_attribution_txt  = "<p class='license-warning'>" . esc_html( $additional_attribution_txt ) . '</p>';
 			}
 			$html = "<div class='license-wrap'>"
 				. $this->license_html_rdfa(
@@ -1256,7 +1343,7 @@ CONTENT;
 					$attribute_text,
 					false,
 					false,
-					$warning_text
+					$additional_attribution_txt
 				)
 				. '</div>';
 		}
@@ -1274,21 +1361,25 @@ CONTENT;
 	public function license_html_rdfa( $deed_url, $license_name, $image_url,
 									$title_work, $is_singular, $attribute_url,
 									$attribute_text, $source_work_url,
-									$extra_permissions_url, $warning_text ) {
+									$extra_permissions_url, $additional_attribution_txt ) {
 		$html = '';
 		$html .= "<a rel='license' href='$deed_url'>";
 		$html .= "<img alt='" . __( 'Creative Commons License', 'CreativeCommons' ) . "' style='border-width:0' src='$image_url' />";
 		$html .= '</a><br />';
-		$html .= "<span xmlns:dct='http://purl.org/dc/terms/' property='dct:title'>$title_work</span> ";
-		if ( $is_singular && $attribute_text ) {
-			$html .= __( 'by', 'CreativeCommons' );
-			if ( $attribute_url != '' ) {
-				$html .= " <a xmlns:cc='http://creativecommons.org/ns#' href='$attribute_url' property='cc:attributionName' rel='cc:attributionURL'>$attribute_text</a> ";
-			} else {
-				$html .= $attribute_text;
-			}
-		}
-		$html .= sprintf( __( 'is licensed under a <a rel="license" href="%s">%s</a> License.', 'CreativeCommons' ), $deed_url, $license_name );
+
+		/**
+		 * Refactor when we add title and work licensing.
+		 */
+		// $html .= "<span xmlns:dct='http://purl.org/dc/terms/' property='dct:title'>$title_work</span> ";
+		// if ( $is_singular && $attribute_text ) {
+		// 	$html .= __( 'by', 'CreativeCommons' );
+		// 	if ( $attribute_url != '' ) {
+		// 		$html .= " <a xmlns:cc='http://creativecommons.org/ns#' href='$attribute_url' property='cc:attributionName' rel='cc:attributionURL'>$attribute_text</a> ";
+		// 	} else {
+		// 		$html .= $attribute_text;
+		// 	}
+		// }
+		$html .= sprintf( __( 'Except where otherwise noted, the content on this site is licensed under a <a rel="license" href="%s">%s</a> License.', 'CreativeCommons' ), $deed_url, $license_name );
 		if ( $source_work_url ) {
 			$html .= '<br />';
 			$html .= sprintf( __( 'Based on a work at <a xmlns:dct="http://purl.org/dc/terms/" href="%s" rel="dct:source">%s</a>.', 'CreativeCommons' ), $source_work_url, $source_work_url );
@@ -1297,9 +1388,10 @@ CONTENT;
 			$html .= '<br />';
 			$html .= sprintf( __( 'Permissions beyond the scope of this license may be available at <a xmlns:cc="http://creativecommons.org/ns#" href="%s" rel="cc:morePermissions">%s</a>.', 'CreativeCommons' ), $extra_permissions_url, $extra_permissions_url );
 		}
-		if ( $warning_text ) {
+
+		if ( $additional_attribution_txt ) {
 			$html .= '<br />';
-			$html .= $warning_text;
+			$html .= $additional_attribution_txt;
 		}
 		return $html;
 	}

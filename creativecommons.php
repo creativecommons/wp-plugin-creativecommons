@@ -2,12 +2,10 @@
 /**
  * Plugin Name: Creative Commons
  * Plugin URI: https://github.com/creativecommons/wp-plugin-creativecommons
- * Description: Official Creative Commons plugin for licensing your content.
- *              With Creative Commons licenses, keep your copyright AND share
- *              your creativity.
- * Version: v2019.7.1
- * Author: Ahmad Bilal, Bjorn Wijers, Matt Lee, Rob Myers, Tarmo Toikkanen,
- *         Timid Robot Zehta
+ * Description: Official Creative Commons plugin for licensing your content. With Creative Commons licenses, keep your copyright AND share your creativity.
+ * Version: v2019.7.2
+ * Author: Ahmad Bilal (https://ahmadbilal.dev), Bjorn Wijers <burobjorn@burobjorn.nl>, Tarmo Toikkanen <tarmo@iki.fi>, Matt Lee <mattl@creativecommons.org>, Rob Myers <rob@creativecommons.org>, Timid Robot Zehta
+ * Author URI: http://CreativeCommons.org/
  * License: GPLv2 or later versions
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  *

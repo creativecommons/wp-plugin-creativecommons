@@ -5,7 +5,7 @@ Donate link: https://us.netdonor.net/page/6650/donate/1?ea.tracking.id=top-of-pa
 Tags: Creative Commons, CC, license, copyright, copyleft, attribution, attribute, ownership, all rights reserved, some rights reserved, footer, widget
 Requires at least: 3.1
 Tested up to: 5.2
-Stable tag: v2019.7.1
+Stable tag: v2019.7.2
 Requires PHP: 5.6.20
 License: GPLv2 or later
 License URI: https://gnu.org/licenses/gpl-2.0.html
@@ -45,7 +45,9 @@ with the role: superadmin, site admin or author.
 By default, the plugin will display a license in the footer of your theme. The
 license plugin is also a widget, and can be dragged to any widget area like the
 side-bar and all other available areas (this will suppress display of the
-license in the theme footer and display it only in the widget area).
+license in the theme footer and display it only in the widget area). We recommend
+using the widget for better compatibility with your theme. You can use individual
+licenses in posts or pages using Gutenberg blocks.
 
 
 == Installation ==
@@ -54,8 +56,11 @@ license in the theme footer and display it only in the widget area).
    Upload the plugin to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress.
 3. From the Widgets menu, drag the License widget to the widget area in which
-   you would like the license to appear.  Otherwise, the license will appear in
+   you would like the license to appear. Otherwise, the license will appear in
    the Wordpress footer area by default.
+4. If you want to include licenses as Gutenberg blocks, simply add a new block,
+   in the categories look for "Creative Commons Licenses" and add the required
+   block.
 
 
 == Frequently Asked Questions ==
@@ -68,8 +73,8 @@ See the GitHub project: [creativecommons/wp-plugin-creativecommons](https://gith
 
 == Screenshots ==
 
-1. In wp-admin, you can access the Creative Commons page inside the Settings. This page has all the license settings. By pressing "Change License", you can change the license.
-2. If you are creating a page or a post with the Gutenberg editor, you can include license to any content or the page/post itself by CC Gutenberg blocks. They are bundled in a seperate category.
+1. In wp-admin/Dashboard, you can access the Creative Commons page inside the Settings. This page has all the license settings. In the select license area, you can select the required license. Check the one and save changes.
+2. If you are creating a page or a post with the Gutenberg editor, you can include license to any content or the page/post itself by CC Gutenberg blocks. They are bundled in a seperate category "Creative Commons Licenses".
 3. Selecting a block adds the respective license block. You can also change backgrounf and text colors of the block from the color pallete on the right.
 4. Gutenberg Block included in a post.
 5. Default license as a widget.
@@ -77,6 +82,13 @@ See the GitHub project: [creativecommons/wp-plugin-creativecommons](https://gith
 
 == Changelog ==
 
+= v2019.7.2 =
+
+* Bug fixes.
+* Old license chooser removed and plugin linked to the new one: https://creativecommons.org/choose/
+* Plugin settings page redesigned for a better user experience.
+* New feature to add additional text after the license.
+* Gutenberg blocks for CC licenses redesigned.
 
 = v2019.7.1 =
 
