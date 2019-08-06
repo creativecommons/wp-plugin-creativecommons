@@ -114,8 +114,7 @@ class CreativeCommons {
 			);
 		}
 
-		// this implements the license plugin as a widget.
-		// TODO: Widget needs more testing with the new approach.
+		// Adds CC License widget to display the license.
 		add_action( 'widgets_init', array( &$this, 'license_as_widget' ) );
 
 		/*
@@ -253,6 +252,7 @@ class CreativeCommons {
 			array( 'label_for' => 'allow_content_override' )
 		);
 	}
+
 
 	/**
 	 * Html output call-back for license section shown in Settings > Creative Commons.
@@ -397,6 +397,7 @@ class CreativeCommons {
 		$deed    = esc_html( $license['deed'] );
 		$name    = esc_html( $license['name'] );
 		$image   = esc_html( $license['image'] );
+
 		// Closing the settings table by </table>. Do not use any more setting fields in license-chooser section.
 		echo "</table><div style=' text-align: center; background: #fff; border: 1px solid #e5e5e5; box-shadow: 0 1px 1px rgba(0,0,0,.04); padding: 1em;'><img id='cc-current-license-image' src='$image'><br /><a href='$deed' target='blank'>$name</a></div>";
 	}
@@ -1364,8 +1365,9 @@ class CreativeCommons {
 		$html .= "<a rel='license' href='$deed_url'>";
 		$html .= "<img alt='" . __( 'Creative Commons License', 'CreativeCommons' ) . "' style='border-width:0' src='$image_url' />";
 		$html .= '</a><br />';
+
 		/**
-		 * Refactor when we add title and work licnesing.
+		 * Refactor when we add title and work licensing.
 		 */
 		// $html .= "<span xmlns:dct='http://purl.org/dc/terms/' property='dct:title'>$title_work</span> ";
 		// if ( $is_singular && $attribute_text ) {
@@ -1385,6 +1387,7 @@ class CreativeCommons {
 			$html .= '<br />';
 			$html .= sprintf( __( 'Permissions beyond the scope of this license may be available at <a xmlns:cc="http://creativecommons.org/ns#" href="%s" rel="cc:morePermissions">%s</a>.', 'CreativeCommons' ), $extra_permissions_url, $extra_permissions_url );
 		}
+
 		if ( $additional_attribution_txt ) {
 			$html .= '<br />';
 			$html .= $additional_attribution_txt;
@@ -1478,12 +1481,10 @@ class CreativeCommons {
 	/**
 	 * Function: license_as_widget
 	 *
-	 * Registers widget.
-	 *
-	 * @return void
+	 * Registers widget, instantiates the CreativeCommons_Widget class.
 	 */
 	public function license_as_widget() {
-		register_widget( 'CreativeCommons_widget' );
+		register_widget( 'CreativeCommons_Widget' );
 	}
 
 
