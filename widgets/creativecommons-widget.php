@@ -2,8 +2,8 @@
 /**
  * Class: Creative Commons Widget
  *
- * User-specified Creative Commons License will display in the page footer by
- * default. User will be able to drag this widget to a sidebar as well.
+ * User-specified Creative Commons License will display in the page footer by default.
+ * User will be able to drag this widget to a sidebar as well.
  *
  * @package CC_WordPress_Plugin
  * @subpackage Widget Class
@@ -19,16 +19,15 @@ if ( ! class_exists( 'CreativeCommons_widget' ) ) {
 	class CreativeCommons_widget extends WP_Widget {
 
 		/**
-		 * Constructor
-		 *
-		 * @return void
+		 * This method is used to assign an id, name, class name, and description to the widget
+		 * to show in admin area.
 		 */
 		public function __construct() {
 
 			// Widget settings.
 			$widget_ops = array(
 				'classname'   => 'license-widget',
-				'description' => __( 'User-specified Creative Commons License will display in the page footer by default. Alternatively, drag this widget to a sidebar and the license will appear there instead.', 'CreativeCommons' ),
+				'description' => __( 'By default, user-specified Creative Commons License will display in the page footer. Alternatively, drag this widget to a sidebar or any other widget area. The license will appear there instead.', 'CreativeCommons' ),
 			);
 
 			// Widget control settings.
@@ -41,7 +40,7 @@ if ( ! class_exists( 'CreativeCommons_widget' ) ) {
 			// Create the widget.
 			parent::__construct(
 				'license-widget',
-				__( 'License', 'CreativeCommons' ),
+				__( 'CC License', 'CreativeCommons' ),
 				$widget_ops,
 				$control_ops
 			);
@@ -74,11 +73,27 @@ if ( ! class_exists( 'CreativeCommons_widget' ) ) {
 		 * @return void
 		 */
 		public function widget( $args, $instance ) {
-			$title = __( 'License', 'CreativeCommons' );
+			$title = apply_filters( 'widget_title', $instance['title'] );
 			echo $args['before_widget'];
 			echo $args['before_title'] . $title . $args['after_title'];
 			$this->print_license();
 			echo $args['after_widget'];
+		}
+
+		/**
+		 * Widget Backend
+		 */
+		public function form( $instance ) {
+			if ( isset( $instance['title'] ) ) {
+				$title = $instance['title'];
+			}
+		}
+
+		// Updating widget replacing old instances with new
+		public function update( $new_instance, $old_instance ) {
+			$instance = array();
+			$instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
+		return $instance;
 		}
 	}
 
