@@ -114,8 +114,7 @@ class CreativeCommons {
 			);
 		}
 
-		// this implements the license plugin as a widget.
-		// TODO: Widget needs more testing with the new approach.
+		// Adds CC License widget to display the license.
 		add_action( 'widgets_init', array( &$this, 'license_as_widget' ) );
 
 		/*
@@ -1482,12 +1481,10 @@ class CreativeCommons {
 	/**
 	 * Function: license_as_widget
 	 *
-	 * Registers widget.
-	 *
-	 * @return void
+	 * Registers widget, instantiates the CreativeCommons_Widget class.
 	 */
 	public function license_as_widget() {
-		register_widget( 'CreativeCommons_widget' );
+		register_widget( 'CreativeCommons_Widget' );
 	}
 
 
