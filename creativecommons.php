@@ -3,7 +3,7 @@
  * Plugin Name: Creative Commons
  * Plugin URI: https://github.com/creativecommons/wp-plugin-creativecommons
  * Description: Official Creative Commons plugin for licensing your content. With Creative Commons licenses, keep your copyright AND share your creativity.
- * Version: v2019.7.2
+ * Version: 2019.8.1
  * Author: Ahmad Bilal (https://ahmadbilal.dev), Bjorn Wijers <burobjorn@burobjorn.nl>, Tarmo Toikkanen <tarmo@iki.fi>, Matt Lee <mattl@creativecommons.org>, Rob Myers <rob@creativecommons.org>, Timid Robot Zehta
  * Author URI: http://CreativeCommons.org/
  * License: GPLv2 or later versions
