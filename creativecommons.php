@@ -17,13 +17,13 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-define( 'CC__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+define( 'CCPLUGIN__DIR', plugin_dir_path( __FILE__ ) );
 
 // Require class files.
-require_once CC__PLUGIN_DIR . 'includes/class-creativecommons.php';
-require_once CC__PLUGIN_DIR . 'widgets/creativecommons-widget.php';
-require CC__PLUGIN_DIR . 'includes/class-creativecommons-image.php';
-require CC__PLUGIN_DIR . 'includes/class-creativecommons-button.php';
+require_once CCPLUGIN__DIR . 'includes/class-creativecommons.php';
+require_once CCPLUGIN__DIR . 'widgets/creativecommons-widget.php';
+require CCPLUGIN__DIR . 'includes/class-creativecommons-image.php';
+require CCPLUGIN__DIR . 'includes/class-creativecommons-button.php';
 
 // Instantiate classes.
 CreativeCommons::get_instance()->init();
@@ -33,7 +33,7 @@ CreativeCommonsImage::get_instance()->init();
 /**
  * Gutenberg Blocks Initializer.
  */
-require_once plugin_dir_path( __FILE__ ) . 'src/init.php';
+require_once CCPLUGIN__DIR . 'src/init.php';
 
 /**
  * Creates a new category for CC blocks.
