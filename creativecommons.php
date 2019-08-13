@@ -1,21 +1,15 @@
 <?php
 /**
  * Plugin Name: Creative Commons
- * Description: Official Creative Commons plugin for WordPress. Allows users to select and display Creative Commons licenses for their content.
- * Partially inspired by the License plugin by mitcho
- * (Michael Yoshitaka Erlewine) and Brett Mellor, as well as the original WpLicense plugin by CC CTO
- * Nathan R. Yergler.
- * Version: 2019.7.2
- * Author: Ahmad Bilal (https://ahmadbilal.dev), Bjorn Wijers <burobjorn@burobjorn.nl>, Tarmo Toikkanen <tarmo@iki.fi>, Matt Lee <mattl@creativecommons.org>, Rob Myers <rob@creativecommons.org>
+ * Plugin URI: https://github.com/creativecommons/wp-plugin-creativecommons
+ * Description: Official Creative Commons plugin for licensing your content. With Creative Commons licenses, keep your copyright AND share your creativity.
+ * Version: 2019.8.1
+ * Author: Ahmad Bilal (https://ahmadbilal.dev), Bjorn Wijers <burobjorn@burobjorn.nl>, Tarmo Toikkanen <tarmo@iki.fi>, Matt Lee <mattl@creativecommons.org>, Rob Myers <rob@creativecommons.org>, Timid Robot Zehta
  * Author URI: http://CreativeCommons.org/
  * License: GPLv2 or later versions
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  *
- * @link http://wiki.creativecommons.org/WpLicense
- *
  * @package CC_WordPress_Plugin
- *
- * GitHub URI: https://github.com/creativecommons/wp-plugin-creativecommons
  */
 
 // If this file is called directly, abort.
