@@ -19,6 +19,8 @@ if ( ! defined( 'WPINC' ) ) {
 
 define( 'CCPLUGIN__DIR', plugin_dir_path( __FILE__ ) );
 
+define( 'CCPLUGIN__URL', plugin_dir_url( __FILE__ ) );
+
 // Require class files.
 require_once CCPLUGIN__DIR . 'includes/class-creativecommons.php';
 require_once CCPLUGIN__DIR . 'widgets/creativecommons-widget.php';
