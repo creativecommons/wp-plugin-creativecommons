@@ -266,13 +266,13 @@ class CreativeCommons {
 		<thead>
 			<tr>
 				<th>
-					<h3><?php _e( 'Select the License', 'CreativeCommons' ); ?></h3>
+					<h3><?php esc_html_e( 'Select the License', 'CreativeCommons' ); ?></h3>
 					<p>
-						<?php _e( 'Select your required default license for your website. Choose a license from Creative Commons licenses. If you are not sure about what license to use, let our ', 'CreativeCommons' ); ?>
+						<?php esc_html_e( 'Select your required default license for your website. Choose a license from Creative Commons licenses. If you are not sure about what license to use, let our ', 'CreativeCommons' ); ?>
 						<strong><a href="https://creativecommons.org/choose/" target="blank">
-						<?php _e( 'License Chooser', 'CreativeCommons' ); ?>
+						<?php esc_html_e( 'License Chooser', 'CreativeCommons' ); ?>
 						</a></strong>
-						<?php _e( ' help. The selected license will be visible in footer as default or you can also use it as a widget. We recommend using the widget for better compatibility with your theme. You can use individual licenses in posts or pages using Gutenberg blocks.', 'CreativeCommons' ); ?>
+						<?php esc_html_e( ' help. The selected license will be visible in footer as default or you can also use it as a widget. We recommend using the widget for better compatibility with your theme. You can use individual licenses in posts or pages using Gutenberg blocks.', 'CreativeCommons' ); ?>
 					</p>
 				</th>
 			</tr>
@@ -282,91 +282,91 @@ class CreativeCommons {
 			<td>
 				<p><label>
 					<input name="license[choice]" type="radio" value="by" <?php checked( $license['choice'], 'by' ); ?> />
-					<?php _e( 'Attribution 4.0 International License', 'CreativeCommons' ); ?>
+					<?php esc_html_e( 'Attribution 4.0 International License', 'CreativeCommons' ); ?>
 					<strong style="color:#fc7303;" >(CC BY 4.0)</strong>
 				</p></label>
 			</td>
 			<td>
 			<?php
-				printf( '<a href="https://creativecommons.org/licenses/by/4.0" target="blank"><img src="%1$s" alt="CC BY"></a>', CCPLUGIN__URL . 'includes/images/by.png' );
+				printf( '<a href="https://creativecommons.org/licenses/by/4.0" target="blank"><img src="%1$s" alt="CC BY"></a>', esc_attr( CCPLUGIN__URL ) . 'includes/images/by.png' );
 			?>
 			</td>
 		</tr>
 		<tr>
 			<td>
 				<p class="cc-test-css"><label>
-					<input name="license[choice]" type="radio" value="by-sa" <?php checked( $license['choice'], 'by-sa' ); ?> /> <?php _e( 'Attribution-ShareAlike 4.0 International License', 'CreativeCommons' ); ?>
+					<input name="license[choice]" type="radio" value="by-sa" <?php checked( $license['choice'], 'by-sa' ); ?> /> <?php esc_html_e( 'Attribution-ShareAlike 4.0 International License', 'CreativeCommons' ); ?>
 					<strong style="color:#fc7303;" >(CC BY-SA 4.0)</strong>
 				</p></label>
 			</td>
 			<td>
 			<?php
-				printf( '<a href="https://creativecommons.org/licenses/by-sa/4.0" target="blank"><img src="%1$s" alt="CC BY-SA"></a>', CCPLUGIN__URL . 'includes/images/by-sa.png' );
+				printf( '<a href="https://creativecommons.org/licenses/by-sa/4.0" target="blank"><img src="%1$s" alt="CC BY-SA"></a>', esc_attr( CCPLUGIN__URL ) . 'includes/images/by-sa.png' );
 			?>
 			</td>
 		</tr>
 		<tr>
 			<td>
 				<p><label>
-					<input name="license[choice]" type="radio" value="by-nc" <?php checked( $license['choice'], 'by-nc' ); ?> /> <?php _e( 'Attribution-NonCommercial 4.0 International License', 'CreativeCommons' );?>
+					<input name="license[choice]" type="radio" value="by-nc" <?php checked( $license['choice'], 'by-nc' ); ?> /> <?php esc_html_e( 'Attribution-NonCommercial 4.0 International License', 'CreativeCommons' ); ?>
 					<strong style="color:#fc7303;" >(CC BY-NC 4.0)</strong>
 				</p></label>
 			</td>
 			<td>
 			<?php
-				printf( '<a href="https://creativecommons.org/licenses/by-nc/4.0" target="blank"><img src="%1$s" alt="CC BY-NC"></a>', CCPLUGIN__URL . 'includes/images/by-nc.png' );
+				printf( '<a href="https://creativecommons.org/licenses/by-nc/4.0" target="blank"><img src="%1$s" alt="CC BY-NC"></a>', esc_attr( CCPLUGIN__URL ) . 'includes/images/by-nc.png' );
 			?>
 			</td>
 		</tr>
 		<tr>
 			<td>
 				<p><label>
-					<input name="license[choice]" type="radio" value="by-nc-sa" <?php checked( $license['choice'], 'by-nc-sa' ); ?> /> <?php _e( 'Attribution-NonCommercial-ShareAlike 4.0 International License', 'CreativeCommons' ); ?>
+					<input name="license[choice]" type="radio" value="by-nc-sa" <?php checked( $license['choice'], 'by-nc-sa' ); ?> /> <?php esc_html_e( 'Attribution-NonCommercial-ShareAlike 4.0 International License', 'CreativeCommons' ); ?>
 					<strong style="color:#fc7303;" >(CC BY-NC-SA 4.0)</strong>
 				</p></label>
 			</td>
 			<td>
 			<?php
-				printf( '<a href="https://creativecommons.org/licenses/by-nc-sa/4.0" target="blank"><img src="%1$s" alt="CC BY-NC-SA"></a>', CCPLUGIN__URL . 'includes/images/by-nc-sa.png' );
+				printf( '<a href="https://creativecommons.org/licenses/by-nc-sa/4.0" target="blank"><img src="%1$s" alt="CC BY-NC-SA"></a>', esc_attr( CCPLUGIN__URL ) . 'includes/images/by-nc-sa.png' );
 			?>
 			</td>
 		</tr>
 		<tr>
 			<td>
 				<p><label>
-					<input name="license[choice]" type="radio" value="by-nc-nd" <?php checked( $license['choice'], 'by-nc-nd' ); ?> /> <?php _e( 'Attribution-NonCommercial-NoDerivatives 4.0 International License', 'CreativeCommons' ); ?>
+					<input name="license[choice]" type="radio" value="by-nc-nd" <?php checked( $license['choice'], 'by-nc-nd' ); ?> /> <?php esc_html_e( 'Attribution-NonCommercial-NoDerivatives 4.0 International License', 'CreativeCommons' ); ?>
 					<strong style="color:#fc7303;" >(CC BY-NC-ND 4.0)</strong>
 				</p></label>
 			</td>
 			<td>
 			<?php
-				printf( '<a href="https://creativecommons.org/licenses/by-nc-nd/4.0" target="blank"><img src="%1$s" alt="CC BY-NC-ND"></a>', CCPLUGIN__URL . 'includes/images/by-nc-nd.png' );
+				printf( '<a href="https://creativecommons.org/licenses/by-nc-nd/4.0" target="blank"><img src="%1$s" alt="CC BY-NC-ND"></a>', esc_attr( CCPLUGIN__URL ) . 'includes/images/by-nc-nd.png' );
 			?>
 			</td>
 		</tr>
 		<tr>
 			<td>
 				<p><label>
-					<input name="license[choice]" type="radio" value="by-nd" <?php checked( $license['choice'], 'by-nd' ); ?> /> <?php _e( 'Attribution-NoDerivatives 4.0 International License', 'CreativeCommons' ); ?>
+					<input name="license[choice]" type="radio" value="by-nd" <?php checked( $license['choice'], 'by-nd' ); ?> /> <?php esc_html_e( 'Attribution-NoDerivatives 4.0 International License', 'CreativeCommons' ); ?>
 					<strong style="color:#fc7303;" >(CC BY-ND 4.0)</strong>
 				</p></label>
 			</td>
 			<td>
 			<?php
-				printf( '<a href="https://creativecommons.org/licenses/by-nd/4.0" target="blank"><img src="%1$s" alt="CC BY-ND"></a>', CCPLUGIN__URL . 'includes/images/by-nd.png' );
+				printf( '<a href="https://creativecommons.org/licenses/by-nd/4.0" target="blank"><img src="%1$s" alt="CC BY-ND"></a>', esc_attr( CCPLUGIN__URL ) . 'includes/images/by-nd.png' );
 			?>
 			</td>
 		</tr>
 		<tr>
 			<td>
 				<p><label>
-					<input name="license[choice]" type="radio" value="cc0" <?php checked( $license['choice'], 'cc0' ); ?> /> <?php _e( 'CC0 Universal Public Domain Dedication license', 'CreativeCommons' ); ?>
+					<input name="license[choice]" type="radio" value="cc0" <?php checked( $license['choice'], 'cc0' ); ?> /> <?php esc_html_e( 'CC0 Universal Public Domain Dedication license', 'CreativeCommons' ); ?>
 					<strong style="color:#fc7303;">(CC0)</strong>
 				</p></label>
 			</td>
 			<td>
 			<?php
-				printf( '<a href="https://creativecommons.org/share-your-work/public-domain/cc0" target="blank"><img src="%1$s" alt="CC0"></a>', CCPLUGIN__URL . 'includes/images/cc0.png' );
+				printf( '<a href="https://creativecommons.org/share-your-work/public-domain/cc0" target="blank"><img src="%1$s" alt="CC0"></a>', esc_attr( CCPLUGIN__URL ) . 'includes/images/cc0.png' );
 			?>
 			</td>
 	</tr>
@@ -790,7 +790,7 @@ class CreativeCommons {
 
 		$html = '';
 		if ( is_array( $attribute_options )
-			&& ( sizeof( $attribute_options ) > 0 )
+			&& ( count( $attribute_options ) > 0 )
 		) {
 			foreach ( $attribute_options as $attr_val => $attr_text ) {
 				$checked = '';
@@ -1047,8 +1047,8 @@ class CreativeCommons {
 	 * user_options
 	 */
 	private function _save_user_license() {
-		$license = $this->_verify_license_data( $from = 'profile' );
-		$user_id = get_current_user_id();
+		$license    = $this->_verify_license_data( $from = 'profile' );
+		$user_id    = get_current_user_id();
 		return update_user_option(
 			$user_id,
 			'license',
@@ -1092,14 +1092,14 @@ class CreativeCommons {
 	 * TODO: add global option: if allowed use this license across all my sites in this network.
 	 */
 	public function user_license_settings_html() {
-		$location = 'profile';
-		$html     = wp_nonce_field(
+		$location    = 'profile';
+		$html        = wp_nonce_field(
 			'license-update',
-			$name = 'license_wpnonce',
+			$name    = 'license_wpnonce',
 			$referer = true,
-			$echo = false
+			$echo    = false
 		);
-		$html     .= $this->_license_settings_html( $location );
+		$html .= $this->_license_settings_html( $location );
 		echo $html;
 	}
 
@@ -1110,9 +1110,9 @@ class CreativeCommons {
 	 */
 	public function post_page_license_settings_html() {
 		$location = 'post-page';
-		$html  = '<div id="license" class="misc-pub-section misc-pub-section-last ">';
-		$html .= wp_nonce_field( 'license-update', $name = 'license_wpnonce', $referer = true, $echo = false );
-		$html .= '<strong>' . __( 'Licensed:', 'CreativeCommons' ) . '</strong>';
+		$html     = '<div id="license" class="misc-pub-section misc-pub-section-last ">';
+		$html     .= wp_nonce_field( 'license-update', $name = 'license_wpnonce', $referer = true, $echo = false );
+		$html     .= '<strong>' . __( 'Licensed:', 'CreativeCommons' ) . '</strong>';
 
 		$html .= '<p>';
 		$html .= $this->select_license_html( $location, $echo = false );
@@ -1182,7 +1182,7 @@ class CreativeCommons {
 		<div style="background: white; border: 1px solid #e5e5e5; box-shadow: 0 1px 1px rgba(0,0,0,.04); padding: 2em; display: inline-table;">
 
 		<?php
-			printf( '<img src="%1$s" align="right" style="padding: 1em; width: 20%; height: auto !important; " />', CCPLUGIN__URL . 'assets/icon-256x256.png' );
+			printf( '<img src="%1$s" align="right" style="padding: 1em; width: 20%; height: auto !important; " />', esc_attr( CCPLUGIN__URL ) . 'assets/icon-256x256.png' );
 		?>
 
 		<h3>About Creative Commons</h3>
@@ -1190,7 +1190,7 @@ class CreativeCommons {
 		<p><a href="https://creativecommons.org"
 		target="_blank">Creative Commons</a>
 		<?php
-		echo __(
+		esc_html_e(
 			'is a
 			nonprofit organization that enables the sharing and use of
 			creativity and knowledge through free legal tools.',
@@ -1201,7 +1201,7 @@ class CreativeCommons {
 
 		<p>
 		<?php
-		echo __(
+		esc_html_e(
 			'Our free, easy-to-use copyright licenses
 			provide a simple, standardized way to give the public
 			permission to share and use your creative work — on
@@ -1215,7 +1215,7 @@ class CreativeCommons {
 
 		<p>
 		<?php
-		echo __(
+		esc_html_e(
 			'Creative Commons licenses are not an
 		   alternative to copyright. They work alongside copyright and
 		   enable you to modify your copyright terms to best suit your
@@ -1225,7 +1225,7 @@ class CreativeCommons {
 		?>
 		</p>
 
-		<p><?php echo __( 'Please consider making a <a href="https://donate.creativecommons.org" target="_blank">donation (tax deductible in the US) to support our work</a>.', 'CreativeCommons' ); ?></p>
+		<p><?php esc_html_e( 'Please consider making a <a href="https://donate.creativecommons.org" target="_blank">donation (tax deductible in the US) to support our work</a>.', 'CreativeCommons' ); ?></p>
 
 		<h4>Sign up for our newsletter</h4>
 
@@ -1339,7 +1339,7 @@ class CreativeCommons {
 			if ( is_singular() ) {
 				global $post;
 				if ( is_object( $post ) ) {
-					$title_work = esc_html( $post->post_title );
+					$title_work                 = esc_html( $post->post_title );
 					$additional_attribution_txt = '';
 				}
 			} else {
