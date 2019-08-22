@@ -50,37 +50,77 @@ registerBlockType('cgb/cc-by-nc-nd', {
 	 * The "edit" property must be a valid function.
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
+	 * @param {Object} props Props.
+	 * @returns {Mixed} JSX Component.
 	 */
-	edit: function( props ) {
+	edit: function(props) {
 		const bgColor = props.attributes.bgColor;
 		const txtColor = props.attributes.txtColor;
+		const contentName = props.attributes.contentName;
+		const contentText = props.attributes.contentText;
+		const { attributes: className, setAttributes } = props;
+
+		const onChangeContentName = contentName => {
+			setAttributes({ contentName });
+		};
+		const onChangeContentText = contentText => {
+			setAttributes({ contentText });
+		};
+
 		return [
-			<InspectorControls>
+			<InspectorControls key="3">
 				<PanelColorSettings
-					title={ __( 'Color Settings', 'creativecommons' ) }
-					colorSettings={ [
+					title={__('Color Settings', 'creativecommons')}
+					colorSettings={[
 						{
-							label: __( 'Background Color' ),
+							label: __('Background Color'),
 							value: bgColor,
-							onChange: colorValue => props.setAttributes( { bgColor: colorValue } ),
+							onChange: colorValue => props.setAttributes({ bgColor: colorValue })
 						},
 						{
-							label: __( 'Text Color' ),
+							label: __('Text Color'),
 							value: txtColor,
-							onChange: colorValue => props.setAttributes( { txtColor: colorValue } ),
-						},
-					] }
+							onChange: colorValue => props.setAttributes({ txtColor: colorValue })
+						}
+					]}
 				/>
 			</InspectorControls>,
 
+			<div key="2" className={className} style={{ backgroundColor: bgColor, color: txtColor }}>
 				<img src={`${globals.pluginDirUrl}includes/images/by-nc-nd.png`} alt="CC-BY-NC-ND" />
 				<p>
-					This content is licensed under a{ ' ' }
+					This content is licensed by{' '}
 					<a href="https://creativecommons.org/licenses/by-nc-nd/4.0">
 						Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International license.
 					</a>
 				</p>
-			</div>,
+				<h4>Edit</h4>
+				<span>
+					Attribution name <i>(default: This content)</i>:
+				</span>
+				<div className="cc-cgb-richtext-input">
+					<RichText
+						className={className}
+						placeholder={__('This content', 'CreativeCommons')}
+						keepPlaceholderOnFocus={true}
+						onChange={onChangeContentName}
+						value={contentName}
+					/>
+				</div>
+				<span>
+					<br />
+					Additional text <i>(optional)</i>:
+				</span>
+				<div className="cc-cgb-richtext-input">
+					<RichText
+						className={className}
+						placeholder={__('Custom text/description/links ', 'CreativeCommons')}
+						keepPlaceholderOnFocus={true}
+						onChange={onChangeContentText}
+						value={contentText}
+					/>
+				</div>
+			</div>
 		];
 	},
 

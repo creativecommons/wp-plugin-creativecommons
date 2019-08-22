@@ -53,36 +53,73 @@ registerBlockType('cgb/cc0', {
 	 * @param {Object} props Props.
 	 * @returns {Mixed} JSX Component.
 	 */
-	edit: function(props) {
+	edit: function (props) {
 		const bgColor = props.attributes.bgColor;
 		const txtColor = props.attributes.txtColor;
+		const contentName = props.attributes.contentName;
+		const contentText = props.attributes.contentText;
+		const { attributes: className, setAttributes } = props;
+
+		const onChangeContentName = contentName => {
+			setAttributes({ contentName });
+		};
+		const onChangeContentText = contentText => {
+			setAttributes({ contentText });
+		};
+
 		return [
-			<InspectorControls>
+			<InspectorControls key="3">
 				<PanelColorSettings
 					title={__('Color Settings', 'creativecommons')}
 					colorSettings={[
 						{
 							label: __('Background Color'),
 							value: bgColor,
-							onChange: colorValue => props.setAttributes({ bgColor: colorValue })
+							onChange: colorValue => props.setAttributes({ bgColor: colorValue }),
 						},
 						{
 							label: __('Text Color'),
 							value: txtColor,
-							onChange: colorValue => props.setAttributes({ txtColor: colorValue })
-						}
+							onChange: colorValue => props.setAttributes({ txtColor: colorValue }),
+						},
 					]}
 				/>
 			</InspectorControls>,
 
+			<div key="2" className={className} style={{ backgroundColor: bgColor, color: txtColor }}>
 				<img src={`${globals.pluginDirUrl}includes/images/cc0.png`} alt="cc0" />
 				<p>
-					This content is licensed under a{' '}
+					This content is licensed by{' '}
 					<a href="https://creativecommons.org/publicdomain/zero/1.0/">
 						Creative Commons CC0 Universal Public Domain Dedication license.
 					</a>
 				</p>
-			</div>
+				<h4>Edit</h4>
+				<span>
+					Attribution name <i>(default: This content)</i>:
+				</span>
+				<div className="cc-cgb-richtext-input">
+					<RichText
+						className={className}
+						placeholder={__('This content', 'CreativeCommons')}
+						keepPlaceholderOnFocus={true}
+						onChange={onChangeContentName}
+						value={contentName}
+					/>
+				</div>
+				<span>
+					Additional text <i>(optional)</i>:
+				</span>
+				<div className="cc-cgb-richtext-input">
+					<RichText
+						className={className}
+						placeholder={__('Custom text/description/links ', 'CreativeCommons')}
+						keepPlaceholderOnFocus={true}
+						onChange={onChangeContentText}
+						value={contentText}
+					/>
+				</div>
+			</div>,
 		];
 	},
 
