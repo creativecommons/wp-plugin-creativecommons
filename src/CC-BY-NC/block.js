@@ -50,6 +50,8 @@ registerBlockType('cgb/cc-by-nc', {
 	 * The "edit" property must be a valid function.
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
+	 * @param {Object} props Props.
+	 * @returns {Mixed} JSX Component.
 	 */
 	edit: function( props ) {
 		const bgColor = props.attributes.bgColor;
@@ -91,6 +93,8 @@ registerBlockType('cgb/cc-by-nc', {
 	 * The "save" property must be specified and must be a valid function.
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
+	 * @param {Object} props Props.
+	 * @returns {Mixed} JSX Frontend HTML.
 	 */
 	save: function( props ) {
 		const bgColor = props.attributes.bgColor;
