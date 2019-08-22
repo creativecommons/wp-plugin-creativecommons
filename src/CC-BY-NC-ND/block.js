@@ -1,6 +1,6 @@
 import './style.scss';
 import './editor.scss';
-
+import globals from 'cgbGlobal';
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
 const { InspectorControls, PanelColorSettings } = wp.editor;
@@ -65,8 +65,7 @@ registerBlockType( 'cgb/cc-by-nc-nd', {
 				/>
 			</InspectorControls>,
 
-			<div className={ props.className } style={ { backgroundColor: bgColor, color: txtColor } }>
-				<img src="https://licensebuttons.net/l/by-nc-nd/3.0/88x31.png" alt="CC" />
+				<img src={`${globals.pluginDirUrl}includes/images/by-nc-nd.png`} alt="CC-BY-NC-ND" />
 				<p>
 					This content is licensed under a{ ' ' }
 					<a href="https://creativecommons.org/licenses/by-nc-nd/4.0">
@@ -89,8 +88,7 @@ registerBlockType( 'cgb/cc-by-nc-nd', {
 		const bgColor = props.attributes.bgColor;
 		const txtColor = props.attributes.txtColor;
 		return (
-			<div style={ { backgroundColor: bgColor, color: txtColor } }>
-				<img src="https://licensebuttons.net/l/by-nc-nd/3.0/88x31.png" alt="CC" />
+				<img src={`${globals.pluginDirUrl}includes/images/by-nc-nd.png`} alt="CC-BY-NC-ND" />
 				<p>
 					This content is licensed under a{ ' ' }
 					<a href="https://creativecommons.org/licenses/by-nc-nd/4.0">
