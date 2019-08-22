@@ -7,7 +7,7 @@ const { InspectorControls, PanelColorSettings } = wp.editor; // Import color set
 const { RichText } = wp.editor; // Import RichText blocks from wp.editor
 
 /**
- * Register: Gutenberg Block.
+ * Register: CC-BY-ND Gutenberg block.
  *
  * Registers a new block provided a unique name and an object defining its
  * behavior. Once registered, the block is made editor as an option to any
@@ -19,21 +19,28 @@ const { RichText } = wp.editor; // Import RichText blocks from wp.editor
  * @return {?WPBlock}          The block, if it has been successfully
  *                             registered; otherwise `undefined`.
  */
-registerBlockType( 'cgb/cc-by-nd', {
-	// Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
-	title: __( 'CC-BY-ND' ), // Block title.
-	icon: 'media-text', // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
-	category: 'cc-licenses', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
-	keywords: [ __( 'creative commons' ), __( 'cc-by-nd' ), __( 'license' ) ],
+registerBlockType('cgb/cc-by-nd', {
+	title: __('CC-BY-ND'),
+	icon: 'media-text',
+	category: 'cc-licenses',
+	keywords: [__('creative commons'), __('CC-BY-ND'), __('nd')],
 	attributes: {
 		bgColor: {
 			type: 'string',
-			default: 'white',
+			default: 'white'
 		},
 		txtColor: {
 			type: 'string',
-			default: 'black',
+			default: 'black'
 		},
+		contentName: {
+			selector: '.cc-cgb-name',
+			source: 'children'
+		},
+		contentText: {
+			selector: '.cc-cgb-text',
+			source: 'children'
+		}
 	},
 
 	/**

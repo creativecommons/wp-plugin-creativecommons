@@ -7,7 +7,7 @@ const { InspectorControls, PanelColorSettings } = wp.editor; // Import color set
 const { RichText } = wp.editor; // Import RichText blocks from wp.editor
 
 /**
- * Register: aa Gutenberg Block.
+ * Register: CC0 Gutenberg block.
  *
  * Registers a new block provided a unique name and an object defining its
  * behavior. Once registered, the block is made editor as an option to any
@@ -20,20 +20,27 @@ const { RichText } = wp.editor; // Import RichText blocks from wp.editor
  *                             registered; otherwise `undefined`.
  */
 registerBlockType('cgb/cc0', {
-	// Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
-	title: __('CC0'), // Block title.
-	icon: 'media-text', // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
-	category: 'cc-licenses', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
-	keywords: [__('creative commons'), __('license'), __('cc0'), _('public domain dedication')],
+	title: __('CC0'),
+	icon: 'media-text',
+	category: 'cc-licenses',
+	keywords: [__('creative commons'), __('cc0'), __('attribution')],
 	attributes: {
 		bgColor: {
 			type: 'string',
-			default: 'white'
+			default: 'white',
 		},
 		txtColor: {
 			type: 'string',
-			default: 'black'
-		}
+			default: 'black',
+		},
+		contentName: {
+			selector: '.cc-cgb-name',
+			source: 'children',
+		},
+		contentText: {
+			selector: '.cc-cgb-text',
+			source: 'children',
+		},
 	},
 
 	/**

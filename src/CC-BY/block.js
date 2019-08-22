@@ -7,7 +7,7 @@ const { InspectorControls, PanelColorSettings } = wp.editor; // Import color set
 const { RichText } = wp.editor; // Import RichText blocks from wp.editor
 
 /**
- * Register: CC-By Gutenberg block.
+ * Register: CC-BY Gutenberg block.
  *
  * Registers a new block provided a unique name and an object defining its
  * behavior. Once registered, the block is made editor as an option to any
@@ -27,12 +27,20 @@ registerBlockType('cgb/cc-by', {
 	attributes: {
 		bgColor: {
 			type: 'string',
-			default: 'white'
+			default: 'white',
 		},
 		txtColor: {
 			type: 'string',
-			default: 'black'
-		}
+			default: 'black',
+		},
+		contentName: {
+			selector: '.cc-cgb-name',
+			source: 'children',
+		},
+		contentText: {
+			selector: '.cc-cgb-text',
+			source: 'children',
+		},
 	},
 
 	/**
