@@ -134,18 +134,26 @@ registerBlockType('cgb/cc-by', {
 	 * @param {Object} props Props.
 	 * @returns {Mixed} JSX Frontend HTML.
 	 */
-	save: function(props) {
+	save: function (props) {
 		const bgColor = props.attributes.bgColor;
 		const txtColor = props.attributes.txtColor;
+		let contentName = props.attributes.contentName;
+		const contentText = props.attributes.contentText;
+
+		if (contentName == '') {
+			contentName = 'This content'; // Default to "This Content".
+		}
 		return (
+			<div className="message-body" style={{ backgroundColor: bgColor, color: txtColor }}>
 				<img src={`${globals.pluginDirUrl}includes/images/by.png`} alt="CC" />
 				<p>
-					This content is licensed under a{' '}
+					<span className="cc-cgb-name">{contentName}</span> is licensed under a{' '}
 					<a href="https://creativecommons.org/licenses/by/4.0/">
 						Creative Commons Attribution 4.0 International license.
-					</a>
+					</a>{' '}
+					<span className="cc-cgb-text">{contentText}</span>
 				</p>
 			</div>
 		);
-	}
+	},
 });
