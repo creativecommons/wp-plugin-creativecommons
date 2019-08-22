@@ -3,7 +3,8 @@ import './editor.scss';
 import globals from 'cgbGlobal';
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
-const { InspectorControls, PanelColorSettings } = wp.editor;
+const { InspectorControls, PanelColorSettings } = wp.editor; // Import color settings from wp.editor
+const { RichText } = wp.editor; // Import RichText blocks from wp.editor
 
 /**
  * Register: Gutenberg Block.
