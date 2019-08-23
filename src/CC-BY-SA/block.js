@@ -1,17 +1,13 @@
-/**
- * BLOCK: CC-BY-SA
- */
-
-//  Import CSS.
 import './style.scss';
 import './editor.scss';
-
+import globals from 'cgbGlobal';
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
-const { InspectorControls, PanelColorSettings } = wp.editor;
+const { InspectorControls, PanelColorSettings } = wp.editor; // Import color settings from wp.editor
+const { RichText } = wp.editor; // Import RichText blocks from wp.editor
 
 /**
- * Register: Gutenberg Block.
+ * Register: CC-BY-SA Gutenberg block.
  *
  * Registers a new block provided a unique name and an object defining its
  * behavior. Once registered, the block is made editor as an option to any
@@ -23,21 +19,28 @@ const { InspectorControls, PanelColorSettings } = wp.editor;
  * @return {?WPBlock}          The block, if it has been successfully
  *                             registered; otherwise `undefined`.
  */
-registerBlockType( 'cgb/cc-by-sa', {
-	// Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
-	title: __( 'CC-BY-SA' ), // Block title.
-	icon: 'media-text', // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
-	category: 'cc-licenses', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
-	keywords: [ __( 'creative commons' ), __( 'cc by sa' ), __( 'share alike' ) ],
+registerBlockType('cgb/cc-by-sa', {
+	title: __('CC-BY-SA'),
+	icon: 'media-text',
+	category: 'cc-licenses',
+	keywords: [__('creative commons'), __('CC-BY-SA'), __('share alike')],
 	attributes: {
 		bgColor: {
 			type: 'string',
-			default: 'white',
+			default: 'white'
 		},
 		txtColor: {
 			type: 'string',
-			default: 'black',
+			default: 'black'
 		},
+		contentName: {
+			selector: '.cc-cgb-name',
+			source: 'children'
+		},
+		contentText: {
+			selector: '.cc-cgb-text',
+			source: 'children'
+		}
 	},
 
 	/**
@@ -47,39 +50,77 @@ registerBlockType( 'cgb/cc-by-sa', {
 	 * The "edit" property must be a valid function.
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
+	 * @param {Object} props Props.
+	 * @returns {Mixed} JSX Component.
 	 */
-	edit: function( props ) {
+	edit: function(props) {
 		const bgColor = props.attributes.bgColor;
 		const txtColor = props.attributes.txtColor;
+		const contentName = props.attributes.contentName;
+		const contentText = props.attributes.contentText;
+		const { attributes: className, setAttributes } = props;
+
+		const onChangeContentName = contentName => {
+			setAttributes({ contentName });
+		};
+		const onChangeContentText = contentText => {
+			setAttributes({ contentText });
+		};
 
 		return [
-			<InspectorControls>
+			<InspectorControls key="3">
 				<PanelColorSettings
-					title={ __( 'Color Settings', 'creativecommons' ) }
-					colorSettings={ [
+					title={__('Color Settings', 'creativecommons')}
+					colorSettings={[
 						{
-							label: __( 'Background Color' ),
+							label: __('Background Color'),
 							value: bgColor,
-							onChange: colorValue => props.setAttributes( { bgColor: colorValue } ),
+							onChange: colorValue => props.setAttributes({ bgColor: colorValue })
 						},
 						{
-							label: __( 'Text Color' ),
+							label: __('Text Color'),
 							value: txtColor,
-							onChange: colorValue => props.setAttributes( { txtColor: colorValue } ),
-						},
-					] }
+							onChange: colorValue => props.setAttributes({ txtColor: colorValue })
+						}
+					]}
 				/>
 			</InspectorControls>,
 
-			<div className={ props.className } style={ { backgroundColor: bgColor, color: txtColor } }>
-				<img src="https://licensebuttons.net/l/by-sa/3.0/88x31.png" alt="CC" />
+			<div key="2" className={className} style={{ backgroundColor: bgColor, color: txtColor }}>
+				<img src={`${globals.pluginDirUrl}includes/images/by-sa.png`} alt="CC-BY-SA" />
 				<p>
-					This content is licensed under a{ ' ' }
+					This content is licensed by{' '}
 					<a href="https://creativecommons.org/licenses/by-sa/4.0">
 						Creative Commons Attribution-ShareAlike 4.0 International license.
 					</a>
 				</p>
-			</div>,
+				<h4>Edit</h4>
+				<span>
+					Attribution name <i>(default: This content)</i>:
+				</span>
+				<div className="cc-cgb-richtext-input">
+					<RichText
+						className={className}
+						placeholder={__('This content', 'CreativeCommons')}
+						keepPlaceholderOnFocus={true}
+						onChange={onChangeContentName}
+						value={contentName}
+					/>
+				</div>
+				<span>
+					<br />
+					Additional text <i>(optional)</i>:
+				</span>
+				<div className="cc-cgb-richtext-input">
+					<RichText
+						className={className}
+						placeholder={__('Custom text/description/links ', 'CreativeCommons')}
+						keepPlaceholderOnFocus={true}
+						onChange={onChangeContentText}
+						value={contentText}
+					/>
+				</div>
+			</div>
 		];
 	},
 
@@ -90,21 +131,29 @@ registerBlockType( 'cgb/cc-by-sa', {
 	 * The "save" property must be specified and must be a valid function.
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
+	 * @param {Object} props Props.
+	 * @returns {Mixed} JSX Frontend HTML.
 	 */
-	save: function( props ) {
+	save: function(props) {
 		const bgColor = props.attributes.bgColor;
 		const txtColor = props.attributes.txtColor;
+		let contentName = props.attributes.contentName;
+		const contentText = props.attributes.contentText;
 
+		if (contentName == '') {
+			contentName = 'This content'; // Default to "This Content".
+		}
 		return (
-			<div style={ { backgroundColor: bgColor, color: txtColor } }>
-				<img src="https://licensebuttons.net/l/by-sa/3.0/88x31.png" alt="CC" />
+			<div className="message-body" style={{ backgroundColor: bgColor, color: txtColor }}>
+				<img src={`${globals.pluginDirUrl}includes/images/by-sa.png`} alt="CC BY-SA" />
 				<p>
-					This content is licensed under a{ ' ' }
+					<span className="cc-cgb-name">{contentName}</span> is licensed under a{' '}
 					<a href="https://creativecommons.org/licenses/by-sa/4.0">
 						Creative Commons Attribution-ShareAlike 4.0 International license.
-					</a>
+					</a>{' '}
+					<span className="cc-cgb-text">{contentText}</span>
 				</p>
 			</div>
 		);
-	},
-} );
+	}
+});

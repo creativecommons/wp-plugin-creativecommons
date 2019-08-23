@@ -45,6 +45,16 @@ function cc_block_cgb_block_assets() { // phpcs:ignore
 		true // Enqueue the script in the footer.
 	);
 
+	// WP Localized globals. Use dynamic PHP stuff in JavaScript via `cgbGlobal` object.
+	wp_localize_script(
+		'cc_block-cgb-block-js',
+		'cgbGlobal', // Array containing dynamic data for a JS Global.
+		[
+			'pluginDirPath' => plugin_dir_path( __DIR__ ),
+			'pluginDirUrl'  => plugin_dir_url( __DIR__ ),
+		]
+	);
+
 	// Register block editor styles for backend.
 	wp_register_style(
 		'cc_block-cgb-block-editor-css', // Handle.

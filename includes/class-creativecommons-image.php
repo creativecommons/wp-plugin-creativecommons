@@ -111,13 +111,13 @@ class CreativeCommonsImage {
 		);
 		if ( $matched ) {
 			if ( $matches[2] == 'zero' ) {
-				$url = 'https://licensebuttons.net/l/zero/1.0/88x31.png';
+				$url = CCPLUGIN__URL . 'includes/images/cc0.png';
 			} elseif ( $matches[1] == 'publicdomain' ) {
-				$url = 'https://licensebuttons.net/l/publicdomain/88x31.png';
+				$url = CCPLUGIN__URL . 'includes/images/cc0.png';
 			} else {
-				$url = 'https://licensebuttons.net/l/'
+				$url = CCPLUGIN__URL . 'includes/images/'
 					. $matches[2]
-					. '/4.0/88x31.png';
+					. '.png';
 			}
 		}
 		return $url;
@@ -495,7 +495,6 @@ class CreativeCommonsImage {
 					$block .= '<p>( ' . $title . ')</p>';
 				}
 			}
-			// $block .= "<p><strong>TESTING NOTE:</strong> We don't have even a CC license for this image so we made this caption instead. Go set a license in the Media Library.</p>";
 		}
 
 		return $block;

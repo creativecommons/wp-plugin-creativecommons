@@ -5,7 +5,7 @@ Donate link: https://us.netdonor.net/page/6650/donate/1?ea.tracking.id=top-of-pa
 Tags: Creative Commons, CC, license, copyright, copyleft, attribution, attribute, ownership, all rights reserved, some rights reserved, footer, widget
 Requires at least: 3.1
 Tested up to: 5.2
-Stable tag: 2019.8.1
+Stable tag: 2019.8.2
 Requires PHP: 5.6.20
 License: GPLv2 or later
 License URI: https://gnu.org/licenses/gpl-2.0.html
@@ -36,18 +36,19 @@ you can:
   license required (Gutenberg License Blocks)
 * Display license information with "One Click Attribution" for images
 
-The default license used by the plugin is the Creative Commons
+The default license for the site used by the plugin is the Creative Commons
 [Attribution-ShareAlike
 (CC BY-SA)](http://creativecommons.org/licenses/by-sa/4.0/) license. This can
 be easily changed including attribution, depending on the permissions by a user
-with the role: superadmin, site admin or author.
+with the role: superadmin, site admin or author.Selecting a license is straight
+forward. If you are not sure about what license to use, you can use the linked
+license chooser.
 
-By default, the plugin will display a license in the footer of your theme. The
-license plugin is also a widget, and can be dragged to any widget area like the
-side-bar and all other available areas (this will suppress display of the
-license in the theme footer and display it only in the widget area). We recommend
-using the widget for better compatibility with your theme. You can use individual
-licenses in posts or pages using Gutenberg blocks.
+The selected license can be displayed as a widget or a footer or both at the same
+time. In Appearance > Widgets, the CC License widget can be dragged to any widget
+area like the side-bar and all other available areas. You can also include the
+license in footer. We recommend using the widget for better compatibility with
+your theme. You can use individual licenses in posts or pages using Gutenberg blocks.
 
 
 == Installation ==
@@ -86,6 +87,17 @@ See the GitHub project: [creativecommons/wp-plugin-creativecommons](https://gith
 
 
 == Changelog ==
+
+
+= v2019.8.2 =
+* All necessary Default/Site license settings added.
+* Plugin settings page updated.
+* Rich-text components added to previously static Gutenberg blocks converted to
+  allow attribution of any     content.
+* Gutenberg blocks redesigned to include settings.
+* Security improvements.
+* i18n improvements.
+* Minor bug fixes and refinements.
 
 
 = v2019.8.1 =
