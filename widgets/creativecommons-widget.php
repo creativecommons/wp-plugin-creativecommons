@@ -44,17 +44,30 @@ if ( ! class_exists( 'CreativeCommons_Widget' ) ) {
 			* if the widget is not active, (i.e. the plugin is installed but the widget has not been
 			* dragged to a sidebar), then display the license in the footer as a default.
 			*/
-			if ( ! is_active_widget( false, false, 'cc-license-widget', true ) ) {
-				add_action( 'wp_footer', array( &$this, 'print_license' ) );
+				add_action( 'wp_footer', array( &$this, 'print_license_footer' ) );
+
+		}
+
+		/**
+		 * Instantiates CreativeCommons class and prints the license as widget
+		 */
+		public function print_license_widget() {
+			$ccl     = CreativeCommons::get_instance();
+			$license = $ccl->get_license( $license = 'site' );
+			if ( $license['display_as_widget'] ) {
+				$ccl->print_license_html();
 			}
 		}
 
 		/**
-		 * Instantiates CreativeCommons class and prints the license
+		 * Instantiates CreativeCommons class and prints the license as footer
 		 */
-		public function print_license() {
-			$ccl = CreativeCommons::get_instance();
-			$ccl->print_license_html();
+		public function print_license_footer() {
+			$ccl     = CreativeCommons::get_instance();
+			$license = $ccl->get_license( $license = 'site' );
+			if ( $license['display_as_footer'] ) {
+				$ccl->print_license_html();
+			}
 		}
 
 		/**
@@ -68,7 +81,7 @@ if ( ! class_exists( 'CreativeCommons_Widget' ) ) {
 			$title = apply_filters( 'widget_title', $instance['title'] );
 			echo $args['before_widget'];
 			echo $args['before_title'] . $title . $args['after_title'];
-			$this->print_license();
+			$this->print_license_widget( );
 			echo $args['after_widget'];
 		}
 

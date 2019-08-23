@@ -229,6 +229,18 @@ class CreativeCommons {
 		);
 
 		add_settings_field(
+			'display_as',
+			__(
+				'Display license as',
+				'CreativeCommons'
+			),
+			array( &$this, 'display_license_as' ),
+			'cc-admin',
+			'license-attribution-settings',
+			array( 'label_for' => 'display_as' )
+		);
+
+		add_settings_field(
 			'allow_user_override',
 			__(
 				'Allow users to override site&#8209;wide license',
@@ -272,7 +284,11 @@ class CreativeCommons {
 						<strong><a href="https://creativecommons.org/choose/" target="blank">
 						<?php esc_html_e( 'License Chooser', 'CreativeCommons' ); ?>
 						</a></strong>
-						<?php esc_html_e( ' help. The selected license will be visible in footer as default or you can also use it as a widget. We recommend using the widget for better compatibility with your theme. You can use individual licenses in posts or pages using Gutenberg blocks.', 'CreativeCommons' ); ?>
+						<?php esc_html_e( ' help. The selected license can be displayed as a widget. In' ); ?>
+						<strong>
+							<?php esc_html_e( 'Appearance > Widgets', 'CreativeCommons' ); ?>
+						</strong>
+						<?php esc_html_e( 'drag CC License widget to the required area. You can also include the license in footer. We recommend using the widget for better compatibility with your theme. You can use individual licenses in posts or pages using Gutenberg blocks.', 'CreativeCommons' ); ?>
 					</p>
 				</th>
 			</tr>
@@ -437,6 +453,26 @@ class CreativeCommons {
 		$this->select_attribute_to_html( $location = 'site', $echo = true );
 	}
 
+	/**
+	 * Display license as a widget or a footer or both.
+	 */
+	public function display_license_as() {
+
+		$license  = $this->get_license( $location = 'site' );
+
+		?>
+		<br />
+		<input name="license[display_as_widget]" type="checkbox" value="true" id="display_as_widget" <?php checked( $license['display_as_widget'], 'true' ); ?> />
+		<label for="display_as_widget"><?php esc_html_e( 'Widget', 'CreativeCommons' ); ?>
+		<i><?php esc_html_e( '(recommended)', 'CreativeCommons' ); ?></i></label>
+		<br />
+
+		<input name="license[display_as_footer]" type="checkbox" value="true" id="display_as_footer" <?php checked( $license['display_as_footer'], 'true' ); ?> />
+		<label for="display_as_footer"><?php esc_html_e( 'Footer', 'CreativeCommons' ); ?></label>
+		<br />
+
+		<?php
+	}
 
 	/**
 	 * Function: setting_user_override_license_field
@@ -581,6 +617,8 @@ class CreativeCommons {
 			'version'                    => self::VERSION,
 			'additional_attribution_txt' => __( '', 'CreativeCommons' ),
 			'choice'                     => '',
+			'display_as_widget'          => 'false',
+			'display_as_footer'          => 'false',
 		);
 		return $license;
 	}
@@ -976,6 +1014,9 @@ class CreativeCommons {
 		$license['attribute_to']        = esc_attr( $data['attribute_to'] );
 		$license['attribute_other']     = esc_html( $data['attribute_other'] );
 		$license['attribute_other_url'] = esc_html( $data['attribute_other_url'] );
+		$license['choice']              = esc_attr( $data['choice'] );
+		$license['display_as_widget']   = esc_html( $data['display_as_widget'] );
+		$license['display_as_footer']   = esc_html( $data['display_as_footer'] );
 
 		// Gets the name, deed(url) and icon of the selected license and stores/saves it.
 		switch ( $data['choice'] ) {
