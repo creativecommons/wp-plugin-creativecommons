@@ -438,16 +438,17 @@ class CreativeCommons {
 	 * attribution text after the license.
 	 */
 	public function setting_additional_text_field() {
-		$license = $this->get_license( $location = 'site' );
-		$add_txt = esc_html( $license['additional_attribution_txt'] );
+
+		$license  = $this->get_license( $location = 'site' );
+		$add_txt  = esc_html( $license['additional_attribution_txt'] );
 		echo "<input style='padding:0.5rem;' name='license[additional_attribution_txt]' type='text' size='120' maxlength='300' id='additional-attribution-txt' value='$add_txt' />";
+
 	}
 
 
 	/**
 	 * Calls attribution details html callback function.
 	 *
-	 * @return void
 	 */
 	public function setting_attribution_field() {
 		$this->select_attribute_to_html( $location = 'site', $echo = true );
@@ -610,7 +611,6 @@ class CreativeCommons {
 			'name'                       => 'Creative Commons Attribution-Share Alike 4.0',
 			'sitename'                   => get_bloginfo( '' ),
 			'siteurl'                    => get_bloginfo( 'url' ),
-			'author'                     => get_bloginfo(),
 			'site_override_license'      => true,
 			'user_override_license'      => true,
 			'content_override_license'   => true,
@@ -826,8 +826,6 @@ class CreativeCommons {
 	 * @param  mixed $echo true.
 	 */
 	public function select_attribute_to_html( $location = null, $echo = true ) {
-		$license = $this->get_license( $location );
-		$attribute_options = $this->get_attribution_options( $location );
 
 		$license    = $this->get_license( $location = 'site' );
 		$title      = esc_html( $license['title'] );
@@ -882,7 +880,6 @@ class CreativeCommons {
 		</table>
 		<?php
 	}
-
 
 	/**
 	 * Function: display_settings_warning
@@ -1240,6 +1237,7 @@ class CreativeCommons {
 		?>
 		<div class="wrap">
 		<h2>Creative Commons licenses</h2>
+		<br />
 
 		<div style="background: white; border: 1px solid #e5e5e5; box-shadow: 0 1px 1px rgba(0,0,0,.04); padding: 2em; display: inline-table;">
 
@@ -1287,12 +1285,12 @@ class CreativeCommons {
 		?>
 		</p>
 
-		<p><?php esc_html_e( 'Please consider making a <a href="https://donate.creativecommons.org" target="_blank">donation (tax deductible in the US) to support our work</a>.', 'CreativeCommons' ); ?></p>
+		<p><?php esc_html_e( 'Please consider making a ', 'CreativeCommons' ); ?><a href="https://donate.creativecommons.org" target="_blank"><?php esc_html_e( 'donation (tax deductible in the US) to support our work', 'CreativeCommons' ); ?></a>.</p>
 
-		<h4>Sign up for our newsletter</h4>
+		<h4><?php esc_html_e( 'Sign up for our newsletter', 'CreativeCommons' ); ?></h4>
 
 		<form id="Edit" target="_blank" action="https://donate.creativecommons.org/civicrm/profile/create?gid=30&amp;reset=1" method="post" name="Edit">
-		<p><input id="email-Primary" class="form-control input-lg" maxlength="64" name="email-Primary" size="30" autofocus placeholder="mattl@example.com" type="email" required></p>
+		<p><input id="email-Primary" class="form-control input-lg" maxlength="64" name="email-Primary" size="30" autofocus placeholder="example@example.com" type="email" required></p>
 		<p><input class="btn btn-success btn-block" id="_qf_Edit_next" accesskey="S" name="_qf_Edit_next" type="submit" value="Subscribe"><input name="postURL" type="hidden" value="https://creativecommons.org/thank-you"><input name="cancelURL" type="hidden" value="https://creativecommons.org/newsletter"><input name="group[121]" type="hidden" value="1"><input name="_qf_default" type="hidden" value="Edit:cancel"></p>
 		</form>
 
@@ -1382,6 +1380,11 @@ class CreativeCommons {
 			$deed_url     = esc_url( $license['deed'] );
 			$image_url    = esc_attr( $license['image'] );
 			$license_name = esc_attr( $license['name'] );
+			$title        = esc_attr( $license['title'] );
+			$title_url    = esc_url( $license['title_url'] );
+			$author       = esc_attr( $license['author'] );
+			$author_url   = esc_url( $license['author_url'] );
+
 
 			$additional_attribution_txt = ( array_key_exists( 'additional_attribution_txt', $license ) )
 						? esc_html( $license['additional_attribution_txt'] ) : '';
@@ -1404,9 +1407,9 @@ class CreativeCommons {
 					$title_work = esc_html( $post->post_title );
 				}
 			} else {
-				$title_work    = get_bloginfo( 'name' );
-				$attribute_url = esc_html( site_url() );
-				$additional_attribution_txt  = "<p class='license-warning'>" . esc_html( $additional_attribution_txt ) . '</p>';
+				$title_work                 = get_bloginfo( 'name' );
+				$attribute_url              = esc_html( site_url() );
+				$additional_attribution_txt = "<p class='license-warning'>" . esc_html( $additional_attribution_txt ) . '</p>';
 			}
 			$html = "<div class='license-wrap'>"
 				. $this->license_html_rdfa(
