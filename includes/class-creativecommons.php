@@ -1378,7 +1378,11 @@ class CreativeCommons {
 					$attribute_text,
 					false,
 					false,
-					$additional_attribution_txt
+					$additional_attribution_txt,
+					$title,
+					$title_url,
+					$author,
+					$author_url
 				)
 				. '</div>';
 		}
@@ -1396,25 +1400,33 @@ class CreativeCommons {
 	public function license_html_rdfa( $deed_url, $license_name, $image_url,
 									$title_work, $is_singular, $attribute_url,
 									$attribute_text, $source_work_url,
-									$extra_permissions_url, $additional_attribution_txt ) {
+									$extra_permissions_url, $additional_attribution_txt, $title, $title_url, $author, $author_url ) {
 		$html = '';
 		$html .= "<a rel='license' href='$deed_url'>";
 		$html .= "<img alt='" . __( 'Creative Commons License', 'CreativeCommons' ) . "' style='border-width:0' src='$image_url' />";
 		$html .= '</a><br />';
 
-		/**
-		 * Refactor when we add title and work licensing.
+		$html .= sprintf( __( 'Except where otherwise noted, ', 'CreativeCommons' ) );
+
+		/*
+		 * If title and author details not entered,
+		 * replace them by 'the content on this site'.
 		 */
-		// $html .= "<span xmlns:dct='http://purl.org/dc/terms/' property='dct:title'>$title_work</span> ";
-		// if ( $is_singular && $attribute_text ) {
-		// 	$html .= __( 'by', 'CreativeCommons' );
-		// 	if ( $attribute_url != '' ) {
-		// 		$html .= " <a xmlns:cc='http://creativecommons.org/ns#' href='$attribute_url' property='cc:attributionName' rel='cc:attributionURL'>$attribute_text</a> ";
-		// 	} else {
-		// 		$html .= $attribute_text;
-		// 	}
-		// }
-		$html .= sprintf( __( 'Except where otherwise noted, the content on this site is licensed under a <a rel="license" href="%s">%s</a> License.', 'CreativeCommons' ), $deed_url, $license_name );
+		if ( $title ) {
+			$html .= sprintf( __( '<a href="%1$s">%2$s</a> ' ), $title_url, $title );
+		}
+		else {
+			$html .= sprintf( __( 'the content ', 'CreativeCommons' ) );
+		}
+
+		if ( $author ) {
+			$html .= sprintf( __( 'by <a href="%1$s">%2$s</a>' ), $author_url, $author );
+		}
+		else {
+			$html .= sprintf( __( 'on this site ', 'CreativeCommons' ) );
+		}
+
+		$html .= sprintf( __( ' is licensed under a <a rel="license" href="%1$s">%2$s</a> License.', 'CreativeCommons' ), $deed_url, $license_name );
 		if ( $source_work_url ) {
 			$html .= '<br />';
 			$html .= sprintf( __( 'Based on a work at <a xmlns:dct="http://purl.org/dc/terms/" href="%s" rel="dct:source">%s</a>.', 'CreativeCommons' ), $source_work_url, $source_work_url );
