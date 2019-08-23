@@ -1360,8 +1360,7 @@ class CreativeCommons {
 			if ( is_singular() ) {
 				global $post;
 				if ( is_object( $post ) ) {
-					$title_work                 = esc_html( $post->post_title );
-					$additional_attribution_txt = '';
+					$title_work = esc_html( $post->post_title );
 				}
 			} else {
 				$title_work    = get_bloginfo( 'name' );
