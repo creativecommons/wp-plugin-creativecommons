@@ -4,12 +4,11 @@
  *
  * @package CC_WordPress_Plugin
  * @subpackage Main_Class
- * @since 2.0
  */
 class CreativeCommons {
 
 	// Make sure the plugin header has the same version number.
-	const VERSION = '2019.8.1';
+	const VERSION = '2019.8.2';
 
 	/**
 	 * Plugin URL.
