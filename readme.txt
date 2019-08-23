@@ -99,6 +99,7 @@ See the GitHub project: [creativecommons/wp-plugin-creativecommons](https://gith
 * i18n improvements.
 * Minor bug fixes and refinements.
 
+
 = v2019.8.1 =
 
 * Fixed widget settings

@@ -1449,6 +1449,7 @@ class CreativeCommons {
 		$html .= "<img alt='" . __( 'Creative Commons License', 'CreativeCommons' ) . "' style='border-width:0' src='$image_url' />";
 		$html .= '</a><br />';
 
+
 		$html .= sprintf( __( 'Except where otherwise noted, ', 'CreativeCommons' ) );
 
 		/*
