@@ -219,12 +219,12 @@ class CreativeCommons {
 		add_settings_field(
 			'attribution_to',
 			__(
-				'Set attribution to',
+				'Attribution Details',
 				'CreativeCommons'
 			),
 			array( &$this, 'setting_attribution_field' ),
 			'cc-admin',
-			'license-section',
+			'license-attribution-settings',
 			array( 'label_for' => 'attribution_to' )
 		);
 
@@ -429,7 +429,7 @@ class CreativeCommons {
 
 
 	/**
-	 * Functon: setting_attribution_field
+	 * Calls attribution details html callback function.
 	 *
 	 * @return void
 	 */
@@ -567,7 +567,10 @@ class CreativeCommons {
 			'deed'                       => 'http://creativecommons.org/licenses/by-sa/4.0/',
 			'image'                      => CCPLUGIN__URL . 'includes/images/by-sa.png',
 			'attribute_to'               => '',
-			'title'                      => get_bloginfo( 'name' ),
+			'title'                      => '',
+			'title_url'                  => '',
+			'author'                     => '',
+			'author_url'                 => '',
 			'name'                       => 'Creative Commons Attribution-Share Alike 4.0',
 			'sitename'                   => get_bloginfo( '' ),
 			'siteurl'                    => get_bloginfo( 'url' ),
@@ -788,42 +791,58 @@ class CreativeCommons {
 		$license = $this->get_license( $location );
 		$attribute_options = $this->get_attribution_options( $location );
 
-		$html = '';
-		if ( is_array( $attribute_options )
-			&& ( count( $attribute_options ) > 0 )
-		) {
-			foreach ( $attribute_options as $attr_val => $attr_text ) {
-				$checked = '';
-				$id = "license-$attr_val";
-				$checked = checked(
-					$license['attribute_to'],
-					$attr_val,
-					false
-				);
-				$html .= "<label for='$id'><input type='radio' class='license-attribution-options' id='$id' $checked name='license[attribute_to]' value='$attr_val' />" . $attr_text . "</label><br/>\n";
-			}
-			if ( 'other' == $license['attribute_to'] ) {
-				$class = '';
-				$value = esc_html( $license['attribute_other'] );
-				$url   = esc_url( $license['attribute_other_url'] );
-			} else {
-				// Hide the other input text field if the 'other' option is not ticked.
-				$class = 'hidden';
-				$value = '';
-				$url = '';
-			}
+		$license    = $this->get_license( $location = 'site' );
+		$title      = esc_html( $license['title'] );
+		$title_url  = esc_html( $license['title_url'] );
+		$author     = esc_html( $license['author'] );
+		$author_url = esc_html( $license['author_url'] );
 
-			$html .= "<p id='attribute-other-data' class='$class'>";
-			$html .= "<label for='license-other-value'>" . __( 'Attribution text:', 'CreativeCommons' ) . "<br /><input type='text' value='$value' name='license[attribute_other]' id='license-other-value' class='large' size='45' /></label><br />";
-			// Might need max length? TODO: need to check hidden value if other prev was selected.
-			$html .= "<label for='license-other-value-url'>" . __( 'Attribution url:', 'CreativeCommons' ) . "<br /><input type='text' value='$url' name='license[attribute_other_url]' id='license-other-value-url' class='large' size='45' /></label>";
-			$html .= '</p>';
-		}
-		if ( $echo ) {
-			echo $html;
-		} else {
-			return $html;
-		}
+		?>
+		<table class="widefat" style="background:none; width:0%; border:none; box-shadow:none;">
+			<tr>
+				<td style="padding:10px 10px;">
+					<span>
+						<?php esc_html_e( 'Title', 'CreativeCommons' ); ?>
+					</span>
+				</td>
+				<td style="padding:10px 10px;">
+					<?php
+					printf( '<input type="text" name="license[title]" value="%1$s" id="title" class="large" size="45" /><br />', esc_attr( $title ) );
+					?>
+				</td>
+			</tr>
+			<tr>
+				<td style="padding:10px 10px;">
+					<span>
+						<?php esc_html_e( 'Title URL', 'CreativeCommons' ); ?>
+					</span>
+				</td>
+				<td style="padding:10px 10px;">
+					<?php printf( '<input type="text" name="license[title_url]" value="%1$s" id="title_url" class="large" size="45" /><br />', esc_attr( $title_url ) ); ?>
+				</td>
+			</tr>
+			<tr>
+				<td style="padding:10px 10px;">
+					<span>
+						<?php esc_html_e( 'Author', 'CreativeCommons' ); ?>
+					</span>
+				</td>
+				<td style="padding:10px 10px;">
+					<?php printf( '<input type="text" name="license[author]" value="%1$s" id="author" class="large" size="45" /><br />', esc_attr( $author ) ); ?>
+				</td>
+			</tr>
+			<tr>
+				<td style="padding:10px 10px;">
+					<span>
+						<?php esc_html_e( 'Author URL', 'CreativeCommons' ); ?>
+					</span>
+				</td>
+				<td style="padding:10px 10px;">
+					<?php printf( '<input type="text" name="license[author_url]" value="%1$s" id="author_url" class="large" size="45" /><br />', esc_attr( $author_url ) ); ?>
+				</td>
+			</tr>
+		</table>
+		<?php
 	}
 
 
@@ -936,7 +955,8 @@ class CreativeCommons {
 
 	/**
 	 * Checks the data before saving it
-	 * Use $from ala get_license to determine where the data is coming from and what should be mandatory return an array or WP_Error?
+	 * You must include any addition in the $license array in this
+	 * function for it to be saved.
 	 *
 	 * @param  mixed $from Data from Network or Site.
 	 * @param  mixed $data Array of license data.
@@ -1012,12 +1032,13 @@ class CreativeCommons {
 				}
 				break;
 			case 'site':
-				$license['user_override_license']
-				= esc_attr( $data['user_override_license'] );
-				$license['content_override_license']
-				= esc_attr( $data['content_override_license'] );
-				$license['additional_attribution_txt']
-				= esc_html( $data['additional_attribution_txt'] );
+				$license['user_override_license']      = esc_attr( $data['user_override_license'] );
+				$license['content_override_license']   = esc_attr( $data['content_override_license'] );
+				$license['additional_attribution_txt'] = esc_html( $data['additional_attribution_txt'] );
+				$license['title']                      = esc_attr( $data['title'] );
+				$license['title_url']                  = esc_url( $data['title_url'] );
+				$license['author']                     = esc_attr( $data['author'] );
+				$license['author_url']                 = esc_url( $data['author_url'] );
 				break;
 		}
 		return $license;
