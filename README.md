@@ -1,145 +1,101 @@
-# Creative Commons WordPress Plugin
+<div align="center">
+  <img src="https://mirrors.creativecommons.org/presskit/icons/cc.xlarge.png" height="150">
+  <h2 align="center">CC WordPress Plugin</h2>
+  <p align="center">Official Creative Commons plugin for licensing your content on your WrodPress website. With Creative Commons licenses, keep your copyright and share your creativity.
+  </p>
 
-Official Creative Commons plugin for licensing your content. With Creative
-Commons licenses, keep your copyright AND share your creativity.
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com) [![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
 
-Download the latest version from this project's [releases][releases].
-
-[releases]: https://github.com/creativecommons/creativecommons-wordpress-plugin/releases "Releases · creativecommons/creativecommons-wordpress-plugin"
-
+</div>
 
 ## Description
 
-The CreativeCommons WordPress plugin gives authors the ability to license
-content with a Creative Commons license
-([Choose a License](https://creativecommons.org/choose/)). With this plugin
-you can:
-
-* License your blog (single WordPress install)
-* Display license for the site, posts and pages
-* Prevent license changes per site (all pages on a site must use the same
-  license)
-* License your WordPress Network (WordPress Multisite install)
-* License some of your sites differently in your WordPress Network
-* Prevent license changes in your WordPress Network (all pages on all sites
-  need to use the same license)
-* License all your content with the same license (license per author)
-* License some posts, pages, or images differently from your default license
-  (per content license)
-* License posts and pages by simply including CC Gutenberg blocks for each
-  license required (Gutenberg License Blocks)
-* Display license information with "One Click Attribution" for images
-
-
-### Possible future features
-
-Here's a list of some features we'd love to add to this plugin or support in a
-separate (child) plugin. If you'd like these or other features to be
-implemented you may consider supporting this plugin with code contributions,
-testing or funding Creative Commons for further development.
-
-* Allow more kinds of media files to be licensed
-* Extract license information from more kinds of media files
-* Allow to search (using external search engines) for specific Creative Commons
-  licensed media files
-
-
-## Code of Conduct
-
-[`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md):
-> The Creative Commons team is committed to fostering a welcoming community.
-> This project and all other Creative Commons open source projects are governed
-> by our [Code of Conduct][code_of_conduct]. Please report unacceptable
-> behavior to [conduct@creativecommons.org](mailto:conduct@creativecommons.org)
-> per our [reporting guidelines][reporting_guide].
-
-[code_of_conduct]:https://creativecommons.github.io/community/code-of-conduct/
-[reporting_guide]:https://creativecommons.github.io/community/code-of-conduct/enforcement/
-
+The plugin is an attribution tool. It has multiple features that allow users to attribute their content by including Creative Commons license
+([Choose a License](https://creativecommons.org/choose/)) on their WordPress website. This includes default, post, page and media attribution.
 
 ## Installation
 
-1. Upload the "creativecommons-wordpress-plugin" folder to the
-   "/wp-content/plugins/" directory
-2. Activate the plugin through the "Plugins" menu in WordPress
-3. From the Widgets menu, drag the License widget to the widget area in which
-   you would like the license to appear.  Otherwise, the license for each page
-   or post will appear in the Wordpress footer area by default.
+Download the latest version from this project's [releases][releases]. You can install the plugin to your WP website
+using any of these methods:
+
+[releases]: https://github.com/creativecommons/creativecommons-wordpress-plugin/releases "Releases · creativecommons/creativecommons-wordpress-plugin"
+
+1. In your plugin Dashboard on WordPress, Click **Add New** and
+upload the plugin `.zip` file. When installed, activate the plugin.
+2. Extract the `.zip` file and paste the extracted folder to the
+   "/wp-content/plugins/" directory. Go to your plugin Dashboard and activate the plugin.
 
 
-## Usage
+## Features
 
-The default license used by the plugin is the Creative Commons
-[Attribution-ShareAlike
-(CC BY-SA)](http://creativecommons.org/licenses/by-sa/4.0/) license. This can
-be easily changed including attribution, depending on the permissions by a user
-with the role: superadmin, site admin or author.
+### Setting a Default Site License
 
-By default, the plugin will display a license in the footer of your theme. The
-license plugin is also a widget, and can be dragged to any widget area like the
-side-bar and all other available areas (this will suppress display of the
-license in the theme footer and display it only in the widget area).
+After activating the plugin, head to **Settings > Creative Commons** to set up the default license.
 
-### Choose A Site License
+![Plugin Settings](https://cl.ly/01ae314c5c57/img)
 
-![Site license chooser](assets/screenshot-1.jpg)
+Selecting a license is simple. Select one from the given
+CC licenses, by default [**CC BY-SA**](http://creativecommons.org/licenses/by-sa/4.0/)
+license is used.
 
-To choose a site-wide license, go to the "Creative Commons" option in the
-"Settings" item on the left hand menu in the WordPress admin site.
+![Select License](https://cl.ly/bfd84b912c78/img)
 
-Be careful when changing these options, they may affect existing published
-work.
+There are multiple options available for the license. You
+can add:
 
+- Additional attribution text for a custom note.
+- Title and Title URL. If not mentioned it defaults to "the content".
+- Author and Author URL. If not mentioned it defaults to "on this site".
+- Display options.
 
-### Choose An Author License
+![License Options](https://cl.ly/b4520d6ab6b1/img)
 
-![Author license chooser](assets/screenshot-3.jpg)
+### Widget
 
-When changing an individual author's license is enabled, the option to do so is
-included on the Users Profile page for that author.
+There are two options to display the default license, as
+a widget or in the footer. We recommend using the widget for better theme compatibility.
 
-You can change the license ("Select a default license") or the attribution
-("Set attribution to").
+![Widget](https://cl.ly/2dacc1739955/img)
 
+After selecting the widget go to **Appearance > Widgets**
+and drag the CC License Widget to the
+required area. The widget will then display the default license on all pages of the site.
 
-### Choose A Post Or Page License
+![Widget Front-end](https://cl.ly/b9b584688f46/img)
 
-![Post edit page with license chooser](assets/screenshot-2.jpg)
+### Gutenberg Blocks
 
-If changing the license on individual posts and pages is enabled, the option to
-do so is included in the editor on the right hand side of the page under the
-heading "Licensed:".
+The plugin adds specific Gutenberg blocks for each Creative
+Commons license. If you are using the default Gutenberg editor,
+you will find these blocks under a seperate category.
 
-You can change the license or the attribution.
+![Blocks Category](https://cl.ly/4934cdc59cd4/img)
 
-Remember to save the post or page after you change its license.
+These blocks can be used to license any page/post/image or
+other media.
 
+![Blocks Back-end](https://cl.ly/b454a77259ce/img)
 
-### Choose An Image License
+Following is an image attributed using CC gutenberg block.
 
-![Media item license metadata editor](assets/screenshot-4.jpg)
+![Attributed Image](https://cl.ly/bde9d591b534/img)
 
-In the "Attachment Details" page for an image in the Media Library, there are
-fields to edit license and attribution information underneath the usual Title,
-Caption and other fields for the image.
+At a glance, with WP CC Plugin you can:
 
-Images that support Exif data may include licensing metadata. Where possible
-the plugin extracts that metadata and uses it to pre-populate the license
-information fields.
-
-
-### Display An Image License
-
-If you place a `[license]` shortcode around an image that has licensing
-metadata, that will display the license block and the One Click Attribution
-button:
-
-![Image with license block](assets/screenshot-6.jpg)
-
+- License your site with a default license.
+- You can display the default license in the footer or as a widget in widget areas.
+- Display license for the site, posts and pages
+  license)
+- License your WordPress Network (WordPress Multisite install)
+- License some of your sites differently in your WordPress Network
+- License some posts, pages, or images differently from your default license
+  (per content license)
+- License posts and pages by simply including CC Gutenberg blocks for each
+  license required (Gutenberg License Blocks)
 
 ## Contributing
 
-See [`CONTRIBUTING.md`](CONTRIBUTING.md).
+Contributions will be very appreciated. See [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
 
 ## Development
