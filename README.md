@@ -8,12 +8,10 @@
 
 </div>
 
-
 ## Description
 
 The plugin is an attribution tool. It has multiple features that allow users to attribute their content by including Creative Commons license
 ([Choose a License](https://creativecommons.org/choose/)) on their WordPress website. This includes default, post, page and media attribution.
-
 
 ## Installation
 
