@@ -100,9 +100,9 @@ SRC=${REPO}/
 DST=${SVN}/trunk/
 echo "SRC: ${SRC}"
 echo "DST: ${DST}"
-transfer "${SRC}" "${DST}" --dry-run --itemize-changes --exclude 'assets'
+transfer "${SRC}" "${DST}" --dry-run --itemize-changes
 prompt_to_continue
-transfer "${SRC}" "${DST}" --quiet --exclude 'assets'
+transfer "${SRC}" "${DST}" --quiet
 
 echo '# Rsync: assets'
 SRC=${REPO}/assets/
