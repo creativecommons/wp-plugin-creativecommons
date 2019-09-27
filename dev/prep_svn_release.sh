@@ -75,7 +75,7 @@ BASE=$(realpath ${BASE})
 REPO=${BASE%/*}
 
 echo '# Testing for local modifications'
-if git diff-index --quiet HEAD --
+if ! git diff-index --quiet HEAD --
 then
     {
         echo 'ERROR: resolve changes before continuing:'
