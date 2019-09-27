@@ -52,6 +52,7 @@ realpath() {
 
 transfer() {
     rsync \
+        --checksum \
         --recursive \
         --links \
         --perms \
