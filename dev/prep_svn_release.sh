@@ -127,5 +127,7 @@ git checkout -q ${BRANCH}
 echo
 
 echo '# Additional Instructions'
+echo "From svn dir (${SVN})"
 echo 'To create a tag:'
-echo "svn copy trunk/ tags/${VERSION}/"
+echo "    svn copy trunk/ tags/${VERSION}/"
+echo "    svn commit -m'Tagging version ${VERSION}'"
