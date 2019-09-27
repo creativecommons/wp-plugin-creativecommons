@@ -8,7 +8,7 @@
 class CreativeCommons {
 
 	// Make sure the plugin header has the same version number.
-	const VERSION = '2019.8.2';
+	const VERSION = '2019.9.1';
 
 	/**
 	 * Plugin URL.
