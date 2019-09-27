@@ -29,6 +29,9 @@ prompt_to_continue() {
                 return 0
                 ;;
             *)
+                echo "# Checkout working branch: ${BRANCH}"
+                git checkout -q ${BRANCH}
+                echo
                 echo 'ABORTED' 1>&2
                 exit 1
                 ;;
