@@ -10,8 +10,7 @@
 
 ## Description
 
-The plugin is an attribution tool. It has multiple features that allow users to attribute their content by including Creative Commons license
-([Choose a License](https://creativecommons.org/choose/)) on their WordPress website. This includes default, post, page and media attribution.
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
 
 ## Installation
 
