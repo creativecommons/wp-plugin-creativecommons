@@ -67,7 +67,7 @@ required area. The widget will then display the default license on all pages of 
 
 The plugin adds specific Gutenberg blocks for each Creative
 Commons license. If you are using the default Gutenberg editor,
-you will find these blocks under a seperate category.
+you will find these blocks under a separate category.
 
 ![Blocks Category](https://cl.ly/4934cdc59cd4/img)
 
@@ -95,16 +95,25 @@ At a glance, with WP CC Plugin you can:
 
 ## Contributing
 
-Contributions will be very appreciated. See [`CONTRIBUTING.md`](CONTRIBUTING.md).
+Contributions will be very appreciated. See
+[`CONTRIBUTING.md`](CONTRIBUTING.md).
 
 
 ## Development
 
 If you're interested in the code have a look at the master branch for the
-releases. Development will be done in the development branch.
+releases. Development will be done in the develop branch.
 
 Occasionally other branches may be available to test new features or play with
 new ideas, but they may be deleted anytime so don't rely on those branches.
+
+
+### Release Schedule
+
+We will release a new version every month that there are substantial changes.
+See [milestones][milestones] for how GitHub issues are assigned for release.
+
+[milestones]: https://github.com/creativecommons/wp-plugin-creativecommons/milestones
 
 
 ## History
