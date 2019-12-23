@@ -8,7 +8,7 @@
 class CreativeCommons {
 
 	// Make sure the plugin header has the same version number.
-	const VERSION = '2019.9.1';
+	const VERSION = '2019.12.1';
 
 	/**
 	 * Plugin URL.
@@ -296,7 +296,7 @@ class CreativeCommons {
 		<tr>
 			<td>
 				<p><label>
-					<input name="license[choice]" type="radio" value="by" <?php checked( $license['choice'], 'by' ); ?> />
+					<input name="license[choice]" type="radio" value="by" <?php isset( $license['choice'] ) ? checked( $license['choice'], 'by' ) : ''; ?> />
 					<?php esc_html_e( 'Attribution 4.0 International License', 'CreativeCommons' ); ?>
 					<strong style="color:#fc7303;" >(CC BY 4.0)</strong>
 				</p></label>
@@ -310,7 +310,7 @@ class CreativeCommons {
 		<tr>
 			<td>
 				<p class="cc-test-css"><label>
-					<input name="license[choice]" type="radio" value="by-sa" <?php checked( $license['choice'], 'by-sa' ); ?> /> <?php esc_html_e( 'Attribution-ShareAlike 4.0 International License', 'CreativeCommons' ); ?>
+					<input name="license[choice]" type="radio" value="by-sa" <?php isset( $license['choice'] ) ? checked( $license['choice'], 'by-sa' ) : ''; ?> /> <?php esc_html_e( 'Attribution-ShareAlike 4.0 International License', 'CreativeCommons' ); ?>
 					<strong style="color:#fc7303;" >(CC BY-SA 4.0)</strong>
 				</p></label>
 			</td>
@@ -323,7 +323,7 @@ class CreativeCommons {
 		<tr>
 			<td>
 				<p><label>
-					<input name="license[choice]" type="radio" value="by-nc" <?php checked( $license['choice'], 'by-nc' ); ?> /> <?php esc_html_e( 'Attribution-NonCommercial 4.0 International License', 'CreativeCommons' ); ?>
+					<input name="license[choice]" type="radio" value="by-nc" <?php isset( $license['choice'] ) ? checked( $license['choice'], 'by-nc' ) : ''; ?> /> <?php esc_html_e( 'Attribution-NonCommercial 4.0 International License', 'CreativeCommons' ); ?>
 					<strong style="color:#fc7303;" >(CC BY-NC 4.0)</strong>
 				</p></label>
 			</td>
@@ -336,7 +336,7 @@ class CreativeCommons {
 		<tr>
 			<td>
 				<p><label>
-					<input name="license[choice]" type="radio" value="by-nc-sa" <?php checked( $license['choice'], 'by-nc-sa' ); ?> /> <?php esc_html_e( 'Attribution-NonCommercial-ShareAlike 4.0 International License', 'CreativeCommons' ); ?>
+					<input name="license[choice]" type="radio" value="by-nc-sa" <?php isset( $license['choice'] ) ? checked( $license['choice'], 'by-nc-sa' ) : ''; ?> /> <?php esc_html_e( 'Attribution-NonCommercial-ShareAlike 4.0 International License', 'CreativeCommons' ); ?>
 					<strong style="color:#fc7303;" >(CC BY-NC-SA 4.0)</strong>
 				</p></label>
 			</td>
@@ -349,7 +349,7 @@ class CreativeCommons {
 		<tr>
 			<td>
 				<p><label>
-					<input name="license[choice]" type="radio" value="by-nc-nd" <?php checked( $license['choice'], 'by-nc-nd' ); ?> /> <?php esc_html_e( 'Attribution-NonCommercial-NoDerivatives 4.0 International License', 'CreativeCommons' ); ?>
+					<input name="license[choice]" type="radio" value="by-nc-nd" <?php isset( $license['choice'] ) ? checked( $license['choice'], 'by-nc-nd' ) : ''; ?> /> <?php esc_html_e( 'Attribution-NonCommercial-NoDerivatives 4.0 International License', 'CreativeCommons' ); ?>
 					<strong style="color:#fc7303;" >(CC BY-NC-ND 4.0)</strong>
 				</p></label>
 			</td>
@@ -362,7 +362,7 @@ class CreativeCommons {
 		<tr>
 			<td>
 				<p><label>
-					<input name="license[choice]" type="radio" value="by-nd" <?php checked( $license['choice'], 'by-nd' ); ?> /> <?php esc_html_e( 'Attribution-NoDerivatives 4.0 International License', 'CreativeCommons' ); ?>
+					<input name="license[choice]" type="radio" value="by-nd" <?php isset( $license['choice'] ) ? checked( $license['choice'], 'by-nd' ) : ''; ?> /> <?php esc_html_e( 'Attribution-NoDerivatives 4.0 International License', 'CreativeCommons' ); ?>
 					<strong style="color:#fc7303;" >(CC BY-ND 4.0)</strong>
 				</p></label>
 			</td>
@@ -375,7 +375,7 @@ class CreativeCommons {
 		<tr>
 			<td>
 				<p><label>
-					<input name="license[choice]" type="radio" value="cc0" <?php checked( $license['choice'], 'cc0' ); ?> /> <?php esc_html_e( 'CC0 Universal Public Domain Dedication license', 'CreativeCommons' ); ?>
+					<input name="license[choice]" type="radio" value="cc0" <?php isset( $license['choice'] ) ? checked( $license['choice'], 'cc0' ) : ''; ?> /> <?php esc_html_e( 'CC0 Universal Public Domain Dedication license', 'CreativeCommons' ); ?>
 					<strong style="color:#fc7303;">(CC0)</strong>
 				</p></label>
 			</td>
@@ -827,10 +827,10 @@ class CreativeCommons {
 	public function select_attribute_to_html( $location = null, $echo = true ) {
 
 		$license    = $this->get_license( $location = 'site' );
-		$title      = esc_html( $license['title'] );
-		$title_url  = esc_html( $license['title_url'] );
-		$author     = esc_html( $license['author'] );
-		$author_url = esc_html( $license['author_url'] );
+		$title      = ( isset( $license['title'] ) ) ? esc_html( $license['title'] ) : '';
+		$title_url  = ( isset( $license['title_url'] ) ) ? esc_html( $license['title_url'] ) : '';
+		$author     = ( isset( $license['author'] ) ) ? esc_html( $license['author'] ) : '';
+		$author_url = ( isset( $license['author_url'] ) ) ? esc_html( $license['author_url'] ) : '';
 
 		?>
 		<table class="widefat" style="background:none; width:0%; border:none; box-shadow:none;">
@@ -1007,12 +1007,12 @@ class CreativeCommons {
 
 		// Saves the license attribution information. MAke sure to save the current version.
 		$license['version']             = self::VERSION;
-		$license['attribute_to']        = esc_attr( $data['attribute_to'] );
-		$license['attribute_other']     = esc_html( $data['attribute_other'] );
-		$license['attribute_other_url'] = esc_html( $data['attribute_other_url'] );
-		$license['choice']              = esc_attr( $data['choice'] );
-		$license['display_as_widget']   = esc_html( $data['display_as_widget'] );
-		$license['display_as_footer']   = esc_html( $data['display_as_footer'] );
+		$license['attribute_to']        = ( isset( $data['attribute_to'] ) ) ? esc_attr( $data['attribute_to'] ) : '';
+		$license['attribute_other']     = ( isset( $data['attribute_other'] ) ) ? esc_html( $data['attribute_other'] ) : '';
+		$license['attribute_other_url'] = ( isset( $data['attribute_other_url'] ) ) ? esc_html( $data['attribute_other_url'] ) : '';
+		$license['choice']              = ( isset( $data['choice'] ) ) ? esc_attr( $data['choice'] ) : '';
+		$license['display_as_widget']   = ( isset( $data['display_as_widget'] ) ) ? esc_html( $data['display_as_widget'] ) : '';
+		$license['display_as_footer']   = ( isset( $data['display_as_footer'] ) ) ? esc_html( $data['display_as_footer'] ) : '';
 
 		// Gets the name, deed(url) and icon of the selected license and stores/saves it.
 		switch ( $data['choice'] ) {
@@ -1069,13 +1069,13 @@ class CreativeCommons {
 				}
 				break;
 			case 'site':
-				$license['user_override_license']      = esc_attr( $data['user_override_license'] );
-				$license['content_override_license']   = esc_attr( $data['content_override_license'] );
-				$license['additional_attribution_txt'] = esc_html( $data['additional_attribution_txt'] );
-				$license['title']                      = esc_attr( $data['title'] );
-				$license['title_url']                  = esc_url( $data['title_url'] );
-				$license['author']                     = esc_attr( $data['author'] );
-				$license['author_url']                 = esc_url( $data['author_url'] );
+				$license['user_override_license']      =  ( isset( $data['user_override_license'] ) ) ? esc_attr( $data['user_override_license'] ) : '';
+				$license['content_override_license']   = ( isset( $data['user_override_license'] ) ) ? esc_attr( $data['user_override_license'] ) : '';
+				$license['additional_attribution_txt'] = ( isset( $data['additional_attribution_txt'] ) ) ? esc_html( $data['additional_attribution_txt'] ) : '';
+				$license['title']                      = ( isset( $data['title'] ) ) ? esc_attr( $data['title'] ) : '';
+				$license['title_url']                  = ( isset( $data['title_url'] ) ) ? esc_url( $data['title_url'] ) : '';
+				$license['author']                     = ( isset( $data['author'] ) ) ? esc_attr( $data['author'] ) : '';
+				$license['author_url']                 = ( isset( $data['author_url'] ) ) ? esc_url( $data['author_url'] ) : '';
 				break;
 		}
 		return $license;
@@ -1090,7 +1090,6 @@ class CreativeCommons {
 	private function _save_network_license() {
 		$license = $this->_verify_license_data( $from = 'network' );
 		return update_site_option( 'license', $license );
-		alert( 'hello' );
 	}
 
 
