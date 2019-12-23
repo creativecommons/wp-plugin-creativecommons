@@ -1443,9 +1443,10 @@ class CreativeCommons {
 									$title_work, $is_singular, $attribute_url,
 									$attribute_text, $source_work_url,
 									$extra_permissions_url, $additional_attribution_txt, $title, $title_url, $author, $author_url ) {
+		list($img_width, $img_height) = getimagesize( $image_url );
 		$html = '';
 		$html .= "<a rel='license' href='$deed_url'>";
-		$html .= "<img alt='" . __( 'Creative Commons License', 'CreativeCommons' ) . "' style='border-width:0' src='$image_url' />";
+		$html .= "<img alt='" . __( 'Creative Commons License', 'CreativeCommons' ) . "' style='border-width:0' src='$image_url' width='$img_width' height='$img_height'  />";
 		$html .= '</a><br />';
 
 
