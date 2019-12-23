@@ -1,11 +1,11 @@
 === Creative Commons ===
 
-Contributors: ahmadbilaldev, cctimidrobot, BjornW, robmyers, tatti
+Contributors: ahmadbilaldev, cctimidrobot, BjornW, robmyers, tatti, hugosolar
 Donate link: https://us.netdonor.net/page/6650/donate/1?ea.tracking.id=top-of-page-banner
 Tags: Creative Commons, CC, license, copyright, copyleft, attribution, attribute, ownership, all rights reserved, some rights reserved, footer, widget
 Requires at least: 3.1
-Tested up to: 5.2
-Stable tag: 2019.9.1
+Tested up to: 5.3
+Stable tag: 2019.12.1
 Requires PHP: 5.6.20
 License: GPLv2 or later
 License URI: https://gnu.org/licenses/gpl-2.0.html
