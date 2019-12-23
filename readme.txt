@@ -61,6 +61,12 @@ See the GitHub project: [creativecommons/wp-plugin-creativecommons](https://gith
 == Changelog ==
 
 
+= v2019.12.1 =
+
+* Remove warnings caused by non-checked index variables in save settings event
+* Tested behavior and compatibility with WordPress 5.3 and PHP 7.4
+
+
 = v2019.9.1 =
 
 * Fixed missing assets/icon-256×256.png
