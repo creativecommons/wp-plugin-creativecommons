@@ -65,6 +65,7 @@ See the GitHub project: [creativecommons/wp-plugin-creativecommons](https://gith
 
 * Remove warnings caused by non-checked index variables in save settings event
 * Tested behavior and compatibility with WordPress 5.3 and PHP 7.4
+* Add image size to generated HTML to support browser lazyload
 
 
 = v2019.9.1 =
