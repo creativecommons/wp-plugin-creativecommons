@@ -8,7 +8,7 @@
 class CreativeCommons {
 
 	// Make sure the plugin header has the same version number.
-	const VERSION = '2019.12.2';
+	const VERSION = '2020.1.1';
 
 	/**
 	 * Plugin URL.
@@ -77,63 +77,9 @@ class CreativeCommons {
 		add_action( 'admin_menu', array( $this, 'add_plugin_page' ) );
 		add_action( 'admin_init', array( $this, 'page_init' ) );
 
-		/*
-		 * Selecting a license for individual posts or pages is only
-		 * possible if the settings of the site allow it
-		 * by default it does allow it.
-		 */
-		if ( $this->allow_content_override_site_license() ) {
-			add_action(
-				'post_submitbox_misc_actions',
-				array( &$this, 'post_page_license_settings_html' )
-			);
-			add_action(
-				'page_submitbox_misc_actions',
-				array( &$this, 'post_page_license_settings_html' )
-			);
-			add_action(
-				'save_post',
-				array( &$this, 'save_license' )
-			);
-		}
-
-		/*
-		 * Selecting a license as a user for all your content is only
-		 * possible if the settings of the site allow it,
-		 * by default it will allow it.
-		 */
-		if ( $this->allow_user_override_site_license() ) {
-			add_action(
-				'personal_options',
-				array( &$this, 'user_license_settings_html' )
-			);
-			add_action(
-				'personal_options_update',
-				array( &$this, 'save_license' )
-			);
-		}
-
 		// Adds CC License widget to display the license.
 		add_action( 'widgets_init', array( &$this, 'license_as_widget' ) );
 
-		/*
-		 * if the plugin is installed in multisite environment allow to set
-		 * the options for all sites as default from the network options
-		 */
-		if ( is_multisite() ) {
-			add_action(
-				'wpmu_options',
-				array( &$this, 'network_license_settings_html' ),
-				10,
-				0
-			);
-			add_action(
-				'update_wpmu_options',
-				array( &$this, 'save_license' ),
-				10,
-				0
-			);
-		}
 	}
 
 
@@ -194,15 +140,6 @@ class CreativeCommons {
 			'license-chooser',
 			array( 'label_for' => 'license_current' )
 		);
-
-		add_settings_field(
-			'license',
-			'',
-			array( &$this, 'setting_license_field' ),
-			'cc-admin',
-			'license-section'
-		);
-
 		add_settings_field(
 			'additional_attribution_txt',
 			__(
@@ -237,30 +174,6 @@ class CreativeCommons {
 			'cc-admin',
 			'license-attribution-settings',
 			array( 'label_for' => 'display_as' )
-		);
-
-		add_settings_field(
-			'allow_user_override',
-			__(
-				'Allow users to override site&#8209;wide license',
-				'CreativeCommons'
-			),
-			array( &$this, 'setting_user_override_license_field' ),
-			'cc-admin',
-			'license-section',
-			array( 'label_for' => 'allow_user_override' )
-		);
-
-		add_settings_field(
-			'allow_content_override',
-			__(
-				'Allow a different license per post/page',
-				'CreativeCommons'
-			),
-			array( &$this, 'setting_content_override_license_field' ),
-			'cc-admin',
-			'license-section',
-			array( 'label_for' => 'allow_content_override' )
 		);
 	}
 
@@ -409,15 +322,6 @@ class CreativeCommons {
 		);
 	}
 
-
-	/**
-	 * Funtion: setting_license_field
-	 */
-	public function setting_license_field() {
-		$this->select_license_html( $location = 'site', $echo = true );
-	}
-
-
 	/**
 	 * Displays a preview of current selected license. Used in 'license-chooser' settings section.
 	 */
@@ -473,41 +377,7 @@ class CreativeCommons {
 
 		<?php
 	}
-
-	/**
-	 * Function: setting_user_override_license_field
-	 * only used once in site admin
-	 *
-	 * @return void
-	 */
-	public function setting_user_override_license_field() {
-		$license = $this->get_license( $location = 'site' );
-		$checked = ( array_key_exists( 'user_override_license', $license ) )
-				? checked( $license['user_override_license'], 'true', false )
-				: '';
-		echo "<input name='license[user_override_license]' type='checkbox' " . $checked . " id='user-override-license' value='true' />";
-	}
-
-
-	/**
-	 * Function: setting_content_override_license_field
-	 * only used once in site admin
-	 *
-	 * @return void
-	 */
-	public function setting_content_override_license_field() {
-		$license = $this->get_license( $location = 'site' );
-		$checked = ( array_key_exists( 'content_override_license', $license ) )
-				? checked(
-					$license['content_override_license'],
-					'true',
-					false
-				)
-				: '';
-		echo "<input name='license[content_override_license]' type='checkbox' " . $checked . " id='content-override-license' value='true' />";
-	}
-
-
+	
 	/**
 	 * Check if a site may override the network license.
 	 *
@@ -536,51 +406,6 @@ class CreativeCommons {
 		}
 	}
 
-
-	/**
-	 * Function: allow_user_override_site_license
-	 *
-	 * @return bool
-	 */
-	public function allow_user_override_site_license() {
-		if ( is_multisite()
-			&& ! $this->allow_site_override_network_license()
-		) {
-			return false;
-		} else {
-			$license = $this->get_license( $location = 'site' );
-			if ( array_key_exists( 'user_override_license', $license )
-				&& 'true' == $license['user_override_license']
-			) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-	}
-
-
-	/**
-	 * Function: allow_content_override_site_license
-	 *
-	 * @return bool
-	 */
-	public function allow_content_override_site_license() {
-		if ( is_multisite()
-			&& ! $this->allow_site_override_network_license()
-		) {
-			return false;
-		} else {
-			$license = $this->get_license( $location = 'site' );
-			if ( array_key_exists( 'content_override_license', $license )
-				&& 'true' == $license['content_override_license']
-			) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-	}
 
 	/**
 	 * Set a default license.
@@ -682,33 +507,6 @@ class CreativeCommons {
 					$this->_logger( 'get license: multisite' );
 					$license = $this->get_license( 'network' );
 					$this->_logger( 'got network license' );
-					if ( $this->allow_site_override_network_license() ) {
-						$this->_logger( 'site may override network license' );
-						$license = $this->get_license( 'site' );
-						// keep track of site license cause we need to check it twice.
-						$site_license = $license;
-						$this->_logger( 'got site license' );
-						if ( array_key_exists(
-							'user_override_license',
-							$site_license
-						)
-						&& 'true' == $site_license['user_override_license']
-						) {
-							$this->_logger( 'user may override license' );
-							$license = $this->get_license( 'profile' );
-							$this->_logger( 'got user license' );
-						}
-						if ( array_key_exists(
-							'content_override_license',
-							$site_license
-						)
-						&& 'true' == $site_license['content_override_license']
-						) {
-							$this->_logger( 'content may override license' );
-							$license = $this->get_license( 'post-page' );
-							$this->_logger( 'got content license' );
-						}
-					}
 				} else {
 					$license = $this->get_license( 'site' );
 					if ( array_key_exists( 'user_override_license', $license )
@@ -799,18 +597,7 @@ class CreativeCommons {
 				break;
 
 			default:
-				if ( $this->allow_user_override_site_license() ) {
-					$attribution_options = array(
-						'display_name' => __(
-							'The author display name',
-							'CreativeCommons'
-						),
-						'other'        => __(
-							'Something completely differrent',
-							'CreativeCommons'
-						),
-					);
-				}
+				
 				break;
 		}
 
@@ -898,50 +685,6 @@ class CreativeCommons {
 			return $html;
 		}
 	}
-
-
-	/**
-	 * Renders the license settings WordPress Network Settings page
-	 *
-	 * Using the settings rendered by this function a superadmin may set a
-	 * default license for the WordPress Network. This will be used for all
-	 * sites. If the superadmin allows it, siteadmins may change their
-	 * site's license and choose a different license than the default
-	 * Network license.
-	 *
-	 * Called by wpmu_options action
-	 **/
-	public function network_license_settings_html() {
-		/*
-		 * Get the previously selected license from the network options or
-		 * the plugin's default license
-		 * $license = get_site_option('license', $this->plugin_default_license());
-		 */
-		$location = 'network';
-		$license = $this->get_license( $location );
-
-		$html  = '';
-		$html .= '<h3>' . __( 'License settings', 'CreativeCommons' ) . "</h3>\n";
-		$html .= $this->display_settings_warning();
-
-		$html .= wp_nonce_field( 'license-update', $name = 'license_wpnonce', $referer = true, $echo = false );
-		$html .= "<table class='form-table'>\n";
-		$html .= "<tbody>\n";
-
-		$html .= $this->_license_settings_html( $location );
-
-		$html .= "<tr valign='top'>\n";
-		$html .= "\t<th scope='row'><label for='override-license'>" . __( "Allow siteadmins to change their site's license", 'CreativeCommons' ) . "</label></th>\n";
-		$html .= "\t<td><input name='site_override_license' type='checkbox'" . checked( $license['site_override_license'], 'true', false ) . " id='site_override-license' value='true' />";
-		$html .= "</td>\n";
-		$html .= "</tr>\n";
-
-		$html .= "</tbody>\n";
-		$html .= "</table>\n";
-
-		echo $html;
-	}
-
 
 	/**
 	 * Function: save_license
@@ -1140,76 +883,6 @@ class CreativeCommons {
 		wp_enqueue_script( 'thickbox' );
 		wp_enqueue_style( 'thickbox' );
 		wp_enqueue_script( 'license' );
-	}
-
-
-	/**
-	 * Function: user_license_settings_html
-	 * Renders the html settings for the user profile
-	 * TODO: add global option: if allowed use this license across all my sites in this network.
-	 */
-	public function user_license_settings_html() {
-		$location    = 'profile';
-		$html        = wp_nonce_field(
-			'license-update',
-			$name    = 'license_wpnonce',
-			$referer = true,
-			$echo    = false
-		);
-		$html .= $this->_license_settings_html( $location );
-		echo $html;
-	}
-
-	/**
-	 * Function: post_page_license_settings_html
-	 *
-	 * @return void
-	 */
-	public function post_page_license_settings_html() {
-		$location = 'post-page';
-		$html     = '<div id="license" class="misc-pub-section misc-pub-section-last ">';
-		$html     .= wp_nonce_field( 'license-update', $name = 'license_wpnonce', $referer = true, $echo = false );
-		$html     .= '<strong>' . __( 'Licensed:', 'CreativeCommons' ) . '</strong>';
-
-		$html .= '<p>';
-		$html .= $this->select_license_html( $location, $echo = false );
-		$html .= '</p>';
-
-		$html .= '<strong>' . __( 'Set attribution to', 'CreativeCommons' ) . '</strong>';
-
-		$html .= '<p>';
-		$html .= $this->select_attribute_to_html( $location, $echo = false );
-		$html .= '</p>';
-		$html .= '</div>';
-
-		echo $html;
-	}
-
-
-	/**
-	 * Function: _license_settings_html
-	 *
-	 * DRY wrapper function used for profile settings and network settings
-	 *
-	 * @param  mixed $location
-	 */
-	private function _license_settings_html( $location ) {
-		$html  = '';
-		$html .= "<tr valign='top'>\n";
-		$html .= "\t<th scope='row'><label for='license'>" . __( 'Select a default license', 'CreativeCommons' ) . "</label></th>\n";
-		$html .= "\t<td>";
-		$html .= $this->select_license_html( $location, $echo = false );
-		$html .= "</td>\n";
-		$html .= "</tr>\n";
-
-		$html .= "<tr valign='top'>\n";
-		$html .= "\t<th scope='row'><label for='attribute_to'>" . __( 'Set attribution to', 'CreativeCommons' ) . "</label></th>\n";
-		$html .= "\t<td>";
-		$html .= $this->select_attribute_to_html( $location, $echo = false );
-		$html .= "</td>\n";
-		$html .= "</tr>\n";
-
-		return $html;
 	}
 
 	/**

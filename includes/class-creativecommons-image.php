@@ -429,7 +429,7 @@ class CreativeCommonsImage {
 		$meta   = wp_get_attachment_metadata( $att_id, true );
 		$credit = get_post_meta( $att_id, 'attribution_name', true );
 		if ( ( ! $credit )
-			&& isset( $image_metadata['credit'] )
+			&& isset( $meta['credit'] )
 		) {
 			$credit = $meta['image_meta']['credit'];
 		}
