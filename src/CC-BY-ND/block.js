@@ -87,7 +87,7 @@ registerBlockType('cgb/cc-by-nd', {
 			</InspectorControls>,
 
 			<div key="2" className={className} style={{ backgroundColor: bgColor, color: txtColor }}>
-				<img src={`${globals.pluginDirUrl}includes/images/by-nd.png`} alt="CC-BY-ND" />
+				<img src={`${globals.pluginDirUrl}includes/images/by-nd.png`} alt="CC-BY-ND" width="88" height="31" />
 				<p>
 					This content is licensed by{' '}
 					<a href="https://creativecommons.org/licenses/by-nd/4.0/">
@@ -145,7 +145,7 @@ registerBlockType('cgb/cc-by-nd', {
 		}
 		return (
 			<div className="message-body" style={{ backgroundColor: bgColor, color: txtColor }}>
-				<img src={`${globals.pluginDirUrl}includes/images/by-nd.png`} alt="CC-BY-ND" />
+				<img src={`${globals.pluginDirUrl}includes/images/by-nd.png`} alt="CC-BY-ND" width="88" height="31" />
 				<p>
 					<span className="cc-cgb-name">{contentName}</span> is licensed under a{' '}
 					<a href="https://creativecommons.org/licenses/by-nd/4.0/">
