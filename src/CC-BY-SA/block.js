@@ -87,7 +87,7 @@ registerBlockType('cgb/cc-by-sa', {
 			</InspectorControls>,
 
 			<div key="2" className={className} style={{ backgroundColor: bgColor, color: txtColor }}>
-				<img src={`${globals.pluginDirUrl}includes/images/by-sa.png`} alt="CC-BY-SA" />
+				<img src={`${globals.pluginDirUrl}includes/images/by-sa.png`} alt="CC-BY-SA" width="88" height="31" />
 				<p>
 					This content is licensed by{' '}
 					<a href="https://creativecommons.org/licenses/by-sa/4.0">
@@ -145,7 +145,7 @@ registerBlockType('cgb/cc-by-sa', {
 		}
 		return (
 			<div className="message-body" style={{ backgroundColor: bgColor, color: txtColor }}>
-				<img src={`${globals.pluginDirUrl}includes/images/by-sa.png`} alt="CC BY-SA" />
+				<img src={`${globals.pluginDirUrl}includes/images/by-sa.png`} alt="CC BY-SA" width="88" height="31" />
 				<p>
 					<span className="cc-cgb-name">{contentName}</span> is licensed under a{' '}
 					<a href="https://creativecommons.org/licenses/by-sa/4.0">
