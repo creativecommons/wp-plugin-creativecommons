@@ -5,7 +5,7 @@ Donate link: https://us.netdonor.net/page/6650/donate/1?ea.tracking.id=top-of-pa
 Tags: Creative Commons, CC, license, copyright, copyleft, attribution, attribute, ownership, all rights reserved, some rights reserved, footer, widget
 Requires at least: 3.1
 Tested up to: 5.3
-Stable tag: 2019.12.2
+Stable tag: 2020.01.1
 Requires PHP: 5.6.20
 License: GPLv2 or later
 License URI: https://gnu.org/licenses/gpl-2.0.html
@@ -59,6 +59,13 @@ See the GitHub project: [creativecommons/wp-plugin-creativecommons](https://gith
 
 
 == Changelog ==
+
+
+= v2020.01.1 =
+
+* Version number is CalVer Format: YYYY.0M.Micro (see https://calver.org/)
+* Add image size to badges in gutenberg blocks
+* Remove non-existent methods (and improve compatibility with Classic Editor)
 
 
 = v2019.12.2 =
