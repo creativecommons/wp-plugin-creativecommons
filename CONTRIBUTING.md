@@ -77,9 +77,14 @@ If you are not setup to detect WPCS errors, consider the following steps.
 
    Clone the official [WordPress Coding Standards repository][wpcs-repo] in
    your home folder. To do so, run the following commands:
+   if using ssh
    ```shell
    cd
    git clone git@github.com:WordPress-Coding-Standards/WordPress-Coding-Standards.git wpcs
+   ```
+   if using https
+   ```shell
+   git clone https://github.com/WordPress/WordPress-Coding-Standards.git
    ```
 
 5. **Tell PHPCS about this directory**
@@ -94,7 +99,7 @@ If you are not setup to detect WPCS errors, consider the following steps.
 
    Confirm that it is working by running the following command:
    ```shell
-   phpcs-i
+   phpcs -i
    ```
    The output should be:
    ```
