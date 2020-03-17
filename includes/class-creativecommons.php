@@ -62,7 +62,8 @@ class CreativeCommons {
 		$this->plugin_url = plugin_dir_url( dirname( __FILE__ ) );
 
 		// language setup.		
-		$lang_dir = dirname( plugin_basename( __FILE__ ) ) . '/languages/';
+		$lang_dir = dirname( dirname( plugin_basename( __FILE__ ) ) ) 
+                    . '/languages/';
 		load_plugin_textdomain( $this->localization_domain, false, $lang_dir );
 
 		/*

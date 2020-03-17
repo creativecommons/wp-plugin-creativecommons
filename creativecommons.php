@@ -8,7 +8,7 @@
  * Author URI: http://CreativeCommons.org/
  * License: GPLv2 or later versions
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
- *
+ * Text Domain: CreativeCommons
  * @package CC_WordPress_Plugin
  */
 
