@@ -4,7 +4,7 @@ Contributors: ahmadbilaldev, cctimidrobot, BjornW, robmyers, tatti, hugosolar
 Donate link: https://us.netdonor.net/page/6650/donate/1?ea.tracking.id=top-of-page-banner
 Tags: Creative Commons, CC, license, copyright, copyleft, attribution, attribute, ownership, all rights reserved, some rights reserved, footer, widget
 Requires at least: 3.1
-Tested up to: 5.3
+Tested up to: 5.4
 Stable tag: 2020.01.1
 Requires PHP: 5.6.20
 License: GPLv2 or later
