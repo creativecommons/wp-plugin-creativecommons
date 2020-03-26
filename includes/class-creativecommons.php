@@ -294,7 +294,7 @@ class CreativeCommons {
 			</td>
 			<td>
 			<?php
-				printf( '<a href="https://creativecommons.org/share-your-work/public-domain/cc0" target="blank"><img src="%1$s" alt="CC0"></a>', esc_attr( CCPLUGIN__URL ) . 'includes/images/cc0.png' );
+				printf( '<a href="https://creativecommons.org/publicdomain/zero/1.0/" target="blank"><img src="%1$s" alt="CC0"></a>', esc_attr( CCPLUGIN__URL ) . 'includes/images/cc0.png' );
 			?>
 			</td>
 	</tr>
@@ -792,7 +792,7 @@ class CreativeCommons {
 			case 'cc0':
 				$license['image'] = esc_attr( CCPLUGIN__URL . 'includes/images/cc0.png' );
 				$license['name']  = esc_attr( 'Creative Commons CC0 Universal Public Domain Dedication' );
-				$license['deed']  = esc_url( 'https://creativecommons.org/share-your-work/public-domain/cc0' );
+				$license['deed']  = esc_url( 'https://creativecommons.org/publicdomain/zero/1.0/' );
 				break;
 			default:    // Uses 'CC BY-SA' as the default license.
 				$license['image'] = esc_attr( CCPLUGIN__URL . 'includes/images/by-sa.png' );
