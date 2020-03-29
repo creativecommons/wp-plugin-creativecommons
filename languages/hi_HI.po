@@ -1,0 +1,159 @@
+# Copyright (C) 2014 Creative Commons
+# This file is distributed under the GNU General Public License version 2.0 (or at your option later versions)
+# Translators:
+# Rajesh Royal <rajeshroyal896@gmail.com>, 2020
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: WPLicense 2.0-beta\\tnReport-Msgid-Bugs-To: http://wordpress.org/support/plugin/wplicense\n"
+"POT-Creation-Date: 2014-04-07 15:50:49+00:00\n"
+"PO-Revision-Date: 2020-03-29 05:04+0000\n"
+"Last-Translator: Rajesh Royal <rajeshroyal896@gmail.com>, 2020\n"
+"Language-Team: Hindi (https://www.transifex.com/rtu-university/teams/108513/hi/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: hi\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Country: NL\n"
+"X-Poedit-Language: NL\n"
+
+#: widgets/wplicense_widget.php:10
+msgid ""
+"User-specified Creative Commons License will display in the page footer by "
+"default. Alternatively, drag this widget to a sidebar and the license will "
+"appear there instead."
+msgstr ""
+"क्रिएटिव कॉमन का लाइसेंस डिफ़ॉल्ट रूप से पेज के फुटर पर दिखाई देगा, या फिर आप"
+" इसे पेज के साइडबार में ऐड कर सकते हे ड्रैग एंड ड्रॉप कर के."
+
+#: widgets/wplicense_widget.php:16 widgets/wplicense_widget.php:32
+msgid "License"
+msgstr "लाइसेंस"
+
+#: wplicense.php:66
+msgid "License your site"
+msgstr "अपनी साइट को लाइसेंस दें"
+
+#: wplicense.php:68
+msgid "Add license warning text"
+msgstr "लाइसेंस चेतावनी लेख जोड़ें"
+
+#: wplicense.php:70 wplicense.php:614
+msgid "Set attribution to"
+msgstr "आरोपण सेट करे"
+
+#: wplicense.php:71
+msgid "Allow users override site license"
+msgstr "उपयोगकर्ताओं को साइट लाइसेंस ओवरराइड करने की अनुमति दें"
+
+#: wplicense.php:72
+msgid "Allow license per post or page"
+msgstr "हर एक पेज या पोस्ट के लिए लाइसेंस को अनुमति दे"
+
+#: wplicense.php:192
+msgid ""
+"The license shown may overriden by individual content such as a single post "
+"or image."
+msgstr ""
+"दिखाए गए लाइसेंस को एकल पोस्ट या छवि जैसी व्यक्तिगत सामग्री द्वारा ओवरराइड "
+"किया जा सकता है।"
+
+#: wplicense.php:311
+msgid "Choose a Creative Commons license"
+msgstr "क्रिएटिव कॉमन लाइसेंस चुनें"
+
+#: wplicense.php:315
+msgid "Change license"
+msgstr "लाइसेंस बदलें"
+
+#: wplicense.php:335
+msgid "The network name: %s"
+msgstr "नेटवर्क नाम:"
+
+#: wplicense.php:336
+msgid "A site's name"
+msgstr "एक साइट का नाम"
+
+#: wplicense.php:337 wplicense.php:345 wplicense.php:353
+msgid "The author display name"
+msgstr "लेखक ka प्रदर्शन नाम"
+
+#: wplicense.php:338 wplicense.php:346 wplicense.php:354
+msgid "Something completely differrent"
+msgstr "कुछ पूरी तरह से अलग"
+
+#: wplicense.php:344
+msgid "The site name: %s"
+msgstr "साइट का नाम:"
+
+#: wplicense.php:390
+msgid "Attribution text:"
+msgstr "एट्रीब्यूशन टेक्स्ट"
+
+#: wplicense.php:391
+msgid "Attribution url:"
+msgstr "एट्रीब्यूशन यूआरएल "
+
+#: wplicense.php:406
+msgid ""
+"WARNING: Changing these license settings after content has been added may "
+"change the licenses authors on the site have selected, effectively "
+"relicensing possibly all content on the site!"
+msgstr ""
+"चेतावनी : सामग्री जोड़ने के बाद इन लाइसेंस सेटिंग्स को बदलना साइट पर लाइसेंस"
+" लेखकों को चुन सकता है, प्रभावी ढंग से साइट पर सभी सामग्री को पुन: वितरित कर"
+" सकता है!"
+
+#: wplicense.php:444
+msgid "License settings"
+msgstr "लाइसेंस की सेटिंग"
+
+#: wplicense.php:455
+msgid "Allow siteadmins to change their site's license"
+msgstr "साइटएडमिन्स को अपनी साइट का लाइसेंस बदलने की अनुमति दें"
+
+#: wplicense.php:587
+msgid "Licensed:"
+msgstr "लाइसेंस्ड"
+
+#: wplicense.php:607
+msgid "Select a default license"
+msgstr "एक डिफ़ॉल्ट लाइसेंस का चयन करें"
+
+#: wplicense.php:668
+msgid "Creative Commons License"
+msgstr "क्रिएटिव कामन्स लाइसेंस"
+
+#: wplicense.php:671
+msgid "by"
+msgstr "द्वारा"
+
+#: wplicense.php:673
+msgid "is licensed under a <a rel=\"license\" href=\"%s\">%s</a>."
+msgstr "<a rel=\"license\" href=\"%s\">% s </a> के तहत लाइसेंस प्राप्त है।"
+
+#. Plugin Name of the plugin/theme
+msgid "WPLicense"
+msgstr "WP लाइसेंस"
+
+#. Description of the plugin/theme
+msgid ""
+"Official Creative Commons plugin for Wordpress. Allows users to select and "
+"display Creative Commons licenses for their content."
+msgstr ""
+"Wordpress के लिए आधिकारिक क्रिएटिव कॉमन्स प्लगइन। उपयोगकर्ताओं को अपनी "
+"सामग्री के लिए क्रिएटिव कॉमन्स लाइसेंस चुनने और प्रदर्शित करने की अनुमति "
+"देता है।"
+
+#. Author of the plugin/theme
+msgid ""
+"Bjorn Wijers <burobjorn@burobjorn.nl>, mitcho (Michael Yoshitaka Erlewine), "
+"Brett Mellor"
+msgstr ""
+"ब्योर्न वाइज़र <burobjorn@burobjorn.nl>, मिचो (माइकल योशिताका एलेविन), ब्रेट"
+" मेलोर"
+
+#. Author URI of the plugin/theme
+msgid "https://burobjorn.nl"
+msgstr "https://burobjorn.nl"
