@@ -16,7 +16,7 @@ msgstr ""
 "Language: hi\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-Country: IN\n"
-"X-Poedit-Language: IN\n"
+"X-Poedit-Language: hi\n"
 
 #: widgets/wplicense_widget.php:10
 msgid ""
