@@ -15,8 +15,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: hi\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Poedit-Country: NL\n"
-"X-Poedit-Language: NL\n"
+"X-Poedit-Country: IN\n"
+"X-Poedit-Language: IN\n"
 
 #: widgets/wplicense_widget.php:10
 msgid ""
