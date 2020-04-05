@@ -25,6 +25,7 @@ define( 'CCPLUGIN__URL', plugin_dir_url( __FILE__ ) );
 require_once CCPLUGIN__DIR . 'includes/class-creativecommons.php';
 require_once CCPLUGIN__DIR . 'widgets/creativecommons-widget.php';
 require CCPLUGIN__DIR . 'includes/class-creativecommons-image.php';
+include CCPLUGIN__DIR . 'includes/image-search-creativecommons.php';
 
 // Instantiate classes.
 CreativeCommons::get_instance()->init();
