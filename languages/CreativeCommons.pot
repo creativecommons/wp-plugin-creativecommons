@@ -1,115 +1,161 @@
+# Copyright (C) 2020 Ahmad Bilal <https://ahmadbilal.dev>, Bjorn Wijers <burobjorn@burobjorn.nl>, Tarmo Toikkanen <tarmo@iki.fi>, Matt Lee <mattl@creativecommons.org>, Rob Myers <rob@creativecommons.org>, Timid Robot Zehta
+# This file is distributed under the same license as the Creative Commons plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
-"POT-Creation-Date: 2020-03-17 20:24+0800\n"
-"PO-Revision-Date: 2020-03-17 20:25+0800\n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"Language: en\n"
+"Project-Id-Version: Creative Commons 2020.01.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-plugin-creativecommons\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.3\n"
-"X-Poedit-Basepath: ..\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Poedit-KeywordsList: esc_html_e\n"
-"X-Poedit-SearchPath-0: .\n"
+"POT-Creation-Date: 2020-04-14T23:18:36+08:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.3.0\n"
+"X-Domain: CreativeCommons\n"
 
-#: includes/class-creativecommons.php:193
+#. Plugin Name of the plugin
+msgid "Creative Commons"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "https://github.com/creativecommons/wp-plugin-creativecommons"
+msgstr ""
+
+#. Description of the plugin
+msgid "Official Creative Commons plugin for licensing your content. With Creative Commons licenses, keep your copyright AND share your creativity."
+msgstr ""
+
+#. Author of the plugin
+msgid "Ahmad Bilal <https://ahmadbilal.dev>, Bjorn Wijers <burobjorn@burobjorn.nl>, Tarmo Toikkanen <tarmo@iki.fi>, Matt Lee <mattl@creativecommons.org>, Rob Myers <rob@creativecommons.org>, Timid Robot Zehta"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "http://CreativeCommons.org/"
+msgstr ""
+
+#: includes/class-creativecommons.php:133
+msgid "Current License"
+msgstr ""
+
+#: includes/class-creativecommons.php:144
+msgid "Add additional attribution text"
+msgstr ""
+
+#: includes/class-creativecommons.php:156
+msgid "Attribution Details"
+msgstr ""
+
+#: includes/class-creativecommons.php:168
+msgid "Display license as"
+msgstr ""
+
+#: includes/class-creativecommons.php:192
 msgid "Select the License"
 msgstr ""
 
-#: includes/class-creativecommons.php:195
-msgid ""
-"Select your required default license for your website. Choose a license from "
-"Creative Commons licenses. If you are not sure about what license to use, "
-"let our "
+#: includes/class-creativecommons.php:194
+msgid "Select your required default license for your website. Choose a license from Creative Commons licenses. If you are not sure about what license to use, let our "
 msgstr ""
 
-#: includes/class-creativecommons.php:197
+#: includes/class-creativecommons.php:196
 msgid "License Chooser"
 msgstr ""
 
-#: includes/class-creativecommons.php:199
-msgid " help. The selected license can be displayed as a widget. In"
-msgstr ""
-
-#: includes/class-creativecommons.php:201
+#: includes/class-creativecommons.php:200
 msgid "Appearance > Widgets"
 msgstr ""
 
-#: includes/class-creativecommons.php:203
-msgid ""
-"drag CC License widget to the required area. You can also include the "
-"license in footer. We recommend using the widget for better compatibility "
-"with your theme. You can use individual licenses in posts or pages using "
-"Gutenberg blocks."
+#: includes/class-creativecommons.php:202
+msgid "drag CC License widget to the required area. You can also include the license in footer. We recommend using the widget for better compatibility with your theme. You can use individual licenses in posts or pages using Gutenberg blocks."
 msgstr ""
 
-#: includes/class-creativecommons.php:213
+#: includes/class-creativecommons.php:212
 msgid "Attribution 4.0 International License"
 msgstr ""
 
-#: includes/class-creativecommons.php:226
+#: includes/class-creativecommons.php:225
 msgid "Attribution-ShareAlike 4.0 International License"
 msgstr ""
 
-#: includes/class-creativecommons.php:239
+#: includes/class-creativecommons.php:238
 msgid "Attribution-NonCommercial 4.0 International License"
 msgstr ""
 
-#: includes/class-creativecommons.php:252
+#: includes/class-creativecommons.php:251
 msgid "Attribution-NonCommercial-ShareAlike 4.0 International License"
 msgstr ""
 
-#: includes/class-creativecommons.php:265
+#: includes/class-creativecommons.php:264
 msgid "Attribution-NonCommercial-NoDerivatives 4.0 International License"
 msgstr ""
 
-#: includes/class-creativecommons.php:278
+#: includes/class-creativecommons.php:277
 msgid "Attribution-NoDerivatives 4.0 International License"
 msgstr ""
 
-#: includes/class-creativecommons.php:291
+#: includes/class-creativecommons.php:290
 msgid "CC0 Universal Public Domain Dedication license"
 msgstr ""
 
-#: includes/class-creativecommons.php:370
+#: includes/class-creativecommons.php:369
 msgid "Widget"
 msgstr ""
 
-#: includes/class-creativecommons.php:371
+#: includes/class-creativecommons.php:370
 msgid "(recommended)"
 msgstr ""
 
-#: includes/class-creativecommons.php:375
+#: includes/class-creativecommons.php:374
 msgid "Footer"
 msgstr ""
 
-#: includes/class-creativecommons.php:627
+#: includes/class-creativecommons.php:563
+msgid "The network name: %s"
+msgstr ""
+
+#: includes/class-creativecommons.php:566
+msgid "A site's name"
+msgstr ""
+
+#: includes/class-creativecommons.php:570
+#: includes/class-creativecommons.php:587
+msgid "The author display name"
+msgstr ""
+
+#: includes/class-creativecommons.php:574
+#: includes/class-creativecommons.php:591
+msgid "Something completely differrent"
+msgstr ""
+
+#: includes/class-creativecommons.php:584
+msgid "The site name: %s"
+msgstr ""
+
+#: includes/class-creativecommons.php:626
 msgid "Title"
 msgstr ""
 
-#: includes/class-creativecommons.php:639
+#: includes/class-creativecommons.php:638
 msgid "Title URL"
 msgstr ""
 
-#: includes/class-creativecommons.php:649
+#: includes/class-creativecommons.php:648
 msgid "Author"
 msgstr ""
 
-#: includes/class-creativecommons.php:659
+#: includes/class-creativecommons.php:658
 msgid "Author URL"
 msgstr ""
 
-#: includes/class-creativecommons.php:925
+#: includes/class-creativecommons.php:923
 msgid ""
 "is a\n"
 "\t\t\tnonprofit organization that enables the sharing and use of\n"
 "\t\t\tcreativity and knowledge through free legal tools."
 msgstr ""
 
-#: includes/class-creativecommons.php:936
+#: includes/class-creativecommons.php:934
 msgid ""
 "Our free, easy-to-use copyright licenses\n"
 "\t\t\tprovide a simple, standardized way to give the public\n"
@@ -119,7 +165,7 @@ msgid ""
 "\t\t\treserved\" to \"some rights reserved.\""
 msgstr ""
 
-#: includes/class-creativecommons.php:950
+#: includes/class-creativecommons.php:948
 msgid ""
 "Creative Commons licenses are not an\n"
 "\t\t   alternative to copyright. They work alongside copyright and\n"
@@ -127,14 +173,72 @@ msgid ""
 "\t\t\tneeds."
 msgstr ""
 
-#: includes/class-creativecommons.php:959
+#: includes/class-creativecommons.php:958
 msgid "Please consider making a "
 msgstr ""
 
-#: includes/class-creativecommons.php:959
+#: includes/class-creativecommons.php:958
 msgid "donation (tax deductible in the US) to support our work"
 msgstr ""
 
-#: includes/class-creativecommons.php:961
+#: includes/class-creativecommons.php:960
 msgid "Sign up for our newsletter"
+msgstr ""
+
+#: includes/class-creativecommons.php:1121
+msgid "Creative Commons License"
+msgstr ""
+
+#: includes/class-creativecommons.php:1125
+msgid "Except where otherwise noted, "
+msgstr ""
+
+#: includes/class-creativecommons.php:1135
+msgid "the content "
+msgstr ""
+
+#: includes/class-creativecommons.php:1142
+msgid "on this site "
+msgstr ""
+
+#: includes/class-creativecommons.php:1145
+msgid " is licensed under a <a rel=\"license\" href=\"%1$s\">%2$s</a> License."
+msgstr ""
+
+#: includes/class-creativecommons.php:1148
+msgid "Based on a work at <a xmlns:dct=\"http://purl.org/dc/terms/\" href=\"%s\" rel=\"dct:source\">%s</a>."
+msgstr ""
+
+#: includes/class-creativecommons.php:1152
+msgid "Permissions beyond the scope of this license may be available at <a xmlns:cc=\"http://creativecommons.org/ns#\" href=\"%s\" rel=\"cc:morePermissions\">%s</a>."
+msgstr ""
+
+#: widgets/creativecommons-widget.php:27
+msgid "By default, user-specified Creative Commons License will display in the page footer. Alternatively, drag this widget to a sidebar or any other widget area. The license will appear there instead."
+msgstr ""
+
+#: widgets/creativecommons-widget.php:38
+msgid "CC License"
+msgstr ""
+
+#: dist/blocks.build.js:1
+#: src/CC-BY-CC0/block.js:104
+#: src/CC-BY-NC-ND/block.js:104
+#: src/CC-BY-NC-SA/block.js:104
+#: src/CC-BY-NC/block.js:104
+#: src/CC-BY-ND/block.js:104
+#: src/CC-BY-SA/block.js:104
+#: src/CC-BY/block.js:104
+msgid "This content"
+msgstr ""
+
+#: dist/blocks.build.js:1
+#: src/CC-BY-CC0/block.js:116
+#: src/CC-BY-NC-ND/block.js:117
+#: src/CC-BY-NC-SA/block.js:117
+#: src/CC-BY-NC/block.js:117
+#: src/CC-BY-ND/block.js:117
+#: src/CC-BY-SA/block.js:117
+#: src/CC-BY/block.js:117
+msgid "Custom text/description/links "
 msgstr ""
