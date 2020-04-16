@@ -61,11 +61,10 @@ class CreativeCommons {
 	public function init() {
 		$this->plugin_url = plugin_dir_url( dirname( __FILE__ ) );
 
-		// language setup.
-		$this->locale = get_locale();
-		$mofile = plugin_dir_path( dirname( __FILE__ ) )
-				. '/languages/' . $this->locale . '.mo';
-		load_textdomain( $this->localization_domain, $mofile );
+		// language setup.		
+		$lang_dir = dirname( dirname( plugin_basename( __FILE__ ) ) ) 
+                    . '/languages/';
+		load_plugin_textdomain( $this->localization_domain, false, $lang_dir );
 
 		/*
 		 * add admin.js to wp-admin pages and displays the site
