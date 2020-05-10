@@ -3,11 +3,13 @@
 	"version": "1.0.0",
 	"private": true,
 	"scripts": {
-		"start": "cgb-scripts start",
-		"build": "cgb-scripts build",
-		"eject": "cgb-scripts eject"
+		"preinstall": "npx npm-force-resolutions"
 	},
 	"dependencies": {
 		"cgb-scripts": "1.20.0"
+	},
+	"resolutions": {
+		"mem": "^4.0.0",
+		"yargs-parser": "13.1.2"
 	}
 }
