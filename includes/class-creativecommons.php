@@ -996,7 +996,6 @@ class CreativeCommons {
 		return $new_input;
 	}
 
-
 	/**
 	 * Print the Section text
 	 */
