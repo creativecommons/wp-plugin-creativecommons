@@ -109,15 +109,16 @@ class CreativeCommonsImage {
 			$license_url,
 			$matches
 		);
+        # SHOULD BE ENUMERATIVE.
 		if ( $matched ) {
 			if ( $matches[2] == 'zero' ) {
-				$url = CCPLUGIN__URL . 'includes/images/cc0.png';
+				$url = CCPLUGIN__URL . 'includes/attribution-box/cc0.svg';
 			} elseif ( $matches[1] == 'publicdomain' ) {
-				$url = CCPLUGIN__URL . 'includes/images/cc0.png';
+				$url = CCPLUGIN__URL . 'includes/attribution-box/cc0.svg';
 			} else {
-				$url = CCPLUGIN__URL . 'includes/images/'
+				$url = CCPLUGIN__URL . 'includes/attribution-box/'
 					. $matches[2]
-					. '.png';
+					. '.svg';
 			}
 		}
 		return $url;
@@ -651,9 +652,53 @@ class CreativeCommonsImage {
 		 * 3
 		 * );
 		*/
+
+		add_filter( 'the_content', array( $this, 'add_attribution_boxes' ));
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_attribution_boxes' ));
+
 		add_shortcode(
 			'license',
 			array( $this, 'license_shortcode' )
 		);
 	}
+
+	public function enqueue_attribution_boxes() {
+		wp_enqueue_style('cc-attribution-box', plugins_url('css/cc-attribution-box.css', dirname(__FILE__)));
+	}
+
+	public function add_attribution_boxes( $content ) {
+		return preg_replace_callback(
+			'/<img\s[^>]*class="wp-image-(\d+)[^>]*>/',
+			function ($matches) {
+				return
+                    '<div class="cc-attribution-box-container">'
+                    . $matches[0]
+					. '<div class="cc-attribution-box"> '
+					. $this->simple_license_block($matches[1])
+					. '</div></div>';
+			},
+			$content
+		);
+	}
+
+	public function simple_license_block($att_id) {
+		/* TODO: this should just be replaced by just using $this->license_block.
+		 * Need to make sure that code can be safely fixed for this purpose,
+		 */
+		$license_url     = get_post_meta( $att_id, 'license_url', true );
+		$attribution_url = get_post_meta( $att_id, 'attribution_url', true );
+		$title = get_the_title( $att_id );
+		$credit = get_post_meta( $att_id, 'attribution_name', true );
+
+		$license_name = $this->license_name( $license_url );
+		$button_url   = $this->license_button_url( $license_url );
+
+		if (!$button_url) return '';
+
+		return "<div>" . esc_html($credit) . "</div>"
+			."<a target='_blank' href='" . esc_url($attribution_url) . "'>$title</a>"
+			. "<a target='_blank' href='" . esc_url($license_url) . "' title='" . esc_attr($license_name) . "'>"
+			. "<img src='" . esc_url($button_url) . "' alt='" . esc_attr($license_name) . "'></a>";
+	}
+
 }
