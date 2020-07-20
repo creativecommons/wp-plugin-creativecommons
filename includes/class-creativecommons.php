@@ -424,24 +424,24 @@ class CreativeCommons {
 	public function plugin_default_license() {
 		$this->_logger( 'Got default settings' );
 		$license = array(
-			'deed'                       => 'http://creativecommons.org/licenses/by-sa/4.0/',
-			'image'                      => CCPLUGIN__URL . 'includes/images/by-sa.png',
+			'deed'                       => '',
+			'image'                      => '',
 			'attribute_to'               => '',
 			'title'                      => '',
 			'title_url'                  => '',
 			'author'                     => '',
 			'author_url'                 => '',
-			'name'                       => 'Creative Commons Attribution-Share Alike 4.0',
-			'sitename'                   => get_bloginfo( '' ),
-			'siteurl'                    => get_bloginfo( 'url' ),
-			'site_override_license'      => true,
-			'user_override_license'      => true,
-			'content_override_license'   => true,
-			'version'                    => self::VERSION,
-			'additional_attribution_txt' => __( '', 'CreativeCommons' ),
+			'name'                       => '',
+			'sitename'                   => '',
+			'siteurl'                    => '',
+			'site_override_license'      => false,
+			'user_override_license'      => false,
+			'content_override_license'   => false,
+			'version'                    => '',
+			'additional_attribution_txt' => '',
 			'choice'                     => '',
-			'display_as_widget'          => 'false',
-			'display_as_footer'          => 'false',
+			'display_as_widget'          => false,
+			'display_as_footer'          => false,
 		);
 		return $license;
 	}
