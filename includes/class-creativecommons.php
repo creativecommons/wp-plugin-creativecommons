@@ -793,10 +793,6 @@ class CreativeCommons {
 				$license['name']  = esc_attr( 'Creative Commons CC0 Universal Public Domain Dedication' );
 				$license['deed']  = esc_url( 'https://creativecommons.org/publicdomain/zero/1.0/' );
 				break;
-			default:    // Uses 'CC BY-SA' as the default license.
-				$license['image'] = esc_attr( CCPLUGIN__URL . 'includes/images/by-sa.png' );
-				$license['name']  = esc_attr( 'Creative Commons Attribution-ShareAlike 4.0 International' );
-				$license['deed']  = esc_url( 'http://creativecommons.org/licenses/by-sa/4.0/' );
 		}
 
 		switch ( $from ) {
