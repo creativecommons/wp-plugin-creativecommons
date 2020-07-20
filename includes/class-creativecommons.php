@@ -424,24 +424,24 @@ class CreativeCommons {
 	public function plugin_default_license() {
 		$this->_logger( 'Got default settings' );
 		$license = array(
-			'deed'                       => 'http://creativecommons.org/licenses/by-sa/4.0/',
-			'image'                      => CCPLUGIN__URL . 'includes/images/by-sa.png',
+			'deed'                       => '',
+			'image'                      => '',
 			'attribute_to'               => '',
 			'title'                      => '',
 			'title_url'                  => '',
 			'author'                     => '',
 			'author_url'                 => '',
-			'name'                       => 'Creative Commons Attribution-Share Alike 4.0',
-			'sitename'                   => get_bloginfo( '' ),
-			'siteurl'                    => get_bloginfo( 'url' ),
-			'site_override_license'      => true,
-			'user_override_license'      => true,
-			'content_override_license'   => true,
-			'version'                    => self::VERSION,
-			'additional_attribution_txt' => __( '', 'CreativeCommons' ),
+			'name'                       => '',
+			'sitename'                   => '',
+			'siteurl'                    => '',
+			'site_override_license'      => false,
+			'user_override_license'      => false,
+			'content_override_license'   => false,
+			'version'                    => '',
+			'additional_attribution_txt' => '',
 			'choice'                     => '',
-			'display_as_widget'          => 'false',
-			'display_as_footer'          => 'false',
+			'display_as_widget'          => false,
+			'display_as_footer'          => false,
 		);
 		return $license;
 	}
@@ -793,10 +793,6 @@ class CreativeCommons {
 				$license['name']  = esc_attr( 'Creative Commons CC0 Universal Public Domain Dedication' );
 				$license['deed']  = esc_url( 'https://creativecommons.org/publicdomain/zero/1.0/' );
 				break;
-			default:    // Uses 'CC BY-SA' as the default license.
-				$license['image'] = esc_attr( CCPLUGIN__URL . 'includes/images/by-sa.png' );
-				$license['name']  = esc_attr( 'Creative Commons Attribution-ShareAlike 4.0 International' );
-				$license['deed']  = esc_url( 'http://creativecommons.org/licenses/by-sa/4.0/' );
 		}
 
 		switch ( $from ) {

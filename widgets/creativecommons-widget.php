@@ -54,7 +54,7 @@ if ( ! class_exists( 'CreativeCommons_Widget' ) ) {
 		public function print_license_widget() {
 			$ccl     = CreativeCommons::get_instance();
 			$license = $ccl->get_license( $license = 'site' );
-			if ( $license['display_as_widget'] ) {
+			if ( $license['display_as_widget'] && !empty( $license['deed'] ) ) {
 				$ccl->print_license_html();
 			}
 		}
@@ -65,7 +65,7 @@ if ( ! class_exists( 'CreativeCommons_Widget' ) ) {
 		public function print_license_footer() {
 			$ccl     = CreativeCommons::get_instance();
 			$license = $ccl->get_license( $license = 'site' );
-			if ( $license['display_as_footer'] ) {
+			if ( $license['display_as_footer'] && !empty( $license['deed'] ) ) {
 				$ccl->print_license_html();
 			}
 		}
