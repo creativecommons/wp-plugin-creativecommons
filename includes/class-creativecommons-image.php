@@ -699,7 +699,7 @@ class CreativeCommonsImage {
 
 		return "<div>" . esc_html($credit) . "</div>"
 			."<a target='_blank' href='" . esc_url($attribution_url) . "'>$title</a>"
-			. "<a target='_blank' href='" . esc_url($license_url) . "' title='" . esc_attr($license_name) . "'>"
+			. "<a class='cc-attribution-box-license' target='_blank' href='" . esc_url($license_url) . "' title='" . esc_attr($license_name) . "'>"
 			. "<img src='" . esc_url($button_url) . "' alt='" . esc_attr($license_name) . "'></a>";
 	}
 

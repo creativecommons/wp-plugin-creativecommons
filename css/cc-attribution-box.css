@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
  
 .cc-attribution-box-container {
+    display: inline-block;
     position: relative;
 }
 .cc-attribution-box {
@@ -23,15 +24,18 @@
     line-height: 22px;
 }
 .cc-attribution-box > * {
-    margin: 0 5px;
+    margin: 5px;
 }
 .cc-attribution-box a {
     color: black;
     text-decoration: none;
 }
+.cc-attribution-box a.cc-attribution-box-license {
+    flex-shrink: .5;
+}
 
 .cc-attribution-box img {
-    height: 53px;
+    height: 48px;
     margin: 20px 0;
 }
 
