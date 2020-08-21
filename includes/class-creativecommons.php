@@ -105,6 +105,10 @@ class CreativeCommons {
 			'license',
 			array( &$this, '_wrapper_settings_api_verify' )
 		);
+		register_setting(
+			'cc-admin',
+			'enable_attribution_box'
+		);
 		/**
 		* This section includes:
 		* License selector.
@@ -173,6 +177,18 @@ class CreativeCommons {
 			'cc-admin',
 			'license-attribution-settings',
 			array( 'label_for' => 'display_as' )
+		);
+
+		add_settings_field(
+			'enable_attribution_box',
+			__(
+				'Display attribution information for images',
+				'CreativeCommons'
+			),
+			array( &$this, 'enable_attribution_box' ),
+			'cc-admin',
+			'license-attribution-settings',
+			array( 'label_for' => 'enable_attribution_box' )
 		);
 	}
 
@@ -376,7 +392,14 @@ class CreativeCommons {
 
 		<?php
 	}
-	
+
+	public function enable_attribution_box() {
+		$enabled = get_option("enable_attribution_box");
+		?>
+			<input name="enable_attribution_box" type="checkbox" value="true" <?php checked($enabled, 'true'); ?> />
+		<?php
+	}
+
 	/**
 	 * Check if a site may override the network license.
 	 *

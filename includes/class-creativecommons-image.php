@@ -653,8 +653,10 @@ class CreativeCommonsImage {
 		 * );
 		*/
 
-		add_filter( 'the_content', array( $this, 'add_attribution_boxes' ));
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_attribution_boxes' ));
+		if (get_option("enable_attribution_box")) {
+			add_filter( 'the_content', array( $this, 'add_attribution_boxes' ));
+			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_attribution_boxes' ));
+		}
 
 		add_shortcode(
 			'license',
