@@ -4,8 +4,8 @@ Contributors: ahmadbilaldev, cctimidrobot, BjornW, robmyers, tatti, hugosolar
 Donate link: https://us.netdonor.net/page/6650/donate/1?ea.tracking.id=top-of-page-banner
 Tags: Creative Commons, CC, license, copyright, copyleft, attribution, attribute, ownership, all rights reserved, some rights reserved, footer, widget
 Requires at least: 3.1
-Tested up to: 5.3
-Stable tag: 2020.07.1
+Tested up to: 5.4
+Stable tag: 2020.08.1
 Requires PHP: 5.6.20
 License: GPLv2 or later
 License URI: https://gnu.org/licenses/gpl-2.0.html
@@ -59,6 +59,11 @@ See the GitHub project: [creativecommons/wp-plugin-creativecommons](https://gith
 
 
 == Changelog ==
+
+
+= v2020.08.1 =
+
+* Fixed: Automatically adding licensing information for embedded content #117
 
 
 = v2020.07.1 =
