@@ -494,6 +494,7 @@ class CreativeCommons {
 				$this->_logger( 'called network' );
 				$license = ( $network_license = get_site_option( 'license' ) )
 					? $network_license : $this->plugin_default_license();
+					
 				break;
 
 			case 'site':
@@ -525,22 +526,16 @@ class CreativeCommons {
 			// since this can cause way too many calls for the right license.
 			case 'frontend':
 				$this->_logger( 'get license for the frontend' );
-				if ( is_multisite() ) {
-					$this->_logger( 'get license: multisite' );
-					$license = $this->get_license( 'network' );
-					$this->_logger( 'got network license' );
-				} else {
-					$license = $this->get_license( 'site' );
-					if ( array_key_exists( 'user_override_license', $license )
-					&& 'true' == $license['user_override_license']
-					) {
-						$license = $this->get_license( 'profile' );
-					}
-					if ( array_key_exists( 'content_override_license', $license )
-					&& 'true' == $license['content_override_license']
-					) {
-						$license = $this->get_license( 'post-page' );
-					}
+				$license = $this->get_license( 'site' );
+				if ( array_key_exists( 'user_override_license', $license )
+				&& 'true' == $license['user_override_license']
+				) {
+					$license = $this->get_license( 'profile' );
+				}
+				if ( array_key_exists( 'content_override_license', $license )
+				&& 'true' == $license['content_override_license']
+				) {
+					$license = $this->get_license( 'post-page' );
 				}
 				break;
 		}
@@ -769,7 +764,6 @@ class CreativeCommons {
 		) {
 			$data = sanitize_text_field( wp_unslash( $_POST['license'] ) );
 		}
-
 		// Saves the license attribution information. MAke sure to save the current version.
 		$license['version']             = self::VERSION;
 		$license['attribute_to']        = ( isset( $data['attribute_to'] ) ) ? esc_attr( $data['attribute_to'] ) : '';
@@ -1061,7 +1055,6 @@ class CreativeCommons {
 		 * Add a filter to include the license with the excerpt & content
 		 * filter allow an option to switch this off
 		 */
-
 		$license = $this->get_license( $location );
 		$html = '';
 		if ( is_array( $license ) && count( $license ) > 0 ) {
