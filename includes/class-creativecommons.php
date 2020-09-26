@@ -61,9 +61,9 @@ class CreativeCommons {
 	public function init() {
 		$this->plugin_url = plugin_dir_url( dirname( __FILE__ ) );
 
-		// language setup.		
-		$lang_dir = dirname( dirname( plugin_basename( __FILE__ ) ) ) 
-                    . '/languages/';
+		// language setup.
+		$lang_dir = dirname( dirname( plugin_basename( __FILE__ ) ) )
+					. '/languages/';
 		load_plugin_textdomain( $this->localization_domain, false, $lang_dir );
 
 		/*
@@ -494,7 +494,7 @@ class CreativeCommons {
 				$this->_logger( 'called network' );
 				$license = ( $network_license = get_site_option( 'license' ) )
 					? $network_license : $this->plugin_default_license();
-					
+
 				break;
 
 			case 'site':
@@ -614,7 +614,7 @@ class CreativeCommons {
 				break;
 
 			default:
-				
+
 				break;
 		}
 
@@ -1127,9 +1127,11 @@ class CreativeCommons {
 									$attribute_text, $source_work_url,
 									$extra_permissions_url, $additional_attribution_txt, $title, $title_url, $author, $author_url ) {
 		list($img_width, $img_height) = getimagesize( $image_url );
+		$lazy = function_exists('wp_lazy_loading_enabled') && wp_lazy_loading_enabled('img', 'license_html_rdfa');
+		$loading_type = $lazy ? 'lazy' : 'eager'; // 'eager' is the browser default
 		$html = '';
 		$html .= "<a rel='license' href='$deed_url'>";
-		$html .= "<img alt='" . __( 'Creative Commons License', 'CreativeCommons' ) . "' style='border-width:0' src='$image_url' width='$img_width' height='$img_height'  />";
+		$html .= "<img alt='" . __( 'Creative Commons License', 'CreativeCommons' ) . "' style='border-width:0' src='$image_url' width='$img_width' height='$img_height' loading='$loading_type'  />";
 		$html .= '</a><br />';
 
 
