@@ -109,7 +109,7 @@ class CreativeCommonsImage {
 			$license_url,
 			$matches
 		);
-        # SHOULD BE ENUMERATIVE.
+		# SHOULD BE ENUMERATIVE.
 		if ( $matched ) {
 			if ( $matches[2] == 'zero' ) {
 				$url = CCPLUGIN__URL . 'includes/attribution-box/cc0.svg';
@@ -673,8 +673,8 @@ class CreativeCommonsImage {
 			'/<img\s[^>]*class="wp-image-(\d+)[^>]*>/',
 			function ($matches) {
 				return
-                    '<div class="cc-attribution-box-container">'
-                    . $matches[0]
+					'<div class="cc-attribution-box-container">'
+					. $matches[0]
 					. '<div class="cc-attribution-box"> '
 					. $this->simple_license_block($matches[1])
 					. '</div></div>';
@@ -697,10 +697,12 @@ class CreativeCommonsImage {
 
 		if (!$button_url) return '';
 
+		$lazy = function_exists('wp_lazy_loading_enabled') && wp_lazy_loading_enabled('img', 'simple_license_block');
+		$loading_type = $lazy ? 'lazy' : 'eager'; // 'eager' is the browser default
 		return "<div>" . esc_html($credit) . "</div>"
 			."<a target='_blank' href='" . esc_url($attribution_url) . "'>$title</a>"
 			. "<a class='cc-attribution-box-license' target='_blank' href='" . esc_url($license_url) . "' title='" . esc_attr($license_name) . "'>"
-			. "<img src='" . esc_url($button_url) . "' alt='" . esc_attr($license_name) . "'></a>";
+			. "<img src='" . esc_url($button_url) . "' alt='" . esc_attr($license_name) . " . loading='" . $loading_type . "'></a>";
 	}
 
 }
