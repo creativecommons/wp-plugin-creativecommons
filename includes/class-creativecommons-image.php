@@ -281,13 +281,13 @@ class CreativeCommonsImage {
 				. __( 'Original' )
 				. '</option>';
 		// Short names so the select fits on the same line as the text input.
-		$select .= '<option value="https://creativecommons.org/licenses/by/4.0/">' . __( 'CC BY 4.0' ) . '</option>';
-		$select .= '<option value="https://creativecommons.org/licenses/by-nc/4.0/">' . __( 'CC BY-NC 4.0' ) . '</option>';
-		$select .= '<option value="https://creativecommons.org/licenses/by-nc-nd/4.0/">' . __( 'CC BY-NC-ND 4.0' ) . '</option>';
-		$select .= '<option value="https://creativecommons.org/licenses/by-nc-sa/4.0/">' . __( 'CC BY-NC-SA 4.0' ) . '</option>';
-		$select .= '<option value="https://creativecommons.org/licenses/by-nd/4.0/">' . __( 'CC BY-ND 4.0' ) . '</option>';
-		$select .= '<option value="https://creativecommons.org/licenses/by-sa/4.0/">' . __( 'CC BY-SA 4.0' ) . '</option>';
-		$select .= '<option value="https://creativecommons.org/publicdomain/zero/1.0/">' . __( 'CC0' ) . '</option>';
+		$select .= '<option value="https://creativecommons.org/licenses/by/4.0/">' . __( 'CC BY 4.0', 'CreativeCommons' ) . '</option>';
+		$select .= '<option value="https://creativecommons.org/licenses/by-nc/4.0/">' . __( 'CC BY-NC 4.0', 'CreativeCommons' ) . '</option>';
+		$select .= '<option value="https://creativecommons.org/licenses/by-nc-nd/4.0/">' . __( 'CC BY-NC-ND 4.0', 'CreativeCommons' ) . '</option>';
+		$select .= '<option value="https://creativecommons.org/licenses/by-nc-sa/4.0/">' . __( 'CC BY-NC-SA 4.0', 'CreativeCommons' ) . '</option>';
+		$select .= '<option value="https://creativecommons.org/licenses/by-nd/4.0/">' . __( 'CC BY-ND 4.0', 'CreativeCommons' ) . '</option>';
+		$select .= '<option value="https://creativecommons.org/licenses/by-sa/4.0/">' . __( 'CC BY-SA 4.0', 'CreativeCommons' ) . '</option>';
+		$select .= '<option value="https://creativecommons.org/publicdomain/zero/1.0/">' . __( 'CC0', 'CreativeCommons' ) . '</option>';
 		$select .= '<option value="">' . __( 'None' ) . '</option>';
 		$select .= '</select>';
 		return $select;
@@ -347,31 +347,31 @@ class CreativeCommonsImage {
 		}
 
 		$form_fields['attribution_name'] = array(
-			'label' => __( 'Attribution Name' ),
+			'label' => __( 'Attribution Name', 'CreativeCommons' ),
 			'input' => 'text',
 			'value' => $attribution_name,
-			'helps' => __( 'The name to attribute the work to, e.g. A. N. Other' ),
+			'helps' => __( 'The name to attribute the work to, e.g. A. N. Other', 'CreativeCommons' ),
 		);
 
 		$form_fields['attribution_url'] = array(
-			'label' => __( 'Attribution&nbsp;URL' ),
+			'label' => __( 'Attribution&nbsp;URL', 'CreativeCommons' ),
 			'input' => 'text',
 			'value' => get_post_meta( $post_id, 'attribution_url', true ),
-			'helps' => __( "The URL to which the work should be attributed. For example the work's page on the author's site., e.g. https://example.com/mattl/image2/" ),
+			'helps' => __( "The URL to which the work should be attributed. For example the work's page on the author's site., e.g. https://example.com/mattl/image2/", 'CreativeCommons' ),
 		);
 
 		$form_fields['source_work_url'] = array(
-			'label' => __( 'Source&nbsp;Work' ),
+			'label' => __( 'Source&nbsp;Work', 'CreativeCommons' ),
 			'input' => 'text',
 			'value' => get_post_meta( $post_id, 'source_work_url', true ),
-			'helps' => __( 'The URL of the work that this work is based on or derived from, e.g. https://example.com/robm/image1/' ),
+			'helps' => __( 'The URL of the work that this work is based on or derived from, e.g. https://example.com/robm/image1/', 'CreativeCommons' ),
 		);
 
 		$form_fields['extra_permissions_url'] = array(
-			'label' => __( 'Extra&nbsp;Permissions' ),
+			'label' => __( 'Extra&nbsp;Permissions', 'CreativeCommons' ),
 			'input' => 'text',
 			'value' => get_post_meta( $post_id, 'extra_permissions_url', true ),
-			'helps' => __( 'A URL where the user can find information about obtaining rights that are not already permitted by the CC license, e.g. https://example.com/mattl/image2/ccplus/' ),
+			'helps' => __( 'A URL where the user can find information about obtaining rights that are not already permitted by the CC license, e.g. https://example.com/mattl/image2/ccplus/', 'CreativeCommons' ),
 		);
 
 		return $form_fields;
