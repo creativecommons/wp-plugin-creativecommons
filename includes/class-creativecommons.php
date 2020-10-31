@@ -901,8 +901,8 @@ class CreativeCommons {
 	 */
 	public function add_plugin_page() {
 		add_options_page(
-			'Settings Admin',
-			'Creative Commons',
+			__( 'Settings Admin', 'CreativeCommons' ),
+			__( 'Creative Commons', 'CreativeCommons' ),
 			'manage_options',
 			'cc-admin',
 			array( $this, 'create_admin_page' )
@@ -918,7 +918,7 @@ class CreativeCommons {
 		$this->options = get_option( 'my_option_name' );
 		?>
 		<div class="wrap">
-		<h2>Creative Commons licenses</h2>
+		<h2><?php esc_html_e( 'Creative Commons licenses', 'CreativeCommons' ); ?></h2>
 		<br />
 
 		<div style="background: white; border: 1px solid #e5e5e5; box-shadow: 0 1px 1px rgba(0,0,0,.04); padding: 2em; display: inline-table;">
@@ -927,10 +927,10 @@ class CreativeCommons {
 			printf( '<img src="%1$s" align="right" style="padding: 1em; width: 20%; height: auto !important; " />', esc_attr( CCPLUGIN__URL ) . 'assets/icon-256x256.png' );
 		?>
 
-		<h3>About Creative Commons</h3>
+		<h3><?php esc_html_e( 'About Creative Commons', 'CreativeCommons' ); ?></h3>
 
 		<p><a href="https://creativecommons.org"
-		target="_blank">Creative Commons</a>
+		target="_blank"><?php esc_html_e( 'About Creative Commons', 'CreativeCommons' ); ?></a>
 		<?php
 		esc_html_e(
 			'is a
