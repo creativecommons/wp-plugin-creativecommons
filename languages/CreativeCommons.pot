@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Creative Commons plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Creative Commons 2020.09.1\n"
+"Project-Id-Version: Creative Commons 2020.11.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-plugin-creativecommons\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
