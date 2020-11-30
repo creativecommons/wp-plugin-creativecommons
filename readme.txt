@@ -1,7 +1,7 @@
 === Creative Commons ===
 
 Contributors: ahmadbilaldev, cctimidrobot, BjornW, robmyers, tatti, hugosolar, kbat82
-Donate link: https://classy.org/give/313412/#!/donation/checkout
+Donate link: https://creativecommons.org/donate
 Tags: Creative Commons, CC, license, copyright, copyleft, attribution, attribute, ownership, all rights reserved, some rights reserved, footer, widget
 Requires at least: 3.1
 Tested up to: 5.4
