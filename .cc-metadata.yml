@@ -1,4 +1,8 @@
 # Whether this GitHub repo is for a CC-led engineering project
 engineering_project: true
-# Whether this repository should be featured on the CC Open Source site's "Projects" page
-featured: false
+# Name of the repository/project in English
+english_name: CC WordPress Plugin
+# All technologies used
+technologies: PHP, CSS, JS, WordPress
+# Whether this repository should be featured on the CC Open Source site
+featured: true
