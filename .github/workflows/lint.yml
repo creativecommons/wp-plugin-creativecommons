@@ -1,0 +1,30 @@
+name: Lint checks
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+jobs:
+  wpcs:
+    runs-on:  ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-18.04]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.3'
+          tools: composer:v2
+      - name: Install dependencies
+        run: composer require squizlabs/php_codesniffer
+      - name: Download WPCS
+        run: git clone https://github.com/WordPress/WordPress-Coding-Standards.git wpcs
+      - name: Setup WPCS
+        run: cd wpcs && git checkout master
+      - name: Integrate WPCS with PHPCS
+        run: sudo ./vendor/bin/phpcs --config-set installed_paths $PWD/wpcs
+      - name: Run lint checks
+        run: ./vendor/bin/phpcs --extensions=php --standard=Wordpress --ignore=*/vendor/*,*/wpcs/* ./
