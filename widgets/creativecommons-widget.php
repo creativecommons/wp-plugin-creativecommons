@@ -82,7 +82,7 @@ if ( ! class_exists( 'CreativeCommons_Widget' ) ) {
 			echo $args['before_widget'];
 
 			/*
-			* To prevent rendering padding on an empty heading tag
+			* To prevent rendering an empty heading tag (and related margin)
 			* only render title when it exists (and isn't an empty string)
 			*/
 			$title_exists = $title && $title != "";
