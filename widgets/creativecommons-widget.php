@@ -80,8 +80,18 @@ if ( ! class_exists( 'CreativeCommons_Widget' ) ) {
 		public function widget( $args, $instance ) {
 			$title = apply_filters( 'widget_title', $instance['title'] );
 			echo $args['before_widget'];
-			echo $args['before_title'] . $title . $args['after_title'];
+
+			/*
+			* To prevent rendering padding on an empty heading tag
+			* only render title when it exists (and isn't an empty string)
+			*/
+			$title_exists = $title && $title != "";
+			
+			if ($title_exists)
+				echo $args['before_title'] . $title . $args['after_title'];
+
 			$this->print_license_widget( );
+			
 			echo $args['after_widget'];
 		}
 
