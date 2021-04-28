@@ -85,7 +85,7 @@ if ( ! class_exists( 'CreativeCommons_Widget' ) ) {
 			* To prevent rendering an empty heading tag (and related margin)
 			* only render title when it exists (and isn't an empty string)
 			*/
-			$title_exists = $title && $title != "";
+			$title_exists = isset($title) && !empty(trim($title));
 			
 			if ($title_exists) {
 				echo $args['before_title'] . $title . $args['after_title'];
