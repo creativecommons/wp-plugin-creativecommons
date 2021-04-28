@@ -87,8 +87,9 @@ if ( ! class_exists( 'CreativeCommons_Widget' ) ) {
 			*/
 			$title_exists = $title && $title != "";
 			
-			if ($title_exists)
+			if ($title_exists) {
 				echo $args['before_title'] . $title . $args['after_title'];
+			}
 
 			$this->print_license_widget( );
 			
