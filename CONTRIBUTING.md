@@ -83,6 +83,12 @@ If you are not setup to detect WPCS errors, consider the following steps.
    git clone https://github.com/WordPress/WordPress-Coding-Standards.git
    ```
 
+   After this you'll need to switch to the master branch of this repo.
+   ```shell
+   cd wpcs
+   git checkout master
+   ```
+
 5. **Tell PHPCS about this directory**
 
    We need to add the ~/wpcs folder, where we cloned wpcs, to the installed
