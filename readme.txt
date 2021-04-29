@@ -5,7 +5,7 @@ Donate link: https://creativecommons.org/donate
 Tags: Creative Commons, CC, license, copyright, copyleft, attribution, attribute, ownership, all rights reserved, some rights reserved, footer, widget
 Requires at least: 3.1
 Tested up to: 5.4
-Stable tag: 2020.11.1
+Stable tag: 2021.04.1
 Requires PHP: 5.6.20
 License: GPLv2 or later
 License URI: https://gnu.org/licenses/gpl-2.0.html
@@ -59,6 +59,13 @@ See the GitHub project: [creativecommons/wp-plugin-creativecommons](https://gith
 
 
 == Changelog ==
+
+
+= v2021.04.1 =
+
+* Fixed: Empty title adds extra padding #148
+* Fixed: Remove outdated language files #108
+* Fixed: Update donation link #139
 
 
 = v2020.11.1 =
