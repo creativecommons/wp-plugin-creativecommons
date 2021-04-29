@@ -8,35 +8,42 @@
 
 </div>
 
+
 ## Description
 
-The plugin is an attribution tool. It has multiple features that allow users to attribute their content by including Creative Commons license
-([Choose a License](https://creativecommons.org/choose/)) on their WordPress website. This includes default, post, page and media attribution.
+The plugin is an attribution tool. It has multiple features that allow users to
+attribute their content by including Creative Commons license ([Choose a
+License](https://creativecommons.org/choose/)) on their WordPress website. This
+includes default, post, page and media attribution.
+
 
 ## Installation
 
-Download the latest version from this project's [releases][releases]. You can install the plugin to your WP website
-using any of these methods:
+Download the latest version from this project's [releases][releases]. You can
+install the plugin to your WP website using any of these methods:
 
 [releases]: https://github.com/creativecommons/creativecommons-wordpress-plugin/releases "Releases · creativecommons/creativecommons-wordpress-plugin"
 
-1. In your plugin Dashboard on WordPress, Click **Add New** and
-upload the plugin `.zip` file. When installed, activate the plugin.
+1. In your plugin Dashboard on WordPress, Click **Add New** and upload the
+   plugin `.zip` file. When installed, activate the plugin.
 2. Extract the `.zip` file and paste the extracted folder to the
-   "/wp-content/plugins/" directory. Go to your plugin Dashboard and activate the plugin.
+   "/wp-content/plugins/" directory. Go to your plugin Dashboard and activate
+   the plugin.
 
 
 ## Features
 
+
 ### Setting a Default Site License
 
-After activating the plugin, head to **Settings > Creative Commons** to set up the default license.
+After activating the plugin, head to **Settings > Creative Commons** to set up
+the default license.
 
 ![Plugin Settings](https://cl.ly/01ae314c5c57/img)
 
-Selecting a license is simple. Select one from the given
-CC licenses, by default [**CC BY-SA**](http://creativecommons.org/licenses/by-sa/4.0/)
-license is used.
+Selecting a license is simple. Select one from the given CC licenses, by
+default [**CC BY-SA**](http://creativecommons.org/licenses/by-sa/4.0/) license
+is used.
 
 ![Select License](https://cl.ly/bfd84b912c78/img)
 
@@ -50,29 +57,30 @@ can add:
 
 ![License Options](https://cl.ly/b4520d6ab6b1/img)
 
+
 ### Widget
 
-There are two options to display the default license, as
-a widget or in the footer. We recommend using the widget for better theme compatibility.
+There are two options to display the default license, as a widget or in the
+footer. We recommend using the widget for better theme compatibility.
 
 ![Widget](https://cl.ly/2dacc1739955/img)
 
-After selecting the widget go to **Appearance > Widgets**
-and drag the CC License Widget to the
-required area. The widget will then display the default license on all pages of the site.
+After selecting the widget go to **Appearance > Widgets** and drag the CC
+License Widget to the required area. The widget will then display the default
+license on all pages of the site.
 
 ![Widget Front-end](https://cl.ly/b9b584688f46/img)
 
+
 ### Gutenberg Blocks
 
-The plugin adds specific Gutenberg blocks for each Creative
-Commons license. If you are using the default Gutenberg editor,
-you will find these blocks under a separate category.
+The plugin adds specific Gutenberg blocks for each Creative Commons license. If
+you are using the default Gutenberg editor, you will find these blocks under a
+separate category.
 
 ![Blocks Category](https://cl.ly/4934cdc59cd4/img)
 
-These blocks can be used to license any page/post/image or
-other media.
+These blocks can be used to license any page/post/image or other media.
 
 ![Blocks Back-end](https://cl.ly/b454a77259ce/img)
 
@@ -93,22 +101,14 @@ At a glance, with WP CC Plugin you can:
 - License posts and pages by simply including CC Gutenberg blocks for each
   license required (Gutenberg License Blocks)
 
+
 ## Contributing
 
 Contributions will be very appreciated. See
 [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
 
-## Development
-
-If you're interested in the code have a look at the master branch for the
-releases. Development will be done in the develop branch.
-
-Occasionally other branches may be available to test new features or play with
-new ideas, but they may be deleted anytime so don't rely on those branches.
-
-
-### Release Schedule
+## Release Schedule
 
 We will release a new version every month that there are substantial changes.
 See [milestones][milestones] for how GitHub issues are assigned for release.
@@ -120,8 +120,8 @@ See [milestones][milestones] for how GitHub issues are assigned for release.
 
 This plugin is loosely based on an existing, but seemingly abandoned WordPress
 plugin named 'License' (a component of the [MIT Educational Collaboration
-Space][collabspace] project) by mitcho (Michael Yoshitaka Erlewine) and
-Brett Mellor. We're also inspired by Creative Commons' original
+Space][collabspace] project) by mitcho (Michael Yoshitaka Erlewine) and Brett
+Mellor. We're also inspired by Creative Commons' original
 [wordpress-cc-plugin][oldplugin] written by former Creative Commons CTO Nathan
 Yergler.
 
@@ -131,12 +131,12 @@ Yergler.
 
 ### Credits
 
-* Michael Yoshitaka Erlewine (License v0.5)
-* Brett Mellor (License v0.5)
-* Bjorn Wijers
-* Matt Lee
-* Rob Myers
-* Tarmo Toikkanen
+- Michael Yoshitaka Erlewine (License v0.5)
+- Brett Mellor (License v0.5)
+- Bjorn Wijers
+- Matt Lee
+- Rob Myers
+- Tarmo Toikkanen
 
 
 ## License
