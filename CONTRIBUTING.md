@@ -72,15 +72,15 @@ If you are not setup to detect WPCS errors, consider the following steps.
 4. **Setup WPCS**
 
    Clone the official [WordPress Coding Standards repository][wpcs-repo] in
-   your home folder. To do so, run the following commands:
-   if using ssh
+   your home folder and ensure you are using its `master` branch:
    ```shell
-   cd
-   git clone git@github.com:WordPress-Coding-Standards/WordPress-Coding-Standards.git wpcs
+   git clone https://github.com/WordPress/WordPress-Coding-Standards.git wpcs
    ```
-   if using https
    ```shell
-   git clone https://github.com/WordPress/WordPress-Coding-Standards.git
+   cd wpcs
+   ```
+   ```shell
+   git checkout master
    ```
 
 5. **Tell PHPCS about this directory**
