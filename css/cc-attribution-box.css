@@ -46,3 +46,15 @@
         padding: 0 15px;
     }
 }
+
+figure .cc-attribution-box{
+	position: inherit;
+}
+
+.cc-attribution-box-container > .cc-attribution-box > .cc-attribution-box-license > img {
+	position: relative;
+	clip: auto;
+	height: 24px;
+    width: auto;
+    margin: 0;
+}
