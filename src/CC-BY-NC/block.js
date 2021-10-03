@@ -90,7 +90,7 @@ registerBlockType('cgb/cc-by-nc', {
 				<img src={`${globals.pluginDirUrl}includes/images/by-nc.png`} alt="CC-BY-NC" width="88" height="31" />
 				<p>
 					This content is licensed by{' '}
-					<a href="https://creativecommons.org/licenses/by-nc/4.0">
+					<a href="https://creativecommons.org/licenses/by-nc/4.0" rel="license">
 						Creative Commons Attribution-NonCommercial 4.0 International license.
 					</a>
 				</p>
@@ -148,7 +148,7 @@ registerBlockType('cgb/cc-by-nc', {
 				<img src={`${globals.pluginDirUrl}includes/images/by-nc.png`} alt="CC-BY-NC" width="88" height="31" />
 				<p>
 					<span className="cc-cgb-name">{contentName}</span> is licensed under a{' '}
-					<a href="https://creativecommons.org/licenses/by-nc/4.0">
+					<a href="https://creativecommons.org/licenses/by-nc/4.0" rel="license">
 						Creative Commons Attribution-NonCommercial 4.0 International license.
 					</a>{' '}
 					<span className="cc-cgb-text">{contentText}</span>

@@ -90,7 +90,7 @@ registerBlockType('cgb/cc0', {
 				<img src={`${globals.pluginDirUrl}includes/images/cc0.png`} alt="cc0" />
 				<p>
 					This content is licensed by{' '}
-					<a href="https://creativecommons.org/publicdomain/zero/1.0/">
+					<a href="https://creativecommons.org/publicdomain/zero/1.0/" rel="license">
 						Creative Commons CC0 Universal Public Domain Dedication license.
 					</a>
 				</p>
@@ -147,7 +147,7 @@ registerBlockType('cgb/cc0', {
 				<img src={`${globals.pluginDirUrl}includes/images/cc0.png`} alt="CC" />
 				<p>
 					<span className="cc-cgb-name">{contentName}</span> is licensed under a{' '}
-					<a href="https://creativecommons.org/publicdomain/zero/1.0/">
+					<a href="https://creativecommons.org/publicdomain/zero/1.0/" rel="license">
 						Creative Commons CC0 Universal Public Domain Dedication license.
 					</a>{' '}
 					<span className="cc-cgb-text">{contentText}</span>
