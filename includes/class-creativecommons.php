@@ -346,7 +346,7 @@ class CreativeCommons {
 		$image   = esc_attr( $license['image'] );
 
 		// Closing the settings table by </table>. Do not use any more setting fields in license-chooser section.
-		echo "</table><div style=' text-align: center; background: #fff; border: 1px solid #e5e5e5; box-shadow: 0 1px 1px rgba(0,0,0,.04); padding: 1em;'><img id='cc-current-license-image' src='$image'><br /><a href='$deed' target='blank'>$name</a></div>";
+		echo "</table><div style=' text-align: center; background: #fff; border: 1px solid #e5e5e5; box-shadow: 0 1px 1px rgba(0,0,0,.04); padding: 1em;'><img id='cc-current-license-image' src='$image'><br /><a href='$deed' target='blank' rel='license'>$name</a></div>";
 	}
 
 
