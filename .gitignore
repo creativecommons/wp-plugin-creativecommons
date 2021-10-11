@@ -54,3 +54,6 @@ tramp
 /apitest/node_modules
 
 .DS_Store
+
+# JavaScript / Gutenberg development
+node_modules/
