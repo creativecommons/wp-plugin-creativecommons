@@ -87,6 +87,15 @@
       "contributions": [
         "projectManagement"
       ]
+    },
+    {
+      "login": "zhaofeng-shu33",
+      "name": "赵丰 (Zhao Feng)",
+      "avatar_url": "https://avatars.githubusercontent.com/u/23316477?v=4",
+      "profile": "https://github.com/zhaofeng-shu33",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
