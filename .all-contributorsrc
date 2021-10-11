@@ -22,6 +22,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "cogdog",
+      "name": "Alan Levine",
+      "avatar_url": "https://avatars.githubusercontent.com/u/463038?v=4",
+      "profile": "https://cog.dog/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
