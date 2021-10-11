@@ -25,6 +25,7 @@
     }
   ],
   "contributorsPerLine": 7,
+  "contributorsSortAlphabetically": true,
   "projectName": "wp-plugin-creativecommons",
   "projectOwner": "creativecommons",
   "repoType": "github",
