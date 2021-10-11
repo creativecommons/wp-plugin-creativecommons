@@ -31,6 +31,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "greatislander",
+      "name": "Ned Zimmerman",
+      "avatar_url": "https://avatars.githubusercontent.com/u/605361?v=4",
+      "profile": "https://bight.dev",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
