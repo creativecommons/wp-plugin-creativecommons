@@ -1,9 +1,4 @@
-<div align="center">
-
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
-  
+<div align="center">  
 <img src="https://mirrors.creativecommons.org/presskit/icons/cc.xlarge.png" height="150">
 
 <h2 align="center">CC WordPress Plugin</h2>
@@ -13,6 +8,10 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com) [![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html) [![CalVer Format: YYYY.0M.Micro](https://img.shields.io/badge/calver-YYYY.0M.MICRO-22bfda.svg)](https://calver.org/)
 
 </div>
+
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 
 ## Description
