@@ -10,7 +10,7 @@
 </div>
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-8-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-9-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 
@@ -163,11 +163,12 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/vestigialcode"><img src="https://avatars.githubusercontent.com/u/54473532?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Dibyajiban Sahoo</b></sub></a><br /><a href="https://github.com/creativecommons/wp-plugin-creativecommons/commits?author=vestigialcode" title="Documentation">📖</a></td>
     <td align="center"><a href="http://hugo.solar"><img src="https://avatars.githubusercontent.com/u/894708?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Hugo Solar</b></sub></a><br /><a href="https://github.com/creativecommons/wp-plugin-creativecommons/commits?author=hugosolar" title="Code">💻</a> <a href="https://github.com/creativecommons/wp-plugin-creativecommons/pulls?q=is%3Apr+reviewed-by%3Ahugosolar" title="Reviewed Pull Requests">👀</a></td>
     <td align="center"><a href="https://github.com/kusinkay"><img src="https://avatars.githubusercontent.com/u/1234511?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Juane Puig</b></sub></a><br /><a href="https://github.com/creativecommons/wp-plugin-creativecommons/commits?author=kusinkay" title="Code">💻</a></td>
+    <td align="center"><a href="http://kritigodey.com"><img src="https://avatars.githubusercontent.com/u/287034?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Kriti Godey</b></sub></a><br /><a href="#projectManagement-kgodey" title="Project Management">📆</a></td>
     <td align="center"><a href="https://bight.dev"><img src="https://avatars.githubusercontent.com/u/605361?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ned Zimmerman</b></sub></a><br /><a href="https://github.com/creativecommons/wp-plugin-creativecommons/commits?author=greatislander" title="Code">💻</a></td>
     <td align="center"><a href="http://rhea.art/"><img src="https://avatars.githubusercontent.com/u/21746?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Rhea Myers</b></sub></a><br /><a href="https://github.com/creativecommons/wp-plugin-creativecommons/commits?author=rheaplex" title="Code">💻</a></td>
-    <td align="center"><a href="https://www.thecrowned.org"><img src="https://avatars.githubusercontent.com/u/7880569?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Stefano Ottolenghi</b></sub></a><br /><a href="https://github.com/creativecommons/wp-plugin-creativecommons/commits?author=TheCrowned" title="Code">💻</a></td>
   </tr>
   <tr>
+    <td align="center"><a href="https://www.thecrowned.org"><img src="https://avatars.githubusercontent.com/u/7880569?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Stefano Ottolenghi</b></sub></a><br /><a href="https://github.com/creativecommons/wp-plugin-creativecommons/commits?author=TheCrowned" title="Code">💻</a></td>
     <td align="center"><a href="https://zehta.me/"><img src="https://avatars.githubusercontent.com/u/691322?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Timid Robot Zehta</b></sub></a><br /><a href="https://github.com/creativecommons/wp-plugin-creativecommons/pulls?q=is%3Apr+reviewed-by%3ATimidRobot" title="Reviewed Pull Requests">👀</a> <a href="#projectManagement-TimidRobot" title="Project Management">📆</a></td>
   </tr>
 </table>
