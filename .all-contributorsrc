@@ -78,6 +78,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "kgodey",
+      "name": "Kriti Godey",
+      "avatar_url": "https://avatars.githubusercontent.com/u/287034?v=4",
+      "profile": "http://kritigodey.com",
+      "contributions": [
+        "projectManagement"
+      ]
     }
   ],
   "contributorsPerLine": 7,
