@@ -58,7 +58,16 @@
       "contributions": [
         "code"
       ]
-    }
+    },
+    {
+      "login": "TimidRobot",
+      "name": "Timid Robot Zehta",
+      "avatar_url": "https://avatars.githubusercontent.com/u/691322?v=4",
+      "profile": "https://zehta.me/",
+      "contributions": [
+        "review"
+      ]
+    },
   ],
   "contributorsPerLine": 7,
   "contributorsSortAlphabetically": true,
