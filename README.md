@@ -10,7 +10,7 @@
 </div>
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-9-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-10-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 
@@ -170,6 +170,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://www.thecrowned.org"><img src="https://avatars.githubusercontent.com/u/7880569?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Stefano Ottolenghi</b></sub></a><br /><a href="https://github.com/creativecommons/wp-plugin-creativecommons/commits?author=TheCrowned" title="Code">💻</a></td>
     <td align="center"><a href="https://zehta.me/"><img src="https://avatars.githubusercontent.com/u/691322?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Timid Robot Zehta</b></sub></a><br /><a href="https://github.com/creativecommons/wp-plugin-creativecommons/pulls?q=is%3Apr+reviewed-by%3ATimidRobot" title="Reviewed Pull Requests">👀</a> <a href="#projectManagement-TimidRobot" title="Project Management">📆</a></td>
+    <td align="center"><a href="https://github.com/zhaofeng-shu33"><img src="https://avatars.githubusercontent.com/u/23316477?v=4?s=100" width="100px;" alt=""/><br /><sub><b>赵丰 (Zhao Feng)</b></sub></a><br /><a href="https://github.com/creativecommons/wp-plugin-creativecommons/commits?author=zhaofeng-shu33" title="Documentation">📖</a></td>
   </tr>
 </table>
 
