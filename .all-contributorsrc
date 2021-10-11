@@ -97,6 +97,15 @@
         "doc",
         "translation"
       ]
+    },
+    {
+      "login": "Rajesh-Royal",
+      "name": "Rajesh Royal",
+      "avatar_url": "https://avatars.githubusercontent.com/u/24524924?v=4",
+      "profile": "https://rajeshroyal.com",
+      "contributions": [
+        "translation"
+      ]
     }
   ],
   "contributorsPerLine": 7,
