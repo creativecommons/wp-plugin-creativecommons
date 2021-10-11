@@ -1,8 +1,10 @@
 <div align="center">
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
-  <img src="https://mirrors.creativecommons.org/presskit/icons/cc.xlarge.png" height="150">
+
+	<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+	[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+	<!-- ALL-CONTRIBUTORS-BADGE:END -->
+  
+	<img src="https://mirrors.creativecommons.org/presskit/icons/cc.xlarge.png" height="150">
   <h2 align="center">CC WordPress Plugin</h2>
   <p align="center">Official Creative Commons plugin for licensing your content on your WordPress website. With Creative Commons licenses, keep your copyright and share your creativity.
   </p>
