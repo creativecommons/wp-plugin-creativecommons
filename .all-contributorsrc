@@ -125,6 +125,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "nishantwrp",
+      "name": "Nishant Mittal",
+      "avatar_url": "https://avatars.githubusercontent.com/u/36989112?v=4",
+      "profile": "http://www.nishantwrp.com",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
