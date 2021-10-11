@@ -51,6 +51,15 @@
       ]
     },
     {
+      "login": "hugosolar",
+      "name": "Hugo Solar",
+      "avatar_url": "https://avatars.githubusercontent.com/u/894708?v=4",
+      "profile": "http://hugo.solar",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
       "login": "TimidRobot",
       "name": "Timid Robot Zehta",
       "avatar_url": "https://avatars.githubusercontent.com/u/691322?v=4",
@@ -58,7 +67,7 @@
       "contributions": [
         "review"
       ]
-    }
+    },
   ],
   "contributorsPerLine": 7,
   "contributorsSortAlphabetically": true,
