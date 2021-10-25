@@ -166,38 +166,21 @@ CC plugin for WordPress uses Gutenberg blocks built by **create-guten-block** to
 
    It optimizes and builds production code for your block inside `dist` folder.
 
-   ### Add @wp-env For Development Environment
+   ### @wp-env For Development Environment
 
-CC Plugin for wordpress uses Guternberg Blocks which includes the released  @wp-env for development environment.
-
-1. **Install @wp-env packages**
-  Change directory in your terminal to the folder that contains the Project and run the following command to install @wp-env packages
-
-  ```shell
-  npm i @wordpress/env --save-dev
-  ```
-
-2.  **Adding @wp-env to the package.json file**
-
-   At the package.json file of the project add the following script to the file 
-
- ```shell
-  "wp-env": "wp-env"
-  ```
-
-3. **Start the @wp-env envrionment using the command**
+1. **Start the @wp-env envrionment using the command**
  Still in the directory of the project run the following command to start the development enviroment
 
 ```shell
   wp-env start
   ```
 
-4. **Check that the development environment is running**
+2. **Check that the development environment is running**
 
 @wp-env requires Docker to run, ensure you have Docker running and open localhost:8888
 to go  into the dashboard localhost:8888/wp-admin
 
-5.**To stop @wp-env**
+3. **To stop @wp-env**
 
 ```shell
  wp-env stop
