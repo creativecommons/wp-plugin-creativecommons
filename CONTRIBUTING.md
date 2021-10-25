@@ -166,14 +166,13 @@ CC plugin for WordPress uses Gutenberg blocks built by **create-guten-block** to
 
    It optimizes and builds production code for your block inside `dist` folder.
 
-   ### @wp-env For Development Environment
+### Using @wp-env for our local development environment
 
 1. **Start the @wp-env envrionment using the command**
  Still in the directory of the project run the following command to start the development enviroment
 
 ```shell
   wp-env start
-  ```
 
 2. **Check that the development environment is running**
 
@@ -183,7 +182,7 @@ to go  into the dashboard localhost:8888/wp-admin
 3. **To stop @wp-env**
 
 ```shell
- wp-env stop
+wp-env stop
 ```
 
 ## Questions or Thoughts?
