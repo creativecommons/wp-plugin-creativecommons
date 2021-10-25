@@ -10,7 +10,7 @@
 </div>
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-14-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-15-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 
@@ -169,11 +169,14 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   </tr>
   <tr>
     <td align="center"><a href="http://www.nishantwrp.com"><img src="https://avatars.githubusercontent.com/u/36989112?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Nishant Mittal</b></sub></a><br /><a href="https://github.com/creativecommons/wp-plugin-creativecommons/commits?author=nishantwrp" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/cillacode"><img src="https://avatars.githubusercontent.com/u/54538525?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Priscillia Umeakuekwe</b></sub></a><br /><a href="https://github.com/creativecommons/wp-plugin-creativecommons/commits?author=cillacode" title="Documentation">📖</a></td>
     <td align="center"><a href="https://github.com/rczajka"><img src="https://avatars.githubusercontent.com/u/264402?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Radek Czajka</b></sub></a><br /><a href="https://github.com/creativecommons/wp-plugin-creativecommons/commits?author=rczajka" title="Code">💻</a></td>
     <td align="center"><a href="https://rajeshroyal.com"><img src="https://avatars.githubusercontent.com/u/24524924?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Rajesh Royal</b></sub></a><br /><a href="#translation-Rajesh-Royal" title="Translation">🌍</a> <a href="https://github.com/creativecommons/wp-plugin-creativecommons/commits?author=Rajesh-Royal" title="Code">💻</a></td>
     <td align="center"><a href="http://rhea.art/"><img src="https://avatars.githubusercontent.com/u/21746?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Rhea Myers</b></sub></a><br /><a href="https://github.com/creativecommons/wp-plugin-creativecommons/commits?author=rheaplex" title="Code">💻</a></td>
     <td align="center"><a href="https://www.thecrowned.org"><img src="https://avatars.githubusercontent.com/u/7880569?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Stefano Ottolenghi</b></sub></a><br /><a href="https://github.com/creativecommons/wp-plugin-creativecommons/commits?author=TheCrowned" title="Code">💻</a></td>
     <td align="center"><a href="https://zehta.me/"><img src="https://avatars.githubusercontent.com/u/691322?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Timid Robot Zehta</b></sub></a><br /><a href="https://github.com/creativecommons/wp-plugin-creativecommons/pulls?q=is%3Apr+reviewed-by%3ATimidRobot" title="Reviewed Pull Requests">👀</a> <a href="#projectManagement-TimidRobot" title="Project Management">📆</a></td>
+  </tr>
+  <tr>
     <td align="center"><a href="https://github.com/zhaofeng-shu33"><img src="https://avatars.githubusercontent.com/u/23316477?v=4?s=100" width="100px;" alt=""/><br /><sub><b>赵丰 (Zhao Feng)</b></sub></a><br /><a href="https://github.com/creativecommons/wp-plugin-creativecommons/commits?author=zhaofeng-shu33" title="Documentation">📖</a> <a href="#translation-zhaofeng-shu33" title="Translation">🌍</a></td>
   </tr>
 </table>
