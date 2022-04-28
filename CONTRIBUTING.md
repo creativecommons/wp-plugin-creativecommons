@@ -1,7 +1,7 @@
 # Contributing to CC WordPress Plugin
 
-Thank you for your interest in contributing to CC WordPress Plugin! This document is
-a set of guidelines to help you contribute to this project.
+Thank you for your interest in contributing to CC WordPress Plugin! This
+document is a set of guidelines to help you contribute to this project.
 
 
 ## Code of Conduct
@@ -9,20 +9,22 @@ a set of guidelines to help you contribute to this project.
 By participating in this project, you are expected to uphold our [Code of
 Conduct][code_of_conduct].
 
-[code_of_conduct]:https://creativecommons.github.io/community/code-of-conduct/
+[code_of_conduct]: https://opensource.creativecommons.org/community/code-of-conduct/
 
 
 ## Project Documentation
 
-Please consult the [`README`](README.md) for the complete project documentation.
+The `README` in the root of the repository should contain or link to project
+documentation. If you cannot find the documentation you're looking for, please
+file a GitHub issue with details of what you'd like to see documented.
 
 
 ## How to Contribute
 
-Make sure you have gone through our general [Contributing Code][contributing]
+Please follow the processes in our general [Contributing Code][contributing]
 guidelines on the Creative Common Open Source website.
 
-[contributing]:https://creativecommons.github.io/contributing-code/
+[contributing]: https://opensource.creativecommons.org/contributing-code/
 
 
 ### Development
@@ -128,16 +130,17 @@ If you are not setup to detect WPCS errors, consider the following steps.
 
 ### Contributing to Gutenberg Blocks
 
-CC plugin for WordPress uses Gutenberg blocks built by **create-guten-block** tool.
- If you are interested, you can read its detailed and
- well-written [documentation](https://github.com/ahmadawais/create-guten-block). If you want to test/make changes to these blocks, follow the following steps.
+CC plugin for WordPress uses Gutenberg blocks built by **create-guten-block**
+tool.  If you are interested, you can read its detailed and well-written
+[documentation](https://github.com/ahmadawais/create-guten-block). If you want
+to test/make changes to these blocks, follow the following steps.
 
 
 1. **Setup npm**
 
-   First off, make sure you have Node version 8+ and npm 5.3 or more. Clone the repository
-   and move to the branch which houses the blocks. In that directory, open your terminal
-   and run:
+   First off, make sure you have Node version 8+ and npm 5.3 or more. Clone the
+   repository and move to the branch which houses the blocks. In that
+    directory, open your terminal and run:
 
    ```shell
    npm install
@@ -151,9 +154,9 @@ CC plugin for WordPress uses Gutenberg blocks built by **create-guten-block** to
    npm start
    ```
 
-   This will compile and run the block in development mode. It also watches for any
-    changes and reports back any errors in your code. Now, you can make changes and
-	 test them.
+   This will compile and run the block in development mode. It also watches for
+   any changes and reports back any errors in your code. Now, you can make
+   changes and test them.
 
 
 3. **Build the Blocks**
@@ -166,27 +169,33 @@ CC plugin for WordPress uses Gutenberg blocks built by **create-guten-block** to
 
    It optimizes and builds production code for your block inside `dist` folder.
 
+
 ### Using @wp-env for our local development environment
 
 1. **Start the @wp-env envrionment using the command**
- Still in the directory of the project run the following command to start the development enviroment
 
-```shell
-  wp-env start
+   Still in the directory
+   of the project run the following command to start the development enviroment
+
+    ```shell
+    wp-env start
+    ```
 
 2. **Check that the development environment is running**
 
-@wp-env requires Docker to run, ensure you have Docker running and open localhost:8888
-to go  into the dashboard localhost:8888/wp-admin
+   @wp-env requires Docker to run, ensure you have Docker running and open
+   localhost:8888 to go into the dashboard localhost:8888/wp-admin
 
 3. **To stop @wp-env**
 
-```shell
-wp-env stop
-```
+    ```shell
+    wp-env stop
+    ```
+
 
 ## Questions or Thoughts?
 
-Talk to us on [our developer mailing list or Slack community][community].
+Talk to us on [one of our community forums][community].
 
-[community]:https://creativecommons.github.io/community/
+[community]: https://opensource.creativecommons.org/community/
+
