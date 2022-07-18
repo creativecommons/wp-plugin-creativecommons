@@ -4,7 +4,7 @@ Contributors: ahmadbilaldev, cctimidrobot, BjornW, robmyers, tatti, hugosolar, k
 Donate link: https://creativecommons.org/donate
 Tags: Creative Commons, CC, license, copyright, copyleft, attribution, attribute, ownership, all rights reserved, some rights reserved, footer, widget
 Requires at least: 3.1
-Tested up to: 5.4
+Tested up to: 6.0.1
 Stable tag: 2021.04.1
 Requires PHP: 5.6.20
 License: GPLv2 or later
