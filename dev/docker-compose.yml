@@ -19,6 +19,7 @@ services:
     volumes:
       - ./wordpress:/var/www/html
       - ../.:/var/www/html/wp-content/plugins/wp-plugin-creativecommons
+      # Ignore these directories when mounting the root into /var/www/html/wp-content/plugins/wp-plugin-creativecommons so they are not included
       - /var/www/html/wp-content/plugins/wp-plugin-creativecommons/dev/wordpress
       - /var/www/html/wp-content/plugins/wp-plugin-creativecommons/dev/db
   db:
