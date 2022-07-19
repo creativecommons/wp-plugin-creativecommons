@@ -116,6 +116,8 @@ Contributions will be very appreciated. See
 
 A local `docker-compose.yml` file is included in the `./dev/` directory. It includes an Apache webserver, the latest WordPress installation files, and a mySQL db server utilizing MariaDB.
 
+It is modelled after the official example, given here by WordPress: https://hub.docker.com/_/wordpress/
+
 To run a local development environment for building and testing contributions you can run the following pattern from the root directory of this repository after cloning it.
 
 `docker compose -f ./dev/docker-compose.yml [command]`
