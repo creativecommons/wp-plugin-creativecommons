@@ -57,3 +57,7 @@ tramp
 
 # JavaScript / Gutenberg development
 node_modules/
+
+# Docker Dev
+/dev/db
+/dev/wordpress
