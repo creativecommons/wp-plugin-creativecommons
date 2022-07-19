@@ -128,6 +128,17 @@ OR
 
 `docker compose -f ./dev/docker-compose.yml down` to stop containers
 
+The first time the build process is run via `docker compose -f ./dev/docker-compose.yml up`, docker will create two directories within your local repository clone:
+
+- `./dev/db` where the database and relevant config will be stored
+- `./dev/wordpress` where the WordPress files will be stored
+
+It will then mount this plugin's root directory into the `/wp-content/plugins/` directory of the WordPress installation. Edits made to your local plugin clone will reflect within the build.
+
+You can then navigate to `http://localhost:8080/` and proceed with a manual WordPress installation. After the initial installation the WordPress install will persisist between docker sessions. 
+
+If you need to reset the WordPress install to a "clean slate" you can simply delete the `db` and `wordpress` directories respectively, and then run `docker compose -f ./dev/docker-compose.yml up` again to initializw a clean install build. 
+
 
 ## Release Schedule
 
