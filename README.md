@@ -139,7 +139,7 @@ It will then mount this plugin's root directory into the `/wp-content/plugins/` 
 
 You can then navigate to `http://localhost:8080/` and proceed with a manual WordPress installation. After the initial installation the WordPress install will persisist between docker sessions. 
 
-If you need to reset the WordPress install to a "clean slate" you can simply delete the `db` and `wordpress` directories respectively, and then run `docker compose -f ./dev/docker-compose.yml up` again to initializw a clean install build. 
+If you need to reset the WordPress install to a "clean slate" you can simply delete the `db` and `wordpress` directories respectively, and then run `docker compose -f ./dev/docker-compose.yml up` again to initialize a clean install build. 
 
 
 ## Release Schedule
