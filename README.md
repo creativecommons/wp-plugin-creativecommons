@@ -112,6 +112,35 @@ At a glance, with WP CC Plugin you can:
 Contributions will be very appreciated. See
 [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
+### Using a localized Docker Setup
+
+A local `docker-compose.yml` file is included in the `./dev/` directory. It includes an Apache webserver, the latest WordPress installation files, and a mySQL db server utilizing MariaDB.
+
+It is modelled after the official example, given here by WordPress: https://hub.docker.com/_/wordpress/
+
+To run a local development environment for building and testing contributions you can run the following pattern from the root directory of this repository after cloning it.
+
+`docker compose -f ./dev/docker-compose.yml [command]`
+
+Be sure to substitute `[command]` for a valid docker compose command, such as: 
+
+`docker compose -f ./dev/docker-compose.yml up` to build and start containers
+
+OR
+
+`docker compose -f ./dev/docker-compose.yml down` to stop containers
+
+The first time the build process is run via `docker compose -f ./dev/docker-compose.yml up`, docker will create two directories within your local repository clone:
+
+- `./dev/db` where the database and relevant config will be stored
+- `./dev/wordpress` where the WordPress files will be stored
+
+It will then mount this plugin's root directory into the `/wp-content/plugins/` directory of the WordPress installation. Edits made to your local plugin clone will reflect within the build.
+
+You can then navigate to `http://localhost:8080/` and proceed with a manual WordPress installation. After the initial installation the WordPress install will persisist between docker sessions. 
+
+If you need to reset the WordPress install to a "clean slate" you can simply delete the `db` and `wordpress` directories respectively, and then run `docker compose -f ./dev/docker-compose.yml up` again to initialize a clean install build. 
+
 
 ## Release Schedule
 
