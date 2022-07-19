@@ -112,6 +112,22 @@ At a glance, with WP CC Plugin you can:
 Contributions will be very appreciated. See
 [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
+### Using a localized Docker Setup
+
+A local `docker-compose.yml` file is included in the `./dev/` directory. It includes an Apache webserver, the latest WordPress installation files, and a mySQL db server utilizing MariaDB.
+
+To run a local development environment for building and testing contributions you can run the following pattern from the root directory of this repository after cloning it.
+
+`docker compose -f ./dev/docker-compose.yml [command]`
+
+Be sure to substitute `[command]` for a valid docker compose command, such as: 
+
+`docker compose -f ./dev/docker-compose.yml up` to build and start containers
+
+OR
+
+`docker compose -f ./dev/docker-compose.yml down` to stop containers
+
 
 ## Release Schedule
 
