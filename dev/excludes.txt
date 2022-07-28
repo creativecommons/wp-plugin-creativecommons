@@ -9,8 +9,9 @@
 .github
 .gitignore
 README.md
-dev/wordpress/*
+dev/db
 dev/excludes.txt
 dev/prep_svn_release.sh
+dev/wordpress
 package-lock.json
 package.json
