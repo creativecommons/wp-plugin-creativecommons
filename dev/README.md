@@ -11,13 +11,13 @@
    2. GitHub tag for the version
    3. Path to the Subversion repository checkout
     ```
-    ./dev/prep_svn_release.sh cctimidrobot v2022.07.1 \
+    ./dev/prep_svn_release.sh cctimidrobot v2022.09.1 \
         ../../svn/wordpress-org-creative-commons/
     ```
 4. From the Subversion repositry checkout, copy and commit Subversion tag:
     ```
-    svn copy trunk/ tags/2022.07.1/
-    svn commit --username=cctimidrobot -m'Tagging version 2022.07.1'
+    svn copy trunk/ tags/2022.09.1/
+    svn commit --username=cctimidrobot -m'Tagging version 2022.09.1'
     ```
 
 ### Notes
