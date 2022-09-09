@@ -1,6 +1,6 @@
 === Creative Commons ===
 
-Contributors: ahmadbilaldev, cctimidrobot, BjornW, robmyers, tatti, hugosolar, kbat82
+Contributors: ahmadbilaldev, BjornW, cctimidrobot, hugosolar, kbat82, robmyers, tatti, possumbilities
 Donate link: https://creativecommons.org/donate
 Tags: Creative Commons, CC, license, copyright, copyleft, attribution, attribute, ownership, all rights reserved, some rights reserved, footer, widget
 Requires at least: 3.1
