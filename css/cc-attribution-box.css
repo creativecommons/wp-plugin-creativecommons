@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
- 
+.cc-attribution-box-license {
+    width:6em;
+}
 .cc-attribution-box-container {
     display: inline-block;
     position: relative;
