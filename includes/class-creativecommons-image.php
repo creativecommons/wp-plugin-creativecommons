@@ -701,7 +701,7 @@ class CreativeCommonsImage {
 		$loading_type = $lazy ? 'lazy' : 'eager'; // 'eager' is the browser default
 		return "<div>" . esc_html($credit) . "</div>"
 			."<a target='_blank' href='" . esc_url($attribution_url) . "'>$title</a>"
-			. "<a class='cc-attribution-box-license' target='_blank' href='" . esc_url($license_url) . "' title='" . esc_attr($license_name) . "'>"
+			. "<a class='cc-attribution-box-license' target='_blank' href='" . esc_url($license_url) . "' title='" . esc_attr($license_name) . "' rel='license'>"
 			. "<img src='" . esc_url($button_url) . "' alt='" . esc_attr($license_name) . " . loading='" . $loading_type . "'></a>";
 	}
 

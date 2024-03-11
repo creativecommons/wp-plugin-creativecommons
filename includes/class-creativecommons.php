@@ -230,7 +230,7 @@ class CreativeCommons {
 			</td>
 			<td>
 			<?php
-				printf( '<a href="https://creativecommons.org/licenses/by/4.0" target="blank"><img src="%1$s" alt="CC BY"></a>', esc_attr( CCPLUGIN__URL ) . 'includes/images/by.png' );
+				printf( '<a href="https://creativecommons.org/licenses/by/4.0" target="blank" rel="license"><img src="%1$s" alt="CC BY"></a>', esc_attr( CCPLUGIN__URL ) . 'includes/images/by.png' );
 			?>
 			</td>
 		</tr>
@@ -243,7 +243,7 @@ class CreativeCommons {
 			</td>
 			<td>
 			<?php
-				printf( '<a href="https://creativecommons.org/licenses/by-sa/4.0" target="blank"><img src="%1$s" alt="CC BY-SA"></a>', esc_attr( CCPLUGIN__URL ) . 'includes/images/by-sa.png' );
+				printf( '<a href="https://creativecommons.org/licenses/by-sa/4.0" target="blank" rel="license"><img src="%1$s" alt="CC BY-SA"></a>', esc_attr( CCPLUGIN__URL ) . 'includes/images/by-sa.png' );
 			?>
 			</td>
 		</tr>
@@ -256,7 +256,7 @@ class CreativeCommons {
 			</td>
 			<td>
 			<?php
-				printf( '<a href="https://creativecommons.org/licenses/by-nc/4.0" target="blank"><img src="%1$s" alt="CC BY-NC"></a>', esc_attr( CCPLUGIN__URL ) . 'includes/images/by-nc.png' );
+				printf( '<a href="https://creativecommons.org/licenses/by-nc/4.0" target="blank" rel="license"><img src="%1$s" alt="CC BY-NC"></a>', esc_attr( CCPLUGIN__URL ) . 'includes/images/by-nc.png' );
 			?>
 			</td>
 		</tr>
@@ -269,7 +269,7 @@ class CreativeCommons {
 			</td>
 			<td>
 			<?php
-				printf( '<a href="https://creativecommons.org/licenses/by-nc-sa/4.0" target="blank"><img src="%1$s" alt="CC BY-NC-SA"></a>', esc_attr( CCPLUGIN__URL ) . 'includes/images/by-nc-sa.png' );
+				printf( '<a href="https://creativecommons.org/licenses/by-nc-sa/4.0" target="blank" rel="license"><img src="%1$s" alt="CC BY-NC-SA"></a>', esc_attr( CCPLUGIN__URL ) . 'includes/images/by-nc-sa.png' );
 			?>
 			</td>
 		</tr>
@@ -282,7 +282,7 @@ class CreativeCommons {
 			</td>
 			<td>
 			<?php
-				printf( '<a href="https://creativecommons.org/licenses/by-nc-nd/4.0" target="blank"><img src="%1$s" alt="CC BY-NC-ND"></a>', esc_attr( CCPLUGIN__URL ) . 'includes/images/by-nc-nd.png' );
+				printf( '<a href="https://creativecommons.org/licenses/by-nc-nd/4.0" target="blank" rel="license"><img src="%1$s" alt="CC BY-NC-ND"></a>', esc_attr( CCPLUGIN__URL ) . 'includes/images/by-nc-nd.png' );
 			?>
 			</td>
 		</tr>
@@ -295,7 +295,7 @@ class CreativeCommons {
 			</td>
 			<td>
 			<?php
-				printf( '<a href="https://creativecommons.org/licenses/by-nd/4.0" target="blank"><img src="%1$s" alt="CC BY-ND"></a>', esc_attr( CCPLUGIN__URL ) . 'includes/images/by-nd.png' );
+				printf( '<a href="https://creativecommons.org/licenses/by-nd/4.0" target="blank" rel="license"><img src="%1$s" alt="CC BY-ND"></a>', esc_attr( CCPLUGIN__URL ) . 'includes/images/by-nd.png' );
 			?>
 			</td>
 		</tr>
@@ -308,7 +308,7 @@ class CreativeCommons {
 			</td>
 			<td>
 			<?php
-				printf( '<a href="https://creativecommons.org/publicdomain/zero/1.0/" target="blank"><img src="%1$s" alt="CC0"></a>', esc_attr( CCPLUGIN__URL ) . 'includes/images/cc0.png' );
+				printf( '<a href="https://creativecommons.org/publicdomain/zero/1.0/" target="blank"  rel="license"><img src="%1$s" alt="CC0"></a>', esc_attr( CCPLUGIN__URL ) . 'includes/images/cc0.png' );
 			?>
 			</td>
 	</tr>
@@ -346,7 +346,7 @@ class CreativeCommons {
 		$image   = esc_attr( $license['image'] );
 
 		// Closing the settings table by </table>. Do not use any more setting fields in license-chooser section.
-		echo "</table><div style=' text-align: center; background: #fff; border: 1px solid #e5e5e5; box-shadow: 0 1px 1px rgba(0,0,0,.04); padding: 1em;'><img id='cc-current-license-image' src='$image'><br /><a href='$deed' target='blank'>$name</a></div>";
+		echo "</table><div style=' text-align: center; background: #fff; border: 1px solid #e5e5e5; box-shadow: 0 1px 1px rgba(0,0,0,.04); padding: 1em;'><img id='cc-current-license-image' src='$image'><br /><a href='$deed' target='blank' rel='license'>$name</a></div>";
 	}
 
 
