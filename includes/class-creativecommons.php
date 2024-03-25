@@ -1058,26 +1058,13 @@ class CreativeCommons {
 		$html = '';
 		if ( is_array( $license ) && count( $license ) > 0 ) {
 			$deed_url     = esc_url( $license['deed'] );
-			// $image_url    = esc_url( $license['image'] );
-			$image_data = array(
-				'url' => esc_url( $license['image'] ),
-				'size' => null
-			);
+			$image_url    = esc_attr( $license['image'] );
 			$license_name = esc_attr( $license['name'] );
 			$title        = esc_attr( $license['title'] );
 			$title_url    = esc_url( $license['title_url'] );
 			$author       = esc_attr( $license['author'] );
 			$author_url   = esc_url( $license['author_url'] );
 
-			if(!empty($image_data['url'])){
-				$image_size = getimagesize($image_data['url']);
-				if(is_array($image_size)){
-					$image_data['size'] = array(
-						'width' => $image_size[0],
-						'height' => $image_size[1]
-					);
-				}
-			}
 
 			$additional_attribution_txt = ( array_key_exists( 'additional_attribution_txt', $license ) )
 						? esc_html( $license['additional_attribution_txt'] ) : '';
@@ -1108,7 +1095,7 @@ class CreativeCommons {
 				. $this->license_html_rdfa(
 					$deed_url,
 					$license_name,
-					$image_data,
+					$image_url,
 					$title_work,
 					is_singular(),
 					$attribute_url,
@@ -1134,16 +1121,20 @@ class CreativeCommons {
 	/**
 	 * Function: license_html_rdfa
 	 */
-	public function license_html_rdfa( $deed_url, $license_name, $image_data,
+	public function license_html_rdfa( $deed_url, $license_name, $image_url,
 									$title_work, $is_singular, $attribute_url,
 									$attribute_text, $source_work_url,
 									$extra_permissions_url, $additional_attribution_txt, $title, $title_url, $author, $author_url ) {
+		$image_path = str_replace( CCPLUGIN__URL, '', $image_url );
+		$image_path = CCPLUGIN__DIR . $image_path;
+
+		list( $img_width, $img_height ) = getimagesize( $image_path );
 
 		$lazy = function_exists( 'wp_lazy_loading_enabled' ) && wp_lazy_loading_enabled( 'img', 'license_html_rdfa' );
 		$loading_type = $lazy ? 'lazy' : 'eager'; // 'eager' is the browser default
 		$html  = '';
 		$html .= "<a rel='license' href='$deed_url'>";
-		$html .= "<img alt='" . __( 'Creative Commons License', 'CreativeCommons' ) . "' style='border-width:0' src='". $image_data['url']. "' width='". $image_data['size']['width']. "' height='". $image_data['size']['height']. "' loading='$loading_type'  />";
+		$html .= "<img alt='" . __( 'Creative Commons License', 'CreativeCommons' ) . "' style='border-width:0' src='$image_url' width='$img_width' height='$img_height' loading='$loading_type'  />";
 		$html .= '</a><br />';
 
 
