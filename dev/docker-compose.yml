@@ -2,6 +2,7 @@ version: '3.2'
 services:
   wordpress:
     container_name: 'local-wordpress'
+    image: wordpress
     restart: always
     links:
       - db:mysql
