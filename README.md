@@ -151,13 +151,13 @@ To access `wp-cli`, you should have:
 You can run wp-cli commands like this:
 
 ```
-docker compose -f ./dev/docker-compose.yml exec wordpress wp core version
+docker compose -f ./dev/docker-compose.yml exec wpcli wp core version
 ```
 The above command will display the wp core version.
 
 You can also use the container's shell to execute wp-cli commands:
 ```
-docker compose -f ./dev/docker-compose.yml exec wordpress bash
+docker compose -f ./dev/docker-compose.yml exec wpcli bash
 ```
 
 ## Release Schedule
