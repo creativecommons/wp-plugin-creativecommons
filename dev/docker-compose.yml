@@ -2,9 +2,6 @@ version: '3.2'
 services:
   wordpress:
     container_name: 'local-wordpress'
-    build:
-      context: .
-      dockerfile: Dockerfile
     restart: always
     links:
       - db:mysql
@@ -16,7 +13,6 @@ services:
       WORDPRESS_DB_PASSWORD: root
       WORDPRESS_USER: root
       WORDPRESS_DB_name: wordpress
-      WORDPRESS_DEBUG: 1
     depends_on:
       - db
     volumes:
