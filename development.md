@@ -201,20 +201,20 @@ you can run the following pattern from the root directory of this repository
 after cloning it.
 
 ```shell
-docker compose -f ./dev/docker-compose.yml [command]
+docker compose [command]
 ```
 
 Be sure to substitute `[command]` for a valid docker compose command, such as
 the following to build and start containers:
 
 ```shell
-docker compose -f ./dev/docker-compose.yml up
+docker compose up
 ```
 
 Or to stop containers:
 
 ```shell
-docker compose -f ./dev/docker-compose.yml down
+docker compose down
 ```
 
 The first time the build process is run via `docker compose -f
@@ -233,5 +233,5 @@ will persisist between docker sessions.
 
 If you need to reset the WordPress install to a "clean slate" you can simply
 delete the `db` and `wordpress` directories respectively, and then run `docker
-compose -f ./dev/docker-compose.yml up` again to initialize a clean install
+compose up` again to initialize a clean install
 build.
