@@ -204,12 +204,15 @@ after cloning it.
 docker compose -f ./dev/docker-compose.yml [command]
 ```
 
-Be sure to substitute `[command]` for a valid docker compose command, such as the following to build and start containers:
+Be sure to substitute `[command]` for a valid docker compose command, such as
+the following to build and start containers:
 
-````shell
+```shell
 docker compose -f ./dev/docker-compose.yml up
+```
 
 Or to stop containers:
+
 ```shell
 docker compose -f ./dev/docker-compose.yml down
 ```
