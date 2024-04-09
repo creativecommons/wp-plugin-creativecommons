@@ -1,4 +1,5 @@
-*.*
+*.swp
+.*
 dev*
 package*
 README.md
