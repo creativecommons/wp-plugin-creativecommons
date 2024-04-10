@@ -12,10 +12,6 @@
 	"dependencies": {
 		"cgb-scripts": "1.23.1"
 	},
-	"resolutions": {
-		"mem": "^4.0.0",
-		"yargs-parser": "13.1.2"
-	},
 	"devDependencies": {
 		"@wordpress/env": "^9.7.0"
 	}
