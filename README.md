@@ -157,7 +157,7 @@ The above command will display the wp core version.
 
 You can also use the container's shell to execute wp-cli commands:
 ```
-docker compose -f ./dev/docker-compose.yml exec wpcli bash
+docker compose -f ./dev/docker-compose.yml exec wpcli bash -i
 ```
 
 ## Release Schedule
