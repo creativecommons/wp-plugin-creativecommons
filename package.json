@@ -17,6 +17,6 @@
 		"yargs-parser": "13.1.2"
 	},
 	"devDependencies": {
-		"@wordpress/env": "^4.1.1"
+		"@wordpress/env": "^9.7.0"
 	}
 }
