@@ -126,6 +126,14 @@ At a glance, with WP CC Plugin you can:
 **See [`development.md`](development.md).**
 
 
+## Release Schedule
+
+We will release a new version every month that there are substantial changes.
+See [milestones][milestones] for how GitHub issues are assigned for release.
+
+[milestones]: https://github.com/creativecommons/wp-plugin-creativecommons/milestones
+
+
 ## License
 
 - [`license.txt`](license.txt) ([GPLv2 or later][gplv2] License)
