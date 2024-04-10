@@ -187,11 +187,12 @@ to test/make changes to these blocks, follow the following steps.
     ```
 
 
-## Using a localized Docker Setup
+## Using a localized Docker setup
 
 A local `docker-compose.yml` file is included in the `./dev/` directory. It
 includes an Apache webserver, the latest WordPress installation files, and a
-mySQL db server utilizing MariaDB.
+mySQL db server utilizing MariaDB. We have also included a copy of `wp-cli` for
+ease of developement and testing.
 
 It is modelled after the official example: [wordpress - Official Image | Docker
 Hub](https://hub.docker.com/_/wordpress/).
@@ -235,3 +236,22 @@ If you need to reset the WordPress install to a "clean slate" you can simply
 delete the `db` and `wordpress` directories respectively, and then run `docker
 compose up` again to initialize a clean install
 build.
+
+
+### WP-CLI
+
+To access `wp-cli`, you should have:
+
+- Started the docker container
+- Completed wordpress setup from dashboard
+
+For example, the following command uses wp-cli to display the version of
+WordPress installed:
+```shell
+docker compose exec wpcli wp core version
+```
+
+You can also use the container's shell to execute wp-cli commands:
+```shell
+docker compose exec wpcli bash -i
+```
