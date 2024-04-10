@@ -23,9 +23,8 @@ services:
       - /var/www/html/wp-content/plugins/wp-plugin-creativecommons/dev/wordpress
       - /var/www/html/wp-content/plugins/wp-plugin-creativecommons/dev/db
   wpcli:
-    # continue running until shutdown (this allows docker compose exec which is
-    # much faster than docker compose run)
-    # Credits: https://serverfault.com/a/1084975
+    # continue running until shutdown (allows docker compose exec which is much
+    # faster than docker compose run) per https://serverfault.com/a/1084975
     command: sh -c 'trap "exit" TERM; while true; do sleep 1; done'
     container_name: 'local-wpcli'
     depends_on:
@@ -57,3 +56,11 @@ services:
       MYSQL_ROOT_PASSWORD: root
     volumes:
       - ./db:/var/lib/mysql
+  node:
+    build: .
+    # continue running until shutdown (allows docker compose exec which is much
+    # faster than docker compose run) per https://serverfault.com/a/1084975
+    command: sh -c 'trap "exit" TERM; while true; do sleep 1; done'
+    container_name: 'local-node'
+    volumes:
+      - ..:/app
