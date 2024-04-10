@@ -1,36 +1,31 @@
-# Contributing to CC WordPress Plugin
+# Contributing and development
 
 Thank you for your interest in contributing to CC WordPress Plugin! This
 document is a set of guidelines to help you contribute to this project.
 
 
-## Code of Conduct
+## Code of conduct
 
-By participating in this project, you are expected to uphold our [Code of
-Conduct][code_of_conduct].
+[`CODE_OF_CONDUCT.md`][org-coc]:
+> The Creative Commons team is committed to fostering a welcoming community.
+> This project and all other Creative Commons open source projects are governed
+> by our [Code of Conduct][code_of_conduct]. Please report unacceptable
+> behavior to [conduct@creativecommons.org](mailto:conduct@creativecommons.org)
+> per our [reporting guidelines][reporting_guide].
 
+[org-coc]: https://github.com/creativecommons/.github/blob/main/CODE_OF_CONDUCT.md
 [code_of_conduct]: https://opensource.creativecommons.org/community/code-of-conduct/
+[reporting_guide]: https://opensource.creativecommons.org/community/code-of-conduct/enforcement/
 
 
-## Project Documentation
+## Contributing
 
-The `README` in the root of the repository should contain or link to project
-documentation. If you cannot find the documentation you're looking for, please
-file a GitHub issue with details of what you'd like to see documented.
+See [`CONTRIBUTING.md`][org-contrib].
 
-
-## How to Contribute
-
-Please follow the processes in our general [Contributing Code][contributing]
-guidelines on the Creative Common Open Source website.
-
-[contributing]: https://opensource.creativecommons.org/contributing-code/
+[org-contrib]: https://github.com/creativecommons/.github/blob/main/CONTRIBUTING.md
 
 
-### Development
-
-
-### WordPress Coding Standards
+## WordPress Coding Standards
 
 Creative Commons plugin for WordPress follows [WordPress Coding
 Standards][standards] and [WordPress Documentation Standards][inline].  Before
@@ -128,13 +123,12 @@ If you are not setup to detect WPCS errors, consider the following steps.
 [phpcs]: https://marketplace.visualstudio.com/items?itemName=ikappas.phpcs
 
 
-### Contributing to Gutenberg Blocks
+## Contributing to Gutenberg Blocks
 
 CC plugin for WordPress uses Gutenberg blocks built by **create-guten-block**
 tool.  If you are interested, you can read its detailed and well-written
 [documentation](https://github.com/ahmadawais/create-guten-block). If you want
 to test/make changes to these blocks, follow the following steps.
-
 
 1. **Setup npm**
 
@@ -170,7 +164,7 @@ to test/make changes to these blocks, follow the following steps.
    It optimizes and builds production code for your block inside `dist` folder.
 
 
-### Using @wp-env for our local development environment
+## Using @wp-env for our local development environment
 
 1. **Start the @wp-env envrionment using the command**
 
@@ -193,9 +187,71 @@ to test/make changes to these blocks, follow the following steps.
     ```
 
 
-## Questions or Thoughts?
+## Using a localized Docker setup
 
-Talk to us on [one of our community forums][community].
+A local `docker-compose.yml` file is included in the `./dev/` directory. It
+includes an Apache webserver, the latest WordPress installation files, and a
+mySQL db server utilizing MariaDB. We have also included a copy of `wp-cli` for
+ease of developement and testing.
 
-[community]: https://opensource.creativecommons.org/community/
+It is modelled after the official example: [wordpress - Official Image | Docker
+Hub](https://hub.docker.com/_/wordpress/).
 
+To run a local development environment for building and testing contributions
+you can run the following pattern from the root directory of this repository
+after cloning it.
+
+```shell
+docker compose [command]
+```
+
+Be sure to substitute `[command]` for a valid docker compose command, such as
+the following to build and start containers:
+
+```shell
+docker compose up
+```
+
+Or to stop containers:
+
+```shell
+docker compose down
+```
+
+The first time the build process is run via `docker compose -f
+./dev/docker-compose.yml up`, docker will create two directories within your
+local repository clone:
+- `./dev/db` where the database and relevant config will be stored
+- `./dev/wordpress` where the WordPress files will be stored
+
+It will then mount this plugin's root directory into the `/wp-content/plugins/`
+directory of the WordPress installation. Edits made to your local plugin clone
+will reflect within the build.
+
+You can then navigate to `http://localhost:8080/` and proceed with a manual
+WordPress installation. After the initial installation the WordPress install
+will persisist between docker sessions.
+
+If you need to reset the WordPress install to a "clean slate" you can simply
+delete the `db` and `wordpress` directories respectively, and then run `docker
+compose up` again to initialize a clean install
+build.
+
+
+### WP-CLI
+
+To access `wp-cli`, you should have:
+
+- Started the docker container
+- Completed wordpress setup from dashboard
+
+For example, the following command uses wp-cli to display the version of
+WordPress installed:
+```shell
+docker compose exec wpcli wp core version
+```
+
+You can also use the container's shell to execute wp-cli commands:
+```shell
+docker compose exec wpcli bash -i
+```

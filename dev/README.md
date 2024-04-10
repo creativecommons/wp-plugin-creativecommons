@@ -1,4 +1,4 @@
-# Development and Deployment
+# Deployment
 
 
 ## WordPress.org Plugin Deployment
