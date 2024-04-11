@@ -1,0 +1,68 @@
+# Use docker compose v2 for non swarm deployments
+# https://docs.docker.com/compose/compose-file/compose-file-v2/
+version: '2.4'
+services:
+  wordpress:
+    container_name: 'local-wordpress'
+    image: wordpress
+    restart: always
+    links:
+      - db:mysql
+    ports:
+      - "8080:80"
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: root
+      WORDPRESS_DB_PASSWORD: root
+      WORDPRESS_USER: root
+      WORDPRESS_DB_name: wordpress
+    depends_on:
+      - db
+    volumes:
+      - ./wordpress:/var/www/html
+      - ../.:/var/www/html/wp-content/plugins/wp-plugin-creativecommons
+      # Ignore these directories when mounting the root into /var/www/html/wp-content/plugins/wp-plugin-creativecommons so they are not included
+      - /var/www/html/wp-content/plugins/wp-plugin-creativecommons/dev/wordpress
+      - /var/www/html/wp-content/plugins/wp-plugin-creativecommons/dev/db
+  wpcli:
+    # continue running until shutdown (allows docker compose exec which is much
+    # faster than docker compose run) per https://serverfault.com/a/1084975
+    command: sh -c 'trap "exit" TERM; while true; do sleep 1; done'
+    container_name: 'local-wpcli'
+    depends_on:
+      - wordpress
+      - db
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: root
+      WORDPRESS_DB_PASSWORD: root
+      WORDPRESS_USER: root
+      WORDPRESS_DB_name: wordpress
+    # https://hub.docker.com/_/wordpress
+    image: wordpress:cli
+    links:
+      - db:mysql
+    volumes:
+      - ./wordpress:/var/www/html
+      - ../.:/var/www/html/wp-content/plugins/wp-plugin-creativecommons
+      # Ignore these directories when mounting the root into /var/www/html/wp-content/plugins/wp-plugin-creativecommons so they are not included
+      - /var/www/html/wp-content/plugins/wp-plugin-creativecommons/dev/wordpress
+      - /var/www/html/wp-content/plugins/wp-plugin-creativecommons/dev/db
+  db:
+    container_name: 'local-wordpress-db'
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: root
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ./db:/var/lib/mysql
+  node:
+    build: .
+    # continue running until shutdown (allows docker compose exec which is much
+    # faster than docker compose run) per https://serverfault.com/a/1084975
+    command: sh -c 'trap "exit" TERM; while true; do sleep 1; done'
+    container_name: 'local-node'
+    volumes:
+      - ..:/app

@@ -8,7 +8,7 @@
 class CreativeCommons {
 
 	// Make sure the plugin header has the same version number.
-	const VERSION = '2021.04.1';
+	const VERSION = '2022.09.1';
 
 	/**
 	 * Plugin URL.
@@ -924,7 +924,7 @@ class CreativeCommons {
 		<div style="background: white; border: 1px solid #e5e5e5; box-shadow: 0 1px 1px rgba(0,0,0,.04); padding: 2em; display: inline-table;">
 
 		<?php
-			printf( '<img src="%1$s" align="right" style="padding: 1em; width: 20%; height: auto !important; " />', esc_attr( CCPLUGIN__URL ) . 'assets/icon-256x256.png' );
+			printf( '<img src="%1$s" align="right" style="padding: 1em; width: 20%%; height: auto !important;" />', esc_attr( CCPLUGIN__URL ) . 'assets/icon-256x256.png' );
 		?>
 
 		<h3>About Creative Commons</h3>

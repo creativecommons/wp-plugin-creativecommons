@@ -86,3 +86,9 @@ function cc_block_cgb_block_assets() { // phpcs:ignore
 
 // Hook: Block assets.
 add_action( 'init', 'cc_block_cgb_block_assets' );
+
+// Register Footer License CSS
+function cc_footer_license() {
+	wp_enqueue_style('cc-footer-license', plugins_url('./css/cc-footer-license.css', dirname(__FILE__)));
+}
+add_action('wp_enqueue_scripts', 'cc_footer_license');

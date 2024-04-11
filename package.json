@@ -6,13 +6,13 @@
 		"start": "cgb-scripts start",
 		"build": "cgb-scripts build",
 		"eject": "cgb-scripts eject",
-		"preinstall": "npx npm-force-resolutions"
+		"preinstall": "npx npm-force-resolutions",
+		"wp-env": "wp-env"
 	},
 	"dependencies": {
-		"cgb-scripts": "1.20.0"
+		"cgb-scripts": "1.23.1"
 	},
-	"resolutions": {
-		"mem": "^4.0.0",
-		"yargs-parser": "13.1.2"
+	"devDependencies": {
+		"@wordpress/env": "^9.7.0"
 	}
 }

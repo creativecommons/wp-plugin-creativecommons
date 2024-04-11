@@ -1,0 +1,22 @@
+.license-wrap {
+	margin: 25px auto;
+	max-width: calc(70vw - 4 * 25px);
+}
+
+@media (max-width: 767px) {
+	.license-wrap {
+		max-width: 90vw;
+	}
+}
+
+@media (min-width: 992px) {
+	.license-wrap {
+		max-width: 75vw;
+	}
+}
+
+@media (min-width: 1300px) {
+	.license-wrap {
+		max-width: 65vw;
+	}
+}

@@ -13,9 +13,140 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "rheaplex",
+      "name": "Rhea Myers",
+      "avatar_url": "https://avatars.githubusercontent.com/u/21746?v=4",
+      "profile": "http://rhea.art/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "cogdog",
+      "name": "Alan Levine",
+      "avatar_url": "https://avatars.githubusercontent.com/u/463038?v=4",
+      "profile": "https://cog.dog/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "greatislander",
+      "name": "Ned Zimmerman",
+      "avatar_url": "https://avatars.githubusercontent.com/u/605361?v=4",
+      "profile": "https://bight.dev",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "TheCrowned",
+      "name": "Stefano Ottolenghi",
+      "avatar_url": "https://avatars.githubusercontent.com/u/7880569?v=4",
+      "profile": "https://www.thecrowned.org",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "hugosolar",
+      "name": "Hugo Solar",
+      "avatar_url": "https://avatars.githubusercontent.com/u/894708?v=4",
+      "profile": "http://hugo.solar",
+      "contributions": [
+        "code",
+        "review"
+      ]
+    },
+    {
+      "login": "TimidRobot",
+      "name": "Timid Robot Zehta",
+      "avatar_url": "https://avatars.githubusercontent.com/u/691322?v=4",
+      "profile": "https://zehta.me/",
+      "contributions": [
+        "review",
+        "projectManagement"
+      ]
+    },
+    {
+      "login": "vestigialcode",
+      "name": "Dibyajiban Sahoo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/54473532?v=4",
+      "profile": "https://github.com/vestigialcode",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "kgodey",
+      "name": "Kriti Godey",
+      "avatar_url": "https://avatars.githubusercontent.com/u/287034?v=4",
+      "profile": "http://kritigodey.com",
+      "contributions": [
+        "projectManagement"
+      ]
+    },
+    {
+      "login": "zhaofeng-shu33",
+      "name": "赵丰 (Zhao Feng)",
+      "avatar_url": "https://avatars.githubusercontent.com/u/23316477?v=4",
+      "profile": "https://github.com/zhaofeng-shu33",
+      "contributions": [
+        "doc",
+        "translation"
+      ]
+    },
+    {
+      "login": "Rajesh-Royal",
+      "name": "Rajesh Royal",
+      "avatar_url": "https://avatars.githubusercontent.com/u/24524924?v=4",
+      "profile": "https://rajeshroyal.com",
+      "contributions": [
+        "translation",
+        "code"
+      ]
+    },
+    {
+      "login": "rczajka",
+      "name": "Radek Czajka",
+      "avatar_url": "https://avatars.githubusercontent.com/u/264402?v=4",
+      "profile": "https://github.com/rczajka",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "brylie",
+      "name": "Brylie Christopher Oxley",
+      "avatar_url": "https://avatars.githubusercontent.com/u/17307?v=4",
+      "profile": "http://linkedin.com/in/brylie-christopher-oxley/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "nishantwrp",
+      "name": "Nishant Mittal",
+      "avatar_url": "https://avatars.githubusercontent.com/u/36989112?v=4",
+      "profile": "http://www.nishantwrp.com",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "cillacode",
+      "name": "Priscillia Umeakuekwe",
+      "avatar_url": "https://avatars.githubusercontent.com/u/54538525?v=4",
+      "profile": "https://github.com/cillacode",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
+  "contributorsSortAlphabetically": true,
   "projectName": "wp-plugin-creativecommons",
   "projectOwner": "creativecommons",
   "repoType": "github",

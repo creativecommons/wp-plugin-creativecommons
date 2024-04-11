@@ -1,11 +1,11 @@
 === Creative Commons ===
 
-Contributors: ahmadbilaldev, cctimidrobot, BjornW, robmyers, tatti, hugosolar, kbat82
+Contributors: ahmadbilaldev, BjornW, cctimidrobot, hugosolar, kbat82, robmyers, tatti, possumbilities
 Donate link: https://creativecommons.org/donate
 Tags: Creative Commons, CC, license, copyright, copyleft, attribution, attribute, ownership, all rights reserved, some rights reserved, footer, widget
 Requires at least: 3.1
-Tested up to: 5.4
-Stable tag: 2021.04.1
+Tested up to: 6.0.1
+Stable tag: 2022.09.1
 Requires PHP: 5.6.20
 License: GPLv2 or later
 License URI: https://gnu.org/licenses/gpl-2.0.html
@@ -59,6 +59,18 @@ See the GitHub project: [creativecommons/wp-plugin-creativecommons](https://gith
 
 
 == Changelog ==
+
+= v2022.09.1 =
+
+* Fixed: PHP 8 plugin admin options load failure #209
+* Notice: migration from create-guten-block to @wordpress/scripts will be coming soon
+
+= v2022.07.1 =
+
+* Feature: Setup baseline docker-compose.yml file for easier development #199, #154
+* Verify for WordPress 6 #158
+* Prep for WordPress 5.5 #125
+* Docs: update wpcs instructions to prevent errors #159
 
 
 = v2021.04.1 =
