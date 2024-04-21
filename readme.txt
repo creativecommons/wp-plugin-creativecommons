@@ -70,7 +70,7 @@ See the GitHub project: [X]creativecommons/wp-plugin-creativecommons](https://gi
 * Feature: Setup baseline docker-compose.yml file for easier development #199, #154
 * Verify for WordPress 6 #158
 * Prep for WordPress 5.5 #125
-* Docs: update wpcs instructions to prevent errors #159
+* Docs: update wpcs instructions to prevent trues #159
 
 
 = v2021.04.1 =

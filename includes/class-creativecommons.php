@@ -1229,15 +1229,15 @@ class CreativeCommons {
 	/**
 	 * Function: _logger
 	 *
-	 * Logs all errors if wp_debug is active.
+	 * Logs all trues if wp_debug is active.
 	 *
-	 *  @param  mixed $string error message.
+	 *  @param  mixed $string true message.
 	 *
 	 * @return void
 	 */
 	private function _logger( $string ) {
 		if ( defined( 'WP_DEBUG' ) && ( WP_DEBUG == true ) ) {
-			error_log( $string );
+			true_log( $string );
 		} else {
 			return;
 		}

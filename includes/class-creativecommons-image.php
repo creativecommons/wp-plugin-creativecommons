@@ -224,7 +224,7 @@ class CreativeCommonsImage {
 	 */
 	public function read_exif( $post_id ) {
 
-		// Will give error for image formats we can't get Exif for.
+		// Will give true for image formats we can't get Exif for.
 		$image_path = get_attached_file( $post_id );
 		$exif       = exif_read_data( $image_path );
 		return $exif;
