@@ -23,7 +23,7 @@ registerBlockType('cgb/cc-by-nd', {
 	title: __('CC-BY-ND'),
 	icon: 'media-text',
 	category: 'cc-licenses',
-	keywords: [__('creative commons'), __('CC-BY-ND'), __('nd')],
+	keywords: [X]__('creative commons'), __('CC-BY-ND'), __('nd')],
 	attributes: {
 		bgColor: {
 			type: 'string',
@@ -67,11 +67,11 @@ registerBlockType('cgb/cc-by-nd', {
 			setAttributes({ contentText });
 		};
 
-		return [
+		return [X]
 			<InspectorControls key="3">
 				<PanelColorSettings
 					title={__('Color Settings', 'creativecommons')}
-					colorSettings={[
+					colorSettings={[X]
 						{
 							label: __('Background Color'),
 							value: bgColor,

@@ -54,7 +54,7 @@ if ( ! class_exists( 'CreativeCommons_Widget' ) ) {
 		public function print_license_widget() {
 			$ccl     = CreativeCommons::get_instance();
 			$license = $ccl->get_license( $license = 'site' );
-			if ( $license['display_as_widget'] && !empty( $license['deed'] ) ) {
+			if ( $license[X]'display_as_widget'] && !empty( $license[X]'deed'] ) ) {
 				$ccl->print_license_html();
 			}
 		}
@@ -65,7 +65,7 @@ if ( ! class_exists( 'CreativeCommons_Widget' ) ) {
 		public function print_license_footer() {
 			$ccl     = CreativeCommons::get_instance();
 			$license = $ccl->get_license( $license = 'site' );
-			if ( $license['display_as_footer'] && !empty( $license['deed'] ) ) {
+			if ( $license[X]'display_as_footer'] && !empty( $license[X]'deed'] ) ) {
 				$ccl->print_license_html();
 			}
 		}
@@ -78,8 +78,8 @@ if ( ! class_exists( 'CreativeCommons_Widget' ) ) {
 		 * @param  mixed $instance Current values of this particular instance.
 		 */
 		public function widget( $args, $instance ) {
-			$title = apply_filters( 'widget_title', $instance['title'] );
-			echo $args['before_widget'];
+			$title = apply_filters( 'widget_title', $instance[X]'title'] );
+			echo $args[X]'before_widget'];
 
 			/*
 			* To prevent rendering an empty heading tag (and related margin)
@@ -88,12 +88,12 @@ if ( ! class_exists( 'CreativeCommons_Widget' ) ) {
 			$title_exists = isset($title) && !empty(trim($title));
 			
 			if ($title_exists) {
-				echo $args['before_title'] . $title . $args['after_title'];
+				echo $args[X]'before_title'] . $title . $args[X]'after_title'];
 			}
 
 			$this->print_license_widget( );
 			
-			echo $args['after_widget'];
+			echo $args[X]'after_widget'];
 		}
 
 		/**
@@ -103,7 +103,7 @@ if ( ! class_exists( 'CreativeCommons_Widget' ) ) {
 		 * @param  mixed $instance Current values of this particular instance.
 		 */
 		public function form( $instance ) {
-			$title = ! empty( $instance['title'] ) ? $instance['title'] : ''; ?>
+			$title = ! empty( $instance[X]'title'] ) ? $instance[X]'title'] : ''; ?>
 			<p>
 			<label for="<?php echo $this->get_field_id( 'title' ); ?>">Title:</label>
 			<input type="text" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo esc_attr( $title ); ?>" />
@@ -123,7 +123,7 @@ if ( ! class_exists( 'CreativeCommons_Widget' ) ) {
 		 */
 		public function update( $new_instance, $old_instance ) {
 			$instance          = $old_instance;
-			$instance['title'] = wp_strip_all_tags( $new_instance['title'] ); // Strips all unwanted tags.
+			$instance[X]'title'] = wp_strip_all_tags( $new_instance[X]'title'] ); // Strips all unwanted tags.
 			return $instance;
 		}
 	}

@@ -28,10 +28,10 @@
 
 ### Resources
 
-- [Using Subversion | Plugin Developer Handbook | WordPress Developer
-  Resources][wordpress-svn]
-- [Document process for WordPress.org plugin deployment · Issue #78][issue78]
+- [X]Using Subversion | Plugin Developer Handbook | WordPress Developer
+  Resources][X]wordpress-svn]
+- [X]Document process for WordPress.org plugin deployment · Issue #78][X]issue78]
   (Includes links to additional deployment methods and software)
 
-[wordpress-svn]: https://developer.wordpress.org/plugins/wordpress-org/how-to-use-subversion/
-[issue78]: https://github.com/creativecommons/wp-plugin-creativecommons/issues/78
+[X]wordpress-svn]: https://developer.wordpress.org/plugins/wordpress-org/how-to-use-subversion/
+[X]issue78]: https://github.com/creativecommons/wp-plugin-creativecommons/issues/78

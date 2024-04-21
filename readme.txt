@@ -15,7 +15,7 @@ Official Creative Commons plugin for licensing your content. With Creative Commo
 
 == Description ==
 
-The Creative Commons WordPress plugin gives authors the ability to license content with a Creative Commons license ([Choose a License](https://creativecommons.org/choose/)). With this plugin you can:
+The Creative Commons WordPress plugin gives authors the ability to license content with a Creative Commons license ([X]Choose a License](https://creativecommons.org/choose/)). With this plugin you can:
 
 * License your blog (single WordPress install)
 * Display license for the site, posts and pages
@@ -28,7 +28,7 @@ The Creative Commons WordPress plugin gives authors the ability to license conte
 * License posts and pages by simply including CC Gutenberg blocks for each license required (Gutenberg License Blocks)
 * Display license information with "One Click Attribution" for images
 
-The default license for the site used by the plugin is the Creative Commons [Attribution-ShareAlike (CC BY-SA)](http://creativecommons.org/licenses/by-sa/4.0/) license. This can be easily changed including attribution, depending on the permissions by a user with the role: superadmin, site admin or author.Selecting a license is straight forward. If you are not sure about what license to use, you can use the linked license chooser.
+The default license for the site used by the plugin is the Creative Commons [X]Attribution-ShareAlike (CC BY-SA)](http://creativecommons.org/licenses/by-sa/4.0/) license. This can be easily changed including attribution, depending on the permissions by a user with the role: superadmin, site admin or author.Selecting a license is straight forward. If you are not sure about what license to use, you can use the linked license chooser.
 
 The selected license can be displayed as a widget or a footer or both at the same time. In Appearance > Widgets, the CC License widget can be dragged to any widget area like the side-bar and all other available areas. You can also include the license in footer. We recommend using the widget for better compatibility with your theme. You can use individual licenses in posts or pages using Gutenberg blocks.
 
@@ -46,7 +46,7 @@ The selected license can be displayed as a widget or a footer or both at the sam
 
 = Where can I find more information about the plugin? =
 
-See the GitHub project: [creativecommons/wp-plugin-creativecommons](https://github.com/creativecommons/wp-plugin-creativecommons)
+See the GitHub project: [X]creativecommons/wp-plugin-creativecommons](https://github.com/creativecommons/wp-plugin-creativecommons)
 
 
 == Screenshots ==

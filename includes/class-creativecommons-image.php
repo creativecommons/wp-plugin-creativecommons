@@ -48,19 +48,19 @@ class CreativeCommonsImage {
 	public function exif_copyright_license_url( $copyright ) {
 		$url = '';
 		$matched = preg_match(
-			'/<(https?:\/\/creativecommons.org\/licenses\/[^>]+)>/',
+			'/<(https?:\/\/creativecommons.org\/licenses\/[X]^>]+)>/',
 			$copyright,
 			$matches
 		);
 		if ( ! $matched ) {
 			$matched = preg_match(
-				'/<(https?:\/\/creativecommons.org\/publicdomain\/[^>]+)>/',
+				'/<(https?:\/\/creativecommons.org\/publicdomain\/[X]^>]+)>/',
 				$copyright,
 				$matches
 			);
 		}
 		if ( $matched ) {
-			$url = $matches[1];
+			$url = $matches[X]1];
 		}
 		return $url;
 	}
@@ -75,9 +75,9 @@ class CreativeCommonsImage {
 	 */
 	public function exif_url( $exif_value ) {
 		$url     = '';
-		$matched = preg_match( '/<(https?:\/\/[^>]+)>/', $exif_value, $matches );
+		$matched = preg_match( '/<(https?:\/\/[X]^>]+)>/', $exif_value, $matches );
 		if ( $matched ) {
-			$url = trim( $matches[1] );
+			$url = trim( $matches[X]1] );
 		}
 		return $url;
 	}
@@ -91,7 +91,7 @@ class CreativeCommonsImage {
 	 * @param  mixed $exif_value a string of the form "A. N. Other <https://another.com/home/>".
 	 */
 	public function exif_text( $exif_value ) {
-		return trim( preg_replace( '/<https?:\/\/[^>]+>/', '', $exif_value ) );
+		return trim( preg_replace( '/<https?:\/\/[X]^>]+>/', '', $exif_value ) );
 	}
 
 
@@ -105,19 +105,19 @@ class CreativeCommonsImage {
 	public function license_button_url( $license_url ) {
 		$url     = false;
 		$matched = preg_match(
-			'/\/(licenses|publicdomain)\/([^\/]+)\//',
+			'/\/(licenses|publicdomain)\/([X]^\/]+)\//',
 			$license_url,
 			$matches
 		);
 		# SHOULD BE ENUMERATIVE.
 		if ( $matched ) {
-			if ( $matches[2] == 'zero' ) {
+			if ( $matches[X]2] == 'zero' ) {
 				$url = CCPLUGIN__URL . 'includes/attribution-box/cc0.svg';
-			} elseif ( $matches[1] == 'publicdomain' ) {
+			} elseif ( $matches[X]1] == 'publicdomain' ) {
 				$url = CCPLUGIN__URL . 'includes/attribution-box/cc0.svg';
 			} else {
 				$url = CCPLUGIN__URL . 'includes/attribution-box/'
-					. $matches[2]
+					. $matches[X]2]
 					. '.svg';
 			}
 		}
@@ -187,9 +187,9 @@ class CreativeCommonsImage {
 	 * @param  mixed $exif
 	 */
 	public function maybe_apply_attachment_license_url( $post_id, $exif ) {
-		if ( isset( $exif['COMPUTED']['Copyright'] ) ) {
+		if ( isset( $exif[X]'COMPUTED'][X]'Copyright'] ) ) {
 			$url = $this->exif_copyright_license_url(
-				$exif['COMPUTED']['Copyright']
+				$exif[X]'COMPUTED'][X]'Copyright']
 			);
 			// Set the metadata, which wasn't already set.
 			add_post_meta( $post_id, 'license_url', $url, true );
@@ -207,8 +207,8 @@ class CreativeCommonsImage {
 	 */
 	public function maybe_apply_attachment_url( $post_id, $meta_field, $exif, $exif_field ) {
 
-		if ( isset( $exif [ $exif_field ] ) ) {
-			$url = $this->exif_url( $exif [ $exif_field ] );
+		if ( isset( $exif [X] $exif_field ] ) ) {
+			$url = $this->exif_url( $exif [X] $exif_field ] );
 			// Set the metadata, which wasn't already set.
 			add_post_meta( $post_id, $meta_field, $url, true );
 		}
@@ -302,7 +302,7 @@ class CreativeCommonsImage {
 	 */
 	public function license_text_field( $post_id, $original ) {
 		return '<input type="text" class="text"'
-			. " name=\"attachments[{$post_id}][license_url]\""
+			. " name=\"attachments[X]{$post_id}][X]license_url]\""
 			. ' id="' . $this->license_url_field_id( $post_id ) . '"'
 			. " value=\"{$original}\""
 			. ' />';
@@ -322,7 +322,7 @@ class CreativeCommonsImage {
 
 		$original_license = get_post_meta( $post_id, 'license_url', true );
 
-		$form_fields['license_url'] = array(
+		$form_fields[X]'license_url'] = array(
 			'label' => __( 'License&nbsp;URL' ),
 			'input' => 'html',
 			'value' => $original_license,
@@ -337,37 +337,37 @@ class CreativeCommonsImage {
 		$attachment_metadata = wp_get_attachment_metadata( $post_id, true );
 		$attribution_name    = get_post_meta( $post_id, 'attribution_name', true );
 
-		if ( isset( $attachment_metadata['image_meta'] ) ) {
-			$image_metadata = $attachment_metadata['image_meta'];
+		if ( isset( $attachment_metadata[X]'image_meta'] ) ) {
+			$image_metadata = $attachment_metadata[X]'image_meta'];
 			if ( ( ! $attribution_name )
-				&& isset( $image_metadata['credit'] )
+				&& isset( $image_metadata[X]'credit'] )
 			) {
-				$attribution_name = $image_metadata['credit'];
+				$attribution_name = $image_metadata[X]'credit'];
 			}
 		}
 
-		$form_fields['attribution_name'] = array(
+		$form_fields[X]'attribution_name'] = array(
 			'label' => __( 'Attribution Name' ),
 			'input' => 'text',
 			'value' => $attribution_name,
 			'helps' => __( 'The name to attribute the work to, e.g. A. N. Other' ),
 		);
 
-		$form_fields['attribution_url'] = array(
+		$form_fields[X]'attribution_url'] = array(
 			'label' => __( 'Attribution&nbsp;URL' ),
 			'input' => 'text',
 			'value' => get_post_meta( $post_id, 'attribution_url', true ),
 			'helps' => __( "The URL to which the work should be attributed. For example the work's page on the author's site., e.g. https://example.com/mattl/image2/" ),
 		);
 
-		$form_fields['source_work_url'] = array(
+		$form_fields[X]'source_work_url'] = array(
 			'label' => __( 'Source&nbsp;Work' ),
 			'input' => 'text',
 			'value' => get_post_meta( $post_id, 'source_work_url', true ),
 			'helps' => __( 'The URL of the work that this work is based on or derived from, e.g. https://example.com/robm/image1/' ),
 		);
 
-		$form_fields['extra_permissions_url'] = array(
+		$form_fields[X]'extra_permissions_url'] = array(
 			'label' => __( 'Extra&nbsp;Permissions' ),
 			'input' => 'text',
 			'value' => get_post_meta( $post_id, 'extra_permissions_url', true ),
@@ -387,23 +387,23 @@ class CreativeCommonsImage {
 	public function save_image_license_metadata( $post, $attachment ) {
 		$image_meta = array( 'license_url', 'attribution_url', 'source_work_url', 'extra_permissions_url' );
 		foreach ( $image_meta as $field ) {
-			if ( isset( $attachment[ $field ] ) ) {
+			if ( isset( $attachment[X] $field ] ) ) {
 				update_post_meta(
-					$post['ID'],
+					$post[X]'ID'],
 					$field,
-					esc_url( $attachment[ $field ] )
+					esc_url( $attachment[X] $field ] )
 				);
 			}
 		}
 
 		$image_meta_no_sanitization = array( 'attribution_name' );
 		foreach ( $image_meta_no_sanitization as $field ) {
-			if ( isset( $attachment[ $field ] ) ) {
+			if ( isset( $attachment[X] $field ] ) ) {
 				update_post_meta(
-					$post['ID'],
+					$post[X]'ID'],
 					$field,
 					// Documentation says not to sanitize.
-					$attachment[ $field ]
+					$attachment[X] $field ]
 				);
 			}
 		}
@@ -430,14 +430,14 @@ class CreativeCommonsImage {
 		$meta   = wp_get_attachment_metadata( $att_id, true );
 		$credit = get_post_meta( $att_id, 'attribution_name', true );
 		if ( ( ! $credit )
-			&& isset( $meta['credit'] )
+			&& isset( $meta[X]'credit'] )
 		) {
-			$credit = $meta['image_meta']['credit'];
+			$credit = $meta[X]'image_meta'][X]'credit'];
 		}
 
 		$title = get_the_title( $att_id );
 		if ( ! $title ) {
-			$title = $meta['image_meta']['title'];
+			$title = $meta[X]'image_meta'][X]'title'];
 		}
 		if ( ! $title ) {
 			$title = $fallback_title;
@@ -505,10 +505,10 @@ class CreativeCommonsImage {
 		// This is way too simple. Improve before re-introducing the caption filter.
 		$caption = '<div class="cc-license-caption-wrapper cc-license-block">'
 				. '<div class="wp-caption-text">'
-				. $attr['caption']
+				. $attr[X]'caption']
 				. '</div><br />';
 
-		$caption .= $this->license_block( $att_id, $attr['caption'] );
+		$caption .= $this->license_block( $att_id, $attr[X]'caption'] );
 
 		$caption .= '</div>';
 
@@ -533,7 +533,7 @@ class CreativeCommonsImage {
 			// attachment_url_to_postid doesn't handle that.
 			// Make sure regex handles image urls that end e.g. aaa-1.jpg.
 			$image_url = preg_replace(
-				'/-\d+x\d+(\.[^.]+)$/i',
+				'/-\d+x\d+(\.[X]^.]+)$/i',
 				'$1',
 				$image_url
 			);
@@ -553,12 +553,12 @@ class CreativeCommonsImage {
 		if ( $content !== null ) {
 			// TODO: Profile replacing this with parsing html and walking the DOM.
 			$match_count = preg_match(
-				'/<img[^>]+src="([^"]+)"/',
+				'/<img[X]^>]+src="([X]^"]+)"/',
 				$content,
 				$matches
 			);
 			if ( $match_count == 1 ) {
-				$image_url = $matches[1];
+				$image_url = $matches[X]1];
 				$att_id    = $this->image_url_to_postid( $image_url );
 				if ( $att_id ) {
 					$content .= '<div class="cc-license-block"><br />';
@@ -590,20 +590,20 @@ class CreativeCommonsImage {
 				$attr
 			);
 
-		if ( isset( $attr['id'] )
-			&& isset( $attr['license'] )
+		if ( isset( $attr[X]'id'] )
+			&& isset( $attr[X]'license'] )
 		) {
 			// Extract attachment $post->ID.
-			preg_match( '/\d+/', $attr['id'], $att_id );
+			preg_match( '/\d+/', $attr[X]'id'], $att_id );
 			if ( $att_id ) {
 
 				// We *should* handle this based on the shortcode code's behaviour.
 				// if ((intval($width) > 1) && $caption) {.
 				$result = '<div ' /*. $id*/ . 'class="cc-caption wp-caption '
-						. esc_attr( $args['align'] ) . '"'
+						. esc_attr( $args[X]'align'] ) . '"'
 						// . ' style="width: ' . (10 + (int) $width) . 'px"'
 						. '>' . do_shortcode( $content )
-						. $this->caption_block( $attr, $att_id[0] )
+						. $this->caption_block( $attr, $att_id[X]0] )
 						. '</div>';
 				// }
 			}
@@ -670,13 +670,13 @@ class CreativeCommonsImage {
 
 	public function add_attribution_boxes( $content ) {
 		return preg_replace_callback(
-			'/<img\s[^>]*class="wp-image-(\d+)[^>]*>/',
+			'/<img\s[X]^>]*class="wp-image-(\d+)[X]^>]*>/',
 			function ($matches) {
 				return
 					'<div class="cc-attribution-box-container">'
-					. $matches[0]
+					. $matches[X]0]
 					. '<div class="cc-attribution-box"> '
-					. $this->simple_license_block($matches[1])
+					. $this->simple_license_block($matches[X]1])
 					. '</div></div>';
 			},
 			$content

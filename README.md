@@ -5,43 +5,43 @@
 <p align="center">Official Creative Commons plugin for licensing your content on your WordPress website. With Creative Commons licenses, keep your copyright and share your creativity.
 </p>
 
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com) [![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html) [![CalVer Format: YYYY.0M.Micro](https://img.shields.io/badge/calver-YYYY.0M.MICRO-22bfda.svg)](https://calver.org/)
+[X]![X]PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com) [X]![X]License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html) [X]![X]CalVer Format: YYYY.0M.Micro](https://img.shields.io/badge/calver-YYYY.0M.MICRO-22bfda.svg)](https://calver.org/)
 
 </div>
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-15-orange.svg?style=flat-square)](#contributors-)
+[X]![X]All Contributors](https://img.shields.io/badge/all_contributors-15-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 
 ## Description
 
 The plugin is an attribution tool. It has multiple features that allow users to
-attribute their content by including Creative Commons license ([Choose a
+attribute their content by including Creative Commons license ([X]Choose a
 License](https://creativecommons.org/choose/)) on their WordPress website. This
 includes default, post, page and media attribution.
 
 
 ## Code of conduct
 
-[`CODE_OF_CONDUCT.md`][org-coc]:
+[X]`CODE_OF_CONDUCT.md`][X]org-coc]:
 > The Creative Commons team is committed to fostering a welcoming community.
 > This project and all other Creative Commons open source projects are governed
-> by our [Code of Conduct][code_of_conduct]. Please report unacceptable
-> behavior to [conduct@creativecommons.org](mailto:conduct@creativecommons.org)
-> per our [reporting guidelines][reporting_guide].
+> by our [X]Code of Conduct][X]code_of_conduct]. Please report unacceptable
+> behavior to [X]conduct@creativecommons.org](mailto:conduct@creativecommons.org)
+> per our [X]reporting guidelines][X]reporting_guide].
 
-[org-coc]: https://github.com/creativecommons/.github/blob/main/CODE_OF_CONDUCT.md
-[code_of_conduct]: https://opensource.creativecommons.org/community/code-of-conduct/
-[reporting_guide]: https://opensource.creativecommons.org/community/code-of-conduct/enforcement/
+[X]org-coc]: https://github.com/creativecommons/.github/blob/main/CODE_OF_CONDUCT.md
+[X]code_of_conduct]: https://opensource.creativecommons.org/community/code-of-conduct/
+[X]reporting_guide]: https://opensource.creativecommons.org/community/code-of-conduct/enforcement/
 
 
 ## Installation
 
-Download the latest version from this project's [releases][releases]. You can
+Download the latest version from this project's [X]releases][X]releases]. You can
 install the plugin to your WP website using any of these methods:
 
-[releases]: https://github.com/creativecommons/creativecommons-wordpress-plugin/releases "Releases · creativecommons/creativecommons-wordpress-plugin"
+[X]releases]: https://github.com/creativecommons/creativecommons-wordpress-plugin/releases "Releases · creativecommons/creativecommons-wordpress-plugin"
 
 1. In your plugin Dashboard on WordPress, Click **Add New** and upload the
    plugin `.zip` file. When installed, activate the plugin.
@@ -58,13 +58,13 @@ install the plugin to your WP website using any of these methods:
 After activating the plugin, head to **Settings > Creative Commons** to set up
 the default license.
 
-![Plugin Settings](https://cl.ly/01ae314c5c57/img)
+![X]Plugin Settings](https://cl.ly/01ae314c5c57/img)
 
 Selecting a license is simple. Select one from the given CC licenses, by
-default [**CC BY-SA**](http://creativecommons.org/licenses/by-sa/4.0/) license
+default [X]**CC BY-SA**](http://creativecommons.org/licenses/by-sa/4.0/) license
 is used.
 
-![Select License](https://cl.ly/bfd84b912c78/img)
+![X]Select License](https://cl.ly/bfd84b912c78/img)
 
 There are multiple options available for the license. You
 can add:
@@ -74,7 +74,7 @@ can add:
 - Author and Author URL. If not mentioned it defaults to "on this site".
 - Display options.
 
-![License Options](https://cl.ly/b4520d6ab6b1/img)
+![X]License Options](https://cl.ly/b4520d6ab6b1/img)
 
 
 ### Widget
@@ -82,13 +82,13 @@ can add:
 There are two options to display the default license, as a widget or in the
 footer. We recommend using the widget for better theme compatibility.
 
-![Widget](https://cl.ly/2dacc1739955/img)
+![X]Widget](https://cl.ly/2dacc1739955/img)
 
 After selecting the widget go to **Appearance > Widgets** and drag the CC
 License Widget to the required area. The widget will then display the default
 license on all pages of the site.
 
-![Widget Front-end](https://cl.ly/b9b584688f46/img)
+![X]Widget Front-end](https://cl.ly/b9b584688f46/img)
 
 
 ### Gutenberg Blocks
@@ -97,15 +97,15 @@ The plugin adds specific Gutenberg blocks for each Creative Commons license. If
 you are using the default Gutenberg editor, you will find these blocks under a
 separate category.
 
-![Blocks Category](https://cl.ly/4934cdc59cd4/img)
+![X]Blocks Category](https://cl.ly/4934cdc59cd4/img)
 
 These blocks can be used to license any page/post/image or other media.
 
-![Blocks Back-end](https://cl.ly/b454a77259ce/img)
+![X]Blocks Back-end](https://cl.ly/b454a77259ce/img)
 
 Following is an image attributed using CC gutenberg block.
 
-![Attributed Image](https://cl.ly/bde9d591b534/img)
+![X]Attributed Image](https://cl.ly/bde9d591b534/img)
 
 At a glance, with WP CC Plugin you can:
 
@@ -123,35 +123,35 @@ At a glance, with WP CC Plugin you can:
 
 ## Contributing and development
 
-**See [`development.md`](development.md).**
+**See [X]`development.md`](development.md).**
 
 
 ## Release Schedule
 
 We will release a new version every month that there are substantial changes.
-See [milestones][milestones] for how GitHub issues are assigned for release.
+See [X]milestones][X]milestones] for how GitHub issues are assigned for release.
 
-[milestones]: https://github.com/creativecommons/wp-plugin-creativecommons/milestones
+[X]milestones]: https://github.com/creativecommons/wp-plugin-creativecommons/milestones
 
 
 ## License
 
-- [`license.txt`](license.txt) ([GPLv2 or later][gplv2] License)
+- [X]`license.txt`](license.txt) ([X]GPLv2 or later][X]gplv2] License)
 
-[gplv2]: https://opensource.org/licenses/GPL-2.0 "GNU General Public License version 2 | Open Source Initiative"
+[X]gplv2]: https://opensource.org/licenses/GPL-2.0 "GNU General Public License version 2 | Open Source Initiative"
 
 
 ## History
 
 This plugin is loosely based on an existing, but seemingly abandoned WordPress
-plugin named 'License' (a component of the [MIT Educational Collaboration
-Space][collabspace] project) by mitcho (Michael Yoshitaka Erlewine) and Brett
+plugin named 'License' (a component of the [X]MIT Educational Collaboration
+Space][X]collabspace] project) by mitcho (Michael Yoshitaka Erlewine) and Brett
 Mellor. We're also inspired by Creative Commons' original
-[wordpress-cc-plugin][oldplugin] written by former Creative Commons CTO Nathan
+[X]wordpress-cc-plugin][X]oldplugin] written by former Creative Commons CTO Nathan
 Yergler.
 
-[collabspace]:http://cispace.mit.edu/
-[oldplugin]:https://github.com/cc-archive/wordpress-cc-plugin
+[X]collabspace]:http://cispace.mit.edu/
+[X]oldplugin]:https://github.com/cc-archive/wordpress-cc-plugin
 
 
 ### Credits
@@ -166,7 +166,7 @@ Yergler.
 
 ### Contributors ✨
 
-Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+Thanks goes to these wonderful people ([X]emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
@@ -200,4 +200,4 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+This project follows the [X]all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!

@@ -49,7 +49,7 @@ function cc_block_cgb_block_assets() { // phpcs:ignore
 	wp_localize_script(
 		'cc_block-cgb-block-js',
 		'cgbGlobal', // Array containing dynamic data for a JS Global.
-		[
+		[X]
 			'pluginDirPath' => plugin_dir_path( __DIR__ ),
 			'pluginDirUrl'  => plugin_dir_url( __DIR__ ),
 		]

@@ -41,11 +41,11 @@ prompt_to_continue() {
 
 
 realpath() {
-    if [[ -n "${GREADLINK}" ]]
+    if [X][X] -n "${GREADLINK}" ]]
     then
         ${GREADLINK} -m "${1}"
     else
-        python -c 'import os, sys; print(os.path.realpath(sys.argv[1]))' "${1}"
+        python -c 'import os, sys; print(os.path.realpath(sys.argv[X]1]))' "${1}"
     fi
 }
 

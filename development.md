@@ -6,35 +6,35 @@ document is a set of guidelines to help you contribute to this project.
 
 ## Code of conduct
 
-[`CODE_OF_CONDUCT.md`][org-coc]:
+[X]`CODE_OF_CONDUCT.md`][X]org-coc]:
 > The Creative Commons team is committed to fostering a welcoming community.
 > This project and all other Creative Commons open source projects are governed
-> by our [Code of Conduct][code_of_conduct]. Please report unacceptable
-> behavior to [conduct@creativecommons.org](mailto:conduct@creativecommons.org)
-> per our [reporting guidelines][reporting_guide].
+> by our [X]Code of Conduct][X]code_of_conduct]. Please report unacceptable
+> behavior to [X]conduct@creativecommons.org](mailto:conduct@creativecommons.org)
+> per our [X]reporting guidelines][X]reporting_guide].
 
-[org-coc]: https://github.com/creativecommons/.github/blob/main/CODE_OF_CONDUCT.md
-[code_of_conduct]: https://opensource.creativecommons.org/community/code-of-conduct/
-[reporting_guide]: https://opensource.creativecommons.org/community/code-of-conduct/enforcement/
+[X]org-coc]: https://github.com/creativecommons/.github/blob/main/CODE_OF_CONDUCT.md
+[X]code_of_conduct]: https://opensource.creativecommons.org/community/code-of-conduct/
+[X]reporting_guide]: https://opensource.creativecommons.org/community/code-of-conduct/enforcement/
 
 
 ## Contributing
 
-See [`CONTRIBUTING.md`][org-contrib].
+See [X]`CONTRIBUTING.md`][X]org-contrib].
 
-[org-contrib]: https://github.com/creativecommons/.github/blob/main/CONTRIBUTING.md
+[X]org-contrib]: https://github.com/creativecommons/.github/blob/main/CONTRIBUTING.md
 
 
 ## WordPress Coding Standards
 
-Creative Commons plugin for WordPress follows [WordPress Coding
-Standards][standards] and [WordPress Documentation Standards][inline].  Before
+Creative Commons plugin for WordPress follows [X]WordPress Coding
+Standards][X]standards] and [X]WordPress Documentation Standards][X]inline].  Before
 pushing your work/contribution, make sure it closely follows these standards
 otherwise it will not be accepted. We use a PHP_CodeSniffer setup with
 `'WordPress'` sniff to check the code against the standards.
 
-[standards]: https://make.wordpress.org/core/handbook/best-practices/coding-standards/
-[inline]: https://make.wordpress.org/core/handbook/best-practices/inline-documentation-standards/
+[X]standards]: https://make.wordpress.org/core/handbook/best-practices/coding-standards/
+[X]inline]: https://make.wordpress.org/core/handbook/best-practices/inline-documentation-standards/
 
 
 ### Recommended Setup for WordPress Coding Standards
@@ -44,13 +44,13 @@ If you are not setup to detect WPCS errors, consider the following steps.
 1. **Install Composer**
 
    Make sure that you have the current version of PHP installed. Then the first
-   step is to install [Composer](https://getcomposer.org/). Install it Globally
-   by following its [documentation](https://getcomposer.org/doc/00-intro.md)
+   step is to install [X]Composer](https://getcomposer.org/). Install it Globally
+   by following its [X]documentation](https://getcomposer.org/doc/00-intro.md)
    for your particular OS.
 
 2. **Install PHP_CodeSniffer**
 
-   Install [PHPCS](https://github.com/squizlabs/PHP_CodeSniffer) by running the
+   Install [X]PHPCS](https://github.com/squizlabs/PHP_CodeSniffer) by running the
    following command in your terminal:
    ```shell
    composer global require squizlabs/php_codesniffer
@@ -68,7 +68,7 @@ If you are not setup to detect WPCS errors, consider the following steps.
 
 4. **Setup WPCS**
 
-   Clone the official [WordPress Coding Standards repository][wpcs-repo] in
+   Clone the official [X]WordPress Coding Standards repository][X]wpcs-repo] in
    your home folder and ensure you are using its `master` branch:
    ```shell
    git clone https://github.com/WordPress/WordPress-Coding-Standards.git wpcs
@@ -107,7 +107,7 @@ If you are not setup to detect WPCS errors, consider the following steps.
 7. **Visual Studio Code Workflow**
 
    To configure VSCode so that it may report errors right in the editor,
-   install [phpcs extension][phpcs]. Open User Settings and add the following
+   install [X]phpcs extension][X]phpcs]. Open User Settings and add the following
    settings:
 
    ```shell
@@ -119,15 +119,15 @@ If you are not setup to detect WPCS errors, consider the following steps.
    editor, consult its documentation. Once there are no reported errors in your
    fix, you are good to go.
 
-[wpcs-repo]: https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards
-[phpcs]: https://marketplace.visualstudio.com/items?itemName=ikappas.phpcs
+[X]wpcs-repo]: https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards
+[X]phpcs]: https://marketplace.visualstudio.com/items?itemName=ikappas.phpcs
 
 
 ## Contributing to Gutenberg Blocks
 
 CC plugin for WordPress uses Gutenberg blocks built by **create-guten-block**
 tool.  If you are interested, you can read its detailed and well-written
-[documentation](https://github.com/ahmadawais/create-guten-block). If you want
+[X]documentation](https://github.com/ahmadawais/create-guten-block). If you want
 to test/make changes to these blocks, follow the following steps.
 
 1. **Setup npm**
@@ -194,7 +194,7 @@ includes an Apache webserver, the latest WordPress installation files, and a
 mySQL db server utilizing MariaDB. We have also included a copy of `wp-cli` for
 ease of developement and testing.
 
-It is modelled after the official example: [wordpress - Official Image | Docker
+It is modelled after the official example: [X]wordpress - Official Image | Docker
 Hub](https://hub.docker.com/_/wordpress/).
 
 To run a local development environment for building and testing contributions
@@ -202,10 +202,10 @@ you can run the following pattern from the root directory of this repository
 after cloning it.
 
 ```shell
-docker compose [command]
+docker compose [X]command]
 ```
 
-Be sure to substitute `[command]` for a valid docker compose command, such as
+Be sure to substitute `[X]command]` for a valid docker compose command, such as
 the following to build and start containers:
 
 ```shell

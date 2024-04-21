@@ -195,7 +195,7 @@ class CreativeCommons {
 	/**
 	 * Html output call-back for license section shown in Settings > Creative Commons.
 	 * Uses radio buttons, and the selected license is stored in the $license
-	 * array as $license['choice'].
+	 * array as $license[X]'choice'].
 	 */
 	public function settings_license_chooser() {
 		$license = $this->get_license( $location = 'site' ); // Gets license array to store the selection.
@@ -223,7 +223,7 @@ class CreativeCommons {
 		<tr>
 			<td>
 				<p><label>
-					<input name="license[choice]" type="radio" value="by" <?php isset( $license['choice'] ) ? checked( $license['choice'], 'by' ) : ''; ?> />
+					<input name="license[X]choice]" type="radio" value="by" <?php isset( $license[X]'choice'] ) ? checked( $license[X]'choice'], 'by' ) : ''; ?> />
 					<?php esc_html_e( 'Attribution 4.0 International License', 'CreativeCommons' ); ?>
 					<strong style="color:#fc7303;" >(CC BY 4.0)</strong>
 				</p></label>
@@ -237,7 +237,7 @@ class CreativeCommons {
 		<tr>
 			<td>
 				<p class="cc-test-css"><label>
-					<input name="license[choice]" type="radio" value="by-sa" <?php isset( $license['choice'] ) ? checked( $license['choice'], 'by-sa' ) : ''; ?> /> <?php esc_html_e( 'Attribution-ShareAlike 4.0 International License', 'CreativeCommons' ); ?>
+					<input name="license[X]choice]" type="radio" value="by-sa" <?php isset( $license[X]'choice'] ) ? checked( $license[X]'choice'], 'by-sa' ) : ''; ?> /> <?php esc_html_e( 'Attribution-ShareAlike 4.0 International License', 'CreativeCommons' ); ?>
 					<strong style="color:#fc7303;" >(CC BY-SA 4.0)</strong>
 				</p></label>
 			</td>
@@ -250,7 +250,7 @@ class CreativeCommons {
 		<tr>
 			<td>
 				<p><label>
-					<input name="license[choice]" type="radio" value="by-nc" <?php isset( $license['choice'] ) ? checked( $license['choice'], 'by-nc' ) : ''; ?> /> <?php esc_html_e( 'Attribution-NonCommercial 4.0 International License', 'CreativeCommons' ); ?>
+					<input name="license[X]choice]" type="radio" value="by-nc" <?php isset( $license[X]'choice'] ) ? checked( $license[X]'choice'], 'by-nc' ) : ''; ?> /> <?php esc_html_e( 'Attribution-NonCommercial 4.0 International License', 'CreativeCommons' ); ?>
 					<strong style="color:#fc7303;" >(CC BY-NC 4.0)</strong>
 				</p></label>
 			</td>
@@ -263,7 +263,7 @@ class CreativeCommons {
 		<tr>
 			<td>
 				<p><label>
-					<input name="license[choice]" type="radio" value="by-nc-sa" <?php isset( $license['choice'] ) ? checked( $license['choice'], 'by-nc-sa' ) : ''; ?> /> <?php esc_html_e( 'Attribution-NonCommercial-ShareAlike 4.0 International License', 'CreativeCommons' ); ?>
+					<input name="license[X]choice]" type="radio" value="by-nc-sa" <?php isset( $license[X]'choice'] ) ? checked( $license[X]'choice'], 'by-nc-sa' ) : ''; ?> /> <?php esc_html_e( 'Attribution-NonCommercial-ShareAlike 4.0 International License', 'CreativeCommons' ); ?>
 					<strong style="color:#fc7303;" >(CC BY-NC-SA 4.0)</strong>
 				</p></label>
 			</td>
@@ -276,7 +276,7 @@ class CreativeCommons {
 		<tr>
 			<td>
 				<p><label>
-					<input name="license[choice]" type="radio" value="by-nc-nd" <?php isset( $license['choice'] ) ? checked( $license['choice'], 'by-nc-nd' ) : ''; ?> /> <?php esc_html_e( 'Attribution-NonCommercial-NoDerivatives 4.0 International License', 'CreativeCommons' ); ?>
+					<input name="license[X]choice]" type="radio" value="by-nc-nd" <?php isset( $license[X]'choice'] ) ? checked( $license[X]'choice'], 'by-nc-nd' ) : ''; ?> /> <?php esc_html_e( 'Attribution-NonCommercial-NoDerivatives 4.0 International License', 'CreativeCommons' ); ?>
 					<strong style="color:#fc7303;" >(CC BY-NC-ND 4.0)</strong>
 				</p></label>
 			</td>
@@ -289,7 +289,7 @@ class CreativeCommons {
 		<tr>
 			<td>
 				<p><label>
-					<input name="license[choice]" type="radio" value="by-nd" <?php isset( $license['choice'] ) ? checked( $license['choice'], 'by-nd' ) : ''; ?> /> <?php esc_html_e( 'Attribution-NoDerivatives 4.0 International License', 'CreativeCommons' ); ?>
+					<input name="license[X]choice]" type="radio" value="by-nd" <?php isset( $license[X]'choice'] ) ? checked( $license[X]'choice'], 'by-nd' ) : ''; ?> /> <?php esc_html_e( 'Attribution-NoDerivatives 4.0 International License', 'CreativeCommons' ); ?>
 					<strong style="color:#fc7303;" >(CC BY-ND 4.0)</strong>
 				</p></label>
 			</td>
@@ -302,7 +302,7 @@ class CreativeCommons {
 		<tr>
 			<td>
 				<p><label>
-					<input name="license[choice]" type="radio" value="cc0" <?php isset( $license['choice'] ) ? checked( $license['choice'], 'cc0' ) : ''; ?> /> <?php esc_html_e( 'CC0 Universal Public Domain Dedication license', 'CreativeCommons' ); ?>
+					<input name="license[X]choice]" type="radio" value="cc0" <?php isset( $license[X]'choice'] ) ? checked( $license[X]'choice'], 'cc0' ) : ''; ?> /> <?php esc_html_e( 'CC0 Universal Public Domain Dedication license', 'CreativeCommons' ); ?>
 					<strong style="color:#fc7303;">(CC0)</strong>
 				</p></label>
 			</td>
@@ -341,9 +341,9 @@ class CreativeCommons {
 	 */
 	public function settings_preview_current_license() {
 		$license = $this->get_license( $location = 'site' );
-		$deed    = esc_html( $license['deed'] );
-		$name    = esc_attr( $license['name'] );
-		$image   = esc_attr( $license['image'] );
+		$deed    = esc_html( $license[X]'deed'] );
+		$name    = esc_attr( $license[X]'name'] );
+		$image   = esc_attr( $license[X]'image'] );
 
 		// Closing the settings table by </table>. Do not use any more setting fields in license-chooser section.
 		echo "</table><div style=' text-align: center; background: #fff; border: 1px solid #e5e5e5; box-shadow: 0 1px 1px rgba(0,0,0,.04); padding: 1em;'><img id='cc-current-license-image' src='$image'><br /><a href='$deed' target='blank' rel='license'>$name</a></div>";
@@ -357,8 +357,8 @@ class CreativeCommons {
 	public function setting_additional_text_field() {
 
 		$license  = $this->get_license( $location = 'site' );
-		$add_txt  = esc_html( $license['additional_attribution_txt'] );
-		echo "<input style='padding:0.5rem;' name='license[additional_attribution_txt]' type='text' size='120' maxlength='300' id='additional-attribution-txt' value='$add_txt' />";
+		$add_txt  = esc_html( $license[X]'additional_attribution_txt'] );
+		echo "<input style='padding:0.5rem;' name='license[X]additional_attribution_txt]' type='text' size='120' maxlength='300' id='additional-attribution-txt' value='$add_txt' />";
 
 	}
 
@@ -380,12 +380,12 @@ class CreativeCommons {
 
 		?>
 		<br />
-		<input name="license[display_as_widget]" type="checkbox" value="true" id="display_as_widget" <?php checked( $license['display_as_widget'], 'true' ); ?> />
+		<input name="license[X]display_as_widget]" type="checkbox" value="true" id="display_as_widget" <?php checked( $license[X]'display_as_widget'], 'true' ); ?> />
 		<label for="display_as_widget"><?php esc_html_e( 'Widget', 'CreativeCommons' ); ?>
 		<i><?php esc_html_e( '(recommended)', 'CreativeCommons' ); ?></i></label>
 		<br />
 
-		<input name="license[display_as_footer]" type="checkbox" value="true" id="display_as_footer" <?php checked( $license['display_as_footer'], 'true' ); ?> />
+		<input name="license[X]display_as_footer]" type="checkbox" value="true" id="display_as_footer" <?php checked( $license[X]'display_as_footer'], 'true' ); ?> />
 		<label for="display_as_footer"><?php esc_html_e( 'Footer', 'CreativeCommons' ); ?></label>
 		<br />
 
@@ -420,7 +420,7 @@ class CreativeCommons {
 		 * Using true as string instead of bool since it will be a
 		 * string value returned from the settings form
 		 */
-		if ( 'true' == $license['site_override_license'] ) {
+		if ( 'true' == $license[X]'site_override_license'] ) {
 			return true;
 		} else {
 			return false;
@@ -527,12 +527,12 @@ class CreativeCommons {
 				$this->_logger( 'get license for the frontend' );
 				$license = $this->get_license( 'site' );
 				if ( array_key_exists( 'user_override_license', $license )
-				&& 'true' == $license['user_override_license']
+				&& 'true' == $license[X]'user_override_license']
 				) {
 					$license = $this->get_license( 'profile' );
 				}
 				if ( array_key_exists( 'content_override_license', $license )
-				&& 'true' == $license['content_override_license']
+				&& 'true' == $license[X]'content_override_license']
 				) {
 					$license = $this->get_license( 'post-page' );
 				}
@@ -630,10 +630,10 @@ class CreativeCommons {
 	public function select_attribute_to_html( $location = null, $echo = true ) {
 
 		$license    = $this->get_license( $location = 'site' );
-		$title      = ( isset( $license['title'] ) ) ? esc_html( $license['title'] ) : '';
-		$title_url  = ( isset( $license['title_url'] ) ) ? esc_html( $license['title_url'] ) : '';
-		$author     = ( isset( $license['author'] ) ) ? esc_html( $license['author'] ) : '';
-		$author_url = ( isset( $license['author_url'] ) ) ? esc_html( $license['author_url'] ) : '';
+		$title      = ( isset( $license[X]'title'] ) ) ? esc_html( $license[X]'title'] ) : '';
+		$title_url  = ( isset( $license[X]'title_url'] ) ) ? esc_html( $license[X]'title_url'] ) : '';
+		$author     = ( isset( $license[X]'author'] ) ) ? esc_html( $license[X]'author'] ) : '';
+		$author_url = ( isset( $license[X]'author_url'] ) ) ? esc_html( $license[X]'author_url'] ) : '';
 
 		?>
 		<table class="widefat" style="background:none; width:0%; border:none; box-shadow:none;">
@@ -645,7 +645,7 @@ class CreativeCommons {
 				</td>
 				<td style="padding:10px 10px;">
 					<?php
-					printf( '<input type="text" name="license[title]" value="%1$s" id="title" class="large" size="45" /><br />', esc_attr( $title ) );
+					printf( '<input type="text" name="license[X]title]" value="%1$s" id="title" class="large" size="45" /><br />', esc_attr( $title ) );
 					?>
 				</td>
 			</tr>
@@ -656,7 +656,7 @@ class CreativeCommons {
 					</span>
 				</td>
 				<td style="padding:10px 10px;">
-					<?php printf( '<input type="text" name="license[title_url]" value="%1$s" id="title_url" class="large" size="45" /><br />', esc_attr( $title_url ) ); ?>
+					<?php printf( '<input type="text" name="license[X]title_url]" value="%1$s" id="title_url" class="large" size="45" /><br />', esc_attr( $title_url ) ); ?>
 				</td>
 			</tr>
 			<tr>
@@ -666,7 +666,7 @@ class CreativeCommons {
 					</span>
 				</td>
 				<td style="padding:10px 10px;">
-					<?php printf( '<input type="text" name="license[author]" value="%1$s" id="author" class="large" size="45" /><br />', esc_attr( $author ) ); ?>
+					<?php printf( '<input type="text" name="license[X]author]" value="%1$s" id="author" class="large" size="45" /><br />', esc_attr( $author ) ); ?>
 				</td>
 			</tr>
 			<tr>
@@ -676,7 +676,7 @@ class CreativeCommons {
 					</span>
 				</td>
 				<td style="padding:10px 10px;">
-					<?php printf( '<input type="text" name="license[author_url]" value="%1$s" id="author_url" class="large" size="45" /><br />', esc_attr( $author_url ) ); ?>
+					<?php printf( '<input type="text" name="license[X]author_url]" value="%1$s" id="author_url" class="large" size="45" /><br />', esc_attr( $author_url ) ); ?>
 				</td>
 			</tr>
 		</table>
@@ -757,64 +757,64 @@ class CreativeCommons {
 	private function _verify_license_data( $from, $data = null ) {
 		$license = array();
 
-		// if no data was provided assume the data is in $_POST['license'].
+		// if no data was provided assume the data is in $_POST[X]'license'].
 		if ( is_null( $data )
-			&& isset( $_POST['license'] )
+			&& isset( $_POST[X]'license'] )
 		) {
-			$data = sanitize_text_field( wp_unslash( $_POST['license'] ) );
+			$data = sanitize_text_field( wp_unslash( $_POST[X]'license'] ) );
 		}
 		// Saves the license attribution information. MAke sure to save the current version.
-		$license['version']             = self::VERSION;
-		$license['attribute_to']        = ( isset( $data['attribute_to'] ) ) ? esc_attr( $data['attribute_to'] ) : '';
-		$license['attribute_other']     = ( isset( $data['attribute_other'] ) ) ? esc_html( $data['attribute_other'] ) : '';
-		$license['attribute_other_url'] = ( isset( $data['attribute_other_url'] ) ) ? esc_html( $data['attribute_other_url'] ) : '';
-		$license['choice']              = ( isset( $data['choice'] ) ) ? esc_attr( $data['choice'] ) : '';
-		$license['display_as_widget']   = ( isset( $data['display_as_widget'] ) ) ? esc_html( $data['display_as_widget'] ) : '';
-		$license['display_as_footer']   = ( isset( $data['display_as_footer'] ) ) ? esc_html( $data['display_as_footer'] ) : '';
+		$license[X]'version']             = self::VERSION;
+		$license[X]'attribute_to']        = ( isset( $data[X]'attribute_to'] ) ) ? esc_attr( $data[X]'attribute_to'] ) : '';
+		$license[X]'attribute_other']     = ( isset( $data[X]'attribute_other'] ) ) ? esc_html( $data[X]'attribute_other'] ) : '';
+		$license[X]'attribute_other_url'] = ( isset( $data[X]'attribute_other_url'] ) ) ? esc_html( $data[X]'attribute_other_url'] ) : '';
+		$license[X]'choice']              = ( isset( $data[X]'choice'] ) ) ? esc_attr( $data[X]'choice'] ) : '';
+		$license[X]'display_as_widget']   = ( isset( $data[X]'display_as_widget'] ) ) ? esc_html( $data[X]'display_as_widget'] ) : '';
+		$license[X]'display_as_footer']   = ( isset( $data[X]'display_as_footer'] ) ) ? esc_html( $data[X]'display_as_footer'] ) : '';
 
 		// Gets the name, deed(url) and icon of the selected license and stores/saves it.
-		switch ( $data['choice'] ) {
+		switch ( $data[X]'choice'] ) {
 			case 'by':
-				$license['image'] = esc_attr( CCPLUGIN__URL . 'includes/images/by.png' );
-				$license['name']  = esc_attr( 'Creative Commons Attribution 4.0 International' );
-				$license['deed']  = esc_url( 'http://creativecommons.org/licenses/by/4.0/' );
+				$license[X]'image'] = esc_attr( CCPLUGIN__URL . 'includes/images/by.png' );
+				$license[X]'name']  = esc_attr( 'Creative Commons Attribution 4.0 International' );
+				$license[X]'deed']  = esc_url( 'http://creativecommons.org/licenses/by/4.0/' );
 				break;
 			case 'by-sa':
-				$license['image'] = esc_attr( CCPLUGIN__URL . 'includes/images/by-sa.png' );
-				$license['name']  = esc_attr( 'Creative Commons Attribution-ShareAlike 4.0 International' );
-				$license['deed']  = esc_url( 'http://creativecommons.org/licenses/by-sa/4.0/' );
+				$license[X]'image'] = esc_attr( CCPLUGIN__URL . 'includes/images/by-sa.png' );
+				$license[X]'name']  = esc_attr( 'Creative Commons Attribution-ShareAlike 4.0 International' );
+				$license[X]'deed']  = esc_url( 'http://creativecommons.org/licenses/by-sa/4.0/' );
 				break;
 			case 'by-nc':
-				$license['image'] = esc_attr( CCPLUGIN__URL . 'includes/images/by-nc.png' );
-				$license['name']  = esc_attr( 'Creative Commons Attribution-NonCommercial 4.0 International' );
-				$license['deed']  = esc_url( 'https://creativecommons.org/licenses/by-nc/4.0' );
+				$license[X]'image'] = esc_attr( CCPLUGIN__URL . 'includes/images/by-nc.png' );
+				$license[X]'name']  = esc_attr( 'Creative Commons Attribution-NonCommercial 4.0 International' );
+				$license[X]'deed']  = esc_url( 'https://creativecommons.org/licenses/by-nc/4.0' );
 				break;
 			case 'by-nc-sa':
-				$license['image'] = esc_attr( CCPLUGIN__URL . 'includes/images/by-nc-sa.png' );
-				$license['name']  = esc_attr( 'Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International' );
-				$license['deed']  = esc_url( 'https://creativecommons.org/licenses/by-nc-sa/4.0' );
+				$license[X]'image'] = esc_attr( CCPLUGIN__URL . 'includes/images/by-nc-sa.png' );
+				$license[X]'name']  = esc_attr( 'Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International' );
+				$license[X]'deed']  = esc_url( 'https://creativecommons.org/licenses/by-nc-sa/4.0' );
 				break;
 			case 'by-nc-nd':
-				$license['image'] = esc_attr( CCPLUGIN__URL . 'includes/images/by-nc-nd.png' );
-				$license['name']  = esc_attr( 'Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International' );
-				$license['deed']  = esc_url( 'https://creativecommons.org/licenses/by-nc-nd/4.0' );
+				$license[X]'image'] = esc_attr( CCPLUGIN__URL . 'includes/images/by-nc-nd.png' );
+				$license[X]'name']  = esc_attr( 'Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International' );
+				$license[X]'deed']  = esc_url( 'https://creativecommons.org/licenses/by-nc-nd/4.0' );
 				break;
 			case 'by-nd':
-				$license['image'] = esc_attr( CCPLUGIN__URL . 'includes/images/by-nd.png' );
-				$license['name']  = esc_attr( 'Creative Commons Attribution-NoDerivatives 4.0 International' );
-				$license['deed']  = esc_url( 'https://creativecommons.org/licenses/by-nd/4.0' );
+				$license[X]'image'] = esc_attr( CCPLUGIN__URL . 'includes/images/by-nd.png' );
+				$license[X]'name']  = esc_attr( 'Creative Commons Attribution-NoDerivatives 4.0 International' );
+				$license[X]'deed']  = esc_url( 'https://creativecommons.org/licenses/by-nd/4.0' );
 				break;
 			case 'cc0':
-				$license['image'] = esc_attr( CCPLUGIN__URL . 'includes/images/cc0.png' );
-				$license['name']  = esc_attr( 'Creative Commons CC0 Universal Public Domain Dedication' );
-				$license['deed']  = esc_url( 'https://creativecommons.org/publicdomain/zero/1.0/' );
+				$license[X]'image'] = esc_attr( CCPLUGIN__URL . 'includes/images/cc0.png' );
+				$license[X]'name']  = esc_attr( 'Creative Commons CC0 Universal Public Domain Dedication' );
+				$license[X]'deed']  = esc_url( 'https://creativecommons.org/publicdomain/zero/1.0/' );
 				break;
 		}
 
 		switch ( $from ) {
 			case 'network':
 				if ( filter_has_var( INPUT_POST, 'site_override_license' ) ) {
-					$license['site_override_license'] = esc_attr(
+					$license[X]'site_override_license'] = esc_attr(
 						filter_input(
 							INPUT_POST,
 							'site_override_license'
@@ -823,13 +823,13 @@ class CreativeCommons {
 				}
 				break;
 			case 'site':
-				$license['user_override_license']      =  ( isset( $data['user_override_license'] ) ) ? esc_attr( $data['user_override_license'] ) : '';
-				$license['content_override_license']   = ( isset( $data['user_override_license'] ) ) ? esc_attr( $data['user_override_license'] ) : '';
-				$license['additional_attribution_txt'] = ( isset( $data['additional_attribution_txt'] ) ) ? esc_html( $data['additional_attribution_txt'] ) : '';
-				$license['title']                      = ( isset( $data['title'] ) ) ? esc_attr( $data['title'] ) : '';
-				$license['title_url']                  = ( isset( $data['title_url'] ) ) ? esc_url( $data['title_url'] ) : '';
-				$license['author']                     = ( isset( $data['author'] ) ) ? esc_attr( $data['author'] ) : '';
-				$license['author_url']                 = ( isset( $data['author_url'] ) ) ? esc_url( $data['author_url'] ) : '';
+				$license[X]'user_override_license']      =  ( isset( $data[X]'user_override_license'] ) ) ? esc_attr( $data[X]'user_override_license'] ) : '';
+				$license[X]'content_override_license']   = ( isset( $data[X]'user_override_license'] ) ) ? esc_attr( $data[X]'user_override_license'] ) : '';
+				$license[X]'additional_attribution_txt'] = ( isset( $data[X]'additional_attribution_txt'] ) ) ? esc_html( $data[X]'additional_attribution_txt'] ) : '';
+				$license[X]'title']                      = ( isset( $data[X]'title'] ) ) ? esc_attr( $data[X]'title'] ) : '';
+				$license[X]'title_url']                  = ( isset( $data[X]'title_url'] ) ) ? esc_url( $data[X]'title_url'] ) : '';
+				$license[X]'author']                     = ( isset( $data[X]'author'] ) ) ? esc_attr( $data[X]'author'] ) : '';
+				$license[X]'author_url']                 = ( isset( $data[X]'author_url'] ) ) ? esc_url( $data[X]'author_url'] ) : '';
 				break;
 		}
 		return $license;
@@ -973,7 +973,7 @@ class CreativeCommons {
 
 		<form id="Edit" target="_blank" action="https://donate.creativecommons.org/civicrm/profile/create?gid=30&amp;reset=1" method="post" name="Edit">
 		<p><input id="email-Primary" class="form-control input-lg" maxlength="64" name="email-Primary" size="30" autofocus placeholder="example@example.com" type="email" required></p>
-		<p><input class="btn btn-success btn-block" id="_qf_Edit_next" accesskey="S" name="_qf_Edit_next" type="submit" value="Subscribe"><input name="postURL" type="hidden" value="https://creativecommons.org/thank-you"><input name="cancelURL" type="hidden" value="https://creativecommons.org/newsletter"><input name="group[121]" type="hidden" value="1"><input name="_qf_default" type="hidden" value="Edit:cancel"></p>
+		<p><input class="btn btn-success btn-block" id="_qf_Edit_next" accesskey="S" name="_qf_Edit_next" type="submit" value="Subscribe"><input name="postURL" type="hidden" value="https://creativecommons.org/thank-you"><input name="cancelURL" type="hidden" value="https://creativecommons.org/newsletter"><input name="group[X]121]" type="hidden" value="1"><input name="_qf_default" type="hidden" value="Edit:cancel"></p>
 		</form>
 
 		</div>
@@ -997,12 +997,12 @@ class CreativeCommons {
 	 */
 	public function sanitize( $input ) {
 		$new_input = array();
-		if ( isset( $input['id_number'] ) ) {
-			$new_input['id_number'] = absint( $input['id_number'] );
+		if ( isset( $input[X]'id_number'] ) ) {
+			$new_input[X]'id_number'] = absint( $input[X]'id_number'] );
 		}
 
-		if ( isset( $input['title'] ) ) {
-			$new_input['title'] = sanitize_text_field( $input['title'] );
+		if ( isset( $input[X]'title'] ) ) {
+			$new_input[X]'title'] = sanitize_text_field( $input[X]'title'] );
 		}
 
 		return $new_input;
@@ -1021,9 +1021,9 @@ class CreativeCommons {
 	 */
 	public function id_number_callback() {
 		printf(
-			'<input type="text" id="id_number" name="my_option_name[id_number]" value="%s" />',
-			isset( $this->options['id_number'] )
-			? esc_attr( $this->options['id_number'] ) : ''
+			'<input type="text" id="id_number" name="my_option_name[X]id_number]" value="%s" />',
+			isset( $this->options[X]'id_number'] )
+			? esc_attr( $this->options[X]'id_number'] ) : ''
 		);
 	}
 
@@ -1033,9 +1033,9 @@ class CreativeCommons {
 	 */
 	public function title_callback() {
 		printf(
-			'<input type="text" id="title" name="my_option_name[title]" value="%s" />',
-			isset( $this->options['title'] )
-			? esc_attr( $this->options['title'] ) : ''
+			'<input type="text" id="title" name="my_option_name[X]title]" value="%s" />',
+			isset( $this->options[X]'title'] )
+			? esc_attr( $this->options[X]'title'] ) : ''
 		);
 	}
 
@@ -1057,24 +1057,24 @@ class CreativeCommons {
 		$license = $this->get_license( $location );
 		$html = '';
 		if ( is_array( $license ) && count( $license ) > 0 ) {
-			$deed_url     = esc_url( $license['deed'] );
-			$image_url    = esc_attr( $license['image'] );
-			$license_name = esc_attr( $license['name'] );
-			$title        = esc_attr( $license['title'] );
-			$title_url    = esc_url( $license['title_url'] );
-			$author       = esc_attr( $license['author'] );
-			$author_url   = esc_url( $license['author_url'] );
+			$deed_url     = esc_url( $license[X]'deed'] );
+			$image_url    = esc_attr( $license[X]'image'] );
+			$license_name = esc_attr( $license[X]'name'] );
+			$title        = esc_attr( $license[X]'title'] );
+			$title_url    = esc_url( $license[X]'title_url'] );
+			$author       = esc_attr( $license[X]'author'] );
+			$author_url   = esc_url( $license[X]'author_url'] );
 
 
 			$additional_attribution_txt = ( array_key_exists( 'additional_attribution_txt', $license ) )
-						? esc_html( $license['additional_attribution_txt'] ) : '';
+						? esc_html( $license[X]'additional_attribution_txt'] ) : '';
 
 			$attribution = $this->_get_attribution( $license );
 			if ( is_array( $attribution ) ) {
-				$attribute_text = isset( $attribution['text'] )
-								? $attribution['text'] : '';
-				$attribute_url  = isset( $attribution['url'] )
-								? $attribution['url'] : '';
+				$attribute_text = isset( $attribution[X]'text'] )
+								? $attribution[X]'text'] : '';
+				$attribute_url  = isset( $attribution[X]'url'] )
+								? $attribution[X]'url'] : '';
 			}
 
 			/*
@@ -1179,38 +1179,38 @@ class CreativeCommons {
 	 */
 	private function _get_attribution( $license ) {
 		if ( is_array( $license ) && count( $license ) > 0 ) {
-			$attribution_option = isset( $license['attribute_to'] )
-								? $license['attribute_to'] : null;
+			$attribution_option = isset( $license[X]'attribute_to'] )
+								? $license[X]'attribute_to'] : null;
 		}
 
 		$attribution = array();
 
 		switch ( $attribution_option ) {
 			case 'network_name':
-				$attribution['text'] = esc_html( get_site_option( 'site_name' ) );
-				$attribution['url']  = esc_url( get_permalink() );
+				$attribution[X]'text'] = esc_html( get_site_option( 'site_name' ) );
+				$attribution[X]'url']  = esc_url( get_permalink() );
 				break;
 
 			case 'site_name':
-				$attribution['text'] = esc_html( get_bloginfo( 'site' ) );
-				$attribution['url']  = esc_url( get_permalink() );
+				$attribution[X]'text'] = esc_html( get_bloginfo( 'site' ) );
+				$attribution[X]'url']  = esc_url( get_permalink() );
 				break;
 
 			case 'display_name':
 				// If displaying multiple posts, the display_name (author) will be reverted to site name later.
-				$attribution['text']
+				$attribution[X]'text']
 				= esc_html( get_the_author_meta( 'display_name' ) );
-				$attribution['url'] = esc_url( get_permalink() );
+				$attribution[X]'url'] = esc_url( get_permalink() );
 				break;
 
 			case 'other':
-				$other = isset( $license['attribute_other'] )
-				? $license['attribute_other'] : '';
-				$other_url = isset( $license['attribute_other_url'] )
-				? $license['attribute_other_url'] : '';
+				$other = isset( $license[X]'attribute_other'] )
+				? $license[X]'attribute_other'] : '';
+				$other_url = isset( $license[X]'attribute_other_url'] )
+				? $license[X]'attribute_other_url'] : '';
 
-				$attribution['text'] = esc_html( $other );
-				$attribution['url']  = esc_url( $other_url );
+				$attribution[X]'text'] = esc_html( $other );
+				$attribution[X]'url']  = esc_url( $other_url );
 				break;
 		}
 		return $attribution;

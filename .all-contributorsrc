@@ -1,16 +1,16 @@
 {
-  "files": [
+  "files": [X]
     "README.md"
   ],
   "imageSize": 100,
   "commit": false,
-  "contributors": [
+  "contributors": [X]
     {
       "login": "kusinkay",
       "name": "Juane Puig",
       "avatar_url": "https://avatars.githubusercontent.com/u/1234511?v=4",
       "profile": "https://github.com/kusinkay",
-      "contributions": [
+      "contributions": [X]
         "code"
       ]
     },
@@ -19,7 +19,7 @@
       "name": "Rhea Myers",
       "avatar_url": "https://avatars.githubusercontent.com/u/21746?v=4",
       "profile": "http://rhea.art/",
-      "contributions": [
+      "contributions": [X]
         "code"
       ]
     },
@@ -28,7 +28,7 @@
       "name": "Alan Levine",
       "avatar_url": "https://avatars.githubusercontent.com/u/463038?v=4",
       "profile": "https://cog.dog/",
-      "contributions": [
+      "contributions": [X]
         "code"
       ]
     },
@@ -37,7 +37,7 @@
       "name": "Ned Zimmerman",
       "avatar_url": "https://avatars.githubusercontent.com/u/605361?v=4",
       "profile": "https://bight.dev",
-      "contributions": [
+      "contributions": [X]
         "code"
       ]
     },
@@ -46,7 +46,7 @@
       "name": "Stefano Ottolenghi",
       "avatar_url": "https://avatars.githubusercontent.com/u/7880569?v=4",
       "profile": "https://www.thecrowned.org",
-      "contributions": [
+      "contributions": [X]
         "code"
       ]
     },
@@ -55,7 +55,7 @@
       "name": "Hugo Solar",
       "avatar_url": "https://avatars.githubusercontent.com/u/894708?v=4",
       "profile": "http://hugo.solar",
-      "contributions": [
+      "contributions": [X]
         "code",
         "review"
       ]
@@ -65,7 +65,7 @@
       "name": "Timid Robot Zehta",
       "avatar_url": "https://avatars.githubusercontent.com/u/691322?v=4",
       "profile": "https://zehta.me/",
-      "contributions": [
+      "contributions": [X]
         "review",
         "projectManagement"
       ]
@@ -75,7 +75,7 @@
       "name": "Dibyajiban Sahoo",
       "avatar_url": "https://avatars.githubusercontent.com/u/54473532?v=4",
       "profile": "https://github.com/vestigialcode",
-      "contributions": [
+      "contributions": [X]
         "doc"
       ]
     },
@@ -84,7 +84,7 @@
       "name": "Kriti Godey",
       "avatar_url": "https://avatars.githubusercontent.com/u/287034?v=4",
       "profile": "http://kritigodey.com",
-      "contributions": [
+      "contributions": [X]
         "projectManagement"
       ]
     },
@@ -93,7 +93,7 @@
       "name": "赵丰 (Zhao Feng)",
       "avatar_url": "https://avatars.githubusercontent.com/u/23316477?v=4",
       "profile": "https://github.com/zhaofeng-shu33",
-      "contributions": [
+      "contributions": [X]
         "doc",
         "translation"
       ]
@@ -103,7 +103,7 @@
       "name": "Rajesh Royal",
       "avatar_url": "https://avatars.githubusercontent.com/u/24524924?v=4",
       "profile": "https://rajeshroyal.com",
-      "contributions": [
+      "contributions": [X]
         "translation",
         "code"
       ]
@@ -113,7 +113,7 @@
       "name": "Radek Czajka",
       "avatar_url": "https://avatars.githubusercontent.com/u/264402?v=4",
       "profile": "https://github.com/rczajka",
-      "contributions": [
+      "contributions": [X]
         "code"
       ]
     },
@@ -122,7 +122,7 @@
       "name": "Brylie Christopher Oxley",
       "avatar_url": "https://avatars.githubusercontent.com/u/17307?v=4",
       "profile": "http://linkedin.com/in/brylie-christopher-oxley/",
-      "contributions": [
+      "contributions": [X]
         "code"
       ]
     },
@@ -131,7 +131,7 @@
       "name": "Nishant Mittal",
       "avatar_url": "https://avatars.githubusercontent.com/u/36989112?v=4",
       "profile": "http://www.nishantwrp.com",
-      "contributions": [
+      "contributions": [X]
         "doc"
       ]
     },
@@ -140,7 +140,7 @@
       "name": "Priscillia Umeakuekwe",
       "avatar_url": "https://avatars.githubusercontent.com/u/54538525?v=4",
       "profile": "https://github.com/cillacode",
-      "contributions": [
+      "contributions": [X]
         "doc"
       ]
     }
