@@ -1,12 +1,13 @@
 {
-	"name": "cc-block-cgb-guten-block",
-	"version": "1.0.0",
-	"private": true,
 	"scripts": {
 		"preinstall": "npx npm-force-resolutions",
 		"wp-env": "wp-env"
 	},
 	"devDependencies": {
 		"@wordpress/env": "^9.7.0"
+	},
+	"dependencies": {
+		"@wordpress/create-block": "^4.51.0",
+		"rimraf": "^6.0.1"
 	}
 }
