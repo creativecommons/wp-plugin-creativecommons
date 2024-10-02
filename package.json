@@ -9,9 +9,6 @@
 		"preinstall": "npx npm-force-resolutions",
 		"wp-env": "wp-env"
 	},
-	"dependencies": {
-		"cgb-scripts": "1.23.1"
-	},
 	"devDependencies": {
 		"@wordpress/env": "^9.7.0"
 	}
