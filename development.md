@@ -3,10 +3,10 @@
 Thank you for your interest in contributing to CC WordPress Plugin! This
 document is a set of guidelines to help you contribute to this project.
 
-
 ## Code of conduct
 
 [`CODE_OF_CONDUCT.md`][org-coc]:
+
 > The Creative Commons team is committed to fostering a welcoming community.
 > This project and all other Creative Commons open source projects are governed
 > by our [Code of Conduct][code_of_conduct]. Please report unacceptable
@@ -17,25 +17,22 @@ document is a set of guidelines to help you contribute to this project.
 [code_of_conduct]: https://opensource.creativecommons.org/community/code-of-conduct/
 [reporting_guide]: https://opensource.creativecommons.org/community/code-of-conduct/enforcement/
 
-
 ## Contributing
 
 See [`CONTRIBUTING.md`][org-contrib].
 
 [org-contrib]: https://github.com/creativecommons/.github/blob/main/CONTRIBUTING.md
 
-
 ## WordPress Coding Standards
 
 Creative Commons plugin for WordPress follows [WordPress Coding
-Standards][standards] and [WordPress Documentation Standards][inline].  Before
+Standards][standards] and [WordPress Documentation Standards][inline]. Before
 pushing your work/contribution, make sure it closely follows these standards
 otherwise it will not be accepted. We use a PHP_CodeSniffer setup with
 `'WordPress'` sniff to check the code against the standards.
 
 [standards]: https://make.wordpress.org/core/handbook/best-practices/coding-standards/
 [inline]: https://make.wordpress.org/core/handbook/best-practices/inline-documentation-standards/
-
 
 ### Recommended Setup for WordPress Coding Standards
 
@@ -52,6 +49,7 @@ If you are not setup to detect WPCS errors, consider the following steps.
 
    Install [PHPCS](https://github.com/squizlabs/PHP_CodeSniffer) by running the
    following command in your terminal:
+
    ```shell
    composer global require squizlabs/php_codesniffer
    ```
@@ -62,6 +60,7 @@ If you are not setup to detect WPCS errors, consider the following steps.
    phpcs executable. If you don't get anything for `which phpcs`, you need to
    add this to your .zshrc or .bash_profile (or your shell’s own profile file)
    so it will make terminal look in that folder too:
+
    ```shell
    export PATH="$HOME/.composer/vendor/bin:$PATH"
    ```
@@ -69,21 +68,25 @@ If you are not setup to detect WPCS errors, consider the following steps.
 4. **Setup WPCS**
 
    Clone the official [WordPress Coding Standards repository][wpcs-repo] in
-   your home folder and ensure you are using its `master` branch:
+   your home folder and ensure you are using its `main` branch:
+
    ```shell
    git clone https://github.com/WordPress/WordPress-Coding-Standards.git wpcs
    ```
+
    ```shell
    cd wpcs
    ```
+
    ```shell
-   git checkout master
+   git checkout main
    ```
 
 5. **Tell PHPCS about this directory**
 
    We need to add the ~/wpcs folder, where we cloned wpcs, to the installed
    paths of phpcs. Replace the path with the path of your wpcs directory:
+
    ```shell
    phpcs --config-set installed_paths /Users/your-username/wpcs
    ```
@@ -91,15 +94,19 @@ If you are not setup to detect WPCS errors, consider the following steps.
 6. **Check Installation**
 
    Confirm that it is working by running the following command:
+
    ```shell
    phpcs -i
    ```
+
    The output should be:
+
    ```
    The installed coding standards are PEAR, Zend, PSR2, MySource, Squiz, PSR1,
    PSR12, WordPress-VIP, WordPress, WordPress-Extra, WordPress-Docs and
    WordPress-Core
    ```
+
    If it does not include the WordPress Standards, most probably the
    installed_paths config option is wrong. Make sure that it points to the
    right directory.
@@ -122,11 +129,10 @@ If you are not setup to detect WPCS errors, consider the following steps.
 [wpcs-repo]: https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards
 [phpcs]: https://marketplace.visualstudio.com/items?itemName=ikappas.phpcs
 
-
 ## Contributing to Gutenberg Blocks
 
 CC plugin for WordPress uses Gutenberg blocks built by **create-guten-block**
-tool.  If you are interested, you can read its detailed and well-written
+tool. If you are interested, you can read its detailed and well-written
 [documentation](https://github.com/ahmadawais/create-guten-block). If you want
 to test/make changes to these blocks, follow the following steps.
 
@@ -134,7 +140,7 @@ to test/make changes to these blocks, follow the following steps.
 
    First off, make sure you have Node version 8+ and npm 5.3 or more. Clone the
    repository and move to the branch which houses the blocks. In that
-    directory, open your terminal and run:
+   directory, open your terminal and run:
 
    ```shell
    npm install
@@ -152,7 +158,6 @@ to test/make changes to these blocks, follow the following steps.
    any changes and reports back any errors in your code. Now, you can make
    changes and test them.
 
-
 3. **Build the Blocks**
 
    Once your development is done, make sure to run this:
@@ -163,7 +168,6 @@ to test/make changes to these blocks, follow the following steps.
 
    It optimizes and builds production code for your block inside `dist` folder.
 
-
 ## Using @wp-env for our local development environment
 
 1. **Start the @wp-env envrionment using the command**
@@ -171,9 +175,9 @@ to test/make changes to these blocks, follow the following steps.
    Still in the directory
    of the project run the following command to start the development enviroment
 
-    ```shell
-    wp-env start
-    ```
+   ```shell
+   wp-env start
+   ```
 
 2. **Check that the development environment is running**
 
@@ -182,10 +186,9 @@ to test/make changes to these blocks, follow the following steps.
 
 3. **To stop @wp-env**
 
-    ```shell
-    wp-env stop
-    ```
-
+   ```shell
+   wp-env stop
+   ```
 
 ## Using a localized Docker setup
 
@@ -221,6 +224,7 @@ docker compose down
 The first time the build process is run via `docker compose -f
 ./dev/docker-compose.yml up`, docker will create two directories within your
 local repository clone:
+
 - `./dev/db` where the database and relevant config will be stored
 - `./dev/wordpress` where the WordPress files will be stored
 
@@ -237,7 +241,6 @@ delete the `db` and `wordpress` directories respectively, and then run `docker
 compose up` again to initialize a clean install
 build.
 
-
 ### WP-CLI
 
 To access `wp-cli`, you should have:
@@ -247,11 +250,13 @@ To access `wp-cli`, you should have:
 
 For example, the following command uses wp-cli to display the version of
 WordPress installed:
+
 ```shell
 docker compose exec wpcli wp core version
 ```
 
 You can also use the container's shell to execute wp-cli commands:
+
 ```shell
 docker compose exec wpcli bash -i
 ```
