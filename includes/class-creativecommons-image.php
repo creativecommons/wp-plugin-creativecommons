@@ -425,7 +425,7 @@ class CreativeCommonsImage {
 		$attribution_url = get_post_meta( $att_id, 'attribution_url', true );
 		$source_work_url = get_post_meta( $att_id, 'source_work_url', true );
 		$extras_url      = get_post_meta( $att_id, 'extra_permissions_url', true );
-
+	
 		// Unfiltered.
 		$meta   = wp_get_attachment_metadata( $att_id, true );
 		$credit = get_post_meta( $att_id, 'attribution_name', true );
@@ -434,7 +434,7 @@ class CreativeCommonsImage {
 		) {
 			$credit = $meta['image_meta']['credit'];
 		}
-
+	
 		$title = get_the_title( $att_id );
 		if ( ! $title ) {
 			$title = $meta['image_meta']['title'];
@@ -447,14 +447,13 @@ class CreativeCommonsImage {
 				$license_url = $license_url . '/';
 			}
 		}
-
+	
 		if ( $license_url ) {
 			$license_name = $this->license_name( $license_url );
 			$button_url   = $this->license_button_url( $license_url );
 		}
-
+	
 		// RDF stuff.
-
 		if ( $license_url ) {
 			$license_button_url = $this->license_button_url( $license_url );
 			$l                  = CreativeCommons::get_instance();
@@ -470,14 +469,14 @@ class CreativeCommonsImage {
 				$extras_url,
 				''
 			); // warning_text.
-
+	
 			$button = CreativeCommonsButton::get_instance()->markup(
 				$html_rdfa,
 				false,
 				31,
 				false
 			);
-
+	
 			$block  = $button;
 			$block .= '<!-- RDFa! -->' . $html_rdfa . '<!-- end of RDFa! -->';
 		} else {
@@ -489,11 +488,15 @@ class CreativeCommonsImage {
 				}
 			}
 		}
-
+	
+		// Added Attribution Support
+		if ( $attribution_url ) {
+			$block .= '<p><a href="' . esc_url($attribution_url) . '" target="_blank">' . esc_html($credit) . '</a></p>';
+		}
+	
 		return $block;
 	}
-
-
+	
 	/**
 	 * Function: caption_block
 	 *
@@ -501,21 +504,19 @@ class CreativeCommonsImage {
 	 * @param mixed $att_id
 	 */
 	public function caption_block( $attr, $att_id ) {
-
 		// This is way too simple. Improve before re-introducing the caption filter.
 		$caption = '<div class="cc-license-caption-wrapper cc-license-block">'
 				. '<div class="wp-caption-text">'
 				. $attr['caption']
 				. '</div><br />';
-
+	
 		$caption .= $this->license_block( $att_id, $attr['caption'] );
-
+	
 		$caption .= '</div>';
-
+	
 		return $caption;
 	}
-
-
+	
 	/**
 	 * Function: image_url_to_postid
 	 *
@@ -541,7 +542,7 @@ class CreativeCommonsImage {
 		}
 		return $att_id;
 	}
-
+	
 	/**
 	 * Function: license_shortcode
 	 *
@@ -549,7 +550,6 @@ class CreativeCommonsImage {
 	 * @param mixed $content
 	 */
 	public function license_shortcode( $atts, $content = null ) {
-
 		if ( $content !== null ) {
 			// TODO: Profile replacing this with parsing html and walking the DOM.
 			$match_count = preg_match(
@@ -569,7 +569,7 @@ class CreativeCommonsImage {
 		}
 		return do_shortcode( $content );
 	}
-
+	
 	/**
 	 * Function: captioned_image
 	 *
@@ -579,24 +579,23 @@ class CreativeCommonsImage {
 	 * robust. So we do not and will not do that.
 	 */
 	public function captioned_image( $empty, $attr, $content ) {
-			$args = shortcode_atts(
-				array(
-					'id'      => '',
-					'align'   => 'alignnone',
-					'width'   => '',
-					'caption' => '',
-					'title'   => '',
-				),
-				$attr
-			);
-
+		$args = shortcode_atts(
+			array(
+				'id'      => '',
+				'align'   => 'alignnone',
+				'width'   => '',
+				'caption' => '',
+				'title'   => '',
+			),
+			$attr
+		);
+	
 		if ( isset( $attr['id'] )
 			&& isset( $attr['license'] )
 		) {
 			// Extract attachment $post->ID.
 			preg_match( '/\d+/', $attr['id'], $att_id );
 			if ( $att_id ) {
-
 				// We *should* handle this based on the shortcode code's behaviour.
 				// if ((intval($width) > 1) && $caption) {.
 				$result = '<div ' /*. $id*/ . 'class="cc-caption wp-caption '
@@ -612,7 +611,7 @@ class CreativeCommonsImage {
 		}
 		return $result;
 	}
-
+	
 	/**
 	 * Function: init
 	 *
@@ -625,25 +624,26 @@ class CreativeCommonsImage {
 			0,
 			2
 		);
-
+	
 		add_filter(
 			'attachment_fields_to_edit',
 			array( $this, 'add_image_license_metadata' ),
 			10,
 			2
 		);
-
+	
 		add_filter(
 			'attachment_fields_to_save',
 			array( $this, 'save_image_license_metadata' ),
 			10,
 			2
 		);
-
+	}
+	
 		// We really need to improve our emulation of the caption shortcode's
 		// output, and make sure our css fits it better, before adding this
 		// back in.
-
+	
 		/*
 		 * add_filter(
 		 * 'img_caption_shortcode',
@@ -651,58 +651,56 @@ class CreativeCommonsImage {
 		 * 10,
 		 * 3
 		 * );
-		*/
-
-		if (get_option("enable_attribution_box")) {
+		 */
+	
+		 if ( get_option("enable_attribution_box") ) {
 			add_filter( 'the_content', array( $this, 'add_attribution_boxes' ));
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_attribution_boxes' ));
 		}
-
+		
 		add_shortcode(
 			'license',
 			array( $this, 'license_shortcode' )
 		);
-	}
-
-	public function enqueue_attribution_boxes() {
-		wp_enqueue_style('cc-attribution-box', plugins_url('css/cc-attribution-box.css', dirname(__FILE__)));
-	}
-
-	public function add_attribution_boxes( $content ) {
-		return preg_replace_callback(
-			'/<img\s[^>]*class="wp-image-(\d+)[^>]*>/',
-			function ($matches) {
-				return
-					'<div class="cc-attribution-box-container">'
-					. $matches[0]
-					. '<div class="cc-attribution-box"> '
-					. $this->simple_license_block($matches[1])
-					. '</div></div>';
-			},
-			$content
-		);
-	}
-
-	public function simple_license_block($att_id) {
-		/* TODO: this should just be replaced by just using $this->license_block.
-		 * Need to make sure that code can be safely fixed for this purpose,
-		 */
-		$license_url     = get_post_meta( $att_id, 'license_url', true );
-		$attribution_url = get_post_meta( $att_id, 'attribution_url', true );
-		$title = get_the_title( $att_id );
-		$credit = get_post_meta( $att_id, 'attribution_name', true );
-
-		$license_name = $this->license_name( $license_url );
-		$button_url   = $this->license_button_url( $license_url );
-
-		if (!$button_url) return '';
-
-		$lazy = function_exists('wp_lazy_loading_enabled') && wp_lazy_loading_enabled('img', 'simple_license_block');
-		$loading_type = $lazy ? 'lazy' : 'eager'; // 'eager' is the browser default
-		return "<div>" . esc_html($credit) . "</div>"
-			."<a target='_blank' href='" . esc_url($attribution_url) . "'>$title</a>"
-			. "<a class='cc-attribution-box-license' target='_blank' href='" . esc_url($license_url) . "' title='" . esc_attr($license_name) . "' rel='license'>"
-			. "<img src='" . esc_url($button_url) . "' alt='" . esc_attr($license_name) . " . loading='" . $loading_type . "'></a>";
-	}
-
-}
+		
+		public function enqueue_attribution_boxes() {
+			wp_enqueue_style('cc-attribution-box', plugins_url('css/cc-attribution-box.css', dirname(__FILE__)));
+		}
+		
+		public function add_attribution_boxes( $content ) {
+			return preg_replace_callback(
+				'/<img\s[^>]*class="wp-image-(\d+)[^>]*>/',
+				function ($matches) {
+					return
+						'<div class="cc-attribution-box-container">'
+						. $matches[0]
+						. '<div class="cc-attribution-box"> '
+						. $this->simple_license_block($matches[1])
+						. '</div></div>';
+				},
+				$content
+			);
+		}
+		
+		public function simple_license_block($att_id) {
+			/* TODO: this should just be replaced by just using $this->license_block.
+			 * Need to make sure that code can be safely fixed for this purpose,
+			 */
+			$license_url     = get_post_meta( $att_id, 'license_url', true );
+			$attribution_url = get_post_meta( $att_id, 'attribution_url', true );
+			$title = get_the_title( $att_id );
+			$credit = get_post_meta( $att_id, 'attribution_name', true );
+		
+			$license_name = $this->license_name( $license_url );
+			$button_url   = $this->license_button_url( $license_url );
+		
+			if (!$button_url) return '';
+		
+			$lazy = function_exists('wp_lazy_loading_enabled') && wp_lazy_loading_enabled('img', 'simple_license_block');
+			$loading_type = $lazy ? 'lazy' : 'eager'; // 'eager' is the browser default
+			return "<div>" . esc_html($credit) . "</div>"
+				."<a target='_blank' href='" . esc_url($attribution_url) . "'>$title</a>"
+				. "<a class='cc-attribution-box-license' target='_blank' href='" . esc_url($license_url) . "' title='" . esc_attr($license_name) . "' rel='license'>"
+				. "<img src='" . esc_url($button_url) . "' alt='" . esc_attr($license_name) . "' loading='" . $loading_type . "'></a>";
+		}
+	}		

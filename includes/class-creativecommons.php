@@ -555,11 +555,8 @@ class CreativeCommons {
 		// TODO check if this can be done without a global.
 		global $post;
 		$license = get_post_meta( $post->ID, '_license', true );
-		if ( is_array( $license ) && count( $license ) > 0 ) {
-			return $license;
-		} else {
-			return false;
-		}
+		return (is_array($lisence) && count($licence> 0)) ? $licence : false;
+
 	}
 
 
@@ -572,116 +569,149 @@ class CreativeCommons {
 	 *
 	 * @return $attribution_options
 	 */
-	public function get_attribution_options( $location ) {
-		switch ( $location ) {
-			case 'network':
-				$attribution_options = array(
-					'network_name' => sprintf(
-						__( 'The network name: %s', 'CreativeCommons' ),
-						get_site_option( 'site_name' )
-					),
-					'site_name'    => __(
-						"A site's name",
-						'CreativeCommons'
-					),
-					'display_name' => __(
-						'The author display name',
-						'CreativeCommons'
-					),
-					'other'        => __(
-						'Something completely differrent',
-						'CreativeCommons'
-					),
-				);
-				break;
+	public function get_attribution_options($location) {
+        switch ($location) {
+            case 'network':
+                $attribution_options = array(
+                    'network_name' => sprintf(__('The network name: %s', 'CreativeCommons'), get_site_option('site_name')),
+                    'site_name'    => __("A site's name", 'CreativeCommons'),
+                    'display_name' => __('The author display name', 'CreativeCommons'),
+                    'other'        => __('Something completely different', 'CreativeCommons'),
+                );
+                break;
 
-			case 'site':
-				$attribution_options = array(
-					'site_name'    => sprintf(
-						__( 'The site name: %s', 'CreativeCommons' ),
-						get_bloginfo( 'site' )
-					),
-					'display_name' => __(
-						'The author display name',
-						'CreativeCommons'
-					),
-					'other'        => __(
-						'Something completely differrent',
-						'CreativeCommons'
-					),
-				);
-				break;
+            case 'site':
+                $attribution_options = array(
+                    'site_name'    => sprintf(__('The site name: %s', 'CreativeCommons'), get_bloginfo('site')),
+                    'display_name' => __('The author display name', 'CreativeCommons'),
+                    'other'        => __('Something completely different', 'CreativeCommons'),
+                );
+                break;
 
-			default:
+            default:
+                $attribution_options = array();
+                break;
+        }
 
-				break;
-		}
+        return $attribution_options;
+    }
 
-		return $attribution_options;
-	}
+/**
+     * Function: select_attribute_to_html
+     *
+     * Generates HTML for selecting attribution attributes.
+     *
+     * @param string|null $location Location type.
+     * @param bool $echo Whether to echo the output.
+     */
+    public function select_attribute_to_html($location = null, $echo = true) {
+        $license = $this->get_post_page_license();
+        $title = (isset($license['title'])) ? esc_html($license['title']) : '';
+        $title_url = (isset($license['title_url'])) ? esc_html($license['title_url']) : '';
+        $author = (isset($license['author'])) ? esc_html($license['author']) : '';
+        $author_url = (isset($license['author_url'])) ? esc_html($license['author_url']) : '';
 
+        ?>
+        <table class="widefat" style="background:none; width:100%; border:none; box-shadow:none;">
+            <tr>
+                <td style="padding:10px 10px;">
+                    <span><?php esc_html_e('Title', 'CreativeCommons'); ?></span>
+                </td>
+                <td style="padding:10px 10px;">
+                    <?php printf('<input type="text" name="license[title]" value="%1$s" id="title" class="large" size="45" /><br />', esc_attr($title)); ?>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:10px 10px;">
+                    <span><?php esc_html_e('Title URL', 'CreativeCommons'); ?></span>
+                </td>
+                <td style="padding:10px 10px;">
+                    <?php printf('<input type="text" name="license[title_url]" value="%1$s" id="title_url" class="large" size="45" /><br />', esc_attr($title_url)); ?>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:10px 10px;">
+                    <span><?php esc_html_e('Author', 'CreativeCommons'); ?></span>
+                </td>
+                <td style="padding:10px 10px;">
+                    <?php printf('<input type="text" name="license[author]" value="%1$s" id="author" class="large" size="45" /><br />', esc_attr($author)); ?>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:10px 10px;">
+                    <span><?php esc_html_e('Author URL', 'CreativeCommons'); ?></span>
+                </td>
+                <td style="padding:10px 10px;">
+                    <?php printf('<input type="text" name="license[author_url]" value="%1$s" id="author_url" class="large" size="45" /><br />', esc_attr($author_url)); ?>
+                </td>
+            </tr>
+        </table>
+        <?php
+    }
 
-	/**
-	 * Funciton: select_attribute_to_html
-	 *
-	 * @param  mixed $location null.
-	 * @param  mixed $echo true.
-	 */
-	public function select_attribute_to_html( $location = null, $echo = true ) {
+    /**
+     * Function: display_featured_image_attribution
+     *
+     * Displays attribution for the featured image if it exists.
+     */
+    public function display_featured_image_attribution() {
+        if (has_post_thumbnail()) {
+            $license = $this->get_post_page_license();
+            // Render the featured image
+            the_post_thumbnail();
+            // Render attribution if license exists
+            if ($license) {
+                echo '<div class="attribution" style="margin-top: 10px; font-style: italic; color: gray;">';
+                echo '<p>' . esc_html($license['author']) . ' - ' . esc_html($license['title']) . '</p>';
+                echo '<p><a href="' . esc_url($license['author_url']) . '">' . esc_html($license['author_url']) . '</a></p>';
+                echo '</div>';
+            }
+        }
+    }
 
-		$license    = $this->get_license( $location = 'site' );
-		$title      = ( isset( $license['title'] ) ) ? esc_html( $license['title'] ) : '';
-		$title_url  = ( isset( $license['title_url'] ) ) ? esc_html( $license['title_url'] ) : '';
-		$author     = ( isset( $license['author'] ) ) ? esc_html( $license['author'] ) : '';
-		$author_url = ( isset( $license['author_url'] ) ) ? esc_html( $license['author_url'] ) : '';
+    /**
+     * Function: enqueue_attribution_boxes
+     *
+     * Enqueues scripts and styles for the attribution boxes.
+     */
+    public function enqueue_attribution_boxes() {
+        if (get_option("enable_attribution_box")) {
+            wp_enqueue_style('creative-commons-style', plugin_dir_url(__FILE__) . 'css/creative-commons.css');
+        }
+    }
 
-		?>
-		<table class="widefat" style="background:none; width:0%; border:none; box-shadow:none;">
-			<tr>
-				<td style="padding:10px 10px;">
-					<span>
-						<?php esc_html_e( 'Title', 'CreativeCommons' ); ?>
-					</span>
-				</td>
-				<td style="padding:10px 10px;">
-					<?php
-					printf( '<input type="text" name="license[title]" value="%1$s" id="title" class="large" size="45" /><br />', esc_attr( $title ) );
-					?>
-				</td>
-			</tr>
-			<tr>
-				<td style="padding:10px 10px;">
-					<span>
-						<?php esc_html_e( 'Title URL', 'CreativeCommons' ); ?>
-					</span>
-				</td>
-				<td style="padding:10px 10px;">
-					<?php printf( '<input type="text" name="license[title_url]" value="%1$s" id="title_url" class="large" size="45" /><br />', esc_attr( $title_url ) ); ?>
-				</td>
-			</tr>
-			<tr>
-				<td style="padding:10px 10px;">
-					<span>
-						<?php esc_html_e( 'Author', 'CreativeCommons' ); ?>
-					</span>
-				</td>
-				<td style="padding:10px 10px;">
-					<?php printf( '<input type="text" name="license[author]" value="%1$s" id="author" class="large" size="45" /><br />', esc_attr( $author ) ); ?>
-				</td>
-			</tr>
-			<tr>
-				<td style="padding:10px 10px;">
-					<span>
-						<?php esc_html_e( 'Author URL', 'CreativeCommons' ); ?>
-					</span>
-				</td>
-				<td style="padding:10px 10px;">
-					<?php printf( '<input type="text" name="license[author_url]" value="%1$s" id="author_url" class="large" size="45" /><br />', esc_attr( $author_url ) ); ?>
-				</td>
-			</tr>
-		</table>
-		<?php
-	}
+    /**
+     * Function: init
+     *
+     * Initializes the plugin by adding necessary hooks.
+     */
+    public function init() {
+        if (get_option("enable_attribution_box")) {
+            add_filter('the_content', array($this, 'add_attribution_boxes'));
+            add_action('wp_enqueue_scripts', array($this, 'enqueue_attribution_boxes'));
+        }
+    }
+
+    /**
+     * Function: add_attribution_boxes
+     *
+     * Appends the attribution boxes to the content.
+     *
+     * @param string $content The original content.
+     * @return string The modified content.
+     */
+    public function add_attribution_boxes($content) {
+        if (is_single() && get_post_meta(get_the_ID(), '_license', true)) {
+            $content .= $this->display_featured_image_attribution(); // Add attribution after content
+        }
+        return $content;
+    }
+}
+
+// Initialize the class
+$creative_commons = new CreativeCommons();
+add_action('init', array($creative_commons, 'init'));
+
 
 	/**
 	 * Function: display_settings_warning
@@ -1243,5 +1273,3 @@ class CreativeCommons {
 			return;
 		}
 	}
-
-}
