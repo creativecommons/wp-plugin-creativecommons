@@ -1,18 +1,19 @@
 {
-	"name": "cc-block-cgb-guten-block",
-	"version": "1.0.0",
-	"private": true,
-	"scripts": {
-		"start": "cgb-scripts start",
-		"build": "cgb-scripts build",
-		"eject": "cgb-scripts eject",
-		"preinstall": "npx npm-force-resolutions",
-		"wp-env": "wp-env"
-	},
-	"dependencies": {
-		"cgb-scripts": "1.23.1"
-	},
-	"devDependencies": {
-		"@wordpress/env": "^9.7.0"
-	}
+    "name": "cc-block-cgb-guten-block",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "start": "nodemon /home/ronaldz/Desktop/C C/wp-plugin-creativecommons/src/blocks.js",
+        "build": "wp-scripts build",
+        "eject": "wp-env eject",
+        "preinstall": "npx npm-force-resolutions",
+        "wp-env": "wp-env"
+    },
+    "devDependencies": {
+        "@wordpress/create-block": "^4.52.0"
+    },
+    "engines": {
+        "node": ">=20.10.0",
+        "npm": ">=10.2.3"
+    }
 }
