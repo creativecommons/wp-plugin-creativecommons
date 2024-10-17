@@ -1,44 +1,16 @@
 <?php
 /**
- * CC WordPress Plugin: Main Class
+ * CC WordPress Plugin: Image Class
  *
  * @package CC_WordPress_Plugin
- * @subpackage Main_Class
+ * @subpackage Image_Class
+ * @since 2.0
  */
-class CreativeCommons {
-
-	// Make sure the plugin header has the same version number.
-	const VERSION = '2022.09.1';
-
-	/**
-	 * Plugin URL.
-	 *
-	 * @since 2.0
-	 * @var mixed $plugin_url
-	 */
-	private $plugin_url;
-
-	/**
-	 * Store text-domain. Only used to load text-domain.
-	 * Do not use this variable with strings, use 'CreativeCommons' instead
-	 *
-	 * @since 2.0
-	 * @var mixed $localization_domain
-	 */
-	private $localization_domain = 'CreativeCommons';
-
-	/**
-	 * To store locale.
-	 *
-	 * @since 2.0
-	 * @var mixed $locale
-	 */
-	private $locale;
+class CreativeCommonsImage {
 
 	/**
 	 * Instance
 	 *
-	 * @since 2.0
 	 * @var null $instance
 	 */
 	private static $instance = null;
@@ -46,43 +18,12 @@ class CreativeCommons {
 
 	/**
 	 * Constructor
-	 *
-	 * @return void
 	 */
 	private function __construct() {
 	}
 
-
 	/**
-	 * Intializer
-	 *
-	 * @return void
-	 */
-	public function init() {
-		$this->plugin_url = plugin_dir_url( dirname( __FILE__ ) );
-
-		// language setup.
-		$lang_dir = dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/';
-		load_plugin_textdomain( $this->localization_domain, false, $lang_dir );
-
-		/*
-		 * add admin.js to wp-admin pages and displays the site
-		 * license settings in the Settings->General settings page
-		 * unless you're running WordPress Multisite (Network) the
-		 * superadmin has disabled this.
-		 */
-		add_action( 'admin_init', array( &$this, 'license_admin_init' ) );
-		add_action( 'admin_menu', array( $this, 'add_plugin_page' ) );
-		add_action( 'admin_init', array( $this, 'page_init' ) );
-
-		// Adds CC License widget to display the license.
-		add_action( 'widgets_init', array( &$this, 'license_as_widget' ) );
-
-	}
-
-
-	/**
-	 * Gets an instance
+	 * Function: get_instance
 	 *
 	 * @return $instance
 	 */
@@ -91,1185 +32,675 @@ class CreativeCommons {
 		if ( null == self::$instance ) {
 			self::$instance = new self();
 		}
+
 		return self::$instance;
-	}
 
-
-	/**
-	 * Register and add plugin settings.
-	 */
-	public function page_init() {
-		register_setting(
-			'cc-admin',
-			'license',
-			array( &$this, '_wrapper_settings_api_verify' )
-		);
-		register_setting(
-			'cc-admin',
-			'enable_attribution_box'
-		);
-		/**
-		* This section includes:
-		* License selector.
-		* license_current settings field which previews the current/selected license.
-		*/
-		add_settings_section(
-			'license-chooser',
-			'',
-			array( &$this, 'settings_license_chooser' ),
-			'cc-admin'
-		);
-		/**
-		 * This section includes:
-		 * Additional attribution text.
-		 * More attribtion settings that will be added in the future.
-		 */
-		add_settings_section(
-			'license-attribution-settings',
-			'',
-			array( &$this, 'admin_license_attr_settings' ),
-			'cc-admin'
-		);
-
-		add_settings_field(
-			'license_current',
-			__(
-				'Current License',
-				'CreativeCommons'
-			),
-			array( &$this, 'settings_preview_current_license' ),
-			'cc-admin',
-			'license-chooser',
-			array( 'label_for' => 'license_current' )
-		);
-		add_settings_field(
-			'additional_attribution_txt',
-			__(
-				'Add additional attribution text',
-				'CreativeCommons'
-			),
-			array( &$this, 'setting_additional_text_field' ),
-			'cc-admin',
-			'license-attribution-settings',
-			array( 'label_for' => 'additional_attribution_txt' )
-		);
-
-		add_settings_field(
-			'attribution_to',
-			__(
-				'Attribution Details',
-				'CreativeCommons'
-			),
-			array( &$this, 'setting_attribution_field' ),
-			'cc-admin',
-			'license-attribution-settings',
-			array( 'label_for' => 'attribution_to' )
-		);
-
-		add_settings_field(
-			'display_as',
-			__(
-				'Display license as',
-				'CreativeCommons'
-			),
-			array( &$this, 'display_license_as' ),
-			'cc-admin',
-			'license-attribution-settings',
-			array( 'label_for' => 'display_as' )
-		);
-
-		add_settings_field(
-			'enable_attribution_box',
-			__(
-				'Display attribution information for images',
-				'CreativeCommons'
-			),
-			array( &$this, 'enable_attribution_box' ),
-			'cc-admin',
-			'license-attribution-settings',
-			array( 'label_for' => 'enable_attribution_box' )
-		);
-	}
-
-
-	/**
-	 * Html output call-back for license section shown in Settings > Creative Commons.
-	 * Uses radio buttons, and the selected license is stored in the $license
-	 * array as $license['choice'].
-	 */
-	public function settings_license_chooser() {
-		$license = $this->get_license( $location = 'site' ); // Gets license array to store the selection.
-		?>
-		<table class="widefat" style="padding: 1.4em; padding-right: 3em;">
-		<thead>
-			<tr>
-				<th>
-					<h3><?php esc_html_e( 'Select the License', 'CreativeCommons' ); ?></h3>
-					<p>
-						<?php esc_html_e( 'Select your required default license for your website. Choose a license from Creative Commons licenses. If you are not sure about what license to use, let our ', 'CreativeCommons' ); ?>
-						<strong><a href="https://creativecommons.org/choose/" target="blank">
-						<?php esc_html_e( 'License Chooser', 'CreativeCommons' ); ?>
-						</a></strong>
-						<?php esc_html_e( ' help. The selected license can be displayed as a widget. In' ); ?>
-						<strong>
-							<?php esc_html_e( 'Appearance > Widgets', 'CreativeCommons' ); ?>
-						</strong>
-						<?php esc_html_e( 'drag CC License widget to the required area. You can also include the license in footer. We recommend using the widget for better compatibility with your theme. You can use individual licenses in posts or pages using Gutenberg blocks.', 'CreativeCommons' ); ?>
-					</p>
-				</th>
-			</tr>
-		</thead>
-		<tbody>
-		<tr>
-			<td>
-				<p><label>
-					<input name="license[choice]" type="radio" value="by" <?php isset( $license['choice'] ) ? checked( $license['choice'], 'by' ) : ''; ?> />
-					<?php esc_html_e( 'Attribution 4.0 International License', 'CreativeCommons' ); ?>
-					<strong style="color:#fc7303;" >(CC BY 4.0)</strong>
-				</p></label>
-			</td>
-			<td>
-			<?php
-				printf( '<a href="https://creativecommons.org/licenses/by/4.0" target="blank" rel="license"><img src="%1$s" alt="CC BY"></a>', esc_attr( CCPLUGIN__URL ) . 'includes/images/by.png' );
-			?>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<p class="cc-test-css"><label>
-					<input name="license[choice]" type="radio" value="by-sa" <?php isset( $license['choice'] ) ? checked( $license['choice'], 'by-sa' ) : ''; ?> /> <?php esc_html_e( 'Attribution-ShareAlike 4.0 International License', 'CreativeCommons' ); ?>
-					<strong style="color:#fc7303;" >(CC BY-SA 4.0)</strong>
-				</p></label>
-			</td>
-			<td>
-			<?php
-				printf( '<a href="https://creativecommons.org/licenses/by-sa/4.0" target="blank" rel="license"><img src="%1$s" alt="CC BY-SA"></a>', esc_attr( CCPLUGIN__URL ) . 'includes/images/by-sa.png' );
-			?>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<p><label>
-					<input name="license[choice]" type="radio" value="by-nc" <?php isset( $license['choice'] ) ? checked( $license['choice'], 'by-nc' ) : ''; ?> /> <?php esc_html_e( 'Attribution-NonCommercial 4.0 International License', 'CreativeCommons' ); ?>
-					<strong style="color:#fc7303;" >(CC BY-NC 4.0)</strong>
-				</p></label>
-			</td>
-			<td>
-			<?php
-				printf( '<a href="https://creativecommons.org/licenses/by-nc/4.0" target="blank" rel="license"><img src="%1$s" alt="CC BY-NC"></a>', esc_attr( CCPLUGIN__URL ) . 'includes/images/by-nc.png' );
-			?>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<p><label>
-					<input name="license[choice]" type="radio" value="by-nc-sa" <?php isset( $license['choice'] ) ? checked( $license['choice'], 'by-nc-sa' ) : ''; ?> /> <?php esc_html_e( 'Attribution-NonCommercial-ShareAlike 4.0 International License', 'CreativeCommons' ); ?>
-					<strong style="color:#fc7303;" >(CC BY-NC-SA 4.0)</strong>
-				</p></label>
-			</td>
-			<td>
-			<?php
-				printf( '<a href="https://creativecommons.org/licenses/by-nc-sa/4.0" target="blank" rel="license"><img src="%1$s" alt="CC BY-NC-SA"></a>', esc_attr( CCPLUGIN__URL ) . 'includes/images/by-nc-sa.png' );
-			?>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<p><label>
-					<input name="license[choice]" type="radio" value="by-nc-nd" <?php isset( $license['choice'] ) ? checked( $license['choice'], 'by-nc-nd' ) : ''; ?> /> <?php esc_html_e( 'Attribution-NonCommercial-NoDerivatives 4.0 International License', 'CreativeCommons' ); ?>
-					<strong style="color:#fc7303;" >(CC BY-NC-ND 4.0)</strong>
-				</p></label>
-			</td>
-			<td>
-			<?php
-				printf( '<a href="https://creativecommons.org/licenses/by-nc-nd/4.0" target="blank" rel="license"><img src="%1$s" alt="CC BY-NC-ND"></a>', esc_attr( CCPLUGIN__URL ) . 'includes/images/by-nc-nd.png' );
-			?>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<p><label>
-					<input name="license[choice]" type="radio" value="by-nd" <?php isset( $license['choice'] ) ? checked( $license['choice'], 'by-nd' ) : ''; ?> /> <?php esc_html_e( 'Attribution-NoDerivatives 4.0 International License', 'CreativeCommons' ); ?>
-					<strong style="color:#fc7303;" >(CC BY-ND 4.0)</strong>
-				</p></label>
-			</td>
-			<td>
-			<?php
-				printf( '<a href="https://creativecommons.org/licenses/by-nd/4.0" target="blank" rel="license"><img src="%1$s" alt="CC BY-ND"></a>', esc_attr( CCPLUGIN__URL ) . 'includes/images/by-nd.png' );
-			?>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<p><label>
-					<input name="license[choice]" type="radio" value="cc0" <?php isset( $license['choice'] ) ? checked( $license['choice'], 'cc0' ) : ''; ?> /> <?php esc_html_e( 'CC0 Universal Public Domain Dedication license', 'CreativeCommons' ); ?>
-					<strong style="color:#fc7303;">(CC0)</strong>
-				</p></label>
-			</td>
-			<td>
-			<?php
-				printf( '<a href="https://creativecommons.org/publicdomain/zero/1.0/" target="blank"  rel="license"><img src="%1$s" alt="CC0"></a>', esc_attr( CCPLUGIN__URL ) . 'includes/images/cc0.png' );
-			?>
-			</td>
-	</tr>
-		</tbody>
-	</table>
-		<?php
 	}
 
 	/**
-	 * Callback for 'license-attribution-settings' section.
-	 * It is empty currently, but is required for the related settings-field to work.
+	 * Function: exif_copyright_license_url
 	 *
-	 * @return void
+	 *  Extract the first license in triangle brackets from the Exif Copyright
+	 * FIXME: validate in regex, and handle publicdomain
+	 *
+	 * @param mixed $copyright exif copyright.
 	 */
-	public function admin_license_attr_settings() {
-	}
-
-
-	/**
-	 * Function: settings_license_section
-	 */
-	public function settings_license_section() {
-		$this->display_settings_warning(
-			$echo = true
+	public function exif_copyright_license_url( $copyright ) {
+		$url = '';
+		$matched = preg_match(
+			'/<(https?:\/\/creativecommons.org\/licenses\/[^>]+)>/',
+			$copyright,
+			$matches
 		);
-	}
-
-	/**
-	 * Displays a preview of current selected license. Used in 'license-chooser' settings section.
-	 */
-	public function settings_preview_current_license() {
-		$license = $this->get_license( $location = 'site' );
-		$deed    = esc_html( $license['deed'] );
-		$name    = esc_attr( $license['name'] );
-		$image   = esc_attr( $license['image'] );
-
-		// Closing the settings table by </table>. Do not use any more setting fields in license-chooser section.
-		echo "</table><div style=' text-align: center; background: #fff; border: 1px solid #e5e5e5; box-shadow: 0 1px 1px rgba(0,0,0,.04); padding: 1em;'><img id='cc-current-license-image' src='$image'><br /><a href='$deed' target='blank' rel='license'>$name</a></div>";
-	}
-
-
-	/**
-	 * Provides an option to the user to add an additional
-	 * attribution text after the license.
-	 */
-	public function setting_additional_text_field() {
-
-		$license  = $this->get_license( $location = 'site' );
-		$add_txt  = esc_html( $license['additional_attribution_txt'] );
-		echo "<input style='padding:0.5rem;' name='license[additional_attribution_txt]' type='text' size='120' maxlength='300' id='additional-attribution-txt' value='$add_txt' />";
-
+		if ( ! $matched ) {
+			$matched = preg_match(
+				'/<(https?:\/\/creativecommons.org\/publicdomain\/[^>]+)>/',
+				$copyright,
+				$matches
+			);
+		}
+		if ( $matched ) {
+			$url = $matches[1];
+		}
+		return $url;
 	}
 
 
 	/**
-	 * Calls attribution details html callback function.
+	 * Function: exif_url
 	 *
+	 * Extracts a url from a string of the form "A. N. Other <https://another.com/home/>"
+	 *
+	 * @param  mixed $exif_value a string of the form "A. N. Other <https://another.com/home/>".
 	 */
-	public function setting_attribution_field() {
-		$this->select_attribute_to_html( $location = 'site', $echo = true );
+	public function exif_url( $exif_value ) {
+		$url     = '';
+		$matched = preg_match( '/<(https?:\/\/[^>]+)>/', $exif_value, $matches );
+		if ( $matched ) {
+			$url = trim( $matches[1] );
+		}
+		return $url;
 	}
+
 
 	/**
-	 * Display license as a widget or a footer or both.
+	 * Function: exif_text
+	 *
+	 * Extracts the non-url text from a string of the form "A. N. Other <https://another.com/home/>"
+	 *
+	 * @param  mixed $exif_value a string of the form "A. N. Other <https://another.com/home/>".
 	 */
-	public function display_license_as() {
-
-		$license  = $this->get_license( $location = 'site' );
-
-		?>
-		<br />
-		<input name="license[display_as_widget]" type="checkbox" value="true" id="display_as_widget" <?php checked( $license['display_as_widget'], 'true' ); ?> />
-		<label for="display_as_widget"><?php esc_html_e( 'Widget', 'CreativeCommons' ); ?>
-		<i><?php esc_html_e( '(recommended)', 'CreativeCommons' ); ?></i></label>
-		<br />
-
-		<input name="license[display_as_footer]" type="checkbox" value="true" id="display_as_footer" <?php checked( $license['display_as_footer'], 'true' ); ?> />
-		<label for="display_as_footer"><?php esc_html_e( 'Footer', 'CreativeCommons' ); ?></label>
-		<br />
-
-		<?php
+	public function exif_text( $exif_value ) {
+		return trim( preg_replace( '/<https?:\/\/[^>]+>/', '', $exif_value ) );
 	}
 
-	public function enable_attribution_box() {
-		$enabled = get_option("enable_attribution_box");
-		?>
-			<input name="enable_attribution_box" type="checkbox" value="true" <?php checked($enabled, 'true'); ?> />
-		<?php
-	}
 
 	/**
-	 * Check if a site may override the network license.
+	 * Function: license_button_url
 	 *
-	 * If a network license override is allowed, a site admin may change
-	 * their site's license. The rights are cascading: if a site admin may
-	 * change a site's license, she may also allow a user to select their
-	 * own license.
-	 * if a site admin may not change the license she will also not be
-	 * allowed to let a user pick their own license. A siteadmin may also
-	 * enable to have a license per content.
+	 * Convert a license url into the url for the icon for that license
 	 *
-	 * @return bool true if the network license override is allowed,
-	 * otherwise false
+	 * @param  mixed $license_url URL of the given licence.
 	 */
-	public function allow_site_override_network_license() {
-		$license = $this->get_license( $location = 'network' );
+	public function license_button_url( $license_url ) {
+		$url     = false;
+		$matched = preg_match(
+			'/\/(licenses|publicdomain)\/([^\/]+)\//',
+			$license_url,
+			$matches
+		);
+		# SHOULD BE ENUMERATIVE.
+		if ( $matched ) {
+			if ( $matches[2] == 'zero' ) {
+				$url = CCPLUGIN__URL . 'includes/attribution-box/cc0.svg';
+			} elseif ( $matches[1] == 'publicdomain' ) {
+				$url = CCPLUGIN__URL . 'includes/attribution-box/cc0.svg';
+			} else {
+				$url = CCPLUGIN__URL . 'includes/attribution-box/'
+					. $matches[2]
+					. '.svg';
+			}
+		}
+		return $url;
+	}
 
-		/*
-		 * Using true as string instead of bool since it will be a
-		 * string value returned from the settings form
-		 */
-		if ( 'true' == $license['site_override_license'] ) {
-			return true;
+
+	/**
+	 * Function: license_name
+	 *
+	 * Generates the canonical English name for the license with the given url
+	 *
+	 * @param  mixed $license_url URL of the given license.
+	 */
+	public function license_name( $license_url ) {
+		$name = '';
+		if ( strpos( $license_url, '/publicdomain/' ) ) {
+			// Note combination of version with dedication.
+			if ( strpos( $license_url, '/zero/1.0' ) ) {
+				$name = 'CC0 1.0 Universal';
+			} else {
+				$name = 'Public Domain';
+			}
 		} else {
-			return false;
+			$name = 'Creative Commons Attribution';
+			if ( strpos( $license_url, '-nc' ) !== false ) {
+				$name .= '-NonCommercial';
+			}
+			if ( strpos( $license_url, '-nd' ) !== false ) {
+				$name .= '-NoDerivatives';
+			} elseif ( strpos( $license_url, '-sa' ) !== false ) {
+				$name .= '-ShareAlike';
+			}
+
+			if ( strpos( $license_url, '/2.0/' ) !== false ) {
+				$name .= ' 2.0 Generic';
+			} elseif ( strpos( $license_url, '/2.5/' ) !== false ) {
+				$name .= ' 2.5 Generic';
+			} elseif ( strpos( $license_url, '/3.0/' ) !== false ) {
+				$name .= ' 3.0 Unported';
+			} elseif ( strpos( $license_url, '/4.0/' ) !== false ) {
+				$name .= ' 4.0 International';
+			}
+			$name .= ' License';
+		}
+		return $name;
+	}
+
+
+	/**
+	 * Function: license_url_is_zero
+	 *
+	 * @param  mixed $license_url URL of the given license.
+	 */
+	public function license_url_is_zero( $license_url ) {
+		return strpos(
+			$license_url,
+			'//creativecommons.org/publicdomain/zero/1.0/'
+		) !== false;
+	}
+
+
+	/**
+	 * Function: maybe_apply_attachment_license_url
+	 *
+	 * @param  mixed $post_id
+	 * @param  mixed $exif
+	 */
+	public function maybe_apply_attachment_license_url( $post_id, $exif ) {
+		if ( isset( $exif['COMPUTED']['Copyright'] ) ) {
+			$url = $this->exif_copyright_license_url(
+				$exif['COMPUTED']['Copyright']
+			);
+			// Set the metadata, which wasn't already set.
+			add_post_meta( $post_id, 'license_url', $url, true );
 		}
 	}
 
 
 	/**
-	 * Set a default license.
+	 * Function: maybe_apply_attachment_url
 	 *
-	 * Hierarchy of license selection
-	 * If the plugin is used in a Multisite Network WordPress setup there is
-	 * an option added to the network options to set a default license for
-	 * all sites in this particular network. Each site will inherit this
-	 * default.
-	 * A sit owner may change this license (at least if the Multisite Admin
-	 * allows it). On a site level (or single WordPress install) an admin
-	 * may allow this site default license to be changed. If the site allows
-	 * a user may change the default license for her/his posts. The same
-	 * goes for posts/pages: if the site admin allows it these can be
-	 * changed per post or page.
-	 **/
-	public function plugin_default_license() {
-		$this->_logger( 'Got default settings' );
-		$license = array(
-			'deed'                       => '',
-			'image'                      => '',
-			'attribute_to'               => '',
-			'title'                      => '',
-			'title_url'                  => '',
-			'author'                     => '',
-			'author_url'                 => '',
-			'name'                       => '',
-			'sitename'                   => '',
-			'siteurl'                    => '',
-			'site_override_license'      => false,
-			'user_override_license'      => false,
-			'content_override_license'   => false,
-			'version'                    => '',
-			'additional_attribution_txt' => '',
-			'choice'                     => '',
-			'display_as_widget'          => false,
-			'display_as_footer'          => false,
+	 * @param  mixed $post_id
+	 * @param  mixed $meta_field
+	 * @param  mixed $exif
+	 * @param  mixed $exif_field
+	 */
+	public function maybe_apply_attachment_url( $post_id, $meta_field, $exif, $exif_field ) {
+
+		if ( isset( $exif [ $exif_field ] ) ) {
+			$url = $this->exif_url( $exif [ $exif_field ] );
+			// Set the metadata, which wasn't already set.
+			add_post_meta( $post_id, $meta_field, $url, true );
+		}
+	}
+
+
+	/**
+	 * Function read_exif
+	 *
+	 * Get exif for given image format
+	 *
+	 * @param  mixed $post_id id of given post.
+	 */
+	public function read_exif( $post_id ) {
+
+		// Will give error for image formats we can't get Exif for.
+		$image_path = get_attached_file( $post_id );
+		$exif       = exif_read_data( $image_path );
+		return $exif;
+	}
+
+
+	/**
+	 * Function: extract_exif_license_metadata
+	 *
+	 * If the file has Exif, and it cointains license metadata, apply it
+	 *
+	 * @param  mixed $post_id id of given post.
+	 */
+	public function extract_exif_license_metadata( $post_id ) {
+		$exif = $this->read_exif( $post_id );
+		$this->maybe_apply_attachment_license_url( $post_id, $exif );
+		$this->maybe_apply_attachment_url(
+			$post_id,
+			'attribution_url',
+			$exif,
+			'ImageDescription'
 		);
-		return $license;
 	}
 
 
 	/**
-	 * Content for a license. No license found or not allowed? Continue 2
-	 * 1) Check if it's allowed to have a license per content => check the
-	 * 2) Check if it's allowed to have a license per user => check the
-	 * content author and grab his/her license preference. No license found
-	 * 3) Check if the site is part of a network => No? continue step 4a
-	 * or user are not allowed to choose their own license? Continue 3
-	 * 4a) the site is NOT part of a network => Get license from options or
-	 * Yes? continue step 4b
-	 * 4b) The site is part of a network => check if the site may choose its
-	 * return plugin's default
-	 * license found Continue step 5
-	 * own license => check the options for a license. Not allowed or no
-	 * return plugin default
-	 * 5) Check the multisite options for a license and return if not found
+	 * Function: license_url_field_id
 	 *
-	 * @param mixed $location null.
+	 * @param  mixed $post_id id of the given post.
 	 */
-	public function get_license( $location = null ) {
-		switch ( $location ) {
-			case 'network':
-				$this->_logger( 'called network' );
-				$license = ( $network_license = get_site_option( 'license' ) )
-					? $network_license : $this->plugin_default_license();
-
-				break;
-
-			case 'site':
-				$this->_logger( 'called site' );
-				if ( is_multisite() ) {
-					$this->_logger( 'multisite, check network settings' );
-					$license = ( $site_license = get_option( 'license' ) )
-						? $site_license : $this->get_license( 'network' );
-				} else {
-					$this->_logger( 'single site, get site license or else default settings' );
-					$license = ( $site_license = get_option( 'license' ) )
-						? $site_license : $this->plugin_default_license();
-				}
-				break;
-
-			case 'profile':
-				$this->_logger( 'called profile' );
-				$license = ( $user_license = get_user_option( 'license' ) )
-					? $user_license : $this->get_license( 'site' );
-				break;
-
-			case 'post-page':
-				$this->_logger( 'called post-page' );
-				$license = ( $post_page_license = $this->get_post_page_license() )
-					? $post_page_license : $this->get_license( 'profile' );
-				break;
-
-			// TODO: need to check default structure below
-			// since this can cause way too many calls for the right license.
-			case 'frontend':
-				$this->_logger( 'get license for the frontend' );
-				$license = $this->get_license( 'site' );
-				if ( array_key_exists( 'user_override_license', $license )
-				&& 'true' == $license['user_override_license']
-				) {
-					$license = $this->get_license( 'profile' );
-				}
-				if ( array_key_exists( 'content_override_license', $license )
-				&& 'true' == $license['content_override_license']
-				) {
-					$license = $this->get_license( 'post-page' );
-				}
-				break;
-		}
-		return $license;
+	public function license_url_field_id( $post_id ) {
+		return "attachments-{$post_id}-license_url]";
 	}
 
 
 	/**
-	 * Function: get_post_page_license
+	 * Function: license_select
 	 *
-	 * It will use a variable prefix with underscore to make really
-	 * sure this postmeta value will NOT be displayed to other users. The option is
-	 * the same structure as everywhere: a serialized array.
-	 *
-	 * (http://codex.wordpress.org/Function_Reference/add_post_meta)
+	 * @param  mixed $post_id id of the given post.
+	 * @param  mixed $original .
 	 */
-	public function get_post_page_license() {
-		// TODO check if this can be done without a global.
-		global $post;
-		$license = get_post_meta( $post->ID, '_license', true );
-		return (is_array($lisence) && count($licence> 0)) ? $licence : false;
+	public function license_select( $post_id, $original ) {
 
+		// TODO: Select a better option than "Original" if we can determine one.
+		// TODO: CC0.
+		// FIXME: Move style to separate css file and change to separate js file.
+
+		$select = '<select onChange="var el = document.getElementById(\''
+				. $this->license_url_field_id( $post_id )
+				// Set & scroll to end of text field so user can see new value.
+				. '\'); el.value=this.value; el.scrollLeft = el.scrollWidth;"'
+				. 'style="vertical-align: baseline;">';
+		$select .= "<option value=\"{$original}\">"
+				. __( 'Original' )
+				. '</option>';
+		// Short names so the select fits on the same line as the text input.
+		$select .= '<option value="https://creativecommons.org/licenses/by/4.0/">' . __( 'CC BY 4.0' ) . '</option>';
+		$select .= '<option value="https://creativecommons.org/licenses/by-nc/4.0/">' . __( 'CC BY-NC 4.0' ) . '</option>';
+		$select .= '<option value="https://creativecommons.org/licenses/by-nc-nd/4.0/">' . __( 'CC BY-NC-ND 4.0' ) . '</option>';
+		$select .= '<option value="https://creativecommons.org/licenses/by-nc-sa/4.0/">' . __( 'CC BY-NC-SA 4.0' ) . '</option>';
+		$select .= '<option value="https://creativecommons.org/licenses/by-nd/4.0/">' . __( 'CC BY-ND 4.0' ) . '</option>';
+		$select .= '<option value="https://creativecommons.org/licenses/by-sa/4.0/">' . __( 'CC BY-SA 4.0' ) . '</option>';
+		$select .= '<option value="https://creativecommons.org/publicdomain/zero/1.0/">' . __( 'CC0' ) . '</option>';
+		$select .= '<option value="">' . __( 'None' ) . '</option>';
+		$select .= '</select>';
+		return $select;
 	}
 
 
 	/**
-	 * Function: get_attribution_options
+	 * Function: license_text_field
 	 *
-	 * Returns default attribution options
-	 *
-	 * @param  mixed $location
-	 *
-	 * @return $attribution_options
+	 * @param mixed $post_id
+	 * @param mixed $original
 	 */
-	public function get_attribution_options($location) {
-        switch ($location) {
-            case 'network':
-                $attribution_options = array(
-                    'network_name' => sprintf(__('The network name: %s', 'CreativeCommons'), get_site_option('site_name')),
-                    'site_name'    => __("A site's name", 'CreativeCommons'),
-                    'display_name' => __('The author display name', 'CreativeCommons'),
-                    'other'        => __('Something completely different', 'CreativeCommons'),
-                );
-                break;
-
-            case 'site':
-                $attribution_options = array(
-                    'site_name'    => sprintf(__('The site name: %s', 'CreativeCommons'), get_bloginfo('site')),
-                    'display_name' => __('The author display name', 'CreativeCommons'),
-                    'other'        => __('Something completely different', 'CreativeCommons'),
-                );
-                break;
-
-            default:
-                $attribution_options = array();
-                break;
-        }
-
-        return $attribution_options;
-    }
-
-/**
-     * Function: select_attribute_to_html
-     *
-     * Generates HTML for selecting attribution attributes.
-     *
-     * @param string|null $location Location type.
-     * @param bool $echo Whether to echo the output.
-     */
-    public function select_attribute_to_html($location = null, $echo = true) {
-        $license = $this->get_post_page_license();
-        $title = (isset($license['title'])) ? esc_html($license['title']) : '';
-        $title_url = (isset($license['title_url'])) ? esc_html($license['title_url']) : '';
-        $author = (isset($license['author'])) ? esc_html($license['author']) : '';
-        $author_url = (isset($license['author_url'])) ? esc_html($license['author_url']) : '';
-
-        ?>
-        <table class="widefat" style="background:none; width:100%; border:none; box-shadow:none;">
-            <tr>
-                <td style="padding:10px 10px;">
-                    <span><?php esc_html_e('Title', 'CreativeCommons'); ?></span>
-                </td>
-                <td style="padding:10px 10px;">
-                    <?php printf('<input type="text" name="license[title]" value="%1$s" id="title" class="large" size="45" /><br />', esc_attr($title)); ?>
-                </td>
-            </tr>
-            <tr>
-                <td style="padding:10px 10px;">
-                    <span><?php esc_html_e('Title URL', 'CreativeCommons'); ?></span>
-                </td>
-                <td style="padding:10px 10px;">
-                    <?php printf('<input type="text" name="license[title_url]" value="%1$s" id="title_url" class="large" size="45" /><br />', esc_attr($title_url)); ?>
-                </td>
-            </tr>
-            <tr>
-                <td style="padding:10px 10px;">
-                    <span><?php esc_html_e('Author', 'CreativeCommons'); ?></span>
-                </td>
-                <td style="padding:10px 10px;">
-                    <?php printf('<input type="text" name="license[author]" value="%1$s" id="author" class="large" size="45" /><br />', esc_attr($author)); ?>
-                </td>
-            </tr>
-            <tr>
-                <td style="padding:10px 10px;">
-                    <span><?php esc_html_e('Author URL', 'CreativeCommons'); ?></span>
-                </td>
-                <td style="padding:10px 10px;">
-                    <?php printf('<input type="text" name="license[author_url]" value="%1$s" id="author_url" class="large" size="45" /><br />', esc_attr($author_url)); ?>
-                </td>
-            </tr>
-        </table>
-        <?php
-    }
-
-    /**
-     * Function: display_featured_image_attribution
-     *
-     * Displays attribution for the featured image if it exists.
-     */
-    public function display_featured_image_attribution() {
-        if (has_post_thumbnail()) {
-            $license = $this->get_post_page_license();
-            // Render the featured image
-            the_post_thumbnail();
-            // Render attribution if license exists
-            if ($license) {
-                echo '<div class="attribution" style="margin-top: 10px; font-style: italic; color: gray;">';
-                echo '<p>' . esc_html($license['author']) . ' - ' . esc_html($license['title']) . '</p>';
-                echo '<p><a href="' . esc_url($license['author_url']) . '">' . esc_html($license['author_url']) . '</a></p>';
-                echo '</div>';
-            }
-        }
-    }
-
-    /**
-     * Function: enqueue_attribution_boxes
-     *
-     * Enqueues scripts and styles for the attribution boxes.
-     */
-    public function enqueue_attribution_boxes() {
-        if (get_option("enable_attribution_box")) {
-            wp_enqueue_style('creative-commons-style', plugin_dir_url(__FILE__) . 'css/creative-commons.css');
-        }
-    }
-
-    /**
-     * Function: init
-     *
-     * Initializes the plugin by adding necessary hooks.
-     */
-    public function init() {
-        if (get_option("enable_attribution_box")) {
-            add_filter('the_content', array($this, 'add_attribution_boxes'));
-            add_action('wp_enqueue_scripts', array($this, 'enqueue_attribution_boxes'));
-        }
-    }
-
-    /**
-     * Function: add_attribution_boxes
-     *
-     * Appends the attribution boxes to the content.
-     *
-     * @param string $content The original content.
-     * @return string The modified content.
-     */
-    public function add_attribution_boxes($content) {
-        if (is_single() && get_post_meta(get_the_ID(), '_license', true)) {
-            $content .= $this->display_featured_image_attribution(); // Add attribution after content
-        }
-        return $content;
-    }
-}
-
-// Initialize the class
-$creative_commons = new CreativeCommons();
-add_action('init', array($creative_commons, 'init'));
-
-
-	/**
-	 * Function: display_settings_warning
-	 *
-	 * Adds a warning text at the site/network settings.
-	 *
-	 * @param  mixed $echo false.
-	 */
-	public function display_settings_warning( $echo = false ) {
-		$html = '';
-		$html .= '<p>';
-		$html .= __( '', 'CreativeCommons' );
-		$html .= '</p>';
-		if ( $echo ) {
-			echo $html;
-		} else {
-			return $html;
-		}
+	public function license_text_field( $post_id, $original ) {
+		return '<input type="text" class="text"'
+			. " name=\"attachments[{$post_id}][license_url]\""
+			. ' id="' . $this->license_url_field_id( $post_id ) . '"'
+			. " value=\"{$original}\""
+			. ' />';
 	}
 
+
 	/**
-	 * Function: save_license
+	 * Function: add_image_license_metadata
 	 *
-	 * Saves license from network settings, user profile and post/page interface.
-	 *
-	 * @param  mixed $post_id false.
+	 * @param mixed $form_fields
+	 * @param mixed $post
 	 */
-	public function save_license( $post_id = false ) {
-		if ( filter_has_var( INPUT_POST, 'license_wpnonce' )
-			&& wp_verify_nonce(
-				filter_input( INPUT_POST, 'license_wpnonce' ),
-				'license-update'
-			)
-		) {
-			if ( defined( 'IS_PROFILE_PAGE' ) && IS_PROFILE_PAGE ) {
-				$this->_save_user_license();
-			} elseif ( is_multisite()
-					&& defined( 'WP_NETWORK_ADMIN' )
-					&& WP_NETWORK_ADMIN
+	public function add_image_license_metadata( $form_fields, $post ) {
+		$post_id = $post->ID;
+
+		// FIXME: We can get the attribution name from Artist, and title from ImageDescription. Should we?
+
+		$original_license = get_post_meta( $post_id, 'license_url', true );
+
+		$form_fields['license_url'] = array(
+			'label' => __( 'License&nbsp;URL' ),
+			'input' => 'html',
+			'value' => $original_license,
+			'helps' => __( 'The URL for the license for the work, e.g. https://creativecommons.org/licenses/by-sa/4.0/ .<br />Only change this to correct the license or if you are the rightsholder!' ),
+			'html'  => $this->license_text_field( $post_id, $original_license )
+					. $this->license_select(
+						$post_id,
+						$original_license
+					),
+		);
+
+		$attachment_metadata = wp_get_attachment_metadata( $post_id, true );
+		$attribution_name    = get_post_meta( $post_id, 'attribution_name', true );
+
+		if ( isset( $attachment_metadata['image_meta'] ) ) {
+			$image_metadata = $attachment_metadata['image_meta'];
+			if ( ( ! $attribution_name )
+				&& isset( $image_metadata['credit'] )
 			) {
-				$this->_save_network_license();
-			} else {
-				// Assume we're in a post or page wp-admin environment might need to deal with autosave.
-				$this->_save_post_page_license( $post_id );
+				$attribution_name = $image_metadata['credit'];
 			}
-		} else {
-			return $post_id;
 		}
+
+		$form_fields['attribution_name'] = array(
+			'label' => __( 'Attribution Name' ),
+			'input' => 'text',
+			'value' => $attribution_name,
+			'helps' => __( 'The name to attribute the work to, e.g. A. N. Other' ),
+		);
+
+		$form_fields['attribution_url'] = array(
+			'label' => __( 'Attribution&nbsp;URL' ),
+			'input' => 'text',
+			'value' => get_post_meta( $post_id, 'attribution_url', true ),
+			'helps' => __( "The URL to which the work should be attributed. For example the work's page on the author's site., e.g. https://example.com/mattl/image2/" ),
+		);
+
+		$form_fields['source_work_url'] = array(
+			'label' => __( 'Source&nbsp;Work' ),
+			'input' => 'text',
+			'value' => get_post_meta( $post_id, 'source_work_url', true ),
+			'helps' => __( 'The URL of the work that this work is based on or derived from, e.g. https://example.com/robm/image1/' ),
+		);
+
+		$form_fields['extra_permissions_url'] = array(
+			'label' => __( 'Extra&nbsp;Permissions' ),
+			'input' => 'text',
+			'value' => get_post_meta( $post_id, 'extra_permissions_url', true ),
+			'helps' => __( 'A URL where the user can find information about obtaining rights that are not already permitted by the CC license, e.g. https://example.com/mattl/image2/ccplus/' ),
+		);
+
+		return $form_fields;
 	}
 
 
 	/**
-	 * Function: _wrapper_settings_api_verify
+	 * Function: save_image_license_metadata
 	 *
-	 * Wrapper so that we can use the _verify_license_data function.
-	 * TODO: refactor in the future
-	 *
-	 * @param  mixed $data license data.
+	 * @param mixed $post
+	 * @param mixed $attachment
 	 */
-	public function _wrapper_settings_api_verify( $data ) {
-		return $this->_verify_license_data( 'site', $data );
+	public function save_image_license_metadata( $post, $attachment ) {
+		$image_meta = array( 'license_url', 'attribution_url', 'source_work_url', 'extra_permissions_url' );
+		foreach ( $image_meta as $field ) {
+			if ( isset( $attachment[ $field ] ) ) {
+				update_post_meta(
+					$post['ID'],
+					$field,
+					esc_url( $attachment[ $field ] )
+				);
+			}
+		}
+
+		$image_meta_no_sanitization = array( 'attribution_name' );
+		foreach ( $image_meta_no_sanitization as $field ) {
+			if ( isset( $attachment[ $field ] ) ) {
+				update_post_meta(
+					$post['ID'],
+					$field,
+					// Documentation says not to sanitize.
+					$attachment[ $field ]
+				);
+			}
+		}
+		return $post;
 	}
 
-
 	/**
-	 * Checks the data before saving it
-	 * You must include any addition in the $license array in this
-	 * function for it to be saved.
+	 * Function: license_block
 	 *
-	 * @param  mixed $from Data from Network or Site.
-	 * @param  mixed $data Array of license data.
+	 * @param mixed $att_id
+	 * @param mixed $fallback_title
 	 */
-	private function _verify_license_data( $from, $data = null ) {
-		$license = array();
-
-		// if no data was provided assume the data is in $_POST['license'].
-		if ( is_null( $data )
-			&& isset( $_POST['license'] )
+	public function license_block( $att_id, $fallback_title = null ) {
+		if ( $fallback_title === null ) {
+			$fallback_title = __( 'This image' );
+		}
+		$license_url     = get_post_meta( $att_id, 'license_url', true );
+		$license_url     = strtolower( $license_url );
+		$attribution_url = get_post_meta( $att_id, 'attribution_url', true );
+		$source_work_url = get_post_meta( $att_id, 'source_work_url', true );
+		$extras_url      = get_post_meta( $att_id, 'extra_permissions_url', true );
+	
+		// Unfiltered.
+		$meta   = wp_get_attachment_metadata( $att_id, true );
+		$credit = get_post_meta( $att_id, 'attribution_name', true );
+		if ( ( ! $credit )
+			&& isset( $meta['credit'] )
 		) {
-			$data = sanitize_text_field( wp_unslash( $_POST['license'] ) );
+			$credit = $meta['image_meta']['credit'];
 		}
-		// Saves the license attribution information. MAke sure to save the current version.
-		$license['version']             = self::VERSION;
-		$license['attribute_to']        = ( isset( $data['attribute_to'] ) ) ? esc_attr( $data['attribute_to'] ) : '';
-		$license['attribute_other']     = ( isset( $data['attribute_other'] ) ) ? esc_html( $data['attribute_other'] ) : '';
-		$license['attribute_other_url'] = ( isset( $data['attribute_other_url'] ) ) ? esc_html( $data['attribute_other_url'] ) : '';
-		$license['choice']              = ( isset( $data['choice'] ) ) ? esc_attr( $data['choice'] ) : '';
-		$license['display_as_widget']   = ( isset( $data['display_as_widget'] ) ) ? esc_html( $data['display_as_widget'] ) : '';
-		$license['display_as_footer']   = ( isset( $data['display_as_footer'] ) ) ? esc_html( $data['display_as_footer'] ) : '';
-
-		// Gets the name, deed(url) and icon of the selected license and stores/saves it.
-		switch ( $data['choice'] ) {
-			case 'by':
-				$license['image'] = esc_attr( CCPLUGIN__URL . 'includes/images/by.png' );
-				$license['name']  = esc_attr( 'Creative Commons Attribution 4.0 International' );
-				$license['deed']  = esc_url( 'http://creativecommons.org/licenses/by/4.0/' );
-				break;
-			case 'by-sa':
-				$license['image'] = esc_attr( CCPLUGIN__URL . 'includes/images/by-sa.png' );
-				$license['name']  = esc_attr( 'Creative Commons Attribution-ShareAlike 4.0 International' );
-				$license['deed']  = esc_url( 'http://creativecommons.org/licenses/by-sa/4.0/' );
-				break;
-			case 'by-nc':
-				$license['image'] = esc_attr( CCPLUGIN__URL . 'includes/images/by-nc.png' );
-				$license['name']  = esc_attr( 'Creative Commons Attribution-NonCommercial 4.0 International' );
-				$license['deed']  = esc_url( 'https://creativecommons.org/licenses/by-nc/4.0' );
-				break;
-			case 'by-nc-sa':
-				$license['image'] = esc_attr( CCPLUGIN__URL . 'includes/images/by-nc-sa.png' );
-				$license['name']  = esc_attr( 'Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International' );
-				$license['deed']  = esc_url( 'https://creativecommons.org/licenses/by-nc-sa/4.0' );
-				break;
-			case 'by-nc-nd':
-				$license['image'] = esc_attr( CCPLUGIN__URL . 'includes/images/by-nc-nd.png' );
-				$license['name']  = esc_attr( 'Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International' );
-				$license['deed']  = esc_url( 'https://creativecommons.org/licenses/by-nc-nd/4.0' );
-				break;
-			case 'by-nd':
-				$license['image'] = esc_attr( CCPLUGIN__URL . 'includes/images/by-nd.png' );
-				$license['name']  = esc_attr( 'Creative Commons Attribution-NoDerivatives 4.0 International' );
-				$license['deed']  = esc_url( 'https://creativecommons.org/licenses/by-nd/4.0' );
-				break;
-			case 'cc0':
-				$license['image'] = esc_attr( CCPLUGIN__URL . 'includes/images/cc0.png' );
-				$license['name']  = esc_attr( 'Creative Commons CC0 Universal Public Domain Dedication' );
-				$license['deed']  = esc_url( 'https://creativecommons.org/publicdomain/zero/1.0/' );
-				break;
+	
+		$title = get_the_title( $att_id );
+		if ( ! $title ) {
+			$title = $meta['image_meta']['title'];
 		}
-
-		switch ( $from ) {
-			case 'network':
-				if ( filter_has_var( INPUT_POST, 'site_override_license' ) ) {
-					$license['site_override_license'] = esc_attr(
-						filter_input(
-							INPUT_POST,
-							'site_override_license'
-						)
-					);
+		if ( ! $title ) {
+			$title = $fallback_title;
+		}
+		if ( strpos( $license_url, 'creativecommons' ) ) {
+			if ( substr( $license_url, -1 ) != '/' ) {
+				$license_url = $license_url . '/';
+			}
+		}
+	
+		if ( $license_url ) {
+			$license_name = $this->license_name( $license_url );
+			$button_url   = $this->license_button_url( $license_url );
+		}
+	
+		// RDF stuff.
+		if ( $license_url ) {
+			$license_button_url = $this->license_button_url( $license_url );
+			$l                  = CreativeCommons::get_instance();
+			$html_rdfa = $l->license_html_rdfa(
+				$license_url,
+				$license_name,
+				$license_button_url,
+				$title,
+				true, // is_singular.
+				$attribution_url,
+				$credit,
+				$source_work_url,
+				$extras_url,
+				''
+			); // warning_text.
+	
+			$button = CreativeCommonsButton::get_instance()->markup(
+				$html_rdfa,
+				false,
+				31,
+				false
+			);
+	
+			$block  = $button;
+			$block .= '<!-- RDFa! -->' . $html_rdfa . '<!-- end of RDFa! -->';
+		} else {
+			if ( $title ) {
+				if ( $credit ) {
+					$block .= '<p>( ' . $title . ' by ' . $credit . ')</p>';
+				} else {
+					$block .= '<p>( ' . $title . ')</p>';
 				}
-				break;
-			case 'site':
-				$license['user_override_license']      =  ( isset( $data['user_override_license'] ) ) ? esc_attr( $data['user_override_license'] ) : '';
-				$license['content_override_license']   = ( isset( $data['user_override_license'] ) ) ? esc_attr( $data['user_override_license'] ) : '';
-				$license['additional_attribution_txt'] = ( isset( $data['additional_attribution_txt'] ) ) ? esc_html( $data['additional_attribution_txt'] ) : '';
-				$license['title']                      = ( isset( $data['title'] ) ) ? esc_attr( $data['title'] ) : '';
-				$license['title_url']                  = ( isset( $data['title_url'] ) ) ? esc_url( $data['title_url'] ) : '';
-				$license['author']                     = ( isset( $data['author'] ) ) ? esc_attr( $data['author'] ) : '';
-				$license['author_url']                 = ( isset( $data['author_url'] ) ) ? esc_url( $data['author_url'] ) : '';
-				break;
+			}
 		}
-		return $license;
+	
+		// Added Attribution Support
+		if ( $attribution_url ) {
+			$block .= '<p><a href="' . esc_url($attribution_url) . '" target="_blank">' . esc_html($credit) . '</a></p>';
+		}
+	
+		return $block;
 	}
-
-
+	
 	/**
-	 * Function: _save_network_license
+	 * Function: caption_block
 	 *
-	 * Validates & verifies the data and then saves the license in the site_options.
+	 * @param mixed $attr
+	 * @param mixed $att_id
 	 */
-	private function _save_network_license() {
-		$license = $this->_verify_license_data( $from = 'network' );
-		return update_site_option( 'license', $license );
+	public function caption_block( $attr, $att_id ) {
+		// This is way too simple. Improve before re-introducing the caption filter.
+		$caption = '<div class="cc-license-caption-wrapper cc-license-block">'
+				. '<div class="wp-caption-text">'
+				. $attr['caption']
+				. '</div><br />';
+	
+		$caption .= $this->license_block( $att_id, $attr['caption'] );
+	
+		$caption .= '</div>';
+	
+		return $caption;
 	}
-
-
+	
 	/**
-	 * Function: _save_user_license
+	 * Function: image_url_to_postid
 	 *
-	 * TODO: need to decide if the user option is global for all sites/blogs in a network.
-	 * Also need to make sure that we're using
-	 * the current profile user_id which might not be the
-	 * current_user (e.g. admin changing license for a user).
-	 * validates & verifies the data and then saves the license in the
-	 * user_options
+	 * This will make two database calls for a resized image, and almost every embedded
+	 * image will be resized. We do this to avoid the edge case where image-20x20.jpg and image.jpg
+	 * both exist and we are getting the former.
+	 *
+	 * @param mixed $image_url
 	 */
-	private function _save_user_license() {
-		$license    = $this->_verify_license_data( $from = 'profile' );
-		$user_id    = get_current_user_id();
-		return update_user_option(
-			$user_id,
+	public function image_url_to_postid( $image_url ) {
+		$att_id = null;
+		$att_id = attachment_url_to_postid( $image_url );
+		if ( ! $att_id ) {
+			// Remove resized image part of path.
+			// attachment_url_to_postid doesn't handle that.
+			// Make sure regex handles image urls that end e.g. aaa-1.jpg.
+			$image_url = preg_replace(
+				'/-\d+x\d+(\.[^.]+)$/i',
+				'$1',
+				$image_url
+			);
+			$att_id    = attachment_url_to_postid( $image_url );
+		}
+		return $att_id;
+	}
+	
+	/**
+	 * Function: license_shortcode
+	 *
+	 * @param mixed $atts
+	 * @param mixed $content
+	 */
+	public function license_shortcode( $atts, $content = null ) {
+		if ( $content !== null ) {
+			// TODO: Profile replacing this with parsing html and walking the DOM.
+			$match_count = preg_match(
+				'/<img[^>]+src="([^"]+)"/',
+				$content,
+				$matches
+			);
+			if ( $match_count == 1 ) {
+				$image_url = $matches[1];
+				$att_id    = $this->image_url_to_postid( $image_url );
+				if ( $att_id ) {
+					$content .= '<div class="cc-license-block"><br />';
+					$content .= $this->license_block( $att_id );
+					$content .= '</div>';
+				}
+			}
+		}
+		return do_shortcode( $content );
+	}
+	
+	/**
+	 * Function: captioned_image
+	 *
+	 * Note that we use isset(license), so e.g. license="1" and license="true"
+	 * both work. We could allow users to insert a license *here*, but we would
+	 * rather associate the license with the media object as that is more
+	 * robust. So we do not and will not do that.
+	 */
+	public function captioned_image( $empty, $attr, $content ) {
+		$args = shortcode_atts(
+			array(
+				'id'      => '',
+				'align'   => 'alignnone',
+				'width'   => '',
+				'caption' => '',
+				'title'   => '',
+			),
+			$attr
+		);
+	
+		if ( isset( $attr['id'] )
+			&& isset( $attr['license'] )
+		) {
+			// Extract attachment $post->ID.
+			preg_match( '/\d+/', $attr['id'], $att_id );
+			if ( $att_id ) {
+				// We *should* handle this based on the shortcode code's behaviour.
+				// if ((intval($width) > 1) && $caption) {.
+				$result = '<div ' /*. $id*/ . 'class="cc-caption wp-caption '
+						. esc_attr( $args['align'] ) . '"'
+						// . ' style="width: ' . (10 + (int) $width) . 'px"'
+						. '>' . do_shortcode( $content )
+						. $this->caption_block( $attr, $att_id[0] )
+						. '</div>';
+				// }
+			}
+		} else {
+			$result = '';
+		}
+		return $result;
+	}
+	
+	/**
+	 * Function: init
+	 *
+	 * @return void
+	 */
+	public function init() {
+		add_filter(
+			'add_attachment',
+			array( $this, 'extract_exif_license_metadata' ),
+			0,
+			2
+		);
+	
+		add_filter(
+			'attachment_fields_to_edit',
+			array( $this, 'add_image_license_metadata' ),
+			10,
+			2
+		);
+	
+		add_filter(
+			'attachment_fields_to_save',
+			array( $this, 'save_image_license_metadata' ),
+			10,
+			2
+		);
+	}
+	
+		// We really need to improve our emulation of the caption shortcode's
+		// output, and make sure our css fits it better, before adding this
+		// back in.
+	
+		/*
+		 * add_filter(
+		 * 'img_caption_shortcode',
+		 * array($this, 'captioned_image'),
+		 * 10,
+		 * 3
+		 * );
+		 */
+	
+		 if ( get_option("enable_attribution_box") ) {
+			add_filter( 'the_content', array( $this, 'add_attribution_boxes' ));
+			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_attribution_boxes' ));
+		}
+		
+		add_shortcode(
 			'license',
-			$license,
-			$global = false
+			array( $this, 'license_shortcode' )
 		);
-	}
-
-
-	/**
-	 * Function: _save_post_page_license
-	 *
-	 * Save post/page metadata due to it being an array it should not be
-	 * shown in the post or page custom fields interface using _license to hide it from the custom fields
-	 *
-	 * @param  mixed $post_id .
-	 */
-	private function _save_post_page_license( $post_id ) {
-		$license = $this->_verify_license_data( $from = 'post-page' );
-		return update_post_meta( $post_id, '_license', $license );
-	}
-
-
-	/**
-	 * Function: license_admin_init
-	 *
-	 * @return void
-	 */
-	public function license_admin_init() {
-		// Register our script.
-		wp_register_script( 'license', $this->plugin_url . '/js/admin.js' );
-		wp_enqueue_script( 'thickbox' );
-		wp_enqueue_style( 'thickbox' );
-		wp_enqueue_script( 'license' );
-	}
-
-	/**
-	 * Add options page, this page will be under "Settings"
-	 */
-	public function add_plugin_page() {
-		add_options_page(
-			'Settings Admin',
-			'Creative Commons',
-			'manage_options',
-			'cc-admin',
-			array( $this, 'create_admin_page' )
-		);
-	}
-
-
-	/**
-	 * Options page callback
-	 */
-	public function create_admin_page() {
-		// Set class property.
-		$this->options = get_option( 'my_option_name' );
-		?>
-		<div class="wrap">
-		<h2>Creative Commons licenses</h2>
-		<br />
-
-		<div style="background: white; border: 1px solid #e5e5e5; box-shadow: 0 1px 1px rgba(0,0,0,.04); padding: 2em; display: inline-table;">
-
-		<?php
-			printf( '<img src="%1$s" align="right" style="padding: 1em; width: 20%%; height: auto !important;" />', esc_attr( CCPLUGIN__URL ) . 'assets/icon-256x256.png' );
-		?>
-
-		<h3>About Creative Commons</h3>
-
-		<p><a href="https://creativecommons.org"
-		target="_blank">Creative Commons</a>
-		<?php
-		esc_html_e(
-			'is a
-			nonprofit organization that enables the sharing and use of
-			creativity and knowledge through free legal tools.',
-			'CreativeCommons'
-		);
-		?>
-		</p>
-
-		<p>
-		<?php
-		esc_html_e(
-			'Our free, easy-to-use copyright licenses
-			provide a simple, standardized way to give the public
-			permission to share and use your creative work — on
-			conditions of your choice. CC licenses let you easily
-			change your copyright terms from the default of "all rights
-			reserved" to "some rights reserved."',
-			'CreativeCommons'
-		);
-		?>
-		</p>
-
-		<p>
-		<?php
-		esc_html_e(
-			'Creative Commons licenses are not an
-		   alternative to copyright. They work alongside copyright and
-		   enable you to modify your copyright terms to best suit your
-			needs.',
-			'CreativeCommons'
-		);
-		?>
-		</p>
-
-		<p><?php esc_html_e( 'Please consider making a ', 'CreativeCommons' ); ?><a href="https://donate.creativecommons.org" target="_blank"><?php esc_html_e( 'donation (tax deductible in the US) to support our work', 'CreativeCommons' ); ?></a>.</p>
-
-		<h4><?php esc_html_e( 'Sign up for our newsletter', 'CreativeCommons' ); ?></h4>
-
-		<form id="Edit" target="_blank" action="https://donate.creativecommons.org/civicrm/profile/create?gid=30&amp;reset=1" method="post" name="Edit">
-		<p><input id="email-Primary" class="form-control input-lg" maxlength="64" name="email-Primary" size="30" autofocus placeholder="example@example.com" type="email" required></p>
-		<p><input class="btn btn-success btn-block" id="_qf_Edit_next" accesskey="S" name="_qf_Edit_next" type="submit" value="Subscribe"><input name="postURL" type="hidden" value="https://creativecommons.org/thank-you"><input name="cancelURL" type="hidden" value="https://creativecommons.org/newsletter"><input name="group[121]" type="hidden" value="1"><input name="_qf_default" type="hidden" value="Edit:cancel"></p>
-		</form>
-
-		</div>
-		<form method="post" action="options.php">
-			<?php
-				// This prints out all hidden setting fields.
-				settings_fields( 'cc-admin' );
-				do_settings_sections( 'cc-admin' );
-				submit_button();
-			?>
-			</form>
-		</div>
-		<?php
-	}
-
-
-	/**
-	 * Sanitize each setting field as needed
-	 *
-	 * @param array $input Contains all settings fields as array keys.
-	 */
-	public function sanitize( $input ) {
-		$new_input = array();
-		if ( isset( $input['id_number'] ) ) {
-			$new_input['id_number'] = absint( $input['id_number'] );
+		
+		public function enqueue_attribution_boxes() {
+			wp_enqueue_style('cc-attribution-box', plugins_url('css/cc-attribution-box.css', dirname(__FILE__)));
 		}
-
-		if ( isset( $input['title'] ) ) {
-			$new_input['title'] = sanitize_text_field( $input['title'] );
+		
+		public function add_attribution_boxes( $content ) {
+			return preg_replace_callback(
+				'/<img\s[^>]*class="wp-image-(\d+)[^>]*>/',
+				function ($matches) {
+					return
+						'<div class="cc-attribution-box-container">'
+						. $matches[0]
+						. '<div class="cc-attribution-box"> '
+						. $this->simple_license_block($matches[1])
+						. '</div></div>';
+				},
+				$content
+			);
 		}
-
-		return $new_input;
-	}
-
-	/**
-	 * Print the Section text
-	 */
-	public function print_section_info() {
-		print 'Enter your settings below:';
-	}
-
-
-	/**
-	 * Get the settings option array and print one of its values
-	 */
-	public function id_number_callback() {
-		printf(
-			'<input type="text" id="id_number" name="my_option_name[id_number]" value="%s" />',
-			isset( $this->options['id_number'] )
-			? esc_attr( $this->options['id_number'] ) : ''
-		);
-	}
-
-
-	/**
-	 * Get the settings option array and print one of its values
-	 */
-	public function title_callback() {
-		printf(
-			'<input type="text" id="title" name="my_option_name[title]" value="%s" />',
-			isset( $this->options['title'] )
-			? esc_attr( $this->options['title'] ) : ''
-		);
-	}
-
-
-	/**
-	 * Funciton: print_license_html
-	 *
-	 * @param  mixed $location
-	 * @param  mixed $echo
-	 */
-	public function print_license_html( $location = 'frontend', $echo = true ) {
-		/*
-		 * TODO: if the license is shown on a multiple items page (except
-		 * the author archive page?) display the site (or network default license)
-		 * default license including a warning that individual items may be licensed differently.
-		 * Add a filter to include the license with the excerpt & content
-		 * filter allow an option to switch this off
-		 */
-		$license = $this->get_license( $location );
-		$html = '';
-		if ( is_array( $license ) && count( $license ) > 0 ) {
-			$deed_url     = esc_url( $license['deed'] );
-			$image_url    = esc_attr( $license['image'] );
-			$license_name = esc_attr( $license['name'] );
-			$title        = esc_attr( $license['title'] );
-			$title_url    = esc_url( $license['title_url'] );
-			$author       = esc_attr( $license['author'] );
-			$author_url   = esc_url( $license['author_url'] );
-
-
-			$additional_attribution_txt = ( array_key_exists( 'additional_attribution_txt', $license ) )
-						? esc_html( $license['additional_attribution_txt'] ) : '';
-
-			$attribution = $this->_get_attribution( $license );
-			if ( is_array( $attribution ) ) {
-				$attribute_text = isset( $attribution['text'] )
-								? $attribution['text'] : '';
-				$attribute_url  = isset( $attribution['url'] )
-								? $attribution['url'] : '';
-			}
-
-			/*
-			 * it's a single entity so use the post->title otherwise use
-			 * the site's title and add a warning that multiple items might have different licenses.
+		
+		public function simple_license_block($att_id) {
+			/* TODO: this should just be replaced by just using $this->license_block.
+			 * Need to make sure that code can be safely fixed for this purpose,
 			 */
-			if ( is_singular() ) {
-				global $post;
-				if ( is_object( $post ) ) {
-					$title_work = esc_html( $post->post_title );
-				}
-			} else {
-				$title_work                 = get_bloginfo( 'name' );
-				$attribute_url              = esc_html( site_url() );
-				$additional_attribution_txt = "<p class='license-warning'>" . esc_html( $additional_attribution_txt ) . '</p>';
-			}
-			$html = "<div class='license-wrap'>"
-				. $this->license_html_rdfa(
-					$deed_url,
-					$license_name,
-					$image_url,
-					$title_work,
-					is_singular(),
-					$attribute_url,
-					$attribute_text,
-					false,
-					false,
-					$additional_attribution_txt,
-					$title,
-					$title_url,
-					$author,
-					$author_url
-				)
-				. '</div>';
+			$license_url     = get_post_meta( $att_id, 'license_url', true );
+			$attribution_url = get_post_meta( $att_id, 'attribution_url', true );
+			$title = get_the_title( $att_id );
+			$credit = get_post_meta( $att_id, 'attribution_name', true );
+		
+			$license_name = $this->license_name( $license_url );
+			$button_url   = $this->license_button_url( $license_url );
+		
+			if (!$button_url) return '';
+		
+			$lazy = function_exists('wp_lazy_loading_enabled') && wp_lazy_loading_enabled('img', 'simple_license_block');
+			$loading_type = $lazy ? 'lazy' : 'eager'; // 'eager' is the browser default
+			return "<div>" . esc_html($credit) . "</div>"
+				."<a target='_blank' href='" . esc_url($attribution_url) . "'>$title</a>"
+				. "<a class='cc-attribution-box-license' target='_blank' href='" . esc_url($license_url) . "' title='" . esc_attr($license_name) . "' rel='license'>"
+				. "<img src='" . esc_url($button_url) . "' alt='" . esc_attr($license_name) . "' loading='" . $loading_type . "'></a>";
 		}
-		if ( $echo ) {
-			echo $html;
-		} else {
-			return $html;
-		}
-	}
-
-
-	/**
-	 * Function: license_html_rdfa
-	 */
-	public function license_html_rdfa( $deed_url, $license_name, $image_url,
-									$title_work, $is_singular, $attribute_url,
-									$attribute_text, $source_work_url,
-									$extra_permissions_url, $additional_attribution_txt, $title, $title_url, $author, $author_url ) {
-		$image_path = str_replace( esc_attr( CCPLUGIN__URL ), esc_attr( CCPLUGIN__DIR ), $image_url );
-		list( $img_width, $img_height ) = getimagesize( $image_path );
-		$lazy = function_exists( 'wp_lazy_loading_enabled' ) && wp_lazy_loading_enabled( 'img', 'license_html_rdfa' );
-		$loading_type = $lazy ? 'lazy' : 'eager'; // 'eager' is the browser default
-		$html  = '';
-		$html .= "<a rel='license' href='$deed_url'>";
-		$html .= "<img alt='" . __( 'Creative Commons License', 'CreativeCommons' ) . "' style='border-width:0' src='$image_url' width='$img_width' height='$img_height' loading='$loading_type'  />";
-		$html .= '</a><br />';
-
-
-		$html .= sprintf( __( 'Except where otherwise noted, ', 'CreativeCommons' ) );
-
-		/*
-		 * If title and author details not entered,
-		 * replace them by 'the content on this site'.
-		 */
-		if ( $title ) {
-			$html .= sprintf( __( '<a href="%1$s">%2$s</a> ' ), $title_url, $title );
-		}
-		else {
-			$html .= sprintf( __( 'the content ', 'CreativeCommons' ) );
-		}
-
-		if ( $author ) {
-			$html .= sprintf( __( 'by <a href="%1$s">%2$s</a>' ), $author_url, $author );
-		}
-		else {
-			$html .= sprintf( __( 'on this site ', 'CreativeCommons' ) );
-		}
-
-		$html .= sprintf( __( ' is licensed under a <a rel="license" href="%1$s">%2$s</a> License.', 'CreativeCommons' ), $deed_url, $license_name );
-		if ( $source_work_url ) {
-			$html .= '<br />';
-			$html .= sprintf( __( 'Based on a work at <a xmlns:dct="http://purl.org/dc/terms/" href="%s" rel="dct:source">%s</a>.', 'CreativeCommons' ), $source_work_url, $source_work_url );
-		}
-		if ( $extra_permissions_url ) {
-			$html .= '<br />';
-			$html .= sprintf( __( 'Permissions beyond the scope of this license may be available at <a xmlns:cc="http://creativecommons.org/ns#" href="%s" rel="cc:morePermissions">%s</a>.', 'CreativeCommons' ), $extra_permissions_url, $extra_permissions_url );
-		}
-
-		if ( $additional_attribution_txt ) {
-			$html .= '<br />';
-			$html .= $additional_attribution_txt;
-		}
-		return $html;
-	}
-
-
-	/**
-	 * Function: _get_attribution
-	 *
-	 * @param  mixed $license
-	 */
-	private function _get_attribution( $license ) {
-		if ( is_array( $license ) && count( $license ) > 0 ) {
-			$attribution_option = isset( $license['attribute_to'] )
-								? $license['attribute_to'] : null;
-		}
-
-		$attribution = array();
-
-		switch ( $attribution_option ) {
-			case 'network_name':
-				$attribution['text'] = esc_html( get_site_option( 'site_name' ) );
-				$attribution['url']  = esc_url( get_permalink() );
-				break;
-
-			case 'site_name':
-				$attribution['text'] = esc_html( get_bloginfo( 'site' ) );
-				$attribution['url']  = esc_url( get_permalink() );
-				break;
-
-			case 'display_name':
-				// If displaying multiple posts, the display_name (author) will be reverted to site name later.
-				$attribution['text']
-				= esc_html( get_the_author_meta( 'display_name' ) );
-				$attribution['url'] = esc_url( get_permalink() );
-				break;
-
-			case 'other':
-				$other = isset( $license['attribute_other'] )
-				? $license['attribute_other'] : '';
-				$other_url = isset( $license['attribute_other_url'] )
-				? $license['attribute_other_url'] : '';
-
-				$attribution['text'] = esc_html( $other );
-				$attribution['url']  = esc_url( $other_url );
-				break;
-		}
-		return $attribution;
-	}
-
-	/**
-	 * Function: license_as_widget
-	 *
-	 * Registers widget, instantiates the CreativeCommons_Widget class.
-	 */
-	public function license_as_widget() {
-		register_widget( 'CreativeCommons_Widget' );
-	}
-
-
-	/**
-	 * Function: _logger
-	 *
-	 * Logs all errors if wp_debug is active.
-	 *
-	 *  @param  mixed $string error message.
-	 *
-	 * @return void
-	 */
-	private function _logger( $string ) {
-		if ( defined( 'WP_DEBUG' ) && ( WP_DEBUG == true ) ) {
-			error_log( $string );
-		} else {
-			return;
-		}
-	}
+	}		

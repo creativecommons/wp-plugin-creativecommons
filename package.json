@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "private": true,
     "scripts": {
-        "start": "nodemon /home/ronaldz/Desktop/C C/wp-plugin-creativecommons/src/blocks.js",
+        "start": "nodemon ../wp-plugin-creativecommons/src/blocks.js",
         "build": "wp-scripts build",
         "eject": "wp-env eject",
         "preinstall": "npx npm-force-resolutions",
