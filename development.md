@@ -69,7 +69,7 @@ If you are not setup to detect WPCS errors, consider the following steps.
 4. **Setup WPCS**
 
    Clone the official [WordPress Coding Standards repository][wpcs-repo] in
-   your home folder and ensure you are using its `master` branch:
+   your home folder and ensure you are using its `main` branch:
    ```shell
    git clone https://github.com/WordPress/WordPress-Coding-Standards.git wpcs
    ```
@@ -77,7 +77,7 @@ If you are not setup to detect WPCS errors, consider the following steps.
    cd wpcs
    ```
    ```shell
-   git checkout master
+   git checkout main
    ```
 
 5. **Tell PHPCS about this directory**
